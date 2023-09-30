@@ -14,5 +14,9 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Practica1"
-include(":app")
- 
+include(":movil")
+include(":desktop")
+include(":interfaces")
+include(":mastermind")
+include(":desktop_engine")
+include(":android_engine")

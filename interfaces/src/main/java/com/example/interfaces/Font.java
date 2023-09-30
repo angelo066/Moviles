@@ -1,4 +1,4 @@
 package com.example.interfaces;
 
-public class Interfaces {
+public interface Font {
 }

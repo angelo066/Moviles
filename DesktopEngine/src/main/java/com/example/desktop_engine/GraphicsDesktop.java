@@ -14,6 +14,7 @@ public class GraphicsDesktop implements Graphics {
 
     private JFrame g_frame;
     private Graphics2D g_graphics;
+
     public GraphicsDesktop(JFrame frame){
         g_frame = frame;
         g_graphics = (Graphics2D) frame.getBufferStrategy().getDrawGraphics();
@@ -64,7 +65,9 @@ public class GraphicsDesktop implements Graphics {
     @Override
     public void setColor(Color color) {
         java.awt.Color color2 = new java.awt.Color(((ColorDesktop)color).c);
-        g_graphics.setColor(color2);
+        ColorDesktop colorAux = (ColorDesktop)color;
+        int color_Convertido = colorAux.c;
+        g_graphics.setColor(new java.awt.Color(color_Convertido));
     }
 
     @Override

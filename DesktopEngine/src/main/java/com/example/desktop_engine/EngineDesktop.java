@@ -46,7 +46,6 @@ public class EngineDesktop implements Engine {
         c.c = 0xFF00AA;
 
 
-
         BufferStrategy strategy = frame.getBufferStrategy();
         while (running) {
             //Prepare for rendering the next frame
@@ -56,8 +55,11 @@ public class EngineDesktop implements Engine {
                     // the strategy is validated
                     Graphics2D graphics = (Graphics2D)strategy.getDrawGraphics();
                     // Render to graphics
-                    graphics.setColor(new java.awt.Color(0xff00aa));
-                    graphics.fillRect(0,0,100,100);
+                    //graphics.setColor(new java.awt.Color(0xA441B6));
+                    //g.setColor(c);
+                    g.clear(c.c);
+                    //graphics.fillRect(0,0,100,100);
+                    //g.fillRectangle(0,0,100,100);
                     graphics.dispose();
                 } while (strategy.contentsRestored()); //Repeat if the buffer were restored
                 // Display the buffer

@@ -17,9 +17,12 @@ public class EngineDesktop implements Engine {
     public JFrame frame;
     private boolean running = true;
 
+    private GraphicsDesktop graphicsDesktop;
+
+    //¿Es legal cambiar esto a GraphicsDesktop?
     @Override
-    public Graphics getGraphics() {
-        return null;
+    public GraphicsDesktop getGraphics() {
+        return graphicsDesktop;
     }
 
     @Override
@@ -41,9 +44,9 @@ public class EngineDesktop implements Engine {
 
         frame.createBufferStrategy(3);  // Creamos tres búferes
 
-        GraphicsDesktop g = new GraphicsDesktop(frame);
-        ColorDesktop c = new ColorDesktop();
-        c.c = 0xFF00AA;
+        graphicsDesktop = new GraphicsDesktop(frame);
+        //ColorDesktop c = new ColorDesktop();
+        //c.c = 0xFF00AA;
 
 
         BufferStrategy strategy = frame.getBufferStrategy();
@@ -51,13 +54,13 @@ public class EngineDesktop implements Engine {
             //Prepare for rendering the next frame
             do {// Render single frame
                 do {// Ensures that the contents of the drawing buffer are consistent
+                    Graphics2D graphics = (Graphics2D)strategy.getDrawGraphics();
                     // Get a new graphics context every time through the loop to make sure
                     // the strategy is validated
-                    Graphics2D graphics = (Graphics2D)strategy.getDrawGraphics();
                     // Render to graphics
                     //graphics.setColor(new java.awt.Color(0xA441B6));
                     //g.setColor(c);
-                    g.clear(c.c);
+                    //g.clear(c.c);
                     //graphics.fillRect(0,0,100,100);
                     //g.fillRectangle(0,0,100,100);
                     graphics.dispose();

@@ -6,15 +6,17 @@ import com.example.engine.Graphics;
 import com.example.engine.Image;
 import com.example.desktop_engine.ColorDesktop;
 
-import java.net.CookieHandler;
+import java.awt.Graphics2D;
 
 import javax.swing.JFrame;
 
 public class GraphicsDesktop implements Graphics {
 
     private JFrame g_frame;
+    private Graphics2D g_graphics;
     public GraphicsDesktop(JFrame frame){
         g_frame = frame;
+        g_graphics = (Graphics2D) frame.getBufferStrategy().getDrawGraphics();
     }
     @Override
     public Image newImage(String name) {
@@ -62,12 +64,12 @@ public class GraphicsDesktop implements Graphics {
     @Override
     public void setColor(Color color) {
         java.awt.Color color2 = new java.awt.Color(((ColorDesktop)color).c);
-        g_frame.getGraphics().setColor(color2);
+        g_graphics.setColor(color2);
     }
 
     @Override
     public void fillRectangle(float cx, float cy, float width, float height) {
-        g_frame.getGraphics().fillRect((int)cx,(int)cy,(int)width,(int)height);
+        g_graphics.fillRect((int)cx,(int)cy,(int)width,(int)height);
     }
 
     @Override

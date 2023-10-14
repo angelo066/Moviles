@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 
 import java.awt.Canvas;
 import java.awt.image.BufferStrategy;
+import java.awt.Graphics2D;
+
 
 public class EngineDesktop implements Engine {
     public JFrame frame;
@@ -35,8 +37,6 @@ public class EngineDesktop implements Engine {
         frame = new JFrame("Buffer Strategy Example");
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //Canvas canvas = new Canvas();
-        //frame.add(canvas);
         frame.setVisible(true);
 
         frame.createBufferStrategy(3);  // Creamos tres búferes
@@ -45,32 +45,24 @@ public class EngineDesktop implements Engine {
         ColorDesktop c = new ColorDesktop();
         c.c = 0xFF00AA;
 
+
+
+        BufferStrategy strategy = frame.getBufferStrategy();
         while (running) {
-            BufferStrategy bs = frame.getBufferStrategy();
-            if (bs == null) {
-                frame.createBufferStrategy(3);
-                return;
-            }
-            g.setColor(c);
-            g.fillRectangle(0,0,100,200);
-            g.clear(0xFF0000);
-
-            /*Graphics g = bs.getDrawGraphics();
-
-            // Dibuja en el búfer
-            g.setColor(Color.BLACK);
-            g.fillRect(0, 0, getWidth(), getHeight());
-            g.setColor(Color.WHITE);
-            g.fillOval(50, 50, 50, 50);
-
-            // Muestra el búfer en la pantalla
-            g.dispose();*/
-            bs.show();
-            /*try {
-                Thread.sleep(16);  // Ajusta el tiempo de espera para controlar la velocidad de la animación
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
+            //Prepare for rendering the next frame
+            do {// Render single frame
+                do {// Ensures that the contents of the drawing buffer are consistent
+                    // Get a new graphics context every time through the loop to make sure
+                    // the strategy is validated
+                    Graphics2D graphics = (Graphics2D)strategy.getDrawGraphics();
+                    // Render to graphics
+                    graphics.setColor(new java.awt.Color(0xff00aa));
+                    graphics.fillRect(0,0,100,100);
+                    graphics.dispose();
+                } while (strategy.contentsRestored()); //Repeat if the buffer were restored
+                // Display the buffer
+                strategy.show();
+            } while (strategy.contentsLost());//Repeat the rendering if the buffer was lost
         }
     }
 

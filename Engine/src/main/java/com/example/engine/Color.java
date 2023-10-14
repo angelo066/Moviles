@@ -1,6 +1,6 @@
 package com.example.engine;
 
 public interface Color {
-    int c = 0x000000;
+    public int c = 0x000000;
 
 }

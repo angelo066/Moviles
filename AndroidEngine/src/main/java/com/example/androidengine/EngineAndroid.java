@@ -4,6 +4,7 @@ import com.example.engine.Audio;
 import com.example.engine.Engine;
 import com.example.engine.Graphics;
 import com.example.engine.Input;
+import com.example.engine.Scene;
 
 public class EngineAndroid implements Engine {
     @Override
@@ -19,5 +20,25 @@ public class EngineAndroid implements Engine {
     @Override
     public Audio getAudio() {
         return null;
+    }
+
+    @Override
+    public void run() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void setScene(Scene scene) {
+
     }
 }

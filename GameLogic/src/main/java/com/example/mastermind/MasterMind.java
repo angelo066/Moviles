@@ -13,7 +13,7 @@ public class MasterMind implements Scene {
     }
 
     @Override
-    public void update() {
+    public void update(double deltaTime) {
 
     }
 

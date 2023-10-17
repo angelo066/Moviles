@@ -6,7 +6,7 @@ import com.example.engine.Graphics;
 import com.example.engine.Input;
 import com.example.engine.Scene;
 
-public class EngineAndroid implements Engine {
+public class EngineAndroid implements Engine, Runnable{
     @Override
     public Graphics getGraphics() {
         return null;
@@ -39,6 +39,21 @@ public class EngineAndroid implements Engine {
 
     @Override
     public void setScene(Scene scene) {
+
+    }
+
+    @Override
+    public void update(double deltaTime) {
+
+    }
+
+    @Override
+    public void render() {
+
+    }
+
+    @Override
+    public void handleInput() {
 
     }
 }

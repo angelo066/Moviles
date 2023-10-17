@@ -13,12 +13,19 @@ import java.awt.image.BufferStrategy;
 import java.awt.Graphics2D;
 
 
-public class EngineDesktop implements Engine {
+public class EngineDesktop implements Engine, Runnable {
+    private boolean running = false;
+    private Thread thread;
+
+
     public JFrame frame;
-    private boolean running = true;
+
+    private BufferStrategy bufferStrategy;
+
 
     private Scene scene;
     private GraphicsDesktop graphicsDesktop;
+    private InputDesktop inputDesktop;
 
     @Override
     public Graphics getGraphics() {
@@ -27,7 +34,7 @@ public class EngineDesktop implements Engine {
 
     @Override
     public Input getInput() {
-        return null;
+        return inputDesktop;
     }
 
     @Override
@@ -35,62 +42,127 @@ public class EngineDesktop implements Engine {
         return null;
     }
 
+    public EngineDesktop(JFrame view) {
+        frame = view;
+        graphicsDesktop = new GraphicsDesktop(frame);
+        inputDesktop = new InputDesktop(frame);
+        //audio
+        bufferStrategy = frame.getBufferStrategy();
+    }
+
     @Override
     public void run() {
-        frame = new JFrame("Mastermind");
-        frame.setSize(800, 600);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
 
-        frame.createBufferStrategy(2);
-
-        graphicsDesktop = new GraphicsDesktop(frame);
-
-        BufferStrategy strategy = frame.getBufferStrategy();
         while (running) {
-            //Prepare for rendering the next frame
-            do {// Render single frame
-                do {// Ensures that the contents of the drawing buffer are consistent
-                    Graphics2D graphics = (Graphics2D) strategy.getDrawGraphics();
-                    // Get a new graphics context every time through the loop to make sure
-                    // the strategy is validated
-                    // Render to graphics
-                    /*
-                    * if(currentScene!=null){
-                    * for(TouchEvent event: input.getTouchEvents()){
-                    * event.x -= graphicsDesktop.translateX;
-                    * event.y -= graphicsDesktop.translateY;
-                    * event.x /= graphicsDesktop.scaleX;
-                    * event.y /= graphicsDesktop.scaleY;
-                    * }
-                    * this.currentScene.handleInput();
-                    * this.currentScene.update();
-                    * this.render();
-                    * }
-                     */
-                    graphicsDesktop.clear(0xFF00AA);
-                    graphicsDesktop.setColor(0x000000);
-                    graphicsDesktop.fillCircle(100, 100, 100);
+
+            if (thread != Thread.currentThread()) {
+                // Evita que cualquiera que no sea esta clase llame a este Runnable en un Thread
+                // Programación defensiva
+                throw new RuntimeException("run() should not be called directly");
+            }
+
+            // Si el Thread se pone en marcha
+            // muy rápido, la vista podría todavía no estar inicializada.
+            while (running && frame.getWidth() == 0) ;
+
+            //comprobar que la escena no sea nula
+            //if (scene != null) {
+
+            //HandleInput
+            handleInput();
+
+
+            //Update
+            long lastFrameTime = System.nanoTime();
+
+            long informePrevio = lastFrameTime; // Informes de FPS
+            int frames = 0;
+            long currentTime = System.nanoTime();
+            long nanoElapsedTime = currentTime - lastFrameTime;
+            lastFrameTime = currentTime;
+
+            // Informe de FPS
+            double elapsedTime = (double) nanoElapsedTime / 1.0E9;
+            update(elapsedTime);
+            if (currentTime - informePrevio > 1000000000l) {
+                long fps = frames * 1000000000l / (currentTime - informePrevio);
+                System.out.println("" + fps + " fps");
+                frames = 0;
+                informePrevio = currentTime;
+            }
+            ++frames;
+
+
+            //Renderizado
+            do {
+                do {
+                    Graphics2D graphics = (Graphics2D) bufferStrategy.getDrawGraphics();
+                    render();
                     graphics.dispose();
-                } while (strategy.contentsRestored()); //Repeat if the buffer were restored
-                // Display the buffer
-                strategy.show();
-            } while (strategy.contentsLost());//Repeat the rendering if the buffer was lost
+                } while (bufferStrategy.contentsRestored());
+                bufferStrategy.show();
+            } while (bufferStrategy.contentsLost());
         }
+        //}
     }
 
     @Override
     public void resume() {
+        if (!running) {
+            running = true;
 
+            thread = new Thread(this);
+            thread.start();
+        }
     }
 
     @Override
     public void pause() {
+        if (running) {
+            running = false;
 
+            while (true) {
+                try {
+                    thread.join();
+                    thread = null;
+                    break;
+                } catch (InterruptedException ie) {
+                    //Esto no debería ocurrir nunca
+                }
+            }
+        }
     }
 
     @Override
     public void setScene(Scene scene) {
         this.scene = scene;
+    }
+
+    @Override
+    public void update(double deltaTime) {
+        //scene.update(deltaTime);
+    }
+
+    @Override
+    public void render() {
+        //scene.render();
+
+        //esto de momento para probar
+        graphicsDesktop.clear(0xFFFFAA);
+        graphicsDesktop.setColor(0x010ad00);
+        graphicsDesktop.fillCircle(100, 100, 100);
+    }
+
+    @Override
+    public void handleInput() {
+        /*
+         * for(TouchEvent event: input.getTouchEvents()){
+         * event.x -= graphicsDesktop.translateX;
+         * event.y -= graphicsDesktop.translateY;
+         * event.x /= graphicsDesktop.scaleX;
+         * event.y /= graphicsDesktop.scaleY;
+         * }
+         * scene.handleInput(input.getTouchEvents());
+         */
     }
 }

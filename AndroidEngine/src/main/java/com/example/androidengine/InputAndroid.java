@@ -1,18 +1,16 @@
-package com.example.desktop_engine;
+package com.example.androidengine;
+
+import android.view.SurfaceView;
 
 import com.example.engine.Input;
 import com.example.engine.TouchEvent;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-
-public class InputDesktop implements Input {
-
+public class InputAndroid implements Input {
     private InputHandler handler;
-    public InputDesktop(JFrame view) {
+
+    public InputAndroid(SurfaceView view) {
         handler = new InputHandler(view);
     }
 

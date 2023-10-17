@@ -17,6 +17,7 @@ public class EngineDesktop implements Engine {
     public JFrame frame;
     private boolean running = true;
 
+    private Scene scene;
     private GraphicsDesktop graphicsDesktop;
 
     @Override
@@ -54,6 +55,19 @@ public class EngineDesktop implements Engine {
                     // Get a new graphics context every time through the loop to make sure
                     // the strategy is validated
                     // Render to graphics
+                    /*
+                    * if(currentScene!=null){
+                    * for(TouchEvent event: input.getTouchEvents()){
+                    * event.x -= graphicsDesktop.translateX;
+                    * event.y -= graphicsDesktop.translateY;
+                    * event.x /= graphicsDesktop.scaleX;
+                    * event.y /= graphicsDesktop.scaleY;
+                    * }
+                    * this.currentScene.handleInput();
+                    * this.currentScene.update();
+                    * this.render();
+                    * }
+                     */
                     graphicsDesktop.clear(0xFF00AA);
                     graphicsDesktop.setColor(0x000000);
                     graphicsDesktop.fillCircle(100, 100, 100);
@@ -77,6 +91,6 @@ public class EngineDesktop implements Engine {
 
     @Override
     public void setScene(Scene scene) {
-
+        this.scene = scene;
     }
 }

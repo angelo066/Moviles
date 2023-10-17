@@ -1,5 +1,7 @@
 package com.example.engine;
 
+import java.util.ArrayList;
+
 public interface Scene {
     public void init();
 
@@ -7,5 +9,5 @@ public interface Scene {
 
     public void render();
 
-    public void handleInput();
+    public void handleInput(ArrayList<TouchEvent> events);
 }

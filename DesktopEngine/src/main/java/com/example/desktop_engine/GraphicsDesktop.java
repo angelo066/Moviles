@@ -13,6 +13,9 @@ public class GraphicsDesktop implements Graphics {
     private JFrame g_frame;
     private Graphics2D g_graphics;
 
+    private float scaleX = 1, scaleY = 1;
+    private float translationX = 0, translationY = 0;
+
     public GraphicsDesktop(JFrame frame) {
         g_frame = frame;
         g_graphics = (Graphics2D) frame.getBufferStrategy().getDrawGraphics();
@@ -37,11 +40,15 @@ public class GraphicsDesktop implements Graphics {
     @Override
     public void translate(float x, float y) {
         g_graphics.translate(x, y);
+        translationX = x;
+        translationY = y;
     }
 
     @Override
     public void scale(float x, float y) {
         g_graphics.scale(x, y);
+        scaleX = x;
+        scaleY = y;
     }
 
     @Override

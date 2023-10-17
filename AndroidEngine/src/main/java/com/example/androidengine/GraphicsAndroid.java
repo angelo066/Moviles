@@ -9,6 +9,7 @@ import android.view.SurfaceView;
 import com.example.engine.Font;
 import com.example.engine.Image;
 import com.example.engine.Graphics;
+import com.example.engine.Scene;
 
 public class GraphicsAndroid implements Graphics {
 
@@ -16,6 +17,9 @@ public class GraphicsAndroid implements Graphics {
     private SurfaceHolder surfaceHolder;
     private Paint paint;
     private Canvas canvas;
+
+    private float scaleX = 1, scaleY = 1;
+    private float translationX = 0, translationY = 0;
 
     GraphicsAndroid(SurfaceView view) {
         renderView = view;

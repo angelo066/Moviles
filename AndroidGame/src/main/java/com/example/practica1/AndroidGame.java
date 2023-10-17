@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-public class MainActivity extends AppCompatActivity {
+public class AndroidGame extends AppCompatActivity {
 
     //Parte de renderizado para android
     private SurfaceView renderView;

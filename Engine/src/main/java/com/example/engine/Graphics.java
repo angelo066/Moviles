@@ -14,7 +14,7 @@ public interface Graphics {
 
     void drawImage(Image image); //void drawImage(Image image, ...)
 
-    void setColor (Color color);
+    void setColor (int color);
 
     void fillRectangle(float cx, float cy, float width, float height);
     void fillRoundRectangle(float cx, float cy, float width, float height, float arc);

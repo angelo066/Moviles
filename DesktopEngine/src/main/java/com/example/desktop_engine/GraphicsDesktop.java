@@ -1,10 +1,8 @@
 package com.example.desktop_engine;
 
-import com.example.engine.Color;
 import com.example.engine.Font;
 import com.example.engine.Graphics;
 import com.example.engine.Image;
-import com.example.desktop_engine.ColorDesktop;
 
 import java.awt.Graphics2D;
 
@@ -15,10 +13,11 @@ public class GraphicsDesktop implements Graphics {
     private JFrame g_frame;
     private Graphics2D g_graphics;
 
-    public GraphicsDesktop(JFrame frame){
+    public GraphicsDesktop(JFrame frame) {
         g_frame = frame;
         g_graphics = (Graphics2D) frame.getBufferStrategy().getDrawGraphics();
     }
+
     @Override
     public Image newImage(String name) {
         return null;
@@ -31,20 +30,18 @@ public class GraphicsDesktop implements Graphics {
 
     @Override
     public void clear(int color) {
-        ColorDesktop c  =new ColorDesktop();
-        c.c = color;
-        setColor(c);
-        fillRectangle(0,0,g_frame.getWidth(),g_frame.getHeight());
+        setColor(color);
+        fillRectangle(0, 0, getWidth(), getHeight());
     }
 
     @Override
     public void translate(float x, float y) {
-
+        g_graphics.translate(x, y);
     }
 
     @Override
     public void scale(float x, float y) {
-
+        g_graphics.scale(x, y);
     }
 
     @Override
@@ -63,46 +60,44 @@ public class GraphicsDesktop implements Graphics {
     }
 
     @Override
-    public void setColor(Color color) {
-        java.awt.Color color2 = new java.awt.Color(((ColorDesktop)color).c);
-        ColorDesktop colorAux = (ColorDesktop)color;
-        int color_Convertido = colorAux.c;
-        g_graphics.setColor(new java.awt.Color(color_Convertido));
+    public void setColor(int color) {
+        java.awt.Color newColor = new java.awt.Color(color);
+        g_graphics.setColor(newColor);
     }
 
     @Override
     public void fillRectangle(float cx, float cy, float width, float height) {
-        g_graphics.fillRect((int)cx,(int)cy,(int)width,(int)height);
+        g_graphics.fillRect((int) cx, (int) cy, (int) width, (int) height);
     }
 
     @Override
     public void fillRoundRectangle(float cx, float cy, float width, float height, float arc) {
-        g_frame.getGraphics().fillRoundRect((int)cx,(int)cy,(int)width,(int)height,(int)arc,(int)arc);
+        g_graphics.fillRoundRect((int) cx, (int) cy, (int) width, (int) height, (int) arc, (int) arc);
     }
 
     @Override
     public void drawRectangle(float cx, float cy, float width, float height) {
-        g_frame.getGraphics().drawRect((int)cx,(int)cy,(int)width,(int)height);
+        g_graphics.drawRect((int) cx, (int) cy, (int) width, (int) height);
     }
 
     @Override
     public void drawRoundRectangle(float cx, float cy, float width, float height, float arc) {
-        g_frame.getGraphics().drawRoundRect((int)cx,(int)cy,(int)width,(int)height,(int)arc,(int)arc);
+        g_graphics.drawRoundRect((int) cx, (int) cy, (int) width, (int) height, (int) arc, (int) arc);
     }
 
     @Override
     public void drawLine(float initX, float InitY, float endX, float endY) {
-        g_frame.getGraphics().drawLine((int)initX,(int)InitY,(int)endX,(int)endY);
+        g_graphics.drawLine((int) initX, (int) InitY, (int) endX, (int) endY);
     }
 
     @Override
     public void drawCircle(float cx, float cy, float radius) {
-
+        g_graphics.drawOval((int) cx, (int) cy, (int) radius, (int) radius);
     }
 
     @Override
     public void fillCircle(float cx, float cy, float radius) {
-
+        g_graphics.fillOval((int) cx, (int) cy, (int) radius, (int) radius);
     }
 
     @Override
@@ -112,11 +107,11 @@ public class GraphicsDesktop implements Graphics {
 
     @Override
     public int getWidth() {
-        return 0;
+        return g_frame.getWidth();
     }
 
     @Override
     public int getHeight() {
-        return 0;
+        return g_frame.getHeight();
     }
 }

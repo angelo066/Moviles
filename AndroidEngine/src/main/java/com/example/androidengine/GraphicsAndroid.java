@@ -2,12 +2,9 @@ package com.example.androidengine;
 
 import android.view.SurfaceView;
 
-import com.example.engine.Color;
 import com.example.engine.Font;
 import com.example.engine.Image;
 import com.example.engine.Graphics;
-
-import com.example.androidengine.ColorAndroid;
 
 public class GraphicsAndroid implements Graphics {
 
@@ -105,7 +102,7 @@ public class GraphicsAndroid implements Graphics {
     }
 
     @Override
-    public void setColor(Color color)
+    public void setColor(int color)
     {
 
     }

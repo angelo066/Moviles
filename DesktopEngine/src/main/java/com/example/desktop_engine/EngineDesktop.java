@@ -19,9 +19,8 @@ public class EngineDesktop implements Engine {
 
     private GraphicsDesktop graphicsDesktop;
 
-    //¿Es legal cambiar esto a GraphicsDesktop?
     @Override
-    public GraphicsDesktop getGraphics() {
+    public Graphics getGraphics() {
         return graphicsDesktop;
     }
 
@@ -37,32 +36,27 @@ public class EngineDesktop implements Engine {
 
     @Override
     public void run() {
-        frame = new JFrame("Buffer Strategy Example");
+        frame = new JFrame("Mastermind");
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
-        frame.createBufferStrategy(3);  // Creamos tres búferes
+        frame.createBufferStrategy(2);
 
         graphicsDesktop = new GraphicsDesktop(frame);
-        //ColorDesktop c = new ColorDesktop();
-        //c.c = 0xFF00AA;
-
 
         BufferStrategy strategy = frame.getBufferStrategy();
         while (running) {
             //Prepare for rendering the next frame
             do {// Render single frame
                 do {// Ensures that the contents of the drawing buffer are consistent
-                    Graphics2D graphics = (Graphics2D)strategy.getDrawGraphics();
+                    Graphics2D graphics = (Graphics2D) strategy.getDrawGraphics();
                     // Get a new graphics context every time through the loop to make sure
                     // the strategy is validated
                     // Render to graphics
-                    //graphics.setColor(new java.awt.Color(0xA441B6));
-                    //g.setColor(c);
-                    //g.clear(c.c);
-                    //graphics.fillRect(0,0,100,100);
-                    //g.fillRectangle(0,0,100,100);
+                    graphicsDesktop.clear(0xFF00AA);
+                    graphicsDesktop.setColor(0x000000);
+                    graphicsDesktop.fillCircle(100, 100, 100);
                     graphics.dispose();
                 } while (strategy.contentsRestored()); //Repeat if the buffer were restored
                 // Display the buffer

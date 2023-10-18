@@ -1,5 +1,6 @@
 package com.example.mastermind;
 
+import com.example.engine.Engine;
 import com.example.engine.Scene;
 import com.example.engine.TouchEvent;
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 
 public class GameOver implements Scene {
     @Override
-    public void init() {
+    public void init(Engine engine) {
 
     }
 

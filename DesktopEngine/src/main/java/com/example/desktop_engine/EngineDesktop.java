@@ -16,12 +16,7 @@ import java.awt.Graphics2D;
 public class EngineDesktop implements Engine, Runnable {
     private boolean running = false;
     private Thread thread;
-
-
     public JFrame frame;
-
-    private BufferStrategy bufferStrategy;
-
 
     private Scene scene;
     private GraphicsDesktop graphicsDesktop;
@@ -47,36 +42,35 @@ public class EngineDesktop implements Engine, Runnable {
         graphicsDesktop = new GraphicsDesktop(frame);
         inputDesktop = new InputDesktop(frame);
         //audio
-        bufferStrategy = frame.getBufferStrategy();
     }
 
     @Override
     public void run() {
+        if (thread != Thread.currentThread()) {
+            // Evita que cualquiera que no sea esta clase llame a este Runnable en un Thread
+            // Programación defensiva
+            throw new RuntimeException("run() should not be called directly");
+        }
+
+        // Si el Thread se pone en marcha
+        // muy rápido, la vista podría todavía no estar inicializada.
+        while (running && frame.getWidth() == 0) ;
+
+        if (scene == null) pause();
+
+        long lastFrameTime = System.nanoTime();
+
+        long informePrevio = lastFrameTime; // Informes de FPS
+        int frames = 0;
+
 
         while (running) {
-
-            if (thread != Thread.currentThread()) {
-                // Evita que cualquiera que no sea esta clase llame a este Runnable en un Thread
-                // Programación defensiva
-                throw new RuntimeException("run() should not be called directly");
-            }
-
-            // Si el Thread se pone en marcha
-            // muy rápido, la vista podría todavía no estar inicializada.
-            while (running && frame.getWidth() == 0) ;
-
-            //comprobar que la escena no sea nula
-            //if (scene != null) {
 
             //HandleInput
             handleInput();
 
 
             //Update
-            long lastFrameTime = System.nanoTime();
-
-            long informePrevio = lastFrameTime; // Informes de FPS
-            int frames = 0;
             long currentTime = System.nanoTime();
             long nanoElapsedTime = currentTime - lastFrameTime;
             lastFrameTime = currentTime;
@@ -92,7 +86,7 @@ public class EngineDesktop implements Engine, Runnable {
             }
             ++frames;
 
-
+            BufferStrategy bufferStrategy = frame.getBufferStrategy();
             //Renderizado
             do {
                 do {
@@ -103,14 +97,13 @@ public class EngineDesktop implements Engine, Runnable {
                 bufferStrategy.show();
             } while (bufferStrategy.contentsLost());
         }
-        //}
+
     }
 
     @Override
     public void resume() {
         if (!running) {
             running = true;
-
             thread = new Thread(this);
             thread.start();
         }
@@ -120,7 +113,6 @@ public class EngineDesktop implements Engine, Runnable {
     public void pause() {
         if (running) {
             running = false;
-
             while (true) {
                 try {
                     thread.join();
@@ -140,17 +132,13 @@ public class EngineDesktop implements Engine, Runnable {
 
     @Override
     public void update(double deltaTime) {
-        //scene.update(deltaTime);
+        scene.update(deltaTime);
     }
 
     @Override
     public void render() {
-        //scene.render();
-
-        //esto de momento para probar
-        graphicsDesktop.clear(0xFFFFAA);
-        graphicsDesktop.setColor(0x010ad00);
-        graphicsDesktop.fillCircle(100, 100, 100);
+        graphicsDesktop.updateGraphics();
+        scene.render();
     }
 
     @Override

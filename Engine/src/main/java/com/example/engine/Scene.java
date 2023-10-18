@@ -3,7 +3,7 @@ package com.example.engine;
 import java.util.ArrayList;
 
 public interface Scene {
-    public void init();
+    public void init(Engine engine);
 
     public void update(double deltaTime);
 

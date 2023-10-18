@@ -13,12 +13,12 @@ public class GraphicsDesktop implements Graphics {
     private JFrame g_frame;
     private Graphics2D g_graphics;
 
-    private float scaleX = 1, scaleY = 1;
-    private float translationX = 0, translationY = 0;
+    public float scaleX = 1, scaleY = 1;
+    public float translationX = 0, translationY = 0;
 
     public GraphicsDesktop(JFrame frame) {
         g_frame = frame;
-        g_graphics = (Graphics2D) frame.getBufferStrategy().getDrawGraphics();
+        g_graphics = (Graphics2D) g_frame.getBufferStrategy().getDrawGraphics();
     }
 
     @Override
@@ -120,5 +120,9 @@ public class GraphicsDesktop implements Graphics {
     @Override
     public int getHeight() {
         return g_frame.getHeight();
+    }
+
+    public void updateGraphics(){
+        g_graphics = (Graphics2D) g_frame.getBufferStrategy().getDrawGraphics();
     }
 }

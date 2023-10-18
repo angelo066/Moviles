@@ -3,6 +3,8 @@ package com.example.desktopgame;
 import com.example.desktop_engine.EngineDesktop;
 
 import com.example.desktop_engine.GraphicsDesktop;
+import com.example.engine.Scene;
+import com.example.mastermind.MasterMind;
 
 import javax.swing.JFrame;
 
@@ -16,9 +18,9 @@ public class DesktopGame {
 
         EngineDesktop engine = new EngineDesktop(frame);
 
-        //Crear escena
-        //inicializar escena? -> scene.init();
-        //asignar escena -> engine.setScene(...);
+        Scene scene = new MasterMind();
+        scene.init(engine);
+        engine.setScene(scene);
 
         engine.resume();
     }

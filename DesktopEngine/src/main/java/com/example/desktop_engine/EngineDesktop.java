@@ -86,7 +86,9 @@ public class EngineDesktop implements Engine, Runnable {
             }
             ++frames;
 
+
             BufferStrategy bufferStrategy = frame.getBufferStrategy();
+
             //Renderizado
             do {
                 do {
@@ -138,7 +140,21 @@ public class EngineDesktop implements Engine, Runnable {
     @Override
     public void render() {
         graphicsDesktop.updateGraphics();
+
+        graphicsDesktop.save();
+
+        float scaleX = (float) frame.getWidth() / scene.getWidth();
+        float scaleY = (float) frame.getHeight() / scene.getHeight();
+        float scale = Math.min(scaleX,scaleY);
+        graphicsDesktop.scale(scale, scale);
+
+        float translateX = (frame.getWidth() - (scene.getWidth() * scale)) / 2f;
+        float translateY = (frame.getHeight() - (scene.getHeight() * scale)) / 2f;
+        graphicsDesktop.translate(translateX, translateY);
+
         scene.render();
+
+        graphicsDesktop.restore();
     }
 
     @Override

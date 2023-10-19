@@ -5,6 +5,7 @@ import com.example.engine.Graphics;
 import com.example.engine.Image;
 
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 
 import javax.swing.JFrame;
 
@@ -13,8 +14,7 @@ public class GraphicsDesktop implements Graphics {
     private JFrame g_frame;
     private Graphics2D g_graphics;
 
-    public float scaleX = 1, scaleY = 1;
-    public float translationX = 0, translationY = 0;
+    AffineTransform frameTransform;
 
     public GraphicsDesktop(JFrame frame) {
         g_frame = frame;
@@ -40,25 +40,21 @@ public class GraphicsDesktop implements Graphics {
     @Override
     public void translate(float x, float y) {
         g_graphics.translate(x, y);
-        translationX = x;
-        translationY = y;
     }
 
     @Override
     public void scale(float x, float y) {
         g_graphics.scale(x, y);
-        scaleX = x;
-        scaleY = y;
     }
 
     @Override
     public void save() {
-
+        frameTransform = (AffineTransform) g_graphics.getTransform().clone();
     }
 
     @Override
     public void restore() {
-
+        g_graphics.setTransform(frameTransform);
     }
 
     @Override

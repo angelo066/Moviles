@@ -15,6 +15,8 @@ public class MasterMind implements Scene {
     private int radius;
     private int speed;
 
+    private int width;
+    private int height;
     @Override
     public void init(Engine engine) {
         this.engine = engine;
@@ -23,11 +25,14 @@ public class MasterMind implements Scene {
         this.y = 50;
         this.radius = 50;
         this.speed = 150;
+
+        width = 400;
+        height = 300;
     }
 
     @Override
     public void update(double deltaTime) {
-        int maxX = this.engine.getGraphics().getWidth() - this.radius;
+        int maxX = getWidth() - this.radius;
 
         this.x += this.speed * deltaTime;
         this.y += 2 * deltaTime;
@@ -47,7 +52,7 @@ public class MasterMind implements Scene {
 
     @Override
     public void render() {
-        this.engine.getGraphics().clear(0xFFFFFF);
+        this.engine.getGraphics().clear(0x000000);
         this.engine.getGraphics().setColor(0x1111FF);
         this.engine.getGraphics().fillCircle(this.x, this.y, this.radius);
 
@@ -56,5 +61,15 @@ public class MasterMind implements Scene {
     @Override
     public void handleInput(ArrayList<TouchEvent> events) {
 
+    }
+
+    @Override
+    public int getWidth() {
+        return width;
+    }
+
+    @Override
+    public int getHeight() {
+        return height;
     }
 }

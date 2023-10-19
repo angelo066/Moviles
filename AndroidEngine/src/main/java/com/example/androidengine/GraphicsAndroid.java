@@ -14,16 +14,11 @@ import com.example.engine.Scene;
 public class GraphicsAndroid implements Graphics {
 
     private SurfaceView renderView;
-    private SurfaceHolder surfaceHolder;
     private Paint paint;
     private Canvas canvas;
 
-    private float scaleX = 1, scaleY = 1;
-    private float translationX = 0, translationY = 0;
-
     GraphicsAndroid(SurfaceView view) {
         renderView = view;
-        surfaceHolder = view.getHolder();
         paint = new Paint();
         paint.setColor(0x000000);
     }
@@ -55,12 +50,12 @@ public class GraphicsAndroid implements Graphics {
 
     @Override
     public void save() {
-
+        canvas.save();
     }
 
     @Override
     public void restore() {
-
+        canvas.restore();
     }
 
     @Override
@@ -129,6 +124,10 @@ public class GraphicsAndroid implements Graphics {
     @Override
     public void setColor(int color) {
         paint.setColor(color);
+    }
+
+    public void updateCanvas(Canvas canvas){
+        this.canvas = canvas;
     }
 
 }

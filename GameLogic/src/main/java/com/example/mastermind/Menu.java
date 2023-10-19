@@ -26,4 +26,14 @@ public class Menu implements Scene {
     public void handleInput(ArrayList<TouchEvent> events) {
 
     }
+
+    @Override
+    public int getWidth() {
+        return 0;
+    }
+
+    @Override
+    public int getHeight() {
+        return 0;
+    }
 }

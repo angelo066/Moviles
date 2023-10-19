@@ -4,17 +4,26 @@ import java.awt.Color;
 import java.util.Random;
 import java.util.ArrayList;
 
+
 enum colores {
-    NO_COLOR,
-    ROJO,
-    NARANJA,
-    AMARILLO,
-    VERDE,
-    CYAN,
-    AZUL,
-    MORADO,
-    ROSA,
-    MARRON
+    NO_COLOR(0x333333),
+    ROJO(0xFF0000),
+    NARANJA(0xFF8000),
+    AMARILLO(0xFFFF00),
+    VERDE(0x00FF00),
+    CYAN(0x00FFFF),
+    AZUL(0X0000FF),
+    MORADO(0xFF00FF),
+    ROSA(0xFF0080),
+    MARRON(0x804000);
+
+    private int value;
+
+    private colores(int v){
+        this.value = v;
+    }
+
+    public int getValue(){return value;}
 }
 
 enum Dificultad
@@ -35,21 +44,22 @@ class IntentoFila
 public class Tablero
 {
     // Esto no es una constante porque nos va a indicar el numero de colores de cada modo
-    int N_COLORS = 9;
-    IntentoFila[] tablero;
-    colores [] combinacion_ganadora;
+    private int N_COLORS;
+    //private[] int colorValues;
+    private IntentoFila[] tablero;
+    private colores [] combinacion_ganadora;
 
-    Random rand;
+    private Random rand;
 
-    int num_casillas;
-    int num_intentos;
+    private int num_casillas;
+    private int num_intentos;
 
-    int INTENTO_ACTUAL = 0;
-    boolean repetion = false;
+    private int INTENTO_ACTUAL = 0;
+    private boolean repetion = false;
 
     //Metodo al que llamar al elegir la dificultad para inicializar el tablero con X casillas
 
-    public void initTablero(int n_intentos, int n_casillas)
+    public void initTablero()
     {
         // Asignamos la dificultad
         configuracion(Dificultad.FACIL);
@@ -58,8 +68,8 @@ public class Tablero
         tablero = new IntentoFila[num_intentos];
         for(int i = 0; i < tablero.length; i++)
         {
-            tablero[i].combinacion = new colores[n_casillas];
-            for(int j = 0; j < n_casillas; j++)
+            tablero[i].combinacion = new colores[num_casillas];
+            for(int j = 0; j < num_casillas; j++)
             {
                 tablero[i].combinacion[i] = colores.NO_COLOR;
             }
@@ -172,4 +182,9 @@ public class Tablero
 
         }
     }
+
+    public int getN_COLORS(){return N_COLORS;}
+
+    public int getNum_casillas(){return num_casillas;}
+    public int getNum_intentos(){return num_intentos;}
 }

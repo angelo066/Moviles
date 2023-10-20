@@ -10,8 +10,4 @@ public interface Scene {
     public void render();
 
     public void handleInput(ArrayList<TouchEvent> events);
-
-    public int getWidth();
-
-    public int getHeight();
 }

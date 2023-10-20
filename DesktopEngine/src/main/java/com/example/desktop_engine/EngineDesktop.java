@@ -5,10 +5,14 @@ import com.example.engine.Engine;
 import com.example.engine.Graphics;
 import com.example.engine.Input;
 import com.example.engine.Scene;
+import com.example.engine.TouchEvent;
 
 import javax.swing.JFrame;
 
 import java.awt.Canvas;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.awt.Graphics2D;
 
@@ -46,58 +50,40 @@ public class EngineDesktop implements Engine, Runnable {
 
     @Override
     public void run() {
-        if (thread != Thread.currentThread()) {
-            // Evita que cualquiera que no sea esta clase llame a este Runnable en un Thread
-            // Programación defensiva
-            throw new RuntimeException("run() should not be called directly");
-        }
+        if (thread != Thread.currentThread())
+            throw new RuntimeException("run() should not be called directly"); //Programación defensiva
 
-        // Si el Thread se pone en marcha
-        // muy rápido, la vista podría todavía no estar inicializada.
+
+        // Si el Thread se pone en marcha muy rápido, la vista podría todavía no estar inicializada.
         while (running && frame.getWidth() == 0) ;
 
         if (scene == null) pause();
 
         long lastFrameTime = System.nanoTime();
 
-        long informePrevio = lastFrameTime; // Informes de FPS
-        int frames = 0;
-
+        graphicsDesktop.save();
 
         while (running) {
-
             //HandleInput
-            handleInput();
-
+           // handleInput();
 
             //Update
             long currentTime = System.nanoTime();
             long nanoElapsedTime = currentTime - lastFrameTime;
             lastFrameTime = currentTime;
-
-            // Informe de FPS
             double elapsedTime = (double) nanoElapsedTime / 1.0E9;
             update(elapsedTime);
-            if (currentTime - informePrevio > 1000000000l) {
-                long fps = frames * 1000000000l / (currentTime - informePrevio);
-                System.out.println("" + fps + " fps");
-                frames = 0;
-                informePrevio = currentTime;
-            }
-            ++frames;
 
-
-            BufferStrategy bufferStrategy = frame.getBufferStrategy();
 
             //Renderizado
+            BufferStrategy bufferStrategy = frame.getBufferStrategy();
             do {
                 do {
-                    Graphics2D graphics = (Graphics2D) bufferStrategy.getDrawGraphics();
                     render();
-                    graphics.dispose();
                 } while (bufferStrategy.contentsRestored());
                 bufferStrategy.show();
             } while (bufferStrategy.contentsLost());
+
         }
 
     }
@@ -132,41 +118,27 @@ public class EngineDesktop implements Engine, Runnable {
         this.scene = scene;
     }
 
-    @Override
-    public void update(double deltaTime) {
+    private void update(double deltaTime) {
         scene.update(deltaTime);
     }
 
-    @Override
-    public void render() {
-        graphicsDesktop.updateGraphics();
-
-        graphicsDesktop.save();
-
-        float scaleX = (float) frame.getWidth() / scene.getWidth();
-        float scaleY = (float) frame.getHeight() / scene.getHeight();
-        float scale = Math.min(scaleX,scaleY);
-        graphicsDesktop.scale(scale, scale);
-
-        float translateX = (frame.getWidth() - (scene.getWidth() * scale)) / 2f;
-        float translateY = (frame.getHeight() - (scene.getHeight() * scale)) / 2f;
-        graphicsDesktop.translate(translateX, translateY);
-
+    private void render() {
+        graphicsDesktop.prepareRender();
         scene.render();
-
-        graphicsDesktop.restore();
+        graphicsDesktop.releaseRender();
     }
 
-    @Override
-    public void handleInput() {
-        /*
-         * for(TouchEvent event: input.getTouchEvents()){
-         * event.x -= graphicsDesktop.translateX;
-         * event.y -= graphicsDesktop.translateY;
-         * event.x /= graphicsDesktop.scaleX;
-         * event.y /= graphicsDesktop.scaleY;
-         * }
-         * scene.handleInput(input.getTouchEvents());
-         */
+    private void handleInput() {
+
+        AffineTransform transform = ((Graphics2D) frame.getBufferStrategy().getDrawGraphics()).getTransform();
+
+        for (TouchEvent event : inputDesktop.getTouchEvents()) {
+            event.x -= transform.getTranslateX();
+            event.y -= transform.getTranslateY();
+            event.x /= transform.getScaleX();
+            event.y /= transform.getScaleY();
+        }
+        scene.handleInput(inputDesktop.getTouchEvents());
+
     }
 }

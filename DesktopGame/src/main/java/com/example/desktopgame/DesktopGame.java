@@ -6,6 +6,9 @@ import com.example.desktop_engine.GraphicsDesktop;
 import com.example.engine.Scene;
 import com.example.mastermind.MasterMind;
 
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+
 import javax.swing.JFrame;
 
 public class DesktopGame {
@@ -15,6 +18,7 @@ public class DesktopGame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.createBufferStrategy(2);
+
 
         EngineDesktop engine = new EngineDesktop(frame);
 

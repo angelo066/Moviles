@@ -28,4 +28,6 @@ public interface Graphics {
     int getWidth();
     int getHeight();
 
+    void setSceneSize(int width,int height);
+
 }

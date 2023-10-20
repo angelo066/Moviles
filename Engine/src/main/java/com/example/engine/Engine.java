@@ -12,10 +12,4 @@ public interface Engine {
     void pause();
 
     void setScene(Scene scene);
-
-    void update(double deltaTime);
-
-    void render();
-
-    void handleInput();
 }

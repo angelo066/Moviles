@@ -15,6 +15,8 @@ public class GraphicsDesktop implements Graphics {
     private Graphics2D g_graphics;
 
     AffineTransform frameTransform;
+    private int sceneWidth;
+    private int sceneHeight;
 
     public GraphicsDesktop(JFrame frame) {
         g_frame = frame;
@@ -34,12 +36,12 @@ public class GraphicsDesktop implements Graphics {
     @Override
     public void clear(int color) {
         setColor(color);
-        fillRectangle(0, 0, getWidth(), getHeight());
+        fillRectangle(0, 0, g_frame.getWidth(), g_frame.getHeight());
     }
 
     @Override
     public void translate(float x, float y) {
-        g_graphics.translate(x, y);
+        g_graphics.translate((int) x, (int) y);
     }
 
     @Override
@@ -49,7 +51,7 @@ public class GraphicsDesktop implements Graphics {
 
     @Override
     public void save() {
-        frameTransform = (AffineTransform) g_graphics.getTransform().clone();
+        frameTransform = g_graphics.getTransform();
     }
 
     @Override
@@ -118,7 +120,30 @@ public class GraphicsDesktop implements Graphics {
         return g_frame.getHeight();
     }
 
-    public void updateGraphics(){
+    public void prepareRender() {
         g_graphics = (Graphics2D) g_frame.getBufferStrategy().getDrawGraphics();
+
+        restore();
+
+        float scaleX = (float) g_frame.getWidth() / sceneWidth;
+        float scaleY = (float) g_frame.getHeight() / sceneHeight;
+        float scale = Math.min(scaleX, scaleY);
+        float translateX = (g_frame.getWidth() - sceneWidth * scale) / 2f;
+        float translateY = (g_frame.getHeight() - sceneHeight * scale) / 2f;
+
+        scale(scale, scale);
+        translate(translateX, translateY);
+
     }
+
+    public void releaseRender() {
+        g_graphics.dispose();
+    }
+
+    @Override
+    public void setSceneSize(int width, int height){
+        sceneWidth = width;
+        sceneHeight = height;
+    }
+
 }

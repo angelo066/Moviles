@@ -122,6 +122,19 @@ public class GraphicsAndroid implements Graphics {
     }
 
     @Override
+    public void setSceneSize(int width, int height) {
+
+    }
+
+    public boolean prepareRender() {
+        return false;
+    }
+
+    public void releaseRender() {
+
+    }
+
+    @Override
     public void setColor(int color) {
         paint.setColor(color);
     }

@@ -25,6 +25,9 @@ public class MasterMind implements Scene {
 
         width = 1080;
         height = 1920;
+        
+        engine.getGraphics().setSceneSize(width,height);
+
     }
 
     @Override
@@ -46,13 +49,4 @@ public class MasterMind implements Scene {
 
     }
 
-    @Override
-    public int getWidth() {
-        return width;
-    }
-
-    @Override
-    public int getHeight() {
-        return height;
-    }
 }

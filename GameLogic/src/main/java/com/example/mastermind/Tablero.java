@@ -1,5 +1,9 @@
 package com.example.mastermind;
 
+import com.example.engine.Engine;
+import com.example.engine.GameObject;
+import com.example.engine.Graphics;
+
 import java.awt.Color;
 import java.util.Random;
 import java.util.ArrayList;
@@ -37,18 +41,18 @@ enum Dificultad
 class IntentoFila
 {
     colores[] combinacion;
-    int aciertos = 0;
+    int aciertos_pos = 0;
+    int aciertos_color = 0;
 }
 
 
-public class Tablero
+public class Tablero extends GameObject
 {
     // Esto no es una constante porque nos va a indicar el numero de colores de cada modo
     private int N_COLORS;
     //private[] int colorValues;
     private IntentoFila[] tablero;
     private colores [] combinacion_ganadora;
-
     private Random rand;
 
     private int num_casillas;
@@ -57,7 +61,46 @@ public class Tablero
     private int INTENTO_ACTUAL = 0;
     private boolean repetion = false;
 
-    //Metodo al que llamar al elegir la dificultad para inicializar el tablero con X casillas
+    //Tamaño de los circulos
+    private final int circleRad = 40;
+    //Espacio entre circulos
+    private final int circleSpace = 20;
+
+
+    public Tablero(Engine e)
+    {
+        super(e);
+    }
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void render()
+    {
+        int h = engine.getGraphics().getHeight();
+        int w = engine.getGraphics().getWidth();
+
+
+        for(int i = 0; i < N_COLORS; i++){
+            colores color = colores.values()[i +1]; //Conversion del indice al color
+            engine.getGraphics().setColor(color.getValue());   //Cogemos el valor del color
+            engine.getGraphics().fillCircle( circleRad * (2 + i) + (circleSpace * i), h - circleRad * 2, circleRad);
+        }
+
+        for(int i = 0; i < num_intentos; i++){
+            for(int j = 0; j < num_casillas; j++){
+                engine.getGraphics().setColor(colores.AZUL.getValue());
+                engine.getGraphics().fillCircle(circleRad * (2 + j) + (circleSpace * j), h- 200 - circleRad * 1.3f * i, circleRad);
+            }
+        }
+    }
+
+    @Override
+    public void update(double deltaTime) {
+
+    }
 
     public void initTablero()
     {
@@ -75,10 +118,11 @@ public class Tablero
             }
         }
 
+
         // Movidas
         combinacionConRep();
         combinacionJugador();
-        checkTablero();
+        checkIntento();
     }
 
     private void combinacionConRep()
@@ -134,19 +178,42 @@ public class Tablero
         }
     }
 
-    public boolean checkTablero()
+    public boolean checkIntento()
     {
         boolean win = false;
+
+        // Volcamos la combinacion ganadora en una lista Auxiliar
+        ArrayList<colores> colores_elegidos = new ArrayList<>();
+        for(int i = 0; i< num_casillas; i++)
+        {
+            colores_elegidos.add(combinacion_ganadora[i]);
+        }
 
         // Tenemos que comprobar la fila del tablero que coincida con el intento actual
         for(int i = 0; i < num_casillas; i++)
         {
+            // Comprobar posicion
             if(tablero[INTENTO_ACTUAL].combinacion[i] == combinacion_ganadora[i])
-                tablero[INTENTO_ACTUAL].aciertos++;
+                tablero[INTENTO_ACTUAL].aciertos_pos++;
+
+            // Comprobar colores -> para cada elemento de la comb del jugador, recorremos la lista hasta encontrar el color que buscamos
+            int j = 0;
+            boolean encontrado = false;
+            while(j < colores_elegidos.size() && !encontrado)
+            {
+                if(tablero[INTENTO_ACTUAL].combinacion[i] == colores_elegidos.get(j))
+                {
+                    // Eliminamos el color de la lista
+                    colores_elegidos.remove(j);
+                    tablero[INTENTO_ACTUAL].aciertos_color++;
+                    encontrado = true;
+                }
+            }
+
         }
 
         // Si ha acertado todas ha ganao
-        if(tablero[INTENTO_ACTUAL].aciertos == num_casillas)
+        if(tablero[INTENTO_ACTUAL].aciertos_pos == num_casillas && tablero[INTENTO_ACTUAL].aciertos_color == num_casillas)
             win = true;
 
         return win;
@@ -187,4 +254,6 @@ public class Tablero
 
     public int getNum_casillas(){return num_casillas;}
     public int getNum_intentos(){return num_intentos;}
+
+
 }

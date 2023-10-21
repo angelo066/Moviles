@@ -38,7 +38,9 @@ public class MasterMind implements Scene {
     @Override
     public void render() {
 
-        graph.clear(0xFFFFFF);
+        //Fondo
+        graph.setColor(0x000000);
+        graph.fillRectangle(0,0,width,height);
 
         tablero.render();
 

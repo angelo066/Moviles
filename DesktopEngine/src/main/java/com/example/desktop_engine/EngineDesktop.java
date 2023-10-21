@@ -9,9 +9,6 @@ import com.example.engine.TouchEvent;
 
 import javax.swing.JFrame;
 
-import java.awt.Canvas;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.awt.Graphics2D;
@@ -65,7 +62,7 @@ public class EngineDesktop implements Engine, Runnable {
 
         while (running) {
             //HandleInput
-           // handleInput();
+            handleInput();
 
             //Update
             long currentTime = System.nanoTime();
@@ -77,6 +74,7 @@ public class EngineDesktop implements Engine, Runnable {
 
             //Renderizado
             BufferStrategy bufferStrategy = frame.getBufferStrategy();
+
             do {
                 do {
                     render();

@@ -14,11 +14,17 @@ import com.example.engine.Scene;
 public class GraphicsAndroid implements Graphics {
 
     private SurfaceView renderView;
+
+    private SurfaceHolder holder;
     private Paint paint;
     private Canvas canvas;
 
+    private int sceneWidth;
+    private int sceneHeight;
+
     GraphicsAndroid(SurfaceView view) {
         renderView = view;
+        holder = view.getHolder();
         paint = new Paint();
         paint.setColor(0x000000);
     }
@@ -122,25 +128,35 @@ public class GraphicsAndroid implements Graphics {
     }
 
     @Override
-    public void setSceneSize(int width, int height) {
-
-    }
-
-    public boolean prepareRender() {
-        return false;
-    }
-
-    public void releaseRender() {
-
-    }
-
-    @Override
     public void setColor(int color) {
         paint.setColor(color);
     }
 
-    public void updateCanvas(Canvas canvas){
-        this.canvas = canvas;
+    public void prepareRender() {
+        while (!holder.getSurface().isValid()) ;
+        canvas = this.holder.lockCanvas();
+
+        restore();
+
+        float scaleX = (float) renderView.getWidth() / sceneWidth;
+        float scaleY = (float) renderView.getHeight() / sceneHeight;
+        float scale = Math.min(scaleX, scaleY);
+
+        float translateX = (renderView.getWidth() - sceneWidth * scale) / 2f;
+        float translateY = (renderView.getHeight() - sceneHeight * scale) / 2f;
+
+        translate(translateX, translateY);
+        scale(scale, scale);
+
     }
 
+    public void releaseRender() {
+        holder.unlockCanvasAndPost(canvas);
+    }
+
+    @Override
+    public void setSceneSize(int width, int height) {
+        sceneWidth = width;
+        sceneHeight = height;
+    }
 }

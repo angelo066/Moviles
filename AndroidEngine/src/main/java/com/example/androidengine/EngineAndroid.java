@@ -50,24 +50,17 @@ public class EngineAndroid implements Engine, Runnable {
 
     @Override
     public void run() {
-        if (thread != Thread.currentThread()) {
-            // Evita que cualquiera que no sea esta clase llame a este Runnable en un Thread
-            // Programación defensiva
-            throw new RuntimeException("run() should not be called directly");
-        }
+        if (thread != Thread.currentThread())
+            throw new RuntimeException("run() should not be called directly");            // Programación defensiva
 
-        // Si el Thread se pone en marcha
-        // muy rápido, la vista podría todavía no estar inicializada.
         while (running && view.getWidth() == 0) ;
 
         if (scene == null) pause();
 
         long lastFrameTime = System.nanoTime();
 
-        long informePrevio = lastFrameTime; // Informes de FPS
-        int frames = 0;
+        graphicsAndroid.save();
 
-        // Bucle de juego principal.
         while (running) {
 
             //handleInput
@@ -77,39 +70,11 @@ public class EngineAndroid implements Engine, Runnable {
             long currentTime = System.nanoTime();
             long nanoElapsedTime = currentTime - lastFrameTime;
             lastFrameTime = currentTime;
-
-            // Informe de FPS
             double elapsedTime = (double) nanoElapsedTime / 1.0E9;
             update(elapsedTime);
-            if (currentTime - informePrevio > 1000000000l) {
-                long fps = frames * 1000000000l / (currentTime - informePrevio);
-                System.out.println("" + fps + " fps");
-                frames = 0;
-                informePrevio = currentTime;
-            }
-            ++frames;
-
-            graphicsAndroid.save();
-
 
             // renderizado
-            while (!holder.getSurface().isValid()) ;
-            canvas = this.holder.lockCanvas();
-
-            float scaleX = (float) view.getWidth() / scene.getWidth();
-            float scaleY = (float) view.getHeight() / scene.getHeight();
-            float scale = Math.min(scaleX,scaleY);
-            graphicsAndroid.scale(scale, scale);
-
-            float translateX = (view.getWidth() - scene.getWidth() * scale) / 2f;
-            float translateY = (view.getHeight() - scene.getHeight() * scale) / 2f;
-            graphicsAndroid.translate(translateX, translateY);
-
-            this.render();
-
-            graphicsAndroid.restore();
-
-            holder.unlockCanvasAndPost(canvas);
+            render();
         }
     }
 
@@ -144,19 +109,16 @@ public class EngineAndroid implements Engine, Runnable {
         this.scene = scene;
     }
 
-    @Override
     public void update(double deltaTime) {
         scene.update(deltaTime);
     }
 
-    @Override
     public void render() {
-        graphicsAndroid.updateCanvas(canvas);
+        graphicsAndroid.prepareRender();
         scene.render();
-        graphicsAndroid.updateCanvas(null);
+        graphicsAndroid.releaseRender();
     }
 
-    @Override
     public void handleInput() {
         /*
          * for(TouchEvent event: input.getTouchEvents()){

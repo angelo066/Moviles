@@ -35,8 +35,11 @@ public class GraphicsDesktop implements Graphics {
 
     @Override
     public void clear(int color) {
+        AffineTransform transform = g_graphics.getTransform();
+        restore();
         setColor(color);
         fillRectangle(0, 0, g_frame.getWidth(), g_frame.getHeight());
+        g_graphics.setTransform(transform);
     }
 
     @Override
@@ -125,14 +128,18 @@ public class GraphicsDesktop implements Graphics {
 
         restore();
 
-        float scaleX = (float) g_frame.getWidth() / sceneWidth;
-        float scaleY = (float) g_frame.getHeight() / sceneHeight;
-        float scale = Math.min(scaleX, scaleY);
-        float translateX = (g_frame.getWidth() - sceneWidth * scale) / 2f;
-        float translateY = (g_frame.getHeight() - sceneHeight * scale) / 2f;
+        int width = g_frame.getWidth() - g_frame.getInsets().left - g_frame.getInsets().right;
+        int height = g_frame.getHeight() - g_frame.getInsets().top - g_frame.getInsets().bottom;
 
-        scale(scale, scale);
+        float scaleX = (float) width / sceneWidth;
+        float scaleY = (float) height / sceneHeight;
+        float scale = Math.min(scaleX, scaleY);
+
+        float translateX = ((g_frame.getWidth() - g_frame.getInsets().right + g_frame.getInsets().left) - sceneWidth * scale) / 2f;
+        float translateY = ((g_frame.getHeight() - g_frame.getInsets().bottom + g_frame.getInsets().top) - sceneHeight * scale) / 2f;
+
         translate(translateX, translateY);
+        scale(scale, scale);
 
     }
 
@@ -141,7 +148,7 @@ public class GraphicsDesktop implements Graphics {
     }
 
     @Override
-    public void setSceneSize(int width, int height){
+    public void setSceneSize(int width, int height) {
         sceneWidth = width;
         sceneHeight = height;
     }

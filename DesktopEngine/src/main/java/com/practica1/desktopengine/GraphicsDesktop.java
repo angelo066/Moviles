@@ -115,12 +115,15 @@ public class GraphicsDesktop implements Graphics {
 
     @Override
     public int getWidth() {
-        return g_frame.getWidth();
+        //return g_frame.getWidth();
+        return sceneWidth;
     }
 
     @Override
     public int getHeight() {
-        return g_frame.getHeight();
+
+        return sceneHeight;
+        //return g_frame.getHeight();
     }
 
     public void prepareRender() {

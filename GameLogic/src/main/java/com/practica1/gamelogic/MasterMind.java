@@ -20,13 +20,13 @@ public class MasterMind implements Scene {
     public void init(Engine engine) {
         this.engine = engine;
         this.graph = engine.getGraphics();
-        this.tablero = new Tablero(engine);
-        tablero.configuracion(Dificultad.FACIL);
+        //tablero.configuracion(Dificultad.DIFICIL);
 
         width = 1080;
         height = 1920;
         
         engine.getGraphics().setSceneSize(width,height);
+        this.tablero = new Tablero(engine);
 
     }
 
@@ -39,7 +39,7 @@ public class MasterMind implements Scene {
     public void render() {
 
         //Fondo
-        graph.setColor(0xFFFFAA00);
+        graph.setColor(colores.BLANCO.getValue());
         graph.fillRectangle(0,0,width,height);
 
         tablero.render();

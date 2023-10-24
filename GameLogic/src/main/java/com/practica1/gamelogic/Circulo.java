@@ -53,8 +53,21 @@ public class Circulo extends GameObject {
     }
 
     public boolean handleInput(TouchEvent event){
-        //....
-        return true;
+        int touchX = event.x;
+        int touchY = event.y;
+        boolean inside = false;
+
+        System.out.println("console");
+
+        //Dentro de manera horizontal
+        if(touchX > pos.x - RADIO_CIRCULO && touchX < pos.x + RADIO_CIRCULO){
+            if(touchY > pos.y - RADIO_CIRCULO && touchY < pos.y + RADIO_CIRCULO){
+                inside = true;
+            }
+        }
+
+        //Entiendo que esto hay que devolverlo asi
+        return inside;
     }
 
     public colores getColor(){return color;}

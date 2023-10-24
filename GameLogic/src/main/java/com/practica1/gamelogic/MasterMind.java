@@ -20,7 +20,6 @@ public class MasterMind implements Scene {
     public void init(Engine engine) {
         this.engine = engine;
         this.graph = engine.getGraphics();
-        //tablero.configuracion(Dificultad.DIFICIL);
 
         width = 1080;
         height = 1920;
@@ -32,7 +31,8 @@ public class MasterMind implements Scene {
 
     @Override
     public void update(double deltaTime) {
-
+        //Crear los eventos digo yo
+        tablero.update(deltaTime);
     }
 
     @Override
@@ -48,7 +48,10 @@ public class MasterMind implements Scene {
 
     @Override
     public void handleInput(ArrayList<TouchEvent> events) {
-
+        //Recorremos el array de eventos mandandolos al tablero
+        for(int i = 0; i < events.size(); i++){
+            tablero.handleInput(events.get(i));
+        }
     }
 
 }

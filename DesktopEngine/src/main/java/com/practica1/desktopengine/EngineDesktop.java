@@ -138,5 +138,6 @@ public class EngineDesktop implements Engine, Runnable {
         }
         scene.handleInput(inputDesktop.getTouchEvents());
 
+        inputDesktop.clearEvents();
     }
 }

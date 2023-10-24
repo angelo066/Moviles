@@ -65,9 +65,13 @@ public class InputHandler implements MouseListener {
 
     }
 
+    public void clearEvents(){events.clear();}
+
     public synchronized ArrayList<TouchEvent> getTouchEvents() {
         events.addAll(pendingEvents);
         pendingEvents.clear();
         return events;
     }
+
+
 }

@@ -21,4 +21,5 @@ public class InputDesktop implements Input {
         return handler.getTouchEvents();
     }
 
+    public void clearEvents(){handler.clearEvents();}
 }

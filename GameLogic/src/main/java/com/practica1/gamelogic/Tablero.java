@@ -2,6 +2,7 @@ package com.practica1.gamelogic;
 
 import com.practica1.engine.Engine;
 import com.practica1.engine.GameObject;
+import com.practica1.engine.TouchEvent;
 import com.practica1.engine.Vector2;
 
 import java.util.Random;
@@ -48,6 +49,13 @@ class IntentoFila {
     Circulo[] combinacion = null;
     int aciertos_pos = 0;
     int aciertos_color = 0;
+
+    public void handleInput(TouchEvent touchEvent){
+
+        for(int i=0; i< combinacion.length; i++){
+            combinacion[i].handleInput(touchEvent);
+        }
+    }
 }
 
 
@@ -279,6 +287,12 @@ public class Tablero extends GameObject {
 
     public int getNUM_INTENTOS() {
         return NUM_INTENTOS;
+    }
+
+    public void handleInput(TouchEvent touchEvent){
+        for(int i=0; i < colores_elegidos.length;i++){
+            colores_elegidos[i].handleInput(touchEvent);
+        }
     }
 
     private void dibujaIntento(int i)

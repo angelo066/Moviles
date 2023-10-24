@@ -6,7 +6,11 @@ import com.practica1.engine.Image;
 
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 public class GraphicsDesktop implements Graphics {
@@ -17,6 +21,7 @@ public class GraphicsDesktop implements Graphics {
     AffineTransform frameTransform;
     private int sceneWidth;
     private int sceneHeight;
+    private String imagesRoute = "data/sprites/";
 
     public GraphicsDesktop(JFrame frame) {
         g_frame = frame;
@@ -24,8 +29,18 @@ public class GraphicsDesktop implements Graphics {
     }
 
     @Override
-    public Image newImage(String name) {
-        return null;
+    public Image newImage(String name) throws IOException
+    {
+        java.awt.Image image = null;
+        try{
+            image = ImageIO.read(new File(imagesRoute + name));
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException();
+        }
+
+        return new ImageDesktop(image);
     }
 
     @Override
@@ -63,8 +78,11 @@ public class GraphicsDesktop implements Graphics {
     }
 
     @Override
-    public void drawImage(Image image) {
-
+    public void drawImage(Image image, int x, int y, int w, int h)
+    {
+        ImageDesktop dImage = (ImageDesktop)image;
+        // ------------------------------------ dst ------------------------ scr
+        g_graphics.drawImage(dImage.getImage(), x, y, x + w, y + h, 0, 0, dImage.getWidth(), dImage.getHeight(), null);
     }
 
     @Override

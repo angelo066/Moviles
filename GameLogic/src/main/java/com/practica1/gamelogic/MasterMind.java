@@ -2,6 +2,7 @@ package com.practica1.gamelogic;
 
 import com.practica1.engine.Engine;
 import com.practica1.engine.Graphics;
+import com.practica1.engine.Image;
 import com.practica1.engine.Scene;
 import com.practica1.engine.TouchEvent;
 

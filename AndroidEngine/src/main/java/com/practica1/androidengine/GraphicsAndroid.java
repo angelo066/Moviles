@@ -1,13 +1,20 @@
 package com.practica1.androidengine;
 
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.practica1.engine.Font;
 import com.practica1.engine.Image;
 import com.practica1.engine.Graphics;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class GraphicsAndroid implements Graphics {
 
@@ -20,16 +27,25 @@ public class GraphicsAndroid implements Graphics {
     private int sceneWidth;
     private int sceneHeight;
 
+    private AssetManager assetManager;
+    private String imagesRoute = "data/sprites/";
+
+
     GraphicsAndroid(SurfaceView view) {
         renderView = view;
         holder = view.getHolder();
         paint = new Paint();
         paint.setColor(0x000000);
+        assetManager = this.renderView.getContext().getAssets();
     }
 
     @Override
-    public Image newImage(String name) {
-        return null;
+    public Image newImage(String name) throws IOException
+    {
+        Bitmap map = null;
+        InputStream is = assetManager.open(imagesRoute + name); // No se si hay que cachear una excepcion aqui
+        map = BitmapFactory.decodeStream(is);
+        return new ImageAndroid(map);
     }
 
     @Override
@@ -63,8 +79,14 @@ public class GraphicsAndroid implements Graphics {
     }
 
     @Override
-    public void drawImage(Image image) {
+    public void drawImage(Image image, int x, int y, int w, int h)
+    {
+        ImageAndroid aImage = (ImageAndroid)image;
 
+        //Rectangulo src y dest
+        Rect src = new Rect(0,0, aImage.getWidth(), aImage.getHeight());
+        Rect dst = new Rect(x, y, x+w, y+h);
+        canvas.drawBitmap(aImage.getImage(), src, dst, paint);
     }
 
     @Override

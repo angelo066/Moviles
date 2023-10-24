@@ -1,7 +1,9 @@
 package com.practica1.engine;
 
+import java.io.IOException;
+
 public interface Graphics {
-    Image newImage(String name);
+    Image newImage(String name) throws IOException;
 
     Font newFont(String filename, int size, boolean isBold);
 
@@ -12,7 +14,7 @@ public interface Graphics {
     void save();
     void restore();
 
-    void drawImage(Image image); //void drawImage(Image image, ...)
+    void drawImage(Image image, int x, int y, int w, int h); //void drawImage(Image image, ...)
 
     void setColor (int color);
 
@@ -33,5 +35,6 @@ public interface Graphics {
     int getSceneWidth();
 
     int getSceneHeight();
+
 
 }

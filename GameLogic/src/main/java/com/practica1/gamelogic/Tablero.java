@@ -21,7 +21,8 @@ enum colores {
     ROSA(0xFFFF0080),
     MARRON(0xFF804000),
     BLANCO(0xFFFFFF),
-    GRIS(0xC6C6C6);
+    GRIS(0xC6C6C6),
+    GRIS_OSCURO(0x8C8C8C);
 
     private int value;
 
@@ -44,7 +45,7 @@ enum Dificultad {
 class IntentoFila {
 
     public IntentoFila(){};
-    colores[] combinacion = null;
+    Circulo[] combinacion = null;
     int aciertos_pos = 0;
     int aciertos_color = 0;
 }
@@ -53,7 +54,8 @@ class IntentoFila {
 public class Tablero extends GameObject {
     private int N_COLORS;
     private IntentoFila[] tablero;
-    private colores[] combinacion_ganadora;
+    private Circulo[] combinacion_ganadora;
+    private Circulo[] colores_elegidos;
     private Random rand;
 
     private int NUM_CASILLAS;
@@ -128,10 +130,19 @@ public class Tablero extends GameObject {
         tablero = new IntentoFila[NUM_INTENTOS];
         for (int i = 0; i < tablero.length; i++) {
             tablero[i] = new IntentoFila();
-            tablero[i].combinacion = new colores[NUM_CASILLAS];
+            tablero[i].combinacion = new Circulo[NUM_CASILLAS];
             for (int j = 0; j < NUM_CASILLAS; j++) {
-                tablero[i].combinacion[j] = colores.NO_COLOR;
+                tablero[i].combinacion[j] = new Circulo(engine);
+                tablero[i].combinacion[j].setColor(colores.NO_COLOR);
             }
+        }
+
+        // Creamos los circulos de los colores elegidos para la partida
+        colores_elegidos = new Circulo[N_COLORS];
+        for(int i = 0; i< N_COLORS; i++)
+        {
+            colores_elegidos[i] = new Circulo(engine);
+            colores_elegidos[i].setColor(colores.values()[i+1]);
         }
 
         // Movidas
@@ -140,18 +151,19 @@ public class Tablero extends GameObject {
     }
 
     private void combinacionConRep() {
-        combinacion_ganadora =  new colores[NUM_CASILLAS];
+        combinacion_ganadora =  new Circulo[NUM_CASILLAS];
         for (int i = 0; i < NUM_CASILLAS; i++) {
+            combinacion_ganadora[i] = new Circulo(engine);
             int index = rand.nextInt((N_COLORS - 0) + 1) + 0;
 
             colores c = colores.values()[index];
 
-            combinacion_ganadora[i] = colores.values()[index];
+            combinacion_ganadora[i].setColor(colores.values()[index]);
         }
     }
 
     private void combinacionSinRep(int cas) {
-        combinacion_ganadora =  new colores[NUM_CASILLAS];
+        combinacion_ganadora =  new Circulo[NUM_CASILLAS];
 
         // Creamos una lista con todos los colores disponibles
         ArrayList<colores> coloresAux = new ArrayList<>();
@@ -160,13 +172,14 @@ public class Tablero extends GameObject {
 
         // Cogemos colores aleatorios de la lista
         for (int i = 0; i < NUM_CASILLAS; i++) {
+            combinacion_ganadora[i] = new Circulo(engine);
             // Cogemos un color aleatorio de la lista y lo quitamos
             int index = rand.nextInt((coloresAux.size() - 0) + 1) + 0;
             colores c = coloresAux.get(index);
             coloresAux.remove(index);
 
             // Asignamos el color
-            combinacion_ganadora[i] = c;
+            combinacion_ganadora[i].setColor(c);
         }
     }
 
@@ -186,7 +199,7 @@ public class Tablero extends GameObject {
             coloresAux.remove(index);
 
             // Asignamoos el color a la fila del tablero
-            tablero[INTENTO_ACTUAL].combinacion[i] = c;
+            tablero[INTENTO_ACTUAL].combinacion[i].setColor(c);
         }
     }
 
@@ -196,20 +209,20 @@ public class Tablero extends GameObject {
         // Volcamos la combinacion ganadora en una lista Auxiliar
         ArrayList<colores> colores_elegidos = new ArrayList<>();
         for (int i = 0; i < NUM_CASILLAS; i++) {
-            colores_elegidos.add(combinacion_ganadora[i]);
+            colores_elegidos.add(combinacion_ganadora[i].getColor());
         }
 
         // Tenemos que comprobar la fila del tablero que coincida con el intento actual
         for (int i = 0; i < NUM_CASILLAS; i++) {
             // Comprobar posicion
-            if (tablero[INTENTO_ACTUAL].combinacion[i] == combinacion_ganadora[i])
+            if (tablero[INTENTO_ACTUAL].combinacion[i].getColor() == combinacion_ganadora[i].getColor())
                 tablero[INTENTO_ACTUAL].aciertos_pos++;
 
             // Comprobar colores -> para cada elemento de la comb del jugador, recorremos la lista hasta encontrar el color que buscamos
             int j = 0;
             boolean encontrado = false;
             while (j < colores_elegidos.size() && !encontrado) {
-                if (tablero[INTENTO_ACTUAL].combinacion[i] == colores_elegidos.get(j)) {
+                if (tablero[INTENTO_ACTUAL].combinacion[i].getColor() == colores_elegidos.get(j)) {
                     // Eliminamos el color de la lista
                     colores_elegidos.remove(j);
                     tablero[INTENTO_ACTUAL].aciertos_color++;
@@ -283,8 +296,9 @@ public class Tablero extends GameObject {
         for (int j = 0; j < NUM_CASILLAS; j++)
         {
             int x = spaceToEachSide + j * RADIO_CIRCULO*2;
-            engine.getGraphics().setColor(colores.AZUL.getValue());
-            engine.getGraphics().fillCircle(x, pos_intentos[i].y, RADIO_CIRCULO);
+            tablero[i].combinacion[j].pos.x = x;
+            tablero[i].combinacion[j].pos.y = pos_intentos[i].y;
+            tablero[i].combinacion[j].render();
         }
 
     }
@@ -302,9 +316,11 @@ public class Tablero extends GameObject {
         // Crear las bolas y establecer sus posiciones
         for (int i = 0; i < N_COLORS; i++) {
             int x = spaceToEachSide + i * (RADIO_CIRCULO*2);
-            colores color = colores.values()[i + 1]; //Conversion del indice al color
-            engine.getGraphics().setColor(color.getValue());
-            engine.getGraphics().fillCircle(x, pos_colores.y, RADIO_CIRCULO);
+            colores_elegidos[i].pos.x = x;
+            colores_elegidos[i].pos.y = pos_colores.y;
+            colores_elegidos[i].descubrir(true);
+            colores_elegidos[i].render();
+
         }
     }
 

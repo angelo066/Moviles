@@ -1,6 +1,7 @@
 package com.practica1.gamelogic;
 
 import com.practica1.engine.Engine;
+import com.practica1.engine.Font;
 import com.practica1.engine.Graphics;
 import com.practica1.engine.Image;
 import com.practica1.engine.Scene;
@@ -18,6 +19,7 @@ public class MasterMind implements Scene {
     private int width;
     private int height;
     private Image image;
+    private Font font;
     @Override
     public void init(Engine engine) {
         this.engine = engine;
@@ -30,6 +32,8 @@ public class MasterMind implements Scene {
         this.tablero = new Tablero(engine);
 
         image = graph.newImage("homero.png");
+        font = graph.newFont("Nexa.ttf", 80, false, false);
+        int a;
 
     }
 
@@ -50,6 +54,9 @@ public class MasterMind implements Scene {
         //cargarHomer();
 
         graph.drawImage(image, 150, 150, 400, 400);
+        graph.setColor(colores.MARRON.getValue());
+        graph.setFont(font);
+        graph.drawText("Homero xino", 80, 80);
 
     }
 

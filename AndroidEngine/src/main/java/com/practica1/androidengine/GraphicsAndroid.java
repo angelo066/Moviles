@@ -1,8 +1,6 @@
 package com.practica1.androidengine;
 
 import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -14,7 +12,6 @@ import com.practica1.engine.Image;
 import com.practica1.engine.Graphics;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 public class GraphicsAndroid implements Graphics {
 
@@ -28,7 +25,8 @@ public class GraphicsAndroid implements Graphics {
     private int sceneHeight;
 
     private AssetManager assetManager;
-    private String imagesRoute = "data/assets/sprites/";
+    private String imagesRoute = "data/assets/sprites/"; // hay que cambiar la ruta
+    private String fontsRoute = "assets/fonts/"; // hay que cambiar la ruta
 
 
     GraphicsAndroid(SurfaceView view) {
@@ -56,8 +54,9 @@ public class GraphicsAndroid implements Graphics {
     }
 
     @Override
-    public Font newFont(String filename, int size, boolean isBold) {
-        return null;
+    public Font newFont(String name, int size, boolean isBold, boolean isItalic) {
+        String filename = fontsRoute + name;
+        return new FontAndroid(filename, assetManager, size, isBold, isItalic);
     }
 
     @Override
@@ -141,7 +140,7 @@ public class GraphicsAndroid implements Graphics {
 
     @Override
     public void drawText(String text, float x, float y) {
-
+        canvas.drawText(text, x, y, paint);
     }
 
     @Override
@@ -157,6 +156,12 @@ public class GraphicsAndroid implements Graphics {
     @Override
     public void setColor(int color) {
         paint.setColor(color);
+    }
+
+    @Override
+    public void setFont(Font font) {
+        FontAndroid aFont = (FontAndroid)font;
+        paint.setTypeface(aFont.getFont());
     }
 
     public void prepareRender() {

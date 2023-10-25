@@ -1,11 +1,9 @@
 package com.practica1.engine;
 
-import java.io.IOException;
-
 public interface Graphics {
     Image newImage(String name);
 
-    Font newFont(String filename, int size, boolean isBold);
+    Font newFont(String name, int size, boolean isBold, boolean isItalic);
 
     void clear(int color);
 
@@ -17,6 +15,7 @@ public interface Graphics {
     void drawImage(Image image, int x, int y, int w, int h); //void drawImage(Image image, ...)
 
     void setColor (int color);
+    void setFont(Font font);
 
     void fillRectangle(float cx, float cy, float width, float height);
     void fillRoundRectangle(float cx, float cy, float width, float height, float arc);

@@ -6,11 +6,7 @@ import com.practica1.engine.Image;
 
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 public class GraphicsDesktop implements Graphics {
@@ -22,6 +18,7 @@ public class GraphicsDesktop implements Graphics {
     private int sceneWidth;
     private int sceneHeight;
     private String imagesRoute = "assets/sprites/";
+    private String fontsRoute = "assets/fonts/";
 
     public GraphicsDesktop(JFrame frame) {
         g_frame = frame;
@@ -36,8 +33,10 @@ public class GraphicsDesktop implements Graphics {
     }
 
     @Override
-    public Font newFont(String filename, int size, boolean isBold) {
-        return null;
+    public Font newFont(String name, int size, boolean isBold, boolean isItalic)
+    {
+        String filename = fontsRoute + name;
+        return new FontDesktop(filename, size, isBold, isItalic);
     }
 
     @Override
@@ -84,6 +83,12 @@ public class GraphicsDesktop implements Graphics {
     }
 
     @Override
+    public void setFont(Font font) {
+        FontDesktop dFont = (FontDesktop)font;
+        g_graphics.setFont(dFont.getFont());
+    }
+
+    @Override
     public void fillRectangle(float cx, float cy, float width, float height) {
         g_graphics.fillRect((int) cx, (int) cy, (int) width, (int) height);
     }
@@ -120,7 +125,7 @@ public class GraphicsDesktop implements Graphics {
 
     @Override
     public void drawText(String text, float x, float y) {
-
+        g_graphics.drawString(text, x, y);
     }
 
     @Override

@@ -17,6 +17,7 @@ public class MasterMind implements Scene {
 
     private int width;
     private int height;
+    private Image image;
     @Override
     public void init(Engine engine) {
         this.engine = engine;
@@ -27,6 +28,8 @@ public class MasterMind implements Scene {
         
         engine.getGraphics().setSceneSize(width,height);
         this.tablero = new Tablero(engine);
+
+        image = graph.newImage("homero.png");
 
     }
 
@@ -44,6 +47,9 @@ public class MasterMind implements Scene {
         graph.fillRectangle(0,0,width,height);
 
         tablero.render();
+        //cargarHomer();
+
+        graph.drawImage(image, 150, 150, 400, 400);
 
     }
 
@@ -53,6 +59,12 @@ public class MasterMind implements Scene {
         for(int i = 0; i < events.size(); i++){
             tablero.handleInput(events.get(i));
         }
+    }
+
+    void cargarHomer()
+    {
+        graph.drawImage(image, 0, 0, 400, 400);
+
     }
 
 }

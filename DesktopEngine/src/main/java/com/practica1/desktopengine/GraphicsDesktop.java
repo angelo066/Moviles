@@ -21,7 +21,7 @@ public class GraphicsDesktop implements Graphics {
     AffineTransform frameTransform;
     private int sceneWidth;
     private int sceneHeight;
-    private String imagesRoute = "data/sprites/";
+    private String imagesRoute = "assets/sprites/";
 
     public GraphicsDesktop(JFrame frame) {
         g_frame = frame;
@@ -29,18 +29,10 @@ public class GraphicsDesktop implements Graphics {
     }
 
     @Override
-    public Image newImage(String name) throws IOException
+    public Image newImage(String name)
     {
-        java.awt.Image image = null;
-        try{
-            image = ImageIO.read(new File(imagesRoute + name));
-        }
-        catch (IOException e)
-        {
-            throw new RuntimeException();
-        }
-
-        return new ImageDesktop(image);
+        String filename = imagesRoute + name;
+        return new ImageDesktop(filename);
     }
 
     @Override

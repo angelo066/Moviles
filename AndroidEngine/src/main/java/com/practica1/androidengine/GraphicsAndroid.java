@@ -28,7 +28,7 @@ public class GraphicsAndroid implements Graphics {
     private int sceneHeight;
 
     private AssetManager assetManager;
-    private String imagesRoute = "data/sprites/";
+    private String imagesRoute = "data/assets/sprites/";
 
 
     GraphicsAndroid(SurfaceView view) {
@@ -40,12 +40,19 @@ public class GraphicsAndroid implements Graphics {
     }
 
     @Override
-    public Image newImage(String name) throws IOException
+    public Image newImage(String name)
     {
-        Bitmap map = null;
-        InputStream is = assetManager.open(imagesRoute + name); // No se si hay que cachear una excepcion aqui
-        map = BitmapFactory.decodeStream(is);
-        return new ImageAndroid(map);
+        String filename = imagesRoute + name;
+        ImageAndroid image = null;
+        try{
+            image = new ImageAndroid(filename, assetManager);
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException("ERROR AL CARGAR IMAGEN POR ANDROID");
+        }
+        return image;
+
     }
 
     @Override

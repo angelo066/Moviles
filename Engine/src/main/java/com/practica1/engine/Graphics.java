@@ -3,7 +3,7 @@ package com.practica1.engine;
 import java.io.IOException;
 
 public interface Graphics {
-    Image newImage(String name) throws IOException;
+    Image newImage(String name);
 
     Font newFont(String filename, int size, boolean isBold);
 

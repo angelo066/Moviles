@@ -19,4 +19,6 @@ public class InputAndroid implements Input {
         return handler.getTouchEvents();
     }
 
+    public void clearEvents(){handler.clearEvents();}
+
 }

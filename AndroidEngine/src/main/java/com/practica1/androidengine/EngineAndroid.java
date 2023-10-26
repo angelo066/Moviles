@@ -24,12 +24,13 @@ public class EngineAndroid implements Engine, Runnable {
 
     private GraphicsAndroid graphicsAndroid;
     private InputAndroid inputAndroid;
+    private AudioAndroid audioAndroid;
 
     public EngineAndroid(SurfaceView view) {
         this.view = view;
         graphicsAndroid = new GraphicsAndroid(view);
         inputAndroid = new InputAndroid(view);
-        //audio
+        audioAndroid = new AudioAndroid();
     }
 
     @Override
@@ -44,7 +45,7 @@ public class EngineAndroid implements Engine, Runnable {
 
     @Override
     public Audio getAudio() {
-        return null;
+        return audioAndroid;
     }
 
     @Override
@@ -118,13 +119,15 @@ public class EngineAndroid implements Engine, Runnable {
 
     public void handleInput() {
 
-          /*for(TouchEvent event: inputAndroid.getTouchEvents()){
-          event.x -= graphicsDesktop.translateX;
-          event.y -= graphicsDesktop.translateY;
-          event.x /= graphicsDesktop.scaleX;
-          event.y /= graphicsDesktop.scaleY;
-          }
-          scene.handleInput(inputAndroid.getTouchEvents());
-          */
+        for (TouchEvent event : inputAndroid.getTouchEvents()) {
+            event.x += graphicsAndroid.getTranslateX();
+            event.y += graphicsAndroid.getTranslateY();
+            event.x *= graphicsAndroid.getScaleX();
+            event.y *= graphicsAndroid.getScaleY();
+        }
+        scene.handleInput(inputAndroid.getTouchEvents());
+
+        inputAndroid.clearEvents();
+
     }
 }

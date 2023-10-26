@@ -28,6 +28,8 @@ public class GraphicsAndroid implements Graphics {
     private String imagesRoute = "data/assets/sprites/"; // hay que cambiar la ruta
     private String fontsRoute = "assets/fonts/"; // hay que cambiar la ruta
 
+    private float scaleX = 0, scaleY = 0, translateX = 0, translateY = 0;
+
 
     GraphicsAndroid(SurfaceView view) {
         renderView = view;
@@ -38,15 +40,12 @@ public class GraphicsAndroid implements Graphics {
     }
 
     @Override
-    public Image newImage(String name)
-    {
+    public Image newImage(String name) {
         String filename = imagesRoute + name;
         ImageAndroid image = null;
-        try{
+        try {
             image = new ImageAndroid(filename, assetManager);
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             throw new RuntimeException("ERROR AL CARGAR IMAGEN POR ANDROID");
         }
         return image;
@@ -67,11 +66,15 @@ public class GraphicsAndroid implements Graphics {
     @Override
     public void translate(float x, float y) {
         canvas.translate(x, y);
+        translateX = x;
+        translateY = y;
     }
 
     @Override
     public void scale(float x, float y) {
         canvas.scale(x, y);
+        scaleX = x;
+        scaleY = y;
     }
 
     @Override
@@ -82,16 +85,19 @@ public class GraphicsAndroid implements Graphics {
     @Override
     public void restore() {
         canvas.restore();
+        scaleX = 0;
+        scaleY = 0;
+        translateY = 0;
+        translateX = 0;
     }
 
     @Override
-    public void drawImage(Image image, int x, int y, int w, int h)
-    {
-        ImageAndroid aImage = (ImageAndroid)image;
+    public void drawImage(Image image, int x, int y, int w, int h) {
+        ImageAndroid aImage = (ImageAndroid) image;
 
         //Rectangulo src y dest
-        Rect src = new Rect(0,0, aImage.getWidth(), aImage.getHeight());
-        Rect dst = new Rect(x, y, x+w, y+h);
+        Rect src = new Rect(0, 0, aImage.getWidth(), aImage.getHeight());
+        Rect dst = new Rect(x, y, x + w, y + h);
         canvas.drawBitmap(aImage.getImage(), src, dst, paint);
     }
 
@@ -160,7 +166,7 @@ public class GraphicsAndroid implements Graphics {
 
     @Override
     public void setFont(Font font) {
-        FontAndroid aFont = (FontAndroid)font;
+        FontAndroid aFont = (FontAndroid) font;
         paint.setTypeface(aFont.getFont());
     }
 
@@ -201,5 +207,21 @@ public class GraphicsAndroid implements Graphics {
     @Override
     public int getSceneHeight() {
         return sceneHeight;
+    }
+
+    public float getScaleX() {
+        return scaleX;
+    }
+
+    public float getScaleY() {
+        return scaleY;
+    }
+
+    public float getTranslateX() {
+        return translateX;
+    }
+
+    public float getTranslateY() {
+        return translateY;
     }
 }

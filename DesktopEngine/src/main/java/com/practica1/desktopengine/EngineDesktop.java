@@ -20,8 +20,10 @@ public class EngineDesktop implements Engine, Runnable {
     public JFrame frame;
 
     private Scene scene;
+
     private GraphicsDesktop graphicsDesktop;
     private InputDesktop inputDesktop;
+    private AudioDesktop audioDesktop;
 
     @Override
     public Graphics getGraphics() {
@@ -35,14 +37,14 @@ public class EngineDesktop implements Engine, Runnable {
 
     @Override
     public Audio getAudio() {
-        return null;
+        return audioDesktop;
     }
 
     public EngineDesktop(JFrame view) {
         frame = view;
         graphicsDesktop = new GraphicsDesktop(frame);
         inputDesktop = new InputDesktop(frame);
-        //audio
+        audioDesktop = new AudioDesktop();
     }
 
     @Override
@@ -131,10 +133,11 @@ public class EngineDesktop implements Engine, Runnable {
         AffineTransform transform = ((Graphics2D) frame.getBufferStrategy().getDrawGraphics()).getTransform();
 
         for (TouchEvent event : inputDesktop.getTouchEvents()) {
-            event.x -= transform.getTranslateX();
-            event.y -= transform.getTranslateY();
-            event.x /= transform.getScaleX();
-            event.y /= transform.getScaleY();
+            event.x += transform.getTranslateX();
+            event.y += transform.getTranslateY();
+            event.x *= transform.getScaleX();
+            event.y *= transform.getScaleY();
+
         }
         scene.handleInput(inputDesktop.getTouchEvents());
 

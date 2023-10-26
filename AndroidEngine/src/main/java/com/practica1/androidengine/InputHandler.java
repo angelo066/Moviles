@@ -49,4 +49,6 @@ public class InputHandler implements View.OnTouchListener {
 
         return true;
     }
+
+    public void clearEvents(){events.clear();}
 }

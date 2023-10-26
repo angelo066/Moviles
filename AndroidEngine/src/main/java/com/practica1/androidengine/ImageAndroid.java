@@ -18,13 +18,15 @@ public class ImageAndroid implements Image {
     Bitmap bitmap;
     @Override
     public int getWidth() {
-        return 0;
+        return bitmap.getWidth();
     }
 
     @Override
     public int getHeight() {
-        return 0;
+        return bitmap.getHeight();
     }
 
     public Bitmap getImage(){return bitmap;};
+
+
 }

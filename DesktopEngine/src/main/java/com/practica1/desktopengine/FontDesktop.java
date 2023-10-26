@@ -10,6 +10,7 @@ import java.io.InputStream;
 
 public class FontDesktop implements Font {
 
+    private int size = 50;
     private java.awt.Font font;
     public FontDesktop(String filename, int size, boolean bold, boolean italic)
     {
@@ -35,4 +36,7 @@ public class FontDesktop implements Font {
     public java.awt.Font getFont(){
         return font;
     }
+
+    public void setSize(int f){size = f;}
+    public int getSize(){return size;}
 }

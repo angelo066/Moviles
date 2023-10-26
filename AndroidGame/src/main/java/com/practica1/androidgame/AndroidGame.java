@@ -2,6 +2,7 @@ package com.practica1.androidgame;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.view.SurfaceView;
 
@@ -13,6 +14,8 @@ public class AndroidGame extends AppCompatActivity {
 
     private SurfaceView renderView;
     private EngineAndroid engine;
+
+    private AssetManager assetManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

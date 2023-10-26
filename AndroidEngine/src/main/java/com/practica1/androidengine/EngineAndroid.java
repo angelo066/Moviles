@@ -120,10 +120,10 @@ public class EngineAndroid implements Engine, Runnable {
     public void handleInput() {
 
         for (TouchEvent event : inputAndroid.getTouchEvents()) {
-            event.x += graphicsAndroid.getTranslateX();
-            event.y += graphicsAndroid.getTranslateY();
-            event.x *= graphicsAndroid.getScaleX();
-            event.y *= graphicsAndroid.getScaleY();
+            event.x -= graphicsAndroid.getTranslateX();
+            event.y -= graphicsAndroid.getTranslateY();
+            event.x /= graphicsAndroid.getScaleX();
+            event.y /= graphicsAndroid.getScaleY();
         }
         scene.handleInput(inputAndroid.getTouchEvents());
 

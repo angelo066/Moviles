@@ -130,13 +130,12 @@ public class EngineDesktop implements Engine, Runnable {
 
     private void handleInput() {
 
-        AffineTransform transform = ((Graphics2D) frame.getBufferStrategy().getDrawGraphics()).getTransform();
 
         for (TouchEvent event : inputDesktop.getTouchEvents()) {
-            event.x += transform.getTranslateX();
-            event.y += transform.getTranslateY();
-            event.x *= transform.getScaleX();
-            event.y *= transform.getScaleY();
+            event.x -= graphicsDesktop.getTranslateX();
+            event.y -= graphicsDesktop.getTranslateY();
+            event.x /= graphicsDesktop.getScaleX();
+            event.y /= graphicsDesktop.getScaleY();
 
         }
         scene.handleInput(inputDesktop.getTouchEvents());

@@ -21,9 +21,9 @@ enum colores {
     MORADO(0xFFFF00FF),
     ROSA(0xFFFF0080),
     MARRON(0xFF804000),
-    BLANCO(0xFFFFFF),
-    GRIS(0xC6C6C6),
-    GRIS_OSCURO(0x8C8C8C);
+    BLANCO(0xFFFFFFFF),
+    GRIS(0xFFC6C6C6),
+    GRIS_OSCURO(0xFF8C8C8C);
 
     private int value;
 
@@ -81,7 +81,7 @@ public class Tablero extends GameObject {
     private final int V_OFFSET = 40;
     private final int RADIO_CIRCULO = 50;
 
-
+    private Circulo selectedCircle; //Circulo que elegimos al clickar
     public Tablero(Engine e) {
         super(e);
 
@@ -290,8 +290,12 @@ public class Tablero extends GameObject {
     }
 
     public void handleInput(TouchEvent touchEvent){
+        boolean selected = false;
         for(int i=0; i < colores_elegidos.length;i++){
-            colores_elegidos[i].handleInput(touchEvent);
+            selected = colores_elegidos[i].handleInput(touchEvent);
+
+            if(selected)
+                selectedCircle = colores_elegidos[i];
         }
     }
 

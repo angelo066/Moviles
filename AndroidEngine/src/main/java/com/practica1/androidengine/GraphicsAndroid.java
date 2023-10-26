@@ -25,10 +25,10 @@ public class GraphicsAndroid implements Graphics {
     private int sceneHeight;
 
     private AssetManager assetManager;
-    private String imagesRoute = "data/assets/sprites/"; // hay que cambiar la ruta
-    private String fontsRoute = "assets/fonts/"; // hay que cambiar la ruta
+    private String imagesRoute = "sprites/"; // hay que cambiar la ruta
+    private String fontsRoute = "fonts/"; // hay que cambiar la ruta
 
-    private float scaleX = 0, scaleY = 0, translateX = 0, translateY = 0;
+    private float scaleX = 1, scaleY = 1, translateX = 0, translateY = 0;
 
 
     GraphicsAndroid(SurfaceView view) {
@@ -85,8 +85,8 @@ public class GraphicsAndroid implements Graphics {
     @Override
     public void restore() {
         canvas.restore();
-        scaleX = 0;
-        scaleY = 0;
+        scaleX = 1;
+        scaleY = 1;
         translateY = 0;
         translateX = 0;
     }
@@ -151,12 +151,12 @@ public class GraphicsAndroid implements Graphics {
 
     @Override
     public int getWidth() {
-        return renderView.getWidth();
+        return sceneWidth;
     }
 
     @Override
     public int getHeight() {
-        return renderView.getHeight();
+        return sceneHeight;
     }
 
     @Override
@@ -167,6 +167,7 @@ public class GraphicsAndroid implements Graphics {
     @Override
     public void setFont(Font font) {
         FontAndroid aFont = (FontAndroid) font;
+        paint.setTextSize(font.getSize());
         paint.setTypeface(aFont.getFont());
     }
 
@@ -224,4 +225,5 @@ public class GraphicsAndroid implements Graphics {
     public float getTranslateY() {
         return translateY;
     }
+
 }

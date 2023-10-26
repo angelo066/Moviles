@@ -20,6 +20,8 @@ public class GraphicsDesktop implements Graphics {
     private String imagesRoute = "assets/sprites/";
     private String fontsRoute = "assets/fonts/";
 
+    private float scaleX = 0, scaleY = 0, translateX = 0, translateY = 0;
+
     public GraphicsDesktop(JFrame frame) {
         g_frame = frame;
         g_graphics = (Graphics2D) g_frame.getBufferStrategy().getDrawGraphics();
@@ -51,11 +53,15 @@ public class GraphicsDesktop implements Graphics {
     @Override
     public void translate(float x, float y) {
         g_graphics.translate((int) x, (int) y);
+        translateX = x;
+        translateY = y;
     }
 
     @Override
     public void scale(float x, float y) {
         g_graphics.scale(x, y);
+        scaleX = x;
+        scaleY = y;
     }
 
     @Override
@@ -179,6 +185,22 @@ public class GraphicsDesktop implements Graphics {
     @Override
     public int getSceneHeight() {
         return sceneHeight;
+    }
+
+    public float getScaleX() {
+        return scaleX;
+    }
+
+    public float getScaleY() {
+        return scaleY;
+    }
+
+    public float getTranslateX() {
+        return translateX;
+    }
+
+    public float getTranslateY() {
+        return translateY;
     }
 
 }

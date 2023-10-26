@@ -57,12 +57,14 @@ public class Circulo extends GameObject {
         int touchY = event.y;
         boolean inside = false;
 
-        System.out.println("console");
+        if(event.type == TouchEvent.TouchEventType.TOUCH_DOWN){
+            //Dentro de manera horizontal
+            if(touchX > pos.x && touchX < pos.x + RADIO_CIRCULO * 2){
+                if(touchY > pos.y && touchY < pos.y + RADIO_CIRCULO * 2){
+                    inside = true;
 
-        //Dentro de manera horizontal
-        if(touchX > pos.x - RADIO_CIRCULO && touchX < pos.x + RADIO_CIRCULO){
-            if(touchY > pos.y - RADIO_CIRCULO && touchY < pos.y + RADIO_CIRCULO){
-                inside = true;
+
+                }
             }
         }
 

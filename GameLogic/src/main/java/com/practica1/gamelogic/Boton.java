@@ -31,7 +31,7 @@ public class Boton extends GameObject {
         this.font = font;
         this.textContent = text;
         this.color = colorBoton;
-        this.text = new Texto(e, pos, size, font, text, colorTexto);
+        this.text = new Texto(e, pos, font, text, colorTexto);
         this.text.centrar();
     }
     // Constructora para boton con redondeo de bordes
@@ -53,7 +53,7 @@ public class Boton extends GameObject {
         this.font = font;
         this.textContent = text;
         this.color = colorBoton;
-        this.text = new Texto(e, new Vector2(pos), size, font, text, colorTexto);
+        this.text = new Texto(e, new Vector2(pos), font, text, colorTexto);
         this.text.centrar();
     }
 
@@ -73,8 +73,24 @@ public class Boton extends GameObject {
 
     public boolean handleInput(TouchEvent event)
     {
-        //....
-        return true;
+        int touchX = event.x;
+        int touchY = event.y;
+        boolean inside = false;
+
+        if(event.type == TouchEvent.TouchEventType.CLICK)
+        {
+            //Dentro de manera horizontal
+            if(touchX > pos.x && touchX < pos.x + size.x){
+                if(touchY > pos.y && touchY < pos.y + size.y){
+                    inside = true;
+
+                }
+            }
+        }
+
+
+        //Entiendo que esto hay que devolverlo asi
+        return inside;
     }
 
     // Modifica la posicion iniciar para que sea la centrada

@@ -9,13 +9,13 @@ import com.practica1.engine.Vector2;
 
 import java.util.ArrayList;
 
-public class Menu implements Scene {
+public class MenuPrincipal implements Scene {
 
     private Engine engine;
     private Graphics graph;
     private int width;
     private int height;
-    private Boton boton;
+    private BotonEscena botonJugar;
     private Texto titulo;
 
     @Override
@@ -29,14 +29,12 @@ public class Menu implements Scene {
 
         engine.getGraphics().setSceneSize(width,height);
 
-        Vector2 size = new Vector2(500,150);
-        Vector2 pos = new Vector2(width/2,height/2);
-        Vector2 posTitulo = new Vector2(width/2,250);
-        Font font = graph.newFont("Nexa.ttf", 80, false, false);
+        Font fontBoton = graph.newFont("Nexa.ttf", 80, false, false);
         Font fontTitulo = graph.newFont("Nexa.ttf", 150, false, false);
-        boton = new Boton(engine, pos, size, 70, font,"Jugar", colores.CYAN, colores.NEGRO);
-        boton.centrar();
-        titulo = new Texto(engine, posTitulo, size, fontTitulo, "Master Mind", colores.NEGRO);
+
+        botonJugar = new BotonEscena(engine, new Vector2(width/2,height/2), new Vector2(500,150), 70, fontBoton,"Jugar", colores.CYAN, colores.NEGRO);
+        botonJugar.centrar();
+        titulo = new Texto(engine, new Vector2(width/2,250), fontTitulo, "Master Mind", colores.NEGRO);
         titulo.centrar();
     }
 
@@ -51,12 +49,15 @@ public class Menu implements Scene {
         //Fondo
         graph.setColor(colores.BLANCO.getValue());
         graph.fillRectangle(0,0,width,height);
-        boton.render();
+        botonJugar.render();
         titulo.render();
     }
 
     @Override
     public void handleInput(ArrayList<TouchEvent> events) {
-
+        //Recorremos el array de eventos mandandolos al tablero
+        for(int i = 0; i < events.size(); i++){
+            botonJugar.handleInput(events.get(i));
+        }
     }
 }

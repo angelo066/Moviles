@@ -5,7 +5,9 @@ public class TouchEvent {
         TOUCH_DOWN,
         TOUCH_UP,
         CLICK,
-        TOUCH_DRAG
+        TOUCH_DRAG,
+        ON_HOVER,
+        ON_RELEASE
     }
 
     public TouchEventType type;

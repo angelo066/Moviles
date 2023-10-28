@@ -2,8 +2,8 @@ package com.practica1.desktopgame;
 
 import com.practica1.desktopengine.EngineDesktop;
 import com.practica1.engine.Scene;
-import com.practica1.gamelogic.MasterMind;
-import com.practica1.gamelogic.Menu;
+import com.practica1.gamelogic.MenuDificultad;
+import com.practica1.gamelogic.MenuPrincipal;
 
 import javax.swing.JFrame;
 
@@ -18,7 +18,8 @@ public class DesktopGame {
 
         EngineDesktop engine = new EngineDesktop(frame);
 
-        Scene scene = new Menu();
+        //Scene scene = new MenuPrincipal();
+        Scene scene = new MenuPrincipal();
         scene.init(engine);
         engine.setScene(scene);
 

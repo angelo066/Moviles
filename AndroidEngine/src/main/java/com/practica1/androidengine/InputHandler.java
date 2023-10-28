@@ -42,6 +42,9 @@ public class InputHandler implements View.OnTouchListener {
             event.type = TouchEvent.TouchEventType.CLICK;
         else if(action == MotionEvent.ACTION_MOVE)
             event.type = TouchEvent.TouchEventType.TOUCH_DRAG;
+        else if(action == MotionEvent.ACTION_HOVER_ENTER)
+            event.type = TouchEvent.TouchEventType.ON_HOVER;
+
 
         synchronized (this) {
             pendingEvents.add(event);

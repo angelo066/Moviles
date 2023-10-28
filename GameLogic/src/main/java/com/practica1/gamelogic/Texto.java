@@ -7,16 +7,14 @@ import com.practica1.engine.TouchEvent;
 import com.practica1.engine.Vector2;
 
 public class Texto extends GameObject {
-    Vector2 size;
     colores color;
     String text;
     Font font;
 
     // Constructora para boton sin redondeo de bordes
-    public Texto(Engine e, Vector2 pos, Vector2 size, Font font, String text, colores color)
+    public Texto(Engine e, Vector2 pos, Font font, String text, colores color)
     {
         super(e, pos);
-        this.size = size;
         this.font = font;
         this.text = text;
         this.color = color;

@@ -23,7 +23,8 @@ enum colores {
     MARRON(0xFF804000),
     BLANCO(0xFFFFFFFF),
     GRIS(0xFFC6C6C6),
-    GRIS_OSCURO(0xFF8C8C8C);
+    GRIS_OSCURO(0xFF8C8C8C),
+    NEGRO(0xFF000000);
 
     private int value;
 

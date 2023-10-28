@@ -34,6 +34,8 @@ public interface Graphics {
     int getSceneWidth();
 
     int getSceneHeight();
+    float getFontMetricWidth(Font font, String texto);
+    float getFontMetricHeight(Font font);
 
 
 }

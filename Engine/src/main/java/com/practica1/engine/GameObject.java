@@ -7,6 +7,11 @@ public class GameObject
         engine = e;
         pos = new Vector2(0,0);
     }
+    public GameObject(Engine e, Vector2 pos)
+    {
+        engine = e;
+        this.pos = pos;
+    }
     public Engine engine = null;
     public Vector2 pos;
     public void init(){};

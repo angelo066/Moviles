@@ -9,6 +9,11 @@ public class Vector2
         x = _x;
         y = _y;
     }
+    public Vector2(Vector2 other)
+    {
+        x = other.x;
+        y = other.y;
+    }
 
     public Vector2 sum(Vector2 other)
     {

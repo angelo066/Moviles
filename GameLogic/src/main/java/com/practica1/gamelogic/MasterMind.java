@@ -33,7 +33,6 @@ public class MasterMind implements Scene {
 
         image = graph.newImage("homero.png");
         font = graph.newFont("Nexa.ttf", 80, false, false);
-        int a;
 
     }
 
@@ -51,7 +50,6 @@ public class MasterMind implements Scene {
         graph.fillRectangle(0,0,width,height);
 
         tablero.render();
-        //cargarHomer();
 
         graph.drawImage(image, 10, 10, 400, 400);
         graph.setColor(colores.MARRON.getValue());

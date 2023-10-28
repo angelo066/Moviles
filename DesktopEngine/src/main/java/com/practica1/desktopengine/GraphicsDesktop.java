@@ -4,6 +4,7 @@ import com.practica1.engine.Font;
 import com.practica1.engine.Graphics;
 import com.practica1.engine.Image;
 
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
@@ -185,6 +186,21 @@ public class GraphicsDesktop implements Graphics {
     @Override
     public int getSceneHeight() {
         return sceneHeight;
+    }
+
+    @Override
+    public float getFontMetricWidth(Font font, String text)
+    {
+        FontDesktop dFont = (FontDesktop)font;
+        FontMetrics fm = g_graphics.getFontMetrics(dFont.getFont());
+        return fm.stringWidth(text);
+    }
+
+    @Override
+    public float getFontMetricHeight(Font font) {
+        FontDesktop dFont = (FontDesktop)font;
+        FontMetrics fm = g_graphics.getFontMetrics(dFont.getFont());
+        return fm.getHeight();
     }
 
     public float getScaleX() {

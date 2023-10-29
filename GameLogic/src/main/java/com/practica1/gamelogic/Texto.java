@@ -39,7 +39,9 @@ public class Texto extends GameObject {
         int fwidth = (int)engine.getGraphics().getFontMetricWidth(font, text);
         int fheight = (int)engine.getGraphics().getFontMetricHeight(font);
         pos.x = pos.x - fwidth/2 - 50; // el 50 es porque el Metrics funciona mal y en width te devuelve el valor con un pequeño offset por la izquierda
+        //pos.x = pos.x - fwidth/2; // el 50 es porque el Metrics funciona mal y en width te devuelve el valor con un pequeño offset por la izquierda
         pos.y = pos.y - fheight/2 + 25;
+        //pos.y = pos.y - fheight/2;
     }
 
 

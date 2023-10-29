@@ -27,7 +27,7 @@ public class AndroidGame extends AppCompatActivity {
 
         engine = new EngineAndroid(renderView);
 
-        Scene scene = new MenuDificultad();
+        Scene scene = new MenuPrincipal();
         scene.init(engine);
         engine.setScene(scene);
 

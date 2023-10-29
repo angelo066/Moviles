@@ -2,6 +2,7 @@ package com.practica1.desktopgame;
 
 import com.practica1.desktopengine.EngineDesktop;
 import com.practica1.engine.Scene;
+import com.practica1.gamelogic.Final;
 import com.practica1.gamelogic.MenuDificultad;
 import com.practica1.gamelogic.MenuPrincipal;
 

@@ -13,6 +13,7 @@ public class FontAndroid implements Font {
     {
         Typeface newFont = Typeface.createFromAsset(assetManager, filename);
         font = newFont;
+        this.size = size;
     }
 
     public Typeface getFont(){return font;}

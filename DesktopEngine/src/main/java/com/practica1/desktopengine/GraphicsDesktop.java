@@ -192,8 +192,11 @@ public class GraphicsDesktop implements Graphics {
     public float getFontMetricWidth(Font font, String text)
     {
         FontDesktop dFont = (FontDesktop)font;
-        FontMetrics fm = g_graphics.getFontMetrics(dFont.getFont());
-        return fm.stringWidth(text);
+        g_graphics.setFont(dFont.getFont());
+        FontMetrics fm = g_graphics.getFontMetrics();
+        int d = fm.stringWidth(text);
+        return d;
+
     }
 
     @Override
@@ -201,6 +204,8 @@ public class GraphicsDesktop implements Graphics {
         FontDesktop dFont = (FontDesktop)font;
         FontMetrics fm = g_graphics.getFontMetrics(dFont.getFont());
         return fm.getHeight();
+
+
     }
 
     public float getScaleX() {

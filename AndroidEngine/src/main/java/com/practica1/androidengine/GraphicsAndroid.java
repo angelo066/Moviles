@@ -145,7 +145,8 @@ public class GraphicsAndroid implements Graphics {
     }
 
     @Override
-    public void drawText(String text, float x, float y) {
+    public void drawText(String text, float x, float y)
+    {
         canvas.drawText(text, x, y, paint);
     }
 
@@ -212,7 +213,9 @@ public class GraphicsAndroid implements Graphics {
 
     @Override
     public float getFontMetricWidth(Font font, String texto) {
-        return paint.measureText(texto);
+        paint.setTextSize(font.getSize());
+        int a = (int)paint.measureText(texto);
+        return a;
     }
 
     @Override

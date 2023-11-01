@@ -117,7 +117,7 @@ public class EngineAndroid implements Engine, Runnable {
         graphicsAndroid.releaseRender();
     }
 
-    public void handleInput() {
+    private void handleInput() {
 
         for (TouchEvent event : inputAndroid.getTouchEvents()) {
             event.x -= graphicsAndroid.getTranslateX();

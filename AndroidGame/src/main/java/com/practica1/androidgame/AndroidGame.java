@@ -8,6 +8,7 @@ import android.view.SurfaceView;
 
 import com.practica1.androidengine.EngineAndroid;
 import com.practica1.engine.Scene;
+import com.practica1.gamelogic.MasterMind;
 import com.practica1.gamelogic.MenuDificultad;
 import com.practica1.gamelogic.MenuPrincipal;
 
@@ -15,8 +16,6 @@ public class AndroidGame extends AppCompatActivity {
 
     private SurfaceView renderView;
     private EngineAndroid engine;
-
-    private AssetManager assetManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +26,7 @@ public class AndroidGame extends AppCompatActivity {
 
         engine = new EngineAndroid(renderView);
 
-        Scene scene = new MenuPrincipal();
+        Scene scene = new MasterMind();
         scene.init(engine);
         engine.setScene(scene);
 

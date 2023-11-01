@@ -35,7 +35,7 @@ public class GraphicsAndroid implements Graphics {
         renderView = view;
         holder = view.getHolder();
         paint = new Paint();
-        paint.setColor(0x000000);
+        paint.setColor(0xFF000000);
         assetManager = this.renderView.getContext().getAssets();
     }
 
@@ -176,8 +176,6 @@ public class GraphicsAndroid implements Graphics {
         while (!holder.getSurface().isValid()) ;
         canvas = this.holder.lockCanvas();
 
-        save();
-
         float scaleX = (float) renderView.getWidth() / sceneWidth;
         float scaleY = (float) renderView.getHeight() / sceneHeight;
         float scale = Math.min(scaleX, scaleY);
@@ -191,7 +189,6 @@ public class GraphicsAndroid implements Graphics {
     }
 
     public void releaseRender() {
-        restore();
         holder.unlockCanvasAndPost(canvas);
     }
 

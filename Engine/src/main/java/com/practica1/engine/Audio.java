@@ -1,7 +1,12 @@
 package com.practica1.engine;
 
 public interface Audio {
-    Sound playSound(String file, boolean loop);
 
-    void stopSound(String file);
+    void loadSound(String file, String id);
+
+    void playSound(String id, boolean loop);
+
+    void stopSound(String id);
+
+    void releaseSound(String id);
 }

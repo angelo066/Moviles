@@ -34,6 +34,7 @@ public class MasterMind implements Scene {
         image = graph.newImage("homero.png");
         font = graph.newFont("Nexa.ttf", 80, false, false);
 
+        engine.getAudio().loadSound("doFlauta.wav","a");
     }
 
     @Override
@@ -64,6 +65,11 @@ public class MasterMind implements Scene {
         //Recorremos el array de eventos mandandolos al tablero
         for(int i = 0; i < events.size(); i++){
             tablero.handleInput(events.get(i));
+        }
+
+        if(events.size() > 0) {
+            engine.getAudio().stopSound("a");
+            engine.getAudio().playSound("a", false);
         }
     }
 

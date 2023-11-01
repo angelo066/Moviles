@@ -3,6 +3,7 @@ package com.practica1.desktopgame;
 import com.practica1.desktopengine.EngineDesktop;
 import com.practica1.engine.Scene;
 import com.practica1.gamelogic.Final;
+import com.practica1.gamelogic.MasterMind;
 import com.practica1.gamelogic.MenuDificultad;
 import com.practica1.gamelogic.MenuPrincipal;
 
@@ -20,7 +21,7 @@ public class DesktopGame {
         EngineDesktop engine = new EngineDesktop(frame);
 
         //Scene scene = new MenuPrincipal();
-        Scene scene = new MenuPrincipal();
+        Scene scene = new MasterMind();
         scene.init(engine);
         engine.setScene(scene);
 

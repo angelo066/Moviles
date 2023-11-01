@@ -17,6 +17,7 @@ import java.awt.Graphics2D;
 public class EngineDesktop implements Engine, Runnable {
     private boolean running = false;
     private Thread thread;
+
     public JFrame frame;
 
     private Scene scene;
@@ -129,7 +130,6 @@ public class EngineDesktop implements Engine, Runnable {
     }
 
     private void handleInput() {
-
 
         for (TouchEvent event : inputDesktop.getTouchEvents()) {
             event.x -= graphicsDesktop.getTranslateX();

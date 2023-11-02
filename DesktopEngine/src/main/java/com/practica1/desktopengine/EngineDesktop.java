@@ -117,6 +117,7 @@ public class EngineDesktop implements Engine, Runnable {
     @Override
     public void setScene(Scene scene) {
         this.scene = scene;
+        this.scene.init(this);
     }
 
     private void update(double deltaTime) {

@@ -8,6 +8,8 @@ import com.practica1.engine.Vector2;
 import java.util.Random;
 import java.util.ArrayList;
 
+import static com.practica1.gamelogic.colores.*;
+
 
 // LOS COLORES A PARTIR DEL MARRON NO SE USAN PARA EL JUEGO
 enum colores {
@@ -51,11 +53,11 @@ class IntentoFila {
     int aciertos_pos = 0;
     int aciertos_color = 0;
 
-    public void handleInput(TouchEvent touchEvent){
+    int coloredCircles = 0;
 
-        for(int i=0; i< combinacion.length; i++){
-            combinacion[i].handleInput(touchEvent);
-        }
+    //Metodo que comprueba si el intento está completo
+    public boolean fullIntento(){
+        return coloredCircles == combinacion.length;
     }
 }
 
@@ -133,7 +135,7 @@ public class Tablero extends GameObject {
 
     public void initTablero() {
         // Asignamos la dificultad
-        configuracion(Dificultad.IMPOSIBLE);
+        configuracion(Dificultad.FACIL);
 
         // Rellenamos el tablero
         tablero = new IntentoFila[NUM_INTENTOS];
@@ -142,7 +144,7 @@ public class Tablero extends GameObject {
             tablero[i].combinacion = new Circulo[NUM_CASILLAS];
             for (int j = 0; j < NUM_CASILLAS; j++) {
                 tablero[i].combinacion[j] = new Circulo(engine);
-                tablero[i].combinacion[j].setColor(colores.NO_COLOR);
+                tablero[i].combinacion[j].setColor(NO_COLOR);
             }
         }
 
@@ -155,23 +157,33 @@ public class Tablero extends GameObject {
         }
 
         // Movidas
-        combinacionConRep();
-        combinacionJugador();
+        //if(repetion)
+            combinacionConRep();
+        //else combinacionSinRep();
+
+        //combinacionJugador();
     }
 
     private void combinacionConRep() {
         combinacion_ganadora =  new Circulo[NUM_CASILLAS];
-        for (int i = 0; i < NUM_CASILLAS; i++) {
+
+        for (int i = 0; i < combinacion_ganadora.length; i++) {
             combinacion_ganadora[i] = new Circulo(engine);
-            int index = rand.nextInt((N_COLORS - 0) + 1) + 0;
+            int index = rand.nextInt(N_COLORS + 1);
+            //Mientras sea NO_COLOR
+            while (index == 0) index = rand.nextInt(N_COLORS + 1);
 
             colores c = colores.values()[index];
 
-            combinacion_ganadora[i].setColor(colores.values()[index]);
+            combinacion_ganadora[i].setColor(c);
+        }
+
+        for(int i = 0; i < combinacion_ganadora.length; i++){
+            System.out.println(combinacion_ganadora[i].getColor());
         }
     }
 
-    private void combinacionSinRep(int cas) {
+    private void combinacionSinRep() {
         combinacion_ganadora =  new Circulo[NUM_CASILLAS];
 
         // Creamos una lista con todos los colores disponibles
@@ -190,9 +202,11 @@ public class Tablero extends GameObject {
             // Asignamos el color
             combinacion_ganadora[i].setColor(c);
         }
+
+
     }
 
-    // Provisional para rellenar los colores
+    // Provisional para rellenar los colores (Debugging)
     private void combinacionJugador() {
         // Volcamos los colores disponibles a una lista y cuando elige un color lo sacamos de la lista
         ArrayList<colores> coloresAux = new ArrayList<>();
@@ -212,7 +226,7 @@ public class Tablero extends GameObject {
         }
     }
 
-    public boolean checkIntento() {
+    public void checkIntento() {
         boolean win = false;
 
         // Volcamos la combinacion ganadora en una lista Auxiliar
@@ -237,6 +251,7 @@ public class Tablero extends GameObject {
                     tablero[INTENTO_ACTUAL].aciertos_color++;
                     encontrado = true;
                 }
+                j++;
             }
 
         }
@@ -244,8 +259,11 @@ public class Tablero extends GameObject {
         // Si ha acertado todas ha ganao
         if (tablero[INTENTO_ACTUAL].aciertos_pos == NUM_CASILLAS && tablero[INTENTO_ACTUAL].aciertos_color == NUM_CASILLAS)
             win = true;
+        else INTENTO_ACTUAL++;
 
-        return win;
+        if(INTENTO_ACTUAL == NUM_INTENTOS || win){
+            engine.setScene(new Final(combinacion_ganadora, win, NUM_CASILLAS));
+        }
     }
 
     public void configuracion(Dificultad modo) {
@@ -290,14 +308,52 @@ public class Tablero extends GameObject {
         return NUM_INTENTOS;
     }
 
-    public void handleInput(TouchEvent touchEvent){
+    public boolean handleInput(TouchEvent touchEvent){
         boolean selected = false;
-        for(int i=0; i < colores_elegidos.length;i++){
+                        //Comprobacion del input dentro de un circulo
+        for(int i=0; i < colores_elegidos.length && !selected ;i++){
             selected = colores_elegidos[i].handleInput(touchEvent);
 
-            if(selected)
+                //Si hemos elegido uno distinto al que ya teniamos elegido
+            if(selected && colores_elegidos[i] != selectedCircle) {
+                //Si cambiamos de eleccion deselecionamos el circulo anterior
+                if(selectedCircle != null) selectedCircle.seleccionar(false);
+
                 selectedCircle = colores_elegidos[i];
+                colores_elegidos[i].seleccionar(true);
+            }
         }
+
+        int longIntento = tablero[INTENTO_ACTUAL].combinacion.length;
+        boolean exchange = false; //Boleano que comprueba si hemos hecho clic sobre alguno de los circulos del intento actual
+        Circulo seleccionado = null;    //Ciruclo seleccionado para poner el nuevo color
+
+        for(int i = 0; i < longIntento && !exchange; i++){
+
+            exchange = tablero[INTENTO_ACTUAL].combinacion[i].handleInput(touchEvent);  //Comprobamos si esta dentro de cada circulo del intento
+
+            if(exchange)
+                seleccionado = tablero[INTENTO_ACTUAL].combinacion[i];
+
+        }
+
+        if(exchange && selectedCircle != null){
+            //Comprobamos si es uno
+            if(!seleccionado.getDescubierto())tablero[INTENTO_ACTUAL].coloredCircles++;
+
+            //Cambiamos el color del combinacion al color del circulo seleccionado previamente
+            seleccionado.descubrir(true);
+            seleccionado.setColor(selectedCircle.getColor());
+            selectedCircle.seleccionar(false);
+            selectedCircle = null;
+
+            //Comprueba si hemos ganado o hay que seguir intentando
+            if(tablero[INTENTO_ACTUAL].fullIntento()){
+                checkIntento();
+            }
+        }
+
+        return true;
     }
 
     private void dibujaIntento(int i)
@@ -307,7 +363,7 @@ public class Tablero extends GameObject {
         int spaceToEachSide = (w - totalWidth) / 2;
 
         // RECTANGULO
-        engine.getGraphics().setColor(colores.GRIS.getValue());
+        engine.getGraphics().setColor(GRIS.getValue());
         int y = pos_intentos[i].y - V_OFFSET / 2;
         engine.getGraphics().drawRoundRectangle(0,y,w,RADIO_CIRCULO*2 + V_OFFSET,50);
 
@@ -329,7 +385,7 @@ public class Tablero extends GameObject {
         int spaceToEachSide = (w - totalWidth) / 2;
 
         // Rectangulo de fondo
-        engine.getGraphics().setColor(colores.GRIS.getValue());
+        engine.getGraphics().setColor(GRIS.getValue());
         engine.getGraphics().fillRectangle(0, pos_colores.y - V_OFFSET/2, w, RADIO_CIRCULO*2+V_OFFSET);
 
         // Crear las bolas y establecer sus posiciones

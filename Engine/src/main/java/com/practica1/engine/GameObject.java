@@ -18,6 +18,8 @@ public class GameObject
     public void update(double deltaTime){}
 
     public void render(){}
+    //Que tiene que devolver handleInput
+    public boolean handleInput(){return false;}
     public void setPosX(int x) {pos.x = x;};
     public void setPosY(int y) {pos.y = y;};
 }

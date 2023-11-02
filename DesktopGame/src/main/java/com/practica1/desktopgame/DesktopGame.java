@@ -22,7 +22,7 @@ public class DesktopGame {
 
         //Scene scene = new MenuPrincipal();
         Scene scene = new MasterMind();
-        scene.init(engine);
+        //Scene scene = new Final(null,true);
         engine.setScene(scene);
 
         engine.resume();

@@ -57,12 +57,12 @@ public class Circulo extends GameObject {
         int touchY = event.y;
         boolean inside = false;
 
+
         if(event.type == TouchEvent.TouchEventType.TOUCH_DOWN){
             //Dentro de manera horizontal
             if(touchX > pos.x && touchX < pos.x + RADIO_CIRCULO * 2){
                 if(touchY > pos.y && touchY < pos.y + RADIO_CIRCULO * 2){
                     inside = true;
-
 
                 }
             }
@@ -77,4 +77,6 @@ public class Circulo extends GameObject {
     public void setColor(colores c){color = c;};
     public void seleccionar(boolean s){seleccionado=s;};
     public void descubrir(boolean d){descubierto=d;};
+
+    public boolean getDescubierto(){return descubierto;}
 }

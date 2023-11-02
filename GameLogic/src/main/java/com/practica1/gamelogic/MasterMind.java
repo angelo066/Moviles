@@ -34,7 +34,7 @@ public class MasterMind implements Scene {
         image = graph.newImage("homero.png");
         font = graph.newFont("Nexa.ttf", 80, false, false);
 
-        engine.getAudio().loadSound("doFlauta.wav","a");
+        //engine.getAudio().loadSound("doFlauta.wav","a");
     }
 
     @Override
@@ -52,11 +52,11 @@ public class MasterMind implements Scene {
 
         tablero.render();
 
-        graph.drawImage(image, 10, 10, 400, 400);
+        //graph.drawImage(image, 10, 10, 400, 400);
         graph.setColor(colores.MARRON.getValue());
         font.setSize(50);
         graph.setFont(font);
-        graph.drawText("Homero xino", 80, 80);
+        //graph.drawText("Homero xino", 80, 80);
 
     }
 

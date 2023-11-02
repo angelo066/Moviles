@@ -25,13 +25,15 @@ public class Final implements Scene {
     int numIntentos = 0;
 
     boolean HaGanado = false;
-    int NUM_CASILLAS = 5;
+    int NUM_CASILLAS;
     int RADIO_CIRCULO = 30;
 
-    public Final(Circulo[] combinacion, boolean HaGanado)
+    public Final(Circulo[] combinacion, boolean HaGanado, int casillas)
     {
         super();
-
+        this.HaGanado = HaGanado;
+        combinacion_ganadora = combinacion;
+        this.NUM_CASILLAS = casillas;
         /*int NUM_CASILLAS = combinacion.length;
         combinacion_ganadora =  new Circulo[NUM_CASILLAS];
         for (int i = 0; i < NUM_CASILLAS; i++) {
@@ -39,14 +41,7 @@ public class Final implements Scene {
             combinacion_ganadora[i].setColor(combinacion[i].getColor());
         }*/
 
-        combinacion_ganadora =  new Circulo[NUM_CASILLAS];
-        for (int i = 0; i < NUM_CASILLAS; i++) {
-            combinacion_ganadora[i] = new Circulo(engine);
-            combinacion_ganadora[i].setColor(colores.values()[i+1]);
-        }
-        setCirclePositions();
 
-        this.HaGanado = HaGanado;
     }
     @Override
     public void init(Engine engine)
@@ -102,6 +97,8 @@ public class Final implements Scene {
         NumeroIntentos.centrar();
         Codigo = new Texto(engine, new Vector2(width/2,600), fontDescripcion, "código:", colores.NEGRO);
         Codigo.centrar();
+
+        setCirclePositions();
 
     }
 

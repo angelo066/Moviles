@@ -156,12 +156,10 @@ public class Tablero extends GameObject {
             colores_elegidos[i].setColor(colores.values()[i+1]);
         }
 
-        // Movidas
-        //if(repetion)
-            combinacionConRep();
-        //else combinacionSinRep();
 
-        //combinacionJugador();
+        if(repetion)combinacionConRep();
+        else combinacionSinRep();
+
     }
 
     private void combinacionConRep() {
@@ -177,10 +175,6 @@ public class Tablero extends GameObject {
 
             combinacion_ganadora[i].setColor(c);
         }
-
-        for(int i = 0; i < combinacion_ganadora.length; i++){
-            System.out.println(combinacion_ganadora[i].getColor());
-        }
     }
 
     private void combinacionSinRep() {
@@ -188,14 +182,19 @@ public class Tablero extends GameObject {
 
         // Creamos una lista con todos los colores disponibles
         ArrayList<colores> coloresAux = new ArrayList<>();
-        for (int i = 0; i < N_COLORS; i++)
+        for (int i = 0; i < N_COLORS + 1; i++)
             coloresAux.add(colores.values()[i]);
 
         // Cogemos colores aleatorios de la lista
         for (int i = 0; i < NUM_CASILLAS; i++) {
             combinacion_ganadora[i] = new Circulo(engine);
+
             // Cogemos un color aleatorio de la lista y lo quitamos
-            int index = rand.nextInt((coloresAux.size() - 0) + 1) + 0;
+            int index = rand.nextInt(coloresAux.size());
+
+            //Mientras sea N0_COLOR
+            while (index == 0)index = rand.nextInt(coloresAux.size());
+
             colores c = coloresAux.get(index);
             coloresAux.remove(index);
 
@@ -203,7 +202,10 @@ public class Tablero extends GameObject {
             combinacion_ganadora[i].setColor(c);
         }
 
-
+        //Debug
+        //for(int i = 0; i < combinacion_ganadora.length; i++){
+          //  System.out.println(combinacion_ganadora[i].getColor());
+        //}
     }
 
     // Provisional para rellenar los colores (Debugging)

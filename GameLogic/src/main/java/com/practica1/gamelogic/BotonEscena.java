@@ -27,8 +27,6 @@ public class BotonEscena extends Boton {
         boolean pulsado = super.handleInput(event);
         if(pulsado)
         {
-            System.out.println("ONMERO");
-
             // Esto hay que cambiarlo, pero para probar que funciona
             Scene scene = new MenuDificultad();
             engine.setScene(scene);

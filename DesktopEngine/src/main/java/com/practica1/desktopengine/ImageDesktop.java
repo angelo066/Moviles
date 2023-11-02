@@ -9,8 +9,7 @@ import javax.imageio.ImageIO;
 
 public class ImageDesktop implements Image {
 
-    public ImageDesktop(String filename)
-    {
+    public ImageDesktop(String filename) throws IOException    {
         java.awt.Image image = null;
         try{
             image = ImageIO.read(new File(filename));

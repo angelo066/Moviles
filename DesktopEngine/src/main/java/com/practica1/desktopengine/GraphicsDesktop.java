@@ -32,7 +32,12 @@ public class GraphicsDesktop implements Graphics {
     public Image newImage(String name)
     {
         String filename = imagesRoute + name;
-        return new ImageDesktop(filename);
+        try{
+            return new ImageDesktop(filename);
+        } catch (Exception e){
+            return null;
+        }
+
     }
 
     @Override
@@ -203,6 +208,7 @@ public class GraphicsDesktop implements Graphics {
     public float getFontMetricHeight(Font font) {
         FontDesktop dFont = (FontDesktop)font;
         FontMetrics fm = g_graphics.getFontMetrics(dFont.getFont());
+        int s = fm.getAscent()+fm.getDescent();
         return fm.getHeight();
 
 

@@ -9,8 +9,17 @@ import com.practica1.gamelogic.MenuPrincipal;
 
 import javax.swing.JFrame;
 
-//Que devolver en el hanbdleInput
-//¿Se puede volver a elegir un circulo sin rep
+//Temita de los botones : Clase boton. Devuelve si has pulsado dentro. Switch con botones de la escena
+//Restore y save: en android no se apilan las transformaciones. Al principio y al final de cada frame
+
+//FALTA:
+//Pasar handleInput a GameObject
+//Renderizar los intentos <--
+//Enlazar las escenas
+//Modo daltonico
+//Sonido en android
+//Sacar clase colores a otro sitio
+//Revisar codigo y comentar
 
 public class DesktopGame {
     public static void main(String[]args){

@@ -1,6 +1,7 @@
 package com.practica1.gamelogic;
 
 import com.practica1.engine.Engine;
+import com.practica1.engine.Font;
 import com.practica1.engine.GameObject;
 import com.practica1.engine.TouchEvent;
 import com.practica1.engine.Vector2;
@@ -53,6 +54,10 @@ class IntentoFila {
     int aciertos_pos = 0;
     int aciertos_color = 0;
 
+    Aciertos aciertos = null;
+
+    Texto number;
+
     int coloredCircles = 0;
 
     //Metodo que comprueba si el intento está completo
@@ -90,7 +95,7 @@ public class Tablero extends GameObject {
 
         pos_cabecera = new Vector2(0,0);
         pos_intentos = new Vector2[N_DIVISIONES_PANTALLA - 2];
-        int height = engine.getGraphics().getHeight();
+        int height = engine.getGraphics().getHeight(); // esto no dbeeria hacer falta pasar desde la escena
         int separacion = height / N_DIVISIONES_PANTALLA;
         for(int i = 0; i< N_DIVISIONES_PANTALLA - 2; i++)
         {
@@ -136,12 +141,17 @@ public class Tablero extends GameObject {
     public void initTablero() {
         // Asignamos la dificultad
         configuracion(Dificultad.FACIL);
+        Font fontTitulo = engine.getGraphics().newFont("Nexa.ttf", 50, false, false);
 
         // Rellenamos el tablero
         tablero = new IntentoFila[NUM_INTENTOS];
         for (int i = 0; i < tablero.length; i++) {
             tablero[i] = new IntentoFila();
             tablero[i].combinacion = new Circulo[NUM_CASILLAS];
+            tablero[i].aciertos = new Aciertos(engine,NUM_CASILLAS, pos_intentos[i]);
+            int mierdon = i+1;
+            tablero[i].number = new Texto(engine,pos_intentos[i], fontTitulo, String.valueOf(mierdon), NEGRO);
+
             for (int j = 0; j < NUM_CASILLAS; j++) {
                 tablero[i].combinacion[j] = new Circulo(engine);
                 tablero[i].combinacion[j].setColor(NO_COLOR);
@@ -155,7 +165,6 @@ public class Tablero extends GameObject {
             colores_elegidos[i] = new Circulo(engine);
             colores_elegidos[i].setColor(colores.values()[i+1]);
         }
-
 
         if(repetion)combinacionConRep();
         else combinacionSinRep();
@@ -257,6 +266,8 @@ public class Tablero extends GameObject {
             }
 
         }
+
+        tablero[INTENTO_ACTUAL].aciertos.setCirculos(tablero[INTENTO_ACTUAL]);
 
         // Si ha acertado todas ha ganao
         if (tablero[INTENTO_ACTUAL].aciertos_pos == NUM_CASILLAS && tablero[INTENTO_ACTUAL].aciertos_color == NUM_CASILLAS)
@@ -377,6 +388,9 @@ public class Tablero extends GameObject {
             tablero[i].combinacion[j].pos.y = pos_intentos[i].y;
             tablero[i].combinacion[j].render();
         }
+        tablero[i].aciertos.render();
+
+        tablero[i].number.render();
 
     }
 

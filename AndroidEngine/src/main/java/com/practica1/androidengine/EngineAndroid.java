@@ -104,7 +104,9 @@ public class EngineAndroid implements Engine, Runnable {
 
     @Override
     public void setScene(Scene scene) {
+
         this.scene = scene;
+        this.scene.init(this);
     }
 
     public void update(double deltaTime) {

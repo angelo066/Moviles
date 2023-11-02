@@ -203,9 +203,9 @@ public class Tablero extends GameObject {
         }
 
         //Debug
-        //for(int i = 0; i < combinacion_ganadora.length; i++){
-          //  System.out.println(combinacion_ganadora[i].getColor());
-        //}
+        for(int i = 0; i < combinacion_ganadora.length; i++){
+            System.out.println(combinacion_ganadora[i].getColor());
+        }
     }
 
     // Provisional para rellenar los colores (Debugging)

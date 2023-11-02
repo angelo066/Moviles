@@ -9,6 +9,9 @@ import com.practica1.gamelogic.MenuPrincipal;
 
 import javax.swing.JFrame;
 
+//Que devolver en el hanbdleInput
+//¿Se puede volver a elegir un circulo sin rep
+
 public class DesktopGame {
     public static void main(String[]args){
         JFrame frame = new JFrame("Mastermind");

@@ -138,7 +138,7 @@ public class Tablero extends GameObject {
 
     public void initTablero() {
         // Asignamos la dificultad
-        configuracion(Dificultad.MEDIO);
+        configuracion(Dificultad.IMPOSIBLE);
         Font fontTitulo = engine.getGraphics().newFont("Nexa.ttf", 50, false, false);
 
         // Rellenamos el tablero
@@ -246,24 +246,27 @@ public class Tablero extends GameObject {
 
         // Tenemos que comprobar la fila del tablero que coincida con el intento actual
         for (int i = 0; i < NUM_CASILLAS; i++) {
-            // Comprobar posicion
+
+            // Acierta color y posicion
             if (tablero[INTENTO_ACTUAL].combinacion[i].getColor() == combinacion_ganadora[i].getColor()){
                 tablero[INTENTO_ACTUAL].aciertos_pos++;
             }
+            else{   //Comprobamos si acierta solo color
+                // Comprobar colores -> para cada elemento de la comb del jugador, recorremos la lista hasta encontrar el color que buscamos
+                int j = 0;
+                boolean encontrado = false;
+                while (j < colores_elegidos.size() && !encontrado) {
 
-            // Comprobar colores -> para cada elemento de la comb del jugador, recorremos la lista hasta encontrar el color que buscamos
-            int j = 0;
-            boolean encontrado = false;
-            while (j < colores_elegidos.size() && !encontrado) {
-
-                if (tablero[INTENTO_ACTUAL].combinacion[i].getColor() == colores_elegidos.get(j)) {
-                    // Eliminamos el color de la lista
-                    colores_elegidos.remove(j);
-                    tablero[INTENTO_ACTUAL].aciertos_color++;
-                    encontrado = true;
+                    if (tablero[INTENTO_ACTUAL].combinacion[i].getColor() == colores_elegidos.get(j)) {
+                        // Eliminamos el color de la lista
+                        colores_elegidos.remove(j);
+                        tablero[INTENTO_ACTUAL].aciertos_color++;
+                        encontrado = true;
+                    }
+                    j++;
                 }
-                j++;
             }
+
 
         }
 

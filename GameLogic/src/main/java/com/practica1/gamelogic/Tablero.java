@@ -59,11 +59,6 @@ class IntentoFila {
     Texto number;
 
     int coloredCircles = 0;
-
-    //Metodo que comprueba si el intento está completo
-    public boolean fullIntento(){
-        return coloredCircles == combinacion.length;
-    }
 }
 
 
@@ -90,6 +85,9 @@ public class Tablero extends GameObject {
     private final int RADIO_CIRCULO = 50;
 
     private Circulo selectedCircle; //Circulo que elegimos al clickar
+
+    private int currentPos = 0; //Ciruclo al que le toca recibir color
+
     public Tablero(Engine e) {
         super(e);
 
@@ -321,9 +319,33 @@ public class Tablero extends GameObject {
         return NUM_INTENTOS;
     }
 
-    public boolean handleInput(TouchEvent touchEvent){
+    public void handleInput(TouchEvent touchEvent){
+        handleColors(touchEvent);
+
+        handleCombination(touchEvent);
+
+    }
+
+    //Metodo encarga de procesar el input sobre la combinacion actual
+    private void handleCombination(TouchEvent touchEvent) {
+        boolean removeColor = false;
+        int intentoLong = tablero[INTENTO_ACTUAL].combinacion.length;
+        for(int i=0; i < intentoLong && !removeColor; i++){
+
+            Circulo c = tablero[INTENTO_ACTUAL].combinacion[i];
+
+            if(c.handleInput(touchEvent)){
+                c.descubrir(false);
+                c.setColor(NO_COLOR);
+                if(i < currentPos) currentPos = i;
+            }
+        }
+    }
+
+    //Método encargado de procesar el input sobre los colores
+    private void handleColors(TouchEvent touchEvent) {
         boolean selected = false;
-                        //Comprobacion del input dentro de un circulo
+        //Comprobacion del input dentro de un circulo
         for(int i=0; i < colores_elegidos.length && !selected ;i++){
             selected = colores_elegidos[i].handleInput(touchEvent);
 
@@ -338,19 +360,11 @@ public class Tablero extends GameObject {
         }
 
         int longIntento = tablero[INTENTO_ACTUAL].combinacion.length;
-        boolean exchange = false; //Boleano que comprueba si hemos hecho clic sobre alguno de los circulos del intento actual
-        Circulo seleccionado = null;    //Ciruclo seleccionado para poner el nuevo color
+        Circulo seleccionado = null;
 
-        for(int i = 0; i < longIntento && !exchange; i++){
+        seleccionado = tablero[INTENTO_ACTUAL].combinacion[currentPos];
 
-            exchange = tablero[INTENTO_ACTUAL].combinacion[i].handleInput(touchEvent);  //Comprobamos si esta dentro de cada circulo del intento
-
-            if(exchange)
-                seleccionado = tablero[INTENTO_ACTUAL].combinacion[i];
-
-        }
-
-        if(exchange && selectedCircle != null){
+        if(selectedCircle != null){
             //Comprobamos si es uno
             if(!seleccionado.getDescubierto())tablero[INTENTO_ACTUAL].coloredCircles++;
 
@@ -359,14 +373,17 @@ public class Tablero extends GameObject {
             seleccionado.setColor(selectedCircle.getColor());
             selectedCircle.seleccionar(false);
             selectedCircle = null;
+            currentPos++;
+
+            //Vamos hasta la primera posicion libre
+            while (currentPos< NUM_CASILLAS && tablero[INTENTO_ACTUAL].combinacion[currentPos].getColor() != NO_COLOR) currentPos++;
 
             //Comprueba si hemos ganado o hay que seguir intentando
-            if(tablero[INTENTO_ACTUAL].fullIntento()){
+            if(currentPos == NUM_CASILLAS){
+                currentPos = 0;
                 checkIntento();
             }
         }
-
-        return true;
     }
 
     private void dibujaIntento(int i)

@@ -138,7 +138,7 @@ public class Tablero extends GameObject {
 
     public void initTablero() {
         // Asignamos la dificultad
-        configuracion(Dificultad.FACIL);
+        configuracion(Dificultad.MEDIO);
         Font fontTitulo = engine.getGraphics().newFont("Nexa.ttf", 50, false, false);
 
         // Rellenamos el tablero
@@ -250,7 +250,6 @@ public class Tablero extends GameObject {
             if (tablero[INTENTO_ACTUAL].combinacion[i].getColor() == combinacion_ganadora[i].getColor()){
                 tablero[INTENTO_ACTUAL].aciertos_pos++;
             }
-
 
             // Comprobar colores -> para cada elemento de la comb del jugador, recorremos la lista hasta encontrar el color que buscamos
             int j = 0;

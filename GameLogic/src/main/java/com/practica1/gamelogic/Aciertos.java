@@ -34,18 +34,22 @@ public class Aciertos extends GameObject {
     @Override
     public void render() {
 
+        //Necesito estas dos variables porque si resto a las de la clase se dejan de dibujar los circulos
+        int aciertos = num_AciertosPosicion;
+        int aciertos_Color = num_AciertosColor;
 
         for(int i = 0; i < NUM_CASILLAS / 2; i++){
             int posX = (engine.getGraphics().getWidth() - 100) + offset * i;
 
-            if(num_AciertosPosicion > 0){
+            if(aciertos > 0){
                 engine.getGraphics().setColor(colores.NEGRO.getValue());
                 engine.getGraphics().fillCircle(posX, pos.y, RADIO_CIRCULO);
-                num_AciertosPosicion--;
+                aciertos--;
             }
-            else if(num_AciertosColor > 0){
+            else if(aciertos_Color > 0){
                 engine.getGraphics().setColor(colores.AZUL.getValue());
                 engine.getGraphics().fillCircle(posX, pos.y , RADIO_CIRCULO);
+                aciertos_Color--;
             }
             else{
                 engine.getGraphics().setColor(colores.GRIS.getValue());
@@ -59,14 +63,15 @@ public class Aciertos extends GameObject {
             int posX = (engine.getGraphics().getWidth() - 100) + offset * (i - NUM_CASILLAS/2);
             int posY_NextLine = pos.y + RADIO_CIRCULO + offset; //Variable para los circulos de la parte inferior
 
-            if(num_AciertosPosicion > 0){
+            if(aciertos > 0){
                 engine.getGraphics().setColor(colores.NEGRO.getValue());
                 engine.getGraphics().fillCircle(posX, posY_NextLine, RADIO_CIRCULO);
-                num_AciertosPosicion--;
+                aciertos--;
             }
-            else if(num_AciertosColor > 0){
+            else if(aciertos_Color > 0){
                 engine.getGraphics().setColor(colores.AZUL.getValue());
                 engine.getGraphics().fillCircle(posX, posY_NextLine , RADIO_CIRCULO);
+                aciertos_Color--;
             }
             else{
                 engine.getGraphics().setColor(colores.GRIS.getValue());

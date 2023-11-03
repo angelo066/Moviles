@@ -34,20 +34,46 @@ public class Aciertos extends GameObject {
     @Override
     public void render() {
 
-        for(int i = 0; i < num_AciertosPosicion; i++){
-            engine.getGraphics().setColor(colores.NEGRO.getValue());
-            engine.getGraphics().fillCircle(engine.getGraphics().getWidth() - 400, pos.y, RADIO_CIRCULO);
+
+        for(int i = 0; i < NUM_CASILLAS / 2; i++){
+            int posX = (engine.getGraphics().getWidth() - 100) + offset * i;
+
+            if(num_AciertosPosicion > 0){
+                engine.getGraphics().setColor(colores.NEGRO.getValue());
+                engine.getGraphics().fillCircle(posX, pos.y, RADIO_CIRCULO);
+                num_AciertosPosicion--;
+            }
+            else if(num_AciertosColor > 0){
+                engine.getGraphics().setColor(colores.AZUL.getValue());
+                engine.getGraphics().fillCircle(posX, pos.y , RADIO_CIRCULO);
+            }
+            else{
+                engine.getGraphics().setColor(colores.GRIS.getValue());
+                engine.getGraphics().fillCircle(posX, pos.y, RADIO_CIRCULO);
+
+            }
         }
 
-        for(int i = 0; i < num_AciertosColor; i++){
-            engine.getGraphics().setColor(colores.BLANCO.getValue());
-            engine.getGraphics().fillCircle(engine.getGraphics().getWidth() - 300, pos.y, RADIO_CIRCULO);
-        }
+        for(int i = NUM_CASILLAS/2; i < NUM_CASILLAS;i++){
+                                                                                //Para que no salgan hacia la derecha
+            int posX = (engine.getGraphics().getWidth() - 100) + offset * (i - NUM_CASILLAS/2);
+            int posY_NextLine = pos.y + RADIO_CIRCULO + offset; //Variable para los circulos de la parte inferior
 
-        for(int i = 0; i < Math.abs(num_AciertosColor - num_AciertosPosicion); i++){                  //Distancia entre circulos
-            engine.getGraphics().fillCircle(engine.getGraphics().getWidth() - 200, pos.y, RADIO_CIRCULO);
-        }
+            if(num_AciertosPosicion > 0){
+                engine.getGraphics().setColor(colores.NEGRO.getValue());
+                engine.getGraphics().fillCircle(posX, posY_NextLine, RADIO_CIRCULO);
+                num_AciertosPosicion--;
+            }
+            else if(num_AciertosColor > 0){
+                engine.getGraphics().setColor(colores.AZUL.getValue());
+                engine.getGraphics().fillCircle(posX, posY_NextLine , RADIO_CIRCULO);
+            }
+            else{
+                engine.getGraphics().setColor(colores.GRIS.getValue());
+                engine.getGraphics().fillCircle(posX, posY_NextLine, RADIO_CIRCULO);
 
+            }
+        }
 
     }
 

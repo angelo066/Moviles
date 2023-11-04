@@ -1,17 +1,13 @@
 package com.practica1.androidgame;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.SurfaceView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.practica1.androidengine.EngineAndroid;
 import com.practica1.engine.Scene;
 import com.practica1.gamelogic.MasterMind;
-import com.practica1.gamelogic.MenuDificultad;
-import com.practica1.gamelogic.MenuPrincipal;
 
 public class AndroidGame extends AppCompatActivity {
 

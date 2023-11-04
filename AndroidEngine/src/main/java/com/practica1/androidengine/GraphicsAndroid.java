@@ -9,8 +9,8 @@ import android.view.SurfaceView;
 
 import com.practica1.engine.Color;
 import com.practica1.engine.Font;
-import com.practica1.engine.Image;
 import com.practica1.engine.Graphics;
+import com.practica1.engine.Image;
 
 import java.io.IOException;
 

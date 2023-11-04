@@ -1,14 +1,11 @@
 package com.practica1.androidengine;
 
-import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.media.SoundPool;
 import android.view.SurfaceView;
 
 import com.practica1.engine.Audio;
-import com.practica1.engine.Sound;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**

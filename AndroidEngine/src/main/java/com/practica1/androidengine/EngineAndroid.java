@@ -1,9 +1,5 @@
 package com.practica1.androidengine;
 
-import android.content.res.AssetManager;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.practica1.engine.Audio;

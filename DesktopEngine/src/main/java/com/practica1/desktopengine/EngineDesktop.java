@@ -7,11 +7,9 @@ import com.practica1.engine.Input;
 import com.practica1.engine.Scene;
 import com.practica1.engine.TouchEvent;
 
-import javax.swing.JFrame;
-
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
-import java.awt.Graphics2D;
+
+import javax.swing.JFrame;
 
 /**
  * Clase motor de la aplicacion en desktop

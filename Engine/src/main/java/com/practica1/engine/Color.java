@@ -1,5 +1,8 @@
 package com.practica1.engine;
 
+/**
+ * Enum que envuelve colores en forma de enteros (en hexadecimal)
+ */
 public enum Color {
     NO_COLOR(0xFF333333),
     ROJO(0xFFFF0000),

@@ -2,15 +2,12 @@ package com.practica1.desktopgame;
 
 import com.practica1.desktopengine.EngineDesktop;
 import com.practica1.engine.Scene;
-import com.practica1.gamelogic.Final;
 import com.practica1.gamelogic.MasterMind;
-import com.practica1.gamelogic.MenuDificultad;
-import com.practica1.gamelogic.MenuPrincipal;
 
 import javax.swing.JFrame;
 
 //Temita de los botones : Clase boton. Devuelve si has pulsado dentro. Switch con botones de la escena
-//Restore y save: en android no se apilan las transformaciones. Al principio y al final de cada frame <--
+//Restore y save: en android no se apilan las transformaciones. Al principio y al final de cada frame <-- en principio
 
 //FALTA:
 //Pasar handleInput a GameObject
@@ -19,8 +16,8 @@ import javax.swing.JFrame;
 //Modo daltonico
 //Sonido en android <--
 //Sacar clase colores a otro sitio <--
-//Revisar codigo y comentar
-//Hacer un clear en las escenas antes de pintar?
+//Revisar codigo y comentar <-- en pricipio
+//Hacer un clear en las escenas antes de pintar
 
 public class DesktopGame {
     public static void main(String[]args){

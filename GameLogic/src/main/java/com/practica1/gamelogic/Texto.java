@@ -1,5 +1,6 @@
 package com.practica1.gamelogic;
 
+import com.practica1.engine.Color;
 import com.practica1.engine.Engine;
 import com.practica1.engine.Font;
 import com.practica1.engine.GameObject;
@@ -7,12 +8,12 @@ import com.practica1.engine.TouchEvent;
 import com.practica1.engine.Vector2;
 
 public class Texto extends GameObject {
-    colores color;
+    Color color;
     String text;
     Font font;
 
     // Constructora para boton sin redondeo de bordes
-    public Texto(Engine e, Vector2 pos, Font font, String text, colores color)
+    public Texto(Engine e, Vector2 pos, Font font, String text, Color color)
     {
         super(e, pos);
         this.font = font;
@@ -23,7 +24,7 @@ public class Texto extends GameObject {
     @Override
     public void render()
     {
-        engine.getGraphics().setColor(color.getValue());
+        engine.getGraphics().setColor(color);
         engine.getGraphics().setFont(font);
         engine.getGraphics().drawText(text, pos.x+50, pos.y+50);
     }

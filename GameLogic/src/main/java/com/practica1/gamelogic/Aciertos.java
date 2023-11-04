@@ -1,8 +1,8 @@
 package com.practica1.gamelogic;
 
+import com.practica1.engine.Color;
 import com.practica1.engine.Engine;
 import com.practica1.engine.GameObject;
-import com.practica1.engine.TouchEvent;
 import com.practica1.engine.Vector2;
 
 public class Aciertos extends GameObject {
@@ -42,17 +42,17 @@ public class Aciertos extends GameObject {
             int posX = (engine.getGraphics().getSceneWidth() - 100) + offset * i;
 
             if(aciertos > 0){
-                engine.getGraphics().setColor(colores.NEGRO.getValue());
+                engine.getGraphics().setColor(Color.NEGRO);
                 engine.getGraphics().fillCircle(posX, pos.y, RADIO_CIRCULO);
                 aciertos--;
             }
             else if(aciertos_Color > 0){
-                engine.getGraphics().setColor(colores.AZUL.getValue());
+                engine.getGraphics().setColor(Color.AZUL);
                 engine.getGraphics().fillCircle(posX, pos.y , RADIO_CIRCULO);
                 aciertos_Color--;
             }
             else{
-                engine.getGraphics().setColor(colores.GRIS.getValue());
+                engine.getGraphics().setColor(Color.GRIS);
                 engine.getGraphics().fillCircle(posX, pos.y, RADIO_CIRCULO);
 
             }
@@ -64,17 +64,17 @@ public class Aciertos extends GameObject {
             int posY_NextLine = pos.y + RADIO_CIRCULO + offset; //Variable para los circulos de la parte inferior
 
             if(aciertos > 0){
-                engine.getGraphics().setColor(colores.NEGRO.getValue());
+                engine.getGraphics().setColor(Color.NEGRO);
                 engine.getGraphics().fillCircle(posX, posY_NextLine, RADIO_CIRCULO);
                 aciertos--;
             }
             else if(aciertos_Color > 0){
-                engine.getGraphics().setColor(colores.AZUL.getValue());
+                engine.getGraphics().setColor(Color.AZUL);
                 engine.getGraphics().fillCircle(posX, posY_NextLine , RADIO_CIRCULO);
                 aciertos_Color--;
             }
             else{
-                engine.getGraphics().setColor(colores.GRIS.getValue());
+                engine.getGraphics().setColor(Color.GRIS);
                 engine.getGraphics().fillCircle(posX, posY_NextLine, RADIO_CIRCULO);
 
             }

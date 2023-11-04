@@ -1,12 +1,13 @@
 package com.practica1.gamelogic;
 
+import com.practica1.engine.Color;
 import com.practica1.engine.Engine;
 import com.practica1.engine.GameObject;
 import com.practica1.engine.TouchEvent;
 
 public class Circulo extends GameObject {
 
-    private colores color;
+    private Color color;
     private boolean descubierto = false; // para cuando asignamos un color al tablero
     private boolean seleccionado = false; // para cuando pinchamos encima
     private final int RADIO_CIRCULO = 50;
@@ -28,21 +29,21 @@ public class Circulo extends GameObject {
         // Pintamos un borde amarillo alrededor del Circulo
         if(seleccionado)
         {
-            engine.getGraphics().setColor(colores.AMARILLO.getValue());
+            engine.getGraphics().setColor(Color.AMARILLO);
             engine.getGraphics().fillCircle(pos.x - (RADIO_SELECCION - RADIO_CIRCULO), pos.y - (RADIO_SELECCION - RADIO_CIRCULO), RADIO_SELECCION);
         }
         // Si se ha seleccionado pintamos el color normal
         if(descubierto)
         {
-            engine.getGraphics().setColor(color.getValue());
+            engine.getGraphics().setColor(color);
             engine.getGraphics().fillCircle(pos.x, pos.y, RADIO_CIRCULO);
         }
         // Si no lo pintamos bloqueado
         else
         {
-            engine.getGraphics().setColor(colores.GRIS.getValue());
+            engine.getGraphics().setColor(Color.GRIS);
             engine.getGraphics().fillCircle(pos.x, pos.y, RADIO_CIRCULO);
-            engine.getGraphics().setColor(colores.GRIS_OSCURO.getValue());
+            engine.getGraphics().setColor(Color.GRIS_OSCURO);
             engine.getGraphics().fillCircle(pos.x + RADIO_CIRCULO - RADIO_CIRCULO_INTERIOR, pos.y +  RADIO_CIRCULO - RADIO_CIRCULO_INTERIOR, RADIO_CIRCULO_INTERIOR);
         }
     }
@@ -72,9 +73,9 @@ public class Circulo extends GameObject {
         return inside;
     }
 
-    public colores getColor(){return color;}
+    public Color getColor(){return color;}
 
-    public void setColor(colores c){color = c;};
+    public void setColor(Color c){color = c;};
     public void seleccionar(boolean s){seleccionado=s;};
     public void descubrir(boolean d){descubierto=d;};
 

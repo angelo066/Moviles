@@ -68,8 +68,6 @@ public class EngineDesktop implements Engine, Runnable {
 
         long lastFrameTime = System.nanoTime();
 
-        graphicsDesktop.save();
-
         while (running) {
             //HandleInput
             handleInput();

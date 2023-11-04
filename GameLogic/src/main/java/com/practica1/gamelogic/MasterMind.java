@@ -1,5 +1,6 @@
 package com.practica1.gamelogic;
 
+import com.practica1.engine.Color;
 import com.practica1.engine.Engine;
 import com.practica1.engine.Font;
 import com.practica1.engine.Graphics;
@@ -47,16 +48,17 @@ public class MasterMind implements Scene {
     @Override
     public void render() {
 
-        graph.clear(colores.GRIS_OSCURO.getValue());
+        graph.clear(Color.GRIS_OSCURO);
 
-        graph.setColor(colores.BLANCO.getValue());
+        graph.setColor(Color.BLANCO);
         graph.fillRectangle(0, 0, width, height);
 
         tablero.render();
 
-        graph.setColor(colores.MARRON.getValue());
+        graph.setColor(Color.MARRON);
         font.setSize(50);
         graph.setFont(font);
+
     }
 
     @Override

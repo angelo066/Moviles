@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.practica1.engine.Color;
 import com.practica1.engine.Font;
 import com.practica1.engine.Image;
 import com.practica1.engine.Graphics;
@@ -88,13 +89,13 @@ public class GraphicsAndroid implements Graphics {
 
 
     @Override
-    public void setColor(int color) {
-        paint.setColor(color);
+    public void setColor(Color color) {
+        paint.setColor(color.getValue());
     }
 
     @Override
-    public void clear(int color) {
-        canvas.drawColor(color);
+    public void clear(Color color) {
+        canvas.drawColor(color.getValue());
     }
 
 
@@ -120,10 +121,6 @@ public class GraphicsAndroid implements Graphics {
     @Override
     public void restore() {
         canvas.restore();
-        scaleX = 1;
-        scaleY = 1;
-        translateY = 0;
-        translateX = 0;
     }
 
 
@@ -161,7 +158,7 @@ public class GraphicsAndroid implements Graphics {
     @Override
     public void drawCircle(float cx, float cy, float radius) {
         paint.setStyle(Paint.Style.STROKE);
-        canvas.drawCircle(cx + radius, cy - radius, radius, this.paint);
+        canvas.drawCircle(cx + radius, cy + radius, radius, this.paint);
     }
 
     @Override
@@ -218,6 +215,8 @@ public class GraphicsAndroid implements Graphics {
         while (!holder.getSurface().isValid()) ;
         canvas = this.holder.lockCanvas();
 
+        save();
+
         float scaleX = (float) renderView.getWidth() / sceneWidth;
         float scaleY = (float) renderView.getHeight() / sceneHeight;
         float scale = Math.min(scaleX, scaleY);
@@ -227,13 +226,13 @@ public class GraphicsAndroid implements Graphics {
 
         translate(translateX, translateY);
         scale(scale, scale);
-
     }
 
     /**
      * Libera todo lo necesario despues del renderizado
      */
     public void releaseRender() {
+        restore();
         holder.unlockCanvasAndPost(canvas);
     }
 

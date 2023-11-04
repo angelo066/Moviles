@@ -1,5 +1,6 @@
 package com.practica1.gamelogic;
 
+import com.practica1.engine.Color;
 import com.practica1.engine.Engine;
 import com.practica1.engine.Font;
 import com.practica1.engine.Graphics;
@@ -66,11 +67,11 @@ public class Final implements Scene {
         Vector2 size = new Vector2(800,120);
 
         Vector2 posRep = new Vector2(width/2, height/2 + 300);
-        botonRepetir = new BotonEscena(engine, posRep, new Vector2(size), 70, fontBoton,"Volver a jugar", colores.CYAN, colores.NEGRO);
+        botonRepetir = new BotonEscena(engine, posRep, new Vector2(size), 70, fontBoton,"Volver a jugar", Color.CYAN, Color.NEGRO);
         botonRepetir.centrar();
 
         Vector2 posVolver = new Vector2(width/2, height/2 + 450);
-        botonVolverMenu = new BotonEscena(engine, posVolver, new Vector2(size), 70, fontBoton,"Elegir Dificultad", colores.CYAN, colores.NEGRO);
+        botonVolverMenu = new BotonEscena(engine, posVolver, new Vector2(size), 70, fontBoton,"Elegir Dificultad", Color.CYAN, Color.NEGRO);
         botonVolverMenu.centrar();
 
         String mensaje ="";
@@ -81,21 +82,21 @@ public class Final implements Scene {
             mensaje = "ENHORABUENA!!";
             descripcion = "Has averiguado el codigo en";
             intentos = numIntentos + " intentos";
-            MensajeFinal = new Texto(engine, new Vector2(width/2,200), fontMensaje, mensaje, colores.NEGRO);
+            MensajeFinal = new Texto(engine, new Vector2(width/2,200), fontMensaje, mensaje, Color.NEGRO);
         }
         else
         {
             mensaje = "HAS PERDIDO :(";
             descripcion = "Te has quedado sin intentos";
-            MensajeFinal = new Texto(engine, new Vector2(width/2,200), fontMensaje, mensaje, colores.NEGRO);
+            MensajeFinal = new Texto(engine, new Vector2(width/2,200), fontMensaje, mensaje, Color.NEGRO);
         }
         MensajeFinal.centrar();
 
-        MensajeDescripcion = new Texto(engine, new Vector2(width/2,350), fontDescripcion, descripcion, colores.NEGRO);
+        MensajeDescripcion = new Texto(engine, new Vector2(width/2,350), fontDescripcion, descripcion, Color.NEGRO);
         MensajeDescripcion.centrar();
-        NumeroIntentos = new Texto(engine, new Vector2(width/2,500), fontIntentos, intentos, colores.NEGRO);
+        NumeroIntentos = new Texto(engine, new Vector2(width/2,500), fontIntentos, intentos, Color.NEGRO);
         NumeroIntentos.centrar();
-        Codigo = new Texto(engine, new Vector2(width/2,600), fontDescripcion, "código:", colores.NEGRO);
+        Codigo = new Texto(engine, new Vector2(width/2,600), fontDescripcion, "código:", Color.NEGRO);
         Codigo.centrar();
 
         setCirclePositions();
@@ -110,9 +111,9 @@ public class Final implements Scene {
     @Override
     public void render()
     {
-        graph.clear(colores.GRIS_OSCURO.getValue());
+        graph.clear(Color.GRIS_OSCURO);
 
-        graph.setColor(colores.BLANCO.getValue());
+        graph.setColor(Color.BLANCO);
         graph.fillRectangle(0,0,width,height);
         botonRepetir.render();
         botonVolverMenu.render();
@@ -142,7 +143,7 @@ public class Final implements Scene {
         int spaceToEachSide = (w - totalWidth) / 2;
 
         // Rectangulo de fondo
-        engine.getGraphics().setColor(colores.GRIS.getValue());
+        engine.getGraphics().setColor(Color.GRIS);
 
         // Crear las bolas y establecer sus posiciones
         for (int i = 0; i < NUM_CASILLAS; i++) {

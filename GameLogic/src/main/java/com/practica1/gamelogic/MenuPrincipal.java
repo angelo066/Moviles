@@ -1,5 +1,6 @@
 package com.practica1.gamelogic;
 
+import com.practica1.engine.Color;
 import com.practica1.engine.Engine;
 import com.practica1.engine.Font;
 import com.practica1.engine.Graphics;
@@ -32,9 +33,9 @@ public class MenuPrincipal implements Scene {
         Font fontBoton = graph.newFont("Nexa.ttf", 80, false, false);
         Font fontTitulo = graph.newFont("Nexa.ttf", 150, false, false);
 
-        botonJugar = new BotonEscena(engine, new Vector2(width/2,height/2), new Vector2(500,150), 70, fontBoton,"Jugar", colores.CYAN, colores.NEGRO);
+        botonJugar = new BotonEscena(engine, new Vector2(width/2,height/2), new Vector2(500,150), 70, fontBoton,"Jugar", Color.CYAN, Color.NEGRO);
         botonJugar.centrar();
-        titulo = new Texto(engine, new Vector2(width/2,250), fontTitulo, "Master Mind", colores.NEGRO);
+        titulo = new Texto(engine, new Vector2(width/2,250), fontTitulo, "Master Mind", Color.NEGRO);
         titulo.centrar();
     }
 
@@ -46,9 +47,9 @@ public class MenuPrincipal implements Scene {
     @Override
     public void render()
     {
-        graph.clear(colores.GRIS_OSCURO.getValue());
+        graph.clear(Color.GRIS_OSCURO);
 
-        graph.setColor(colores.BLANCO.getValue());
+        graph.setColor(Color.BLANCO);
         graph.fillRectangle(0,0,width,height);
 
         botonJugar.render();

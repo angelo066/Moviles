@@ -1,5 +1,6 @@
 package com.practica1.gamelogic;
 
+import com.practica1.engine.Color;
 import com.practica1.engine.Engine;
 import com.practica1.engine.Font;
 import com.practica1.engine.Graphics;
@@ -41,22 +42,22 @@ public class MenuDificultad implements Scene {
         Vector2 size = new Vector2(500,100);
 
         Vector2 posFacil = new Vector2(pos.x, pos.y - (3*size.y)/2 - (3*offset));
-        botonFacil = new BotonEscena(engine, posFacil, new Vector2(size), 70, fontBoton,"Fácil", colores.VERDE, colores.NEGRO);
+        botonFacil = new BotonEscena(engine, posFacil, new Vector2(size), 70, fontBoton,"Fácil", Color.VERDE, Color.NEGRO);
         botonFacil.centrar();
 
         Vector2 posMedio = new Vector2(pos.x, pos.y - size.y/2 - offset);
-        botonMedio = new BotonEscena(engine, posMedio, new Vector2(size), 70, fontBoton,"Medio", colores.AMARILLO, colores.NEGRO);
+        botonMedio = new BotonEscena(engine, posMedio, new Vector2(size), 70, fontBoton,"Medio", Color.AMARILLO, Color.NEGRO);
         botonMedio.centrar();
 
         Vector2 posDificil = new Vector2(pos.x, pos.y + size.y/2 + offset);
-        botonDificil = new BotonEscena(engine, posDificil, new Vector2(size), 70, fontBoton,"Difícil", colores.NARANJA, colores.NEGRO);
+        botonDificil = new BotonEscena(engine, posDificil, new Vector2(size), 70, fontBoton,"Difícil", Color.NARANJA, Color.NEGRO);
         botonDificil.centrar();
 
         Vector2 posImposible = new Vector2(pos.x, pos.y + (3*size.y)/2 + (3*offset));
-        botonImposible = new BotonEscena(engine, posImposible, new Vector2(size), 70, fontBoton,"Imposible", colores.ROJO, colores.NEGRO);
+        botonImposible = new BotonEscena(engine, posImposible, new Vector2(size), 70, fontBoton,"Imposible", Color.ROJO, Color.NEGRO);
         botonImposible.centrar();
 
-        titulo = new Texto(engine, new Vector2(width/2,250), fontTitulo, "Selecciona la dificultad.", colores.NEGRO);
+        titulo = new Texto(engine, new Vector2(width/2,250), fontTitulo, "Selecciona la dificultad.", Color.NEGRO);
         titulo.centrar();
     }
 
@@ -69,7 +70,7 @@ public class MenuDificultad implements Scene {
     public void render()
     {
         //Fondo
-        graph.setColor(colores.BLANCO.getValue());
+        graph.setColor(Color.BLANCO);
         graph.fillRectangle(0,0,width,height);
         botonFacil.render();
         botonMedio.render();

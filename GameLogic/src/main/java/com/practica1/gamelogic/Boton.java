@@ -1,5 +1,6 @@
 package com.practica1.gamelogic;
 
+import com.practica1.engine.Color;
 import com.practica1.engine.Engine;
 import com.practica1.engine.Font;
 import com.practica1.engine.GameObject;
@@ -8,7 +9,7 @@ import com.practica1.engine.Vector2;
 
 public class Boton extends GameObject {
     Vector2 size;
-    colores color;
+    Color color;
     String textContent;
     boolean redondeado = false;
     boolean conTexto = false;
@@ -17,13 +18,13 @@ public class Boton extends GameObject {
     Texto text;
 
     // Constructora para boton sin redondeo de bordes
-    public Boton(Engine e, Vector2 size, colores colorBoton, colores colorTexto)
+    public Boton(Engine e, Vector2 size, Color colorBoton, Color colorTexto)
     {
         super(e);
         this.size = size;
         this.color = colorBoton;
     }
-    public Boton(Engine e, Vector2 size, Font font, String text, colores colorBoton, colores colorTexto)
+    public Boton(Engine e, Vector2 size, Font font, String text, Color colorBoton, Color colorTexto)
     {
         super(e);
         this.size = size;
@@ -35,7 +36,7 @@ public class Boton extends GameObject {
         this.text.centrar();
     }
     // Constructora para boton con redondeo de bordes
-    public Boton(Engine e, Vector2 size, float arc, colores colorBoton, colores colorTexto)
+    public Boton(Engine e, Vector2 size, float arc, Color colorBoton, Color colorTexto)
     {
         super(e);
         this.size = size;
@@ -43,7 +44,7 @@ public class Boton extends GameObject {
         redondeado = true;
         this.color = colorBoton;
     }
-    public Boton(Engine e, Vector2 pos, Vector2 size, float arc, Font font, String text, colores colorBoton, colores colorTexto)
+    public Boton(Engine e, Vector2 pos, Vector2 size, float arc, Font font, String text, Color colorBoton, Color colorTexto)
     {
         super(e, pos);
         this.size = size;
@@ -60,7 +61,7 @@ public class Boton extends GameObject {
     @Override
     public void render()
     {
-        engine.getGraphics().setColor(color.getValue());
+        engine.getGraphics().setColor(color);
 
         if(redondeado)
             engine.getGraphics().fillRoundRectangle(pos.x, pos.y, size.x, size.y, arc);

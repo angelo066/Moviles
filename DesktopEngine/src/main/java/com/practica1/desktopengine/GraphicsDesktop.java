@@ -1,5 +1,6 @@
 package com.practica1.desktopengine;
 
+import com.practica1.engine.Color;
 import com.practica1.engine.Font;
 import com.practica1.engine.Graphics;
 import com.practica1.engine.Image;
@@ -70,15 +71,15 @@ public class GraphicsDesktop implements Graphics {
     }
 
     @Override
-    public void setColor(int color) {
-        java.awt.Color newColor = new java.awt.Color(color);
+    public void setColor(Color color) {
+        java.awt.Color newColor = new java.awt.Color(color.getValue());
         g_graphics.setColor(newColor);
     }
 
     @Override
-    public void clear(int color) {
+    public void clear(Color color) {
         AffineTransform transform = g_graphics.getTransform();
-        restore();
+        g_graphics.setTransform(frameTransform);
         setColor(color);
         fillRectangle(0, 0, g_frame.getWidth(), g_frame.getHeight());
         g_graphics.setTransform(transform);
@@ -192,7 +193,7 @@ public class GraphicsDesktop implements Graphics {
     public void prepareRender() {
         g_graphics = (Graphics2D) g_frame.getBufferStrategy().getDrawGraphics();
 
-        restore();
+        save();
 
         int width = g_frame.getWidth() - g_frame.getInsets().left - g_frame.getInsets().right;
         int height = g_frame.getHeight() - g_frame.getInsets().top - g_frame.getInsets().bottom;
@@ -212,6 +213,7 @@ public class GraphicsDesktop implements Graphics {
      * Libera todo lo necesario despues del renderizado
      */
     public void releaseRender() {
+        restore();
         g_graphics.dispose();
     }
 

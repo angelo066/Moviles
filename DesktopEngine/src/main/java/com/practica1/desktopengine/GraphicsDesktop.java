@@ -21,7 +21,7 @@ public class GraphicsDesktop implements Graphics {
     private String imagesRoute = "assets/sprites/";
     private String fontsRoute = "assets/fonts/";
 
-    private float scaleX = 0, scaleY = 0, translateX = 0, translateY = 0;
+    private float scaleX = 1, scaleY = 1, translateX = 0, translateY = 0;
 
     public GraphicsDesktop(JFrame frame) {
         g_frame = frame;

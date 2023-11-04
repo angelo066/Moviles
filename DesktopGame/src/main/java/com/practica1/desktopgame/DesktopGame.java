@@ -20,12 +20,14 @@ import javax.swing.JFrame;
 //Sonido en android
 //Sacar clase colores a otro sitio
 //Revisar codigo y comentar
+//Hacer un clear en las escenas antes de pintar?
 
 public class DesktopGame {
     public static void main(String[]args){
         JFrame frame = new JFrame("Mastermind");
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setIgnoreRepaint(true);
         frame.setVisible(true);
 
         int intentos = 100;

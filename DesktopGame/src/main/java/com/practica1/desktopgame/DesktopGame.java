@@ -27,8 +27,19 @@ public class DesktopGame {
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        frame.createBufferStrategy(2);
 
+        int intentos = 100;
+        while(intentos-- > 0){
+            try{
+                frame.createBufferStrategy(2);
+                break;
+            }
+            catch (Exception e){}
+        }
+        if(intentos == 0){
+            System.out.println("No se ha podido crear el buffer strategy");
+            return;
+        }
 
         EngineDesktop engine = new EngineDesktop(frame);
 

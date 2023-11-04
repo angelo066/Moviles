@@ -20,6 +20,7 @@ public class MasterMind implements Scene {
     private int height;
     private Image image;
     private Font font;
+
     @Override
     public void init(Engine engine) {
         this.engine = engine;
@@ -27,14 +28,14 @@ public class MasterMind implements Scene {
 
         width = 1080;
         height = 1920;
-        
-        engine.getGraphics().setSceneSize(width,height);
+
+        engine.getGraphics().setSceneSize(width, height);
         this.tablero = new Tablero(engine);
 
         image = graph.newImage("homero.png");
         font = graph.newFont("Nexa.ttf", 80, false, false);
 
-        //engine.getAudio().loadSound("doFlauta.wav","a");
+        //engine.getAudio().loadSound("doFlauta.wav", "a");
     }
 
     @Override
@@ -49,7 +50,7 @@ public class MasterMind implements Scene {
         graph.clear(colores.GRIS_OSCURO.getValue());
 
         graph.setColor(colores.BLANCO.getValue());
-        graph.fillRectangle(0,0,width,height);
+        graph.fillRectangle(0, 0, width, height);
 
         tablero.render();
 
@@ -61,18 +62,12 @@ public class MasterMind implements Scene {
     @Override
     public void handleInput(ArrayList<TouchEvent> events) {
         //Recorremos el array de eventos mandandolos al tablero
-        for(int i = 0; i < events.size(); i++){
+        for (int i = 0; i < events.size(); i++) {
             tablero.handleInput(events.get(i));
-        }
-
-        if(events.size() > 0) {
-            engine.getAudio().stopSound("a");
-            engine.getAudio().playSound("a", false);
         }
     }
 
-    void cargarHomer()
-    {
+    void cargarHomer() {
         graph.drawImage(image, 0, 0, 400, 400);
 
     }

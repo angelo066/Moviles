@@ -16,9 +16,9 @@ public interface Sound {
     void stop();
 
     /**
-     * Establece el loop del sonido a verdadero
+     * Establece el loop del sonido a True/False
      */
-    void loop();
+    void loop(boolean loop);
 
     /**
      * Libera los recursos del sonido

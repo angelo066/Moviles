@@ -45,8 +45,11 @@ public class SoundDesktop implements Sound {
     }
 
     @Override
-    public void loop() {
-        audioClip.loop(Clip.LOOP_CONTINUOUSLY);
+    public void loop(boolean loop) {
+        if(loop)
+            audioClip.loop(Clip.LOOP_CONTINUOUSLY);
+        else
+            audioClip.loop(0);
     }
 
     @Override

@@ -30,8 +30,9 @@ public class AudioDesktop implements Audio {
         if (!soundsMap.containsKey(id)) return;
 
         SoundDesktop sound = soundsMap.get(id);
-        if (loop) sound.loop();
+
         sound.play();
+        sound.loop(loop);
     }
 
     @Override

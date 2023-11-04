@@ -36,7 +36,7 @@ public class EngineAndroid implements Engine, Runnable {
         this.view = view;
         graphicsAndroid = new GraphicsAndroid(view);
         inputAndroid = new InputAndroid(view);
-        audioAndroid = new AudioAndroid();
+        audioAndroid = new AudioAndroid(view);
     }
 
 

@@ -2,7 +2,17 @@ plugins {
     id 'com.android.application'
 }
 
+tasks.register("CopyAssets",Copy){
+    from (rootDir.getAbsolutePath() + "/assets")
+    into("src/main/assets")
+}
+
 android {
+
+    applicationVariants.all { variant ->
+        variant.preBuild.dependsOn CopyAssets
+    }
+
     namespace 'com.practica1.androidgame'
     compileSdk 34
 

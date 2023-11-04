@@ -39,7 +39,7 @@ public class Aciertos extends GameObject {
         int aciertos_Color = num_AciertosColor;
 
         for(int i = 0; i < NUM_CASILLAS / 2; i++){
-            int posX = (engine.getGraphics().getWidth() - 100) + offset * i;
+            int posX = (engine.getGraphics().getSceneWidth() - 100) + offset * i;
 
             if(aciertos > 0){
                 engine.getGraphics().setColor(colores.NEGRO.getValue());
@@ -60,7 +60,7 @@ public class Aciertos extends GameObject {
 
         for(int i = NUM_CASILLAS/2; i < NUM_CASILLAS;i++){
                                                                                 //Para que no salgan hacia la derecha
-            int posX = (engine.getGraphics().getWidth() - 100) + offset * (i - NUM_CASILLAS/2);
+            int posX = (engine.getGraphics().getSceneWidth() - 100) + offset * (i - NUM_CASILLAS/2);
             int posY_NextLine = pos.y + RADIO_CIRCULO + offset; //Variable para los circulos de la parte inferior
 
             if(aciertos > 0){

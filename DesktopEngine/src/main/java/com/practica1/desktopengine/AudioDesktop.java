@@ -5,14 +5,18 @@ import com.practica1.desktopengine.SoundDesktop;
 
 import java.util.HashMap;
 
+/**
+ * Clase que se encarga de gestionar el audio de la apliacion en desktop
+ */
 public class AudioDesktop implements Audio {
     HashMap<String, SoundDesktop> soundsMap;
 
     private String soundsPath = "assets/sounds/";
 
-    public AudioDesktop(){
+    public AudioDesktop() {
         soundsMap = new HashMap<>();
     }
+
     @Override
     public void loadSound(String file, String id) {
         if (soundsMap.containsKey(id)) return;

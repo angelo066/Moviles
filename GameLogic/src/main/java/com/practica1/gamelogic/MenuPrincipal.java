@@ -46,9 +46,11 @@ public class MenuPrincipal implements Scene {
     @Override
     public void render()
     {
-        //Fondo
+        graph.clear(colores.GRIS_OSCURO.getValue());
+
         graph.setColor(colores.BLANCO.getValue());
         graph.fillRectangle(0,0,width,height);
+
         botonJugar.render();
         titulo.render();
     }

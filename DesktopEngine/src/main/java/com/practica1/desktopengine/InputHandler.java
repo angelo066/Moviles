@@ -9,17 +9,24 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+/**
+ * Clase que gestiona los eventos de input recibidos en la ventana en desktop
+ */
 public class InputHandler implements MouseListener, MouseMotionListener {
 
     private ArrayList<TouchEvent> events;
 
     private ArrayList<TouchEvent> pendingEvents;
 
-    public InputHandler(JFrame view){
+    /**
+     * @param view Ventana de la aplicacion
+     */
+    public InputHandler(JFrame view) {
         events = new ArrayList<>();
         pendingEvents = new ArrayList<>();
         view.addMouseListener(this);
     }
+
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         TouchEvent event = new TouchEvent();
@@ -73,8 +80,16 @@ public class InputHandler implements MouseListener, MouseMotionListener {
         }
     }
 
-    public void clearEvents(){events.clear();}
+    /**
+     * Limpia los eventos
+     */
+    public void clearEvents() {
+        events.clear();
+    }
 
+    /**
+     * @return Devuelve los eventos ocurridos en el ultimo frame de la aplicacion
+     */
     public synchronized ArrayList<TouchEvent> getTouchEvents() {
         events.addAll(pendingEvents);
         pendingEvents.clear();

@@ -46,18 +46,16 @@ public class MasterMind implements Scene {
     @Override
     public void render() {
 
-        //Fondo
+        graph.clear(colores.GRIS_OSCURO.getValue());
+
         graph.setColor(colores.BLANCO.getValue());
         graph.fillRectangle(0,0,width,height);
 
         tablero.render();
 
-        //graph.drawImage(image, 10, 10, 400, 400);
         graph.setColor(colores.MARRON.getValue());
         font.setSize(50);
         graph.setFont(font);
-        //graph.drawText("Homero xino", 80, 80);
-
     }
 
     @Override

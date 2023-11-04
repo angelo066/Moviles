@@ -13,7 +13,9 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.awt.Graphics2D;
 
-
+/**
+ * Clase motor de la aplicacion en desktop
+ */
 public class EngineDesktop implements Engine, Runnable {
     private boolean running = false;
     private Thread thread;
@@ -25,6 +27,17 @@ public class EngineDesktop implements Engine, Runnable {
     private GraphicsDesktop graphicsDesktop;
     private InputDesktop inputDesktop;
     private AudioDesktop audioDesktop;
+
+    /**
+     * @param view Ventana de la aplicacion
+     */
+    public EngineDesktop(JFrame view) {
+        frame = view;
+        graphicsDesktop = new GraphicsDesktop(frame);
+        inputDesktop = new InputDesktop(frame);
+        audioDesktop = new AudioDesktop();
+    }
+
 
     @Override
     public Graphics getGraphics() {
@@ -41,12 +54,6 @@ public class EngineDesktop implements Engine, Runnable {
         return audioDesktop;
     }
 
-    public EngineDesktop(JFrame view) {
-        frame = view;
-        graphicsDesktop = new GraphicsDesktop(frame);
-        inputDesktop = new InputDesktop(frame);
-        audioDesktop = new AudioDesktop();
-    }
 
     @Override
     public void run() {
@@ -120,16 +127,27 @@ public class EngineDesktop implements Engine, Runnable {
         this.scene.init(this);
     }
 
+    /**
+     * Update del motor
+     *
+     * @param deltaTime
+     */
     private void update(double deltaTime) {
         scene.update(deltaTime);
     }
 
+    /**
+     * Renderizado del motor
+     */
     private void render() {
         graphicsDesktop.prepareRender();
         scene.render();
         graphicsDesktop.releaseRender();
     }
 
+    /**
+     * Manejo de input del motor
+     */
     private void handleInput() {
 
         for (TouchEvent event : inputDesktop.getTouchEvents()) {

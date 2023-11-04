@@ -93,7 +93,7 @@ public class Tablero extends GameObject {
 
         pos_cabecera = new Vector2(0,0);
         pos_intentos = new Vector2[N_DIVISIONES_PANTALLA - 2];
-        int height = engine.getGraphics().getHeight(); // esto no dbeeria hacer falta pasar desde la escena
+        int height = engine.getGraphics().getSceneHeight(); // esto no dbeeria hacer falta pasar desde la escena
         int separacion = height / N_DIVISIONES_PANTALLA;
         for(int i = 0; i< N_DIVISIONES_PANTALLA - 2; i++)
         {
@@ -393,7 +393,7 @@ public class Tablero extends GameObject {
 
     private void dibujaIntento(int i)
     {
-        int w = engine.getGraphics().getWidth();
+        int w = engine.getGraphics().getSceneWidth();
         int totalWidth = combinacion_ganadora.length * RADIO_CIRCULO*2;
         int spaceToEachSide = (w - totalWidth) / 2;
 
@@ -418,7 +418,7 @@ public class Tablero extends GameObject {
 
     private void dibujaColoresDisponibles()
     {
-        int w = engine.getGraphics().getWidth();
+        int w = engine.getGraphics().getSceneWidth();
         int totalWidth = N_COLORS * RADIO_CIRCULO*2;
         int spaceToEachSide = (w - totalWidth) / 2;
 

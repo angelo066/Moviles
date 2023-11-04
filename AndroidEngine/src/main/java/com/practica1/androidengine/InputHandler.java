@@ -8,22 +8,33 @@ import com.practica1.engine.TouchEvent;
 
 import java.util.ArrayList;
 
+/**
+ * Clase que gestiona los eventos de input recibidos en la ventana en android
+ */
 public class InputHandler implements View.OnTouchListener {
 
     private ArrayList<TouchEvent> events;
 
     private ArrayList<TouchEvent> pendingEvents;
 
-    public InputHandler(SurfaceView view){
+    /**
+     * @param view Ventana de la aplicacion
+     */
+    public InputHandler(SurfaceView view) {
         events = new ArrayList<>();
         pendingEvents = new ArrayList<>();
         view.setOnTouchListener(this);
     }
+
+    /**
+     * @return Devuelve los eventos ocurridos en el ultimo frame de la aplicacion
+     */
     public synchronized ArrayList<TouchEvent> getTouchEvents() {
         events.addAll(pendingEvents);
         pendingEvents.clear();
         return events;
     }
+
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         TouchEvent event = new TouchEvent(); //pool de eventos por hacer
@@ -34,15 +45,15 @@ public class InputHandler implements View.OnTouchListener {
         event.x = (int) motionEvent.getX(finger);
         event.y = (int) motionEvent.getY(finger);
 
-        if(action == MotionEvent.ACTION_DOWN)
+        if (action == MotionEvent.ACTION_DOWN)
             event.type = TouchEvent.TouchEventType.TOUCH_DOWN;
-        else if(action == MotionEvent.ACTION_UP)
+        else if (action == MotionEvent.ACTION_UP)
             event.type = TouchEvent.TouchEventType.TOUCH_UP;
-        else if(action == MotionEvent.ACTION_BUTTON_PRESS)
+        else if (action == MotionEvent.ACTION_BUTTON_PRESS)
             event.type = TouchEvent.TouchEventType.CLICK;
-        else if(action == MotionEvent.ACTION_MOVE)
+        else if (action == MotionEvent.ACTION_MOVE)
             event.type = TouchEvent.TouchEventType.TOUCH_DRAG;
-        else if(action == MotionEvent.ACTION_HOVER_ENTER)
+        else if (action == MotionEvent.ACTION_HOVER_ENTER)
             event.type = TouchEvent.TouchEventType.ON_HOVER;
 
 
@@ -53,5 +64,10 @@ public class InputHandler implements View.OnTouchListener {
         return true;
     }
 
-    public void clearEvents(){events.clear();}
+    /**
+     * Limpia los eventos
+     */
+    public void clearEvents() {
+        events.clear();
+    }
 }

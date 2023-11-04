@@ -110,7 +110,8 @@ public class Final implements Scene {
     @Override
     public void render()
     {
-        //Fondo
+        graph.clear(colores.GRIS_OSCURO.getValue());
+
         graph.setColor(colores.BLANCO.getValue());
         graph.fillRectangle(0,0,width,height);
         botonRepetir.render();
@@ -136,7 +137,7 @@ public class Final implements Scene {
 
     private void setCirclePositions()
     {
-        int w = engine.getGraphics().getWidth();
+        int w = engine.getGraphics().getSceneWidth();
         int totalWidth = NUM_CASILLAS * RADIO_CIRCULO*2;
         int spaceToEachSide = (w - totalWidth) / 2;
 

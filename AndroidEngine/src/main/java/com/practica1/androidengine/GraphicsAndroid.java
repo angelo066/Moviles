@@ -13,6 +13,9 @@ import com.practica1.engine.Graphics;
 
 import java.io.IOException;
 
+/**
+ * Clase para el manejo de los gráficos de la aplicacion en android
+ */
 public class GraphicsAndroid implements Graphics {
 
     private SurfaceView renderView;
@@ -25,12 +28,15 @@ public class GraphicsAndroid implements Graphics {
     private int sceneHeight;
 
     private AssetManager assetManager;
-    private String imagesRoute = "sprites/"; // hay que cambiar la ruta
-    private String fontsRoute = "fonts/"; // hay que cambiar la ruta
+    private String imagesRoute = "sprites/";
+    private String fontsRoute = "fonts/";
 
     private float scaleX = 1, scaleY = 1, translateX = 0, translateY = 0;
 
 
+    /**
+     * @param view Ventana de la aplicacion
+     */
     GraphicsAndroid(SurfaceView view) {
         renderView = view;
         holder = view.getHolder();
@@ -49,8 +55,18 @@ public class GraphicsAndroid implements Graphics {
             throw new RuntimeException("ERROR AL CARGAR IMAGEN POR ANDROID");
         }
         return image;
-
     }
+
+    @Override
+    public void drawImage(Image image, int x, int y, int w, int h) {
+        ImageAndroid aImage = (ImageAndroid) image;
+
+        //Rectangulo src y dest
+        Rect src = new Rect(0, 0, aImage.getWidth(), aImage.getHeight());
+        Rect dst = new Rect(x, y, x + w, y + h);
+        canvas.drawBitmap(aImage.getImage(), src, dst, paint);
+    }
+
 
     @Override
     public Font newFont(String name, int size, boolean isBold, boolean isItalic) {
@@ -59,9 +75,28 @@ public class GraphicsAndroid implements Graphics {
     }
 
     @Override
+    public void setFont(Font font) {
+        FontAndroid aFont = (FontAndroid) font;
+        paint.setTextSize(font.getSize());
+        paint.setTypeface(aFont.getFont());
+    }
+
+    @Override
+    public void drawText(String text, float x, float y) {
+        canvas.drawText(text, x, y, paint);
+    }
+
+
+    @Override
+    public void setColor(int color) {
+        paint.setColor(color);
+    }
+
+    @Override
     public void clear(int color) {
         canvas.drawColor(color);
     }
+
 
     @Override
     public void translate(float x, float y) {
@@ -91,15 +126,6 @@ public class GraphicsAndroid implements Graphics {
         translateX = 0;
     }
 
-    @Override
-    public void drawImage(Image image, int x, int y, int w, int h) {
-        ImageAndroid aImage = (ImageAndroid) image;
-
-        //Rectangulo src y dest
-        Rect src = new Rect(0, 0, aImage.getWidth(), aImage.getHeight());
-        Rect dst = new Rect(x, y, x + w, y + h);
-        canvas.drawBitmap(aImage.getImage(), src, dst, paint);
-    }
 
     @Override
     public void fillRectangle(float cx, float cy, float width, float height) {
@@ -144,53 +170,17 @@ public class GraphicsAndroid implements Graphics {
         canvas.drawCircle(cx + radius, cy + radius, radius, this.paint);
     }
 
-    @Override
-    public void drawText(String text, float x, float y)
-    {
-        canvas.drawText(text, x, y, paint);
-    }
 
     @Override
     public int getWidth() {
-        return sceneWidth;
+        return renderView.getWidth();
     }
 
     @Override
     public int getHeight() {
-        return sceneHeight;
+        return renderView.getHeight();
     }
 
-    @Override
-    public void setColor(int color) {
-        paint.setColor(color);
-    }
-
-    @Override
-    public void setFont(Font font) {
-        FontAndroid aFont = (FontAndroid) font;
-        paint.setTextSize(font.getSize());
-        paint.setTypeface(aFont.getFont());
-    }
-
-    public void prepareRender() {
-        while (!holder.getSurface().isValid()) ;
-        canvas = this.holder.lockCanvas();
-
-        float scaleX = (float) renderView.getWidth() / sceneWidth;
-        float scaleY = (float) renderView.getHeight() / sceneHeight;
-        float scale = Math.min(scaleX, scaleY);
-
-        float translateX = (renderView.getWidth() - sceneWidth * scale) / 2f;
-        float translateY = (renderView.getHeight() - sceneHeight * scale) / 2f;
-
-        translate(translateX, translateY);
-        scale(scale, scale);
-
-    }
-
-    public void releaseRender() {
-        holder.unlockCanvasAndPost(canvas);
-    }
 
     @Override
     public void setSceneSize(int width, int height) {
@@ -211,8 +201,7 @@ public class GraphicsAndroid implements Graphics {
     @Override
     public float getFontMetricWidth(Font font, String texto) {
         paint.setTextSize(font.getSize());
-        int a = (int)paint.measureText(texto);
-        return a;
+        return ((int) paint.measureText(texto));
     }
 
     @Override
@@ -221,18 +210,49 @@ public class GraphicsAndroid implements Graphics {
         return metrics.bottom - metrics.top;
     }
 
+
+    /**
+     * Prepara todo para el renderizado
+     */
+    public void prepareRender() {
+        while (!holder.getSurface().isValid()) ;
+        canvas = this.holder.lockCanvas();
+
+        float scaleX = (float) renderView.getWidth() / sceneWidth;
+        float scaleY = (float) renderView.getHeight() / sceneHeight;
+        float scale = Math.min(scaleX, scaleY);
+
+        float translateX = (renderView.getWidth() - sceneWidth * scale) / 2f;
+        float translateY = (renderView.getHeight() - sceneHeight * scale) / 2f;
+
+        translate(translateX, translateY);
+        scale(scale, scale);
+
+    }
+
+    /**
+     * Libera todo lo necesario despues del renderizado
+     */
+    public void releaseRender() {
+        holder.unlockCanvasAndPost(canvas);
+    }
+
+    @Override
     public float getScaleX() {
         return scaleX;
     }
 
+    @Override
     public float getScaleY() {
         return scaleY;
     }
 
+    @Override
     public float getTranslateX() {
         return translateX;
     }
 
+    @Override
     public float getTranslateY() {
         return translateY;
     }

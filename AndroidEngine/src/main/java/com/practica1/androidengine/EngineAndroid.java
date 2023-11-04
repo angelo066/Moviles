@@ -13,6 +13,9 @@ import com.practica1.engine.Input;
 import com.practica1.engine.Scene;
 import com.practica1.engine.TouchEvent;
 
+/**
+ * Clase motor de la aplicacion en android
+ */
 public class EngineAndroid implements Engine, Runnable {
 
     private boolean running = false;
@@ -26,12 +29,16 @@ public class EngineAndroid implements Engine, Runnable {
     private InputAndroid inputAndroid;
     private AudioAndroid audioAndroid;
 
+    /**
+     * @param view Ventana de la aplicacion
+     */
     public EngineAndroid(SurfaceView view) {
         this.view = view;
         graphicsAndroid = new GraphicsAndroid(view);
         inputAndroid = new InputAndroid(view);
         audioAndroid = new AudioAndroid();
     }
+
 
     @Override
     public Graphics getGraphics() {
@@ -47,6 +54,7 @@ public class EngineAndroid implements Engine, Runnable {
     public Audio getAudio() {
         return audioAndroid;
     }
+
 
     @Override
     public void run() {
@@ -75,7 +83,6 @@ public class EngineAndroid implements Engine, Runnable {
             render();
         }
     }
-
 
     @Override
     public void resume() {
@@ -109,16 +116,27 @@ public class EngineAndroid implements Engine, Runnable {
         this.scene.init(this);
     }
 
+    /**
+     * Update del motor
+     *
+     * @param deltaTime
+     */
     public void update(double deltaTime) {
         scene.update(deltaTime);
     }
 
+    /**
+     * Renderizado del motor
+     */
     public void render() {
         graphicsAndroid.prepareRender();
         scene.render();
         graphicsAndroid.releaseRender();
     }
 
+    /**
+     * Manejo de input del motor
+     */
     private void handleInput() {
 
         for (TouchEvent event : inputAndroid.getTouchEvents()) {

@@ -8,10 +8,16 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
+/**
+ * Clase que envuelve un sonido en la aplicacion en desktop
+ */
 public class SoundDesktop implements Sound {
 
     private Clip audioClip;
 
+    /**
+     * @param file Nombre del archivo
+     */
     public SoundDesktop(String file) {
         try {
             File audio = new File(file);

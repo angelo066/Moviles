@@ -9,13 +9,23 @@ import com.practica1.engine.Image;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Clase que envuelve una imagen en la aplicacion en android
+ */
 public class ImageAndroid implements Image {
-    public ImageAndroid(String filename, AssetManager assetManager) throws IOException
-    {
+
+    /**
+     * @param filename     Nombre del archivo
+     * @param assetManager AssetsManager en android
+     * @throws IOException
+     */
+    public ImageAndroid(String filename, AssetManager assetManager) throws IOException {
         InputStream is = assetManager.open(filename);
         bitmap = BitmapFactory.decodeStream(is);
     }
-    Bitmap bitmap;
+
+    private Bitmap bitmap;
+
     @Override
     public int getWidth() {
         return bitmap.getWidth();
@@ -26,7 +36,10 @@ public class ImageAndroid implements Image {
         return bitmap.getHeight();
     }
 
-    public Bitmap getImage(){return bitmap;};
-
-
+    /**
+     * @return La imagen envuelta
+     */
+    public Bitmap getImage() {
+        return bitmap;
+    }
 }

@@ -10,6 +10,9 @@ import java.awt.geom.AffineTransform;
 
 import javax.swing.JFrame;
 
+/**
+ * Clase para el manejo de los gráficos de la aplicacion en desktop
+ */
 public class GraphicsDesktop implements Graphics {
 
     private JFrame g_frame;
@@ -23,28 +26,53 @@ public class GraphicsDesktop implements Graphics {
 
     private float scaleX = 1, scaleY = 1, translateX = 0, translateY = 0;
 
+
+    /**
+     * @param frame Ventana de la aplicacion
+     */
     public GraphicsDesktop(JFrame frame) {
         g_frame = frame;
         g_graphics = (Graphics2D) g_frame.getBufferStrategy().getDrawGraphics();
     }
 
     @Override
-    public Image newImage(String name)
-    {
+    public Image newImage(String name) {
         String filename = imagesRoute + name;
-        try{
+        try {
             return new ImageDesktop(filename);
-        } catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
-
     }
 
     @Override
-    public Font newFont(String name, int size, boolean isBold, boolean isItalic)
-    {
+    public void drawImage(Image image, int x, int y, int w, int h) {
+        ImageDesktop dImage = (ImageDesktop) image;
+        // ------------------------------------ dst ------------------------ scr
+        g_graphics.drawImage(dImage.getImage(), x, y, x + w, y + h, 0, 0, dImage.getWidth(), dImage.getHeight(), null);
+    }
+
+    @Override
+    public Font newFont(String name, int size, boolean isBold, boolean isItalic) {
         String filename = fontsRoute + name;
         return new FontDesktop(filename, size, isBold, isItalic);
+    }
+
+    @Override
+    public void setFont(Font font) {
+        FontDesktop dFont = (FontDesktop) font;
+        g_graphics.setFont(dFont.getFont());
+    }
+
+    @Override
+    public void drawText(String text, float x, float y) {
+        g_graphics.drawString(text, x, y);
+    }
+
+    @Override
+    public void setColor(int color) {
+        java.awt.Color newColor = new java.awt.Color(color);
+        g_graphics.setColor(newColor);
     }
 
     @Override
@@ -80,25 +108,6 @@ public class GraphicsDesktop implements Graphics {
         g_graphics.setTransform(frameTransform);
     }
 
-    @Override
-    public void drawImage(Image image, int x, int y, int w, int h)
-    {
-        ImageDesktop dImage = (ImageDesktop)image;
-        // ------------------------------------ dst ------------------------ scr
-        g_graphics.drawImage(dImage.getImage(), x, y, x + w, y + h, 0, 0, dImage.getWidth(), dImage.getHeight(), null);
-    }
-
-    @Override
-    public void setColor(int color) {
-        java.awt.Color newColor = new java.awt.Color(color);
-        g_graphics.setColor(newColor);
-    }
-
-    @Override
-    public void setFont(Font font) {
-        FontDesktop dFont = (FontDesktop)font;
-        g_graphics.setFont(dFont.getFont());
-    }
 
     @Override
     public void fillRectangle(float cx, float cy, float width, float height) {
@@ -127,54 +136,22 @@ public class GraphicsDesktop implements Graphics {
 
     @Override
     public void drawCircle(float cx, float cy, float radius) {
-        g_graphics.drawOval((int) cx, (int) cy, (int) (2*radius), (int) (2*radius));
+        g_graphics.drawOval((int) cx, (int) cy, (int) (2 * radius), (int) (2 * radius));
     }
 
     @Override
     public void fillCircle(float cx, float cy, float radius) {
-        g_graphics.fillOval((int) cx, (int) cy, (int) (2*radius), (int) (2*radius));
-    }
-
-    @Override
-    public void drawText(String text, float x, float y) {
-        g_graphics.drawString(text, x, y);
+        g_graphics.fillOval((int) cx, (int) cy, (int) (2 * radius), (int) (2 * radius));
     }
 
     @Override
     public int getWidth() {
-        //return g_frame.getWidth();
-        return sceneWidth;
+        return g_frame.getWidth();
     }
 
     @Override
     public int getHeight() {
-
-        return sceneHeight;
-        //return g_frame.getHeight();
-    }
-
-    public void prepareRender() {
-        g_graphics = (Graphics2D) g_frame.getBufferStrategy().getDrawGraphics();
-
-        restore();
-
-        int width = g_frame.getWidth() - g_frame.getInsets().left - g_frame.getInsets().right;
-        int height = g_frame.getHeight() - g_frame.getInsets().top - g_frame.getInsets().bottom;
-
-        float scaleX = (float) width / sceneWidth;
-        float scaleY = (float) height / sceneHeight;
-        float scale = Math.min(scaleX, scaleY);
-
-        float translateX = ((g_frame.getWidth() - g_frame.getInsets().right + g_frame.getInsets().left) - sceneWidth * scale) / 2f;
-        float translateY = ((g_frame.getHeight() - g_frame.getInsets().bottom + g_frame.getInsets().top) - sceneHeight * scale) / 2f;
-
-        translate(translateX, translateY);
-        scale(scale, scale);
-
-    }
-
-    public void releaseRender() {
-        g_graphics.dispose();
+        return g_frame.getHeight();
     }
 
     @Override
@@ -194,38 +171,68 @@ public class GraphicsDesktop implements Graphics {
     }
 
     @Override
-    public float getFontMetricWidth(Font font, String text)
-    {
-        FontDesktop dFont = (FontDesktop)font;
+    public float getFontMetricWidth(Font font, String text) {
+        FontDesktop dFont = (FontDesktop) font;
         g_graphics.setFont(dFont.getFont());
         FontMetrics fm = g_graphics.getFontMetrics();
-        int d = fm.stringWidth(text);
-        return d;
-
+        return fm.stringWidth(text);
     }
 
     @Override
     public float getFontMetricHeight(Font font) {
-        FontDesktop dFont = (FontDesktop)font;
+        FontDesktop dFont = (FontDesktop) font;
         FontMetrics fm = g_graphics.getFontMetrics(dFont.getFont());
-        int s = fm.getAscent()+fm.getDescent();
+        int s = fm.getAscent() + fm.getDescent();
         return fm.getHeight();
-
-
     }
 
+    /**
+     * Prepara todo para el renderizado
+     */
+    public void prepareRender() {
+        g_graphics = (Graphics2D) g_frame.getBufferStrategy().getDrawGraphics();
+
+        restore();
+
+        int width = g_frame.getWidth() - g_frame.getInsets().left - g_frame.getInsets().right;
+        int height = g_frame.getHeight() - g_frame.getInsets().top - g_frame.getInsets().bottom;
+
+        float scaleX = (float) width / sceneWidth;
+        float scaleY = (float) height / sceneHeight;
+        float scale = Math.min(scaleX, scaleY);
+
+        float translateX = ((g_frame.getWidth() - g_frame.getInsets().right + g_frame.getInsets().left) - sceneWidth * scale) / 2f;
+        float translateY = ((g_frame.getHeight() - g_frame.getInsets().bottom + g_frame.getInsets().top) - sceneHeight * scale) / 2f;
+
+        translate(translateX, translateY);
+        scale(scale, scale);
+    }
+
+    /**
+     * Libera todo lo necesario despues del renderizado
+     */
+    public void releaseRender() {
+        g_graphics.dispose();
+    }
+
+
+    @Override
     public float getScaleX() {
         return scaleX;
     }
 
+    @Override
     public float getScaleY() {
         return scaleY;
     }
+
+    @Override
 
     public float getTranslateX() {
         return translateX;
     }
 
+    @Override
     public float getTranslateY() {
         return translateY;
     }

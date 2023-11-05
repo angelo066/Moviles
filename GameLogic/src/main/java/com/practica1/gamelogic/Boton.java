@@ -56,7 +56,7 @@ public class Boton extends GameObject {
         int touchY = event.y;
         boolean inside = false;
 
-        if (event.type == TouchEvent.TouchEventType.CLICK) {
+        if (event.type == TouchEvent.TouchEventType.TOUCH_DOWN) {
             if (touchX > pos.x && touchX < pos.x + size.x &&
                     touchY > pos.y && touchY < pos.y + size.y)
                 return true;

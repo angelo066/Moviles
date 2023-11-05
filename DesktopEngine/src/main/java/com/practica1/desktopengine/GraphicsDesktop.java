@@ -162,16 +162,6 @@ public class GraphicsDesktop implements Graphics {
     }
 
     @Override
-    public int getSceneWidth() {
-        return sceneWidth;
-    }
-
-    @Override
-    public int getSceneHeight() {
-        return sceneHeight;
-    }
-
-    @Override
     public float getFontMetricWidth(Font font, String text) {
         FontDesktop dFont = (FontDesktop) font;
         g_graphics.setFont(dFont.getFont());

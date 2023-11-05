@@ -35,10 +35,10 @@ public class MasterMind implements Scene {
         height = 1920;
 
         engine.getGraphics().setSceneSize(width, height);
-        this.tablero = new Tablero(engine);
+        this.tablero = new Tablero(engine,width,height);
 
         font = graph.newFont("Nexa.ttf", 80, false, false);
-        boton_daltonismo = new Boton(engine, new Vector2(0,0), new Vector2(100,100), "ojo.png");
+        boton_daltonismo = new Boton(engine,width,height, new Vector2(0, 0), new Vector2(100, 100), "ojo.png");
 
 
         //engine.getAudio().loadSound("doFlauta.wav", "a");
@@ -74,9 +74,8 @@ public class MasterMind implements Scene {
         for (int i = 0; i < events.size(); i++) {
             tablero.handleInput(events.get(i));
 
-            if(boton_daltonismo.handleInput(events.get(i)))
-            {
-                if(!DALTONISMO)
+            if (boton_daltonismo.handleInput(events.get(i))) {
+                if (!DALTONISMO)
                     tablero.Daltonismo(true);
                 else
                     tablero.Daltonismo(false);

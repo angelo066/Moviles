@@ -19,16 +19,16 @@ public class Circulo extends GameObject {
     private final int RADIO_SELECCION = 55;
 
 
-    public Circulo(Engine e, int id, Font font)
+    public Circulo(Engine e, int sceneWidth, int sceneHeight, int id, Font font)
     {
-        super(e);
-        identificador = new Texto(e, new Vector2(this.pos), font, String.valueOf(id), Color.NEGRO);
+        super(e,sceneWidth,sceneHeight);
+        identificador = new Texto(e,sceneWidth,sceneHeight, new Vector2(this.pos), font, String.valueOf(id), Color.NEGRO);
     }
 
-    public Circulo(Engine e, Vector2 pos, int id, Font font)
+    public Circulo(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, int id, Font font)
     {
-        super(e, pos);
-        identificador = new Texto(e, new Vector2(this.pos), font, String.valueOf(id), Color.NEGRO);
+        super(e,sceneWidth,sceneHeight, pos);
+        identificador = new Texto(e,sceneWidth,sceneHeight, new Vector2(this.pos), font, String.valueOf(id), Color.NEGRO);
     }
 
     @Override

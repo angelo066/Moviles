@@ -5,24 +5,33 @@ package com.practica1.engine;
  */
 public class GameObject {
     /**
-     * @param eng Objeto engine de la aplicacion
+     * @param eng         Objeto engine de la aplicacion
+     * @param sceneWidth  Anchura de la escena
+     * @param sceneHeight Altura de la escena
      */
-    public GameObject(Engine eng) {
+    public GameObject(Engine eng, int sceneWidth, int sceneHeight) {
         engine = eng;
         pos = new Vector2(0, 0);
+        this.sceneWidth = sceneWidth;
+        this.sceneHeight = sceneHeight;
     }
 
     /**
-     * @param eng Objeto engine de la aplicacion
-     * @param pos Posicion de la entidad
+     * @param eng         Objeto engine de la aplicacion
+     * @param pos         Posicion de la entidad
+     * @param sceneWidth  Anchura de la escena
+     * @param sceneHeight Altura de la escena
      */
-    public GameObject(Engine eng, Vector2 pos) {
+    public GameObject(Engine eng, int sceneWidth, int sceneHeight, Vector2 pos) {
         engine = eng;
         this.pos = pos;
+        this.sceneWidth = sceneWidth;
+        this.sceneHeight = sceneHeight;
     }
 
     public Engine engine = null;
     public Vector2 pos;
+    protected int sceneWidth, sceneHeight;
 
     /**
      * Metodo para inicializar la entidad

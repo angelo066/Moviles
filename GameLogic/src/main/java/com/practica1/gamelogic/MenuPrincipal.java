@@ -33,9 +33,9 @@ public class MenuPrincipal implements Scene {
         Font fontBoton = graph.newFont("Nexa.ttf", 80, false, false);
         Font fontTitulo = graph.newFont("Nexa.ttf", 150, false, false);
 
-        botonJugar = new BotonEscena(engine, new Vector2(width/2,height/2), new Vector2(500,150), 70, fontBoton,"Jugar", Color.CYAN, Color.NEGRO);
+        botonJugar = new BotonEscena(engine,width,height, new Vector2(width/2,height/2), new Vector2(500,150), 70, fontBoton,"Jugar", Color.CYAN, Color.NEGRO);
         botonJugar.centrar();
-        titulo = new Texto(engine, new Vector2(width/2,250), fontTitulo, "Master Mind", Color.NEGRO);
+        titulo = new Texto(engine,width,height, new Vector2(width/2,250), fontTitulo, "Master Mind", Color.NEGRO);
         titulo.centrar();
     }
 

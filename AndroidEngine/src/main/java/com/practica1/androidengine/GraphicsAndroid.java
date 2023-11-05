@@ -186,16 +186,6 @@ public class GraphicsAndroid implements Graphics {
     }
 
     @Override
-    public int getSceneWidth() {
-        return sceneWidth;
-    }
-
-    @Override
-    public int getSceneHeight() {
-        return sceneHeight;
-    }
-
-    @Override
     public float getFontMetricWidth(Font font, String texto) {
         paint.setTextSize(font.getSize());
         return ((int) paint.measureText(texto));

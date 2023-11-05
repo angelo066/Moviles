@@ -13,40 +13,36 @@ public class Texto extends GameObject {
     Font font;
 
     // Constructora para boton sin redondeo de bordes
-    public Texto(Engine e, Vector2 pos, Font font, String text, Color color)
-    {
-        super(e, pos);
+    public Texto(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Font font, String text, Color color) {
+        super(e, sceneWidth, sceneHeight, pos);
         this.font = font;
         this.text = text;
         this.color = color;
     }
 
     @Override
-    public void render()
-    {
+    public void render() {
         engine.getGraphics().setColor(color);
         engine.getGraphics().setFont(font);
-        engine.getGraphics().drawText(text, pos.x+50, pos.y+50);
+        engine.getGraphics().drawText(text, pos.x + 50, pos.y + 50);
     }
 
     @Override
-    public boolean handleInput(TouchEvent event)
-    {
+    public boolean handleInput(TouchEvent event) {
         //....
         return true;
     }
 
-    public void centrar()
-    {
-        int fwidth = (int)engine.getGraphics().getFontMetricWidth(font, text);
-        int fheight = (int)engine.getGraphics().getFontMetricHeight(font);
-        pos.x = pos.x - fwidth/2 - 50; // el 50 es porque el Metrics funciona mal y en width te devuelve el valor con un pequeño offset por la izquierda
+    public void centrar() {
+        int fwidth = (int) engine.getGraphics().getFontMetricWidth(font, text);
+        int fheight = (int) engine.getGraphics().getFontMetricHeight(font);
+        pos.x = pos.x - fwidth / 2 - 50; // el 50 es porque el Metrics funciona mal y en width te devuelve el valor con un pequeño offset por la izquierda
         //pos.x = pos.x - fwidth/2; // el 50 es porque el Metrics funciona mal y en width te devuelve el valor con un pequeño offset por la izquierda
-        pos.y = pos.y - fheight/2 + 25;
+        pos.y = pos.y - fheight / 2 + 25;
         //pos.y = pos.y - fheight/2;
     }
 
-    public void setText(String text){
+    public void setText(String text) {
         this.text = text;
     }
 

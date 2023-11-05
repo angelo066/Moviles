@@ -185,16 +185,6 @@ public interface Graphics {
     void setSceneSize(int width, int height);
 
     /**
-     * @return Anchura de la escena
-     */
-    int getSceneWidth();
-
-    /**
-     * @return Altura de la escena
-     */
-    int getSceneHeight();
-
-    /**
      * @param font  Fuente
      * @param texto Texto
      * @return Anchura del canvas que ocupa el texto con la fuente actual

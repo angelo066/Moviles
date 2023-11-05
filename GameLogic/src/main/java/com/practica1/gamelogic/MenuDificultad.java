@@ -45,27 +45,22 @@ public class MenuDificultad implements Scene {
         Vector2 size = new Vector2(500,100);
 
         Vector2 posFacil = new Vector2(pos.x, pos.y - (3*size.y)/2 - (3*offset));
-        botonFacil = new BotonEscena(engine, posFacil, new Vector2(size), 70, fontBoton,"Fácil", Color.VERDE, Color.NEGRO);
+        botonFacil = new BotonEscena(engine, width,height,posFacil, new Vector2(size), 70, fontBoton,"Fácil", Color.VERDE, Color.NEGRO);
         botonFacil.centrar();
 
         Vector2 posMedio = new Vector2(pos.x, pos.y - size.y/2 - offset);
-        botonMedio = new BotonEscena(engine, posMedio, new Vector2(size), 70, fontBoton,"Medio", Color.AMARILLO, Color.NEGRO);
+        botonMedio = new BotonEscena(engine, width,height,posMedio, new Vector2(size), 70, fontBoton,"Medio", Color.AMARILLO, Color.NEGRO);
         botonMedio.centrar();
 
         Vector2 posDificil = new Vector2(pos.x, pos.y + size.y/2 + offset);
-        botonDificil = new BotonEscena(engine, posDificil, new Vector2(size), 70, fontBoton,"Difícil", Color.NARANJA, Color.NEGRO);
+        botonDificil = new BotonEscena(engine, width,height,posDificil, new Vector2(size), 70, fontBoton,"Difícil", Color.NARANJA, Color.NEGRO);
         botonDificil.centrar();
 
         Vector2 posImposible = new Vector2(pos.x, pos.y + (3*size.y)/2 + (3*offset));
-        botonImposible = new BotonEscena(engine, posImposible, new Vector2(size), 70, fontBoton,"Imposible", Color.ROJO, Color.NEGRO);
+        botonImposible = new BotonEscena(engine,width,height, posImposible, new Vector2(size), 70, fontBoton,"Imposible", Color.ROJO, Color.NEGRO);
         botonImposible.centrar();
 
-        Vector2 posVolver = new Vector2(0, 0);
-        /*botonImposible = new BotonEscena(engine, );
-        botonImposible.centrar();*/
-
-
-        titulo = new Texto(engine, new Vector2(width/2,250), fontTitulo, "Selecciona la dificultad.", Color.NEGRO);
+        titulo = new Texto(engine,width,height, new Vector2(width/2,250), fontTitulo, "Selecciona la dificultad.", Color.NEGRO);
         titulo.centrar();
     }
 

@@ -386,5 +386,6 @@ public class Tablero extends GameObject {
         }
     }
 
+    public int getNUM_INTENTOS_RESTANTES(){return NUM_INTENTOS - INTENTO_ACTUAL;};
 
 }

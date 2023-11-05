@@ -84,7 +84,8 @@ public class GraphicsAndroid implements Graphics {
 
     @Override
     public void drawText(String text, float x, float y) {
-        canvas.drawText(text, x, y, paint);
+        Paint.FontMetrics metrics = paint.getFontMetrics();
+        canvas.drawText(text, x, y + (metrics.bottom - metrics.top), paint);
     }
 
 
@@ -187,12 +188,13 @@ public class GraphicsAndroid implements Graphics {
 
     @Override
     public float getFontMetricWidth(Font font, String texto) {
-        paint.setTextSize(font.getSize());
-        return ((int) paint.measureText(texto));
+        setFont(font);
+        return  paint.measureText(texto);
     }
 
     @Override
     public float getFontMetricHeight(Font font) {
+        setFont(font);
         Paint.FontMetrics metrics = paint.getFontMetrics();
         return metrics.bottom - metrics.top;
     }

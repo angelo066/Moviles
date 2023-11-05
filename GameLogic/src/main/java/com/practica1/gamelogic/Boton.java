@@ -19,33 +19,6 @@ public class Boton extends GameObject {
     Texto text;
     Imagen image;
 
-    // Constructora para boton sin redondeo de bordes
-    public Boton(Engine e, int sceneWidth, int sceneHeight, Vector2 size, Color colorBoton, Color colorTexto) {
-        super(e, sceneWidth, sceneHeight);
-        this.size = size;
-        this.color = colorBoton;
-    }
-
-    public Boton(Engine e, int sceneWidth, int sceneHeight, Vector2 size, Font font, String text, Color colorBoton, Color colorTexto) {
-        super(e, sceneWidth, sceneHeight);
-        this.size = size;
-        conTexto = true;
-        this.font = font;
-        this.textContent = text;
-        this.color = colorBoton;
-        this.text = new Texto(e,sceneWidth,sceneHeight, pos, font, text, colorTexto);
-        this.text.centrar();
-    }
-
-    // Constructora para boton con redondeo de bordes
-    public Boton(Engine e, int sceneWidth, int sceneHeight, Vector2 size, float arc, Color colorBoton, Color colorTexto) {
-        super(e, sceneWidth, sceneHeight);
-        this.size = size;
-        this.arc = arc;
-        redondeado = true;
-        this.color = colorBoton;
-    }
-
     public Boton(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Vector2 size, float arc, Font font, String text, Color colorBoton, Color colorTexto) {
         super(e, sceneWidth, sceneHeight, pos);
         this.size = size;

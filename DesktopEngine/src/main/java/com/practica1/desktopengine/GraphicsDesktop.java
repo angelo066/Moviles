@@ -67,7 +67,7 @@ public class GraphicsDesktop implements Graphics {
 
     @Override
     public void drawText(String text, float x, float y) {
-        g_graphics.drawString(text, x, y);
+        g_graphics.drawString(text, x, y + g_graphics.getFontMetrics().getHeight());
     }
 
     @Override
@@ -117,7 +117,7 @@ public class GraphicsDesktop implements Graphics {
 
     @Override
     public void fillRoundRectangle(float cx, float cy, float width, float height, float arc) {
-        g_graphics.fillRoundRect((int) cx, (int) cy, (int) width, (int) height, (int) arc, (int) arc);
+        g_graphics.fillRoundRect((int) cx, (int) cy, (int) width, (int) height, (int) (2 * arc),(int) (2 * arc));
     }
 
     @Override
@@ -127,7 +127,7 @@ public class GraphicsDesktop implements Graphics {
 
     @Override
     public void drawRoundRectangle(float cx, float cy, float width, float height, float arc) {
-        g_graphics.drawRoundRect((int) cx, (int) cy, (int) width, (int) height, (int) arc, (int) arc);
+        g_graphics.drawRoundRect((int) cx, (int) cy, (int) width, (int) height, (int) (2 * arc), (int) (2 * arc));
     }
 
     @Override
@@ -163,17 +163,15 @@ public class GraphicsDesktop implements Graphics {
 
     @Override
     public float getFontMetricWidth(Font font, String text) {
-        FontDesktop dFont = (FontDesktop) font;
-        g_graphics.setFont(dFont.getFont());
+        setFont(font);
         FontMetrics fm = g_graphics.getFontMetrics();
         return fm.stringWidth(text);
     }
 
     @Override
     public float getFontMetricHeight(Font font) {
-        FontDesktop dFont = (FontDesktop) font;
-        FontMetrics fm = g_graphics.getFontMetrics(dFont.getFont());
-        int s = fm.getAscent() + fm.getDescent();
+        setFont(font);
+        FontMetrics fm = g_graphics.getFontMetrics();
         return fm.getHeight();
     }
 

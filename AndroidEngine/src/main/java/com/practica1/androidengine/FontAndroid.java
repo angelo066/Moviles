@@ -29,7 +29,6 @@ public class FontAndroid implements Font {
 
         font = Typeface.create(newFont, flags);
         this.size = size;
-
     }
 
     /**

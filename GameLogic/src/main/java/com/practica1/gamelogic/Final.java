@@ -22,16 +22,21 @@ public class Final implements Scene {
     private Texto MensajeDescripcion;
     private Texto Codigo;
     private Texto NumeroIntentos;
-    private Circulo[] combinacion_ganadora;
+    private Color[] combinacion_ganadora;
     int numIntentos = 0;
 
     boolean HaGanado = false;
     int NUM_CASILLAS;
-    int RADIO_CIRCULO = 30;
+    int RADIO_CIRCULO = 50;
 
+    private Circulo[] circles;
     Dificultad modo;
 
-    public Final(Circulo[] combinacion, boolean HaGanado, int casillas, Dificultad modo, int numIntentos)
+    private Font fuente;
+
+    private boolean daltonicos;
+
+    public Final(Color[] combinacion, boolean HaGanado, int casillas, Dificultad modo, int numIntentos, boolean daltonicos)
     {
         super();
         this.HaGanado = HaGanado;
@@ -39,6 +44,8 @@ public class Final implements Scene {
         this.NUM_CASILLAS = casillas;
         this.modo = modo;
         this.numIntentos = numIntentos;
+        this.daltonicos = daltonicos;
+
     }
     @Override
     public void init(Engine engine)
@@ -95,8 +102,31 @@ public class Final implements Scene {
         Codigo = new Texto(engine,width,height, new Vector2(width/2,600), fontDescripcion, "código:", Color.NEGRO);
         Codigo.centrar();
 
-        setCirclePositions();
 
+        setCircles(engine);
+
+    }
+
+    private void setCircles(Engine engine) {
+        this.circles = new Circulo[NUM_CASILLAS];
+
+        this.fuente = graph.newFont("Nexa.ttf", 50, false, false);
+
+        int totalWidth = NUM_CASILLAS * RADIO_CIRCULO * 2;
+        int spaceToEachSide = (width - totalWidth) / 2;
+
+
+        for(int i = 0; i < combinacion_ganadora.length; i++){
+            int x = spaceToEachSide + i * (RADIO_CIRCULO * 2);
+
+
+            circles[i] = new Circulo(engine, width, height,
+                    new Vector2(x,800), combinacion_ganadora[i].getId(), fuente);
+
+            circles[i].daltonismo(daltonicos);
+            circles[i].setColor(combinacion_ganadora[i]);
+            circles[i].descubrir(true);
+        }
     }
 
     @Override
@@ -119,7 +149,7 @@ public class Final implements Scene {
         Codigo.render();
 
         for (int i = 0; i < NUM_CASILLAS; i++) {
-            combinacion_ganadora[i].render();
+            circles[i].render();
         }
 
     }
@@ -139,21 +169,4 @@ public class Final implements Scene {
         }
     }
 
-    private void setCirclePositions()
-    {
-        int totalWidth = NUM_CASILLAS * RADIO_CIRCULO*2;
-        int spaceToEachSide = (width - totalWidth) / 2;
-
-        // Rectangulo de fondo
-        engine.getGraphics().setColor(Color.GRIS);
-
-        // Crear las bolas y establecer sus posiciones
-        for (int i = 0; i < NUM_CASILLAS; i++) {
-            int x = spaceToEachSide + i * (RADIO_CIRCULO*2);
-            combinacion_ganadora[i].pos.x = x;
-            combinacion_ganadora[i].pos.y = 800;
-            combinacion_ganadora[i].descubrir(true);
-            combinacion_ganadora[i].render();
-        }
-    }
 }

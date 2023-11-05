@@ -14,21 +14,31 @@ public class Circulo extends GameObject {
     private boolean descubierto = false; // para cuando asignamos un color al tablero
     private boolean seleccionado = false; // para cuando pinchamos encima
     private boolean daltonismo = false; // para cuando pinchamos encima
-    private final int RADIO_CIRCULO = 50;
+    private int RADIO_CIRCULO = 50;     //Default Valu
     private final int RADIO_CIRCULO_INTERIOR = 15;
     private final int RADIO_SELECCION = 55;
 
 
-    public Circulo(Engine e, int sceneWidth, int sceneHeight, int id, Font font)
+    public Circulo(Engine e, int sceneWidth, int sceneHeight, int id, Font font, int RADIO_CIRCULO)
     {
         super(e,sceneWidth,sceneHeight);
-        identificador = new Texto(e,sceneWidth,sceneHeight, new Vector2(this.pos), font, String.valueOf(id), Color.NEGRO);
+
+        identificador = new Texto(e,sceneWidth,sceneHeight,
+                new Vector2(this.pos.x + RADIO_CIRCULO, this.pos.y + RADIO_CIRCULO),
+                font, String.valueOf(id), Color.NEGRO);
+
+        identificador.centrar();
+        this.RADIO_CIRCULO = RADIO_CIRCULO;
     }
 
     public Circulo(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, int id, Font font)
     {
         super(e,sceneWidth,sceneHeight, pos);
-        identificador = new Texto(e,sceneWidth,sceneHeight, new Vector2(this.pos), font, String.valueOf(id), Color.NEGRO);
+        identificador = new Texto(e,sceneWidth,sceneHeight,
+                new Vector2(this.pos.x + RADIO_CIRCULO, this.pos.y + RADIO_CIRCULO),
+                font, String.valueOf(id), Color.NEGRO);
+
+        identificador.centrar();
     }
 
     @Override
@@ -105,4 +115,12 @@ public class Circulo extends GameObject {
     {
         this.identificador.setText(String.valueOf(id));
     }
+
+    public void setPosition(int x, int y){
+        this.pos.x = x;
+        this.pos.y = y;
+        this.identificador.pos.x = x;
+        this.identificador.pos.y = y;
+    }
+
 }

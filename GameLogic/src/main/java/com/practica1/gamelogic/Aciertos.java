@@ -45,8 +45,10 @@ public class Aciertos extends GameObject {
                 engine.getGraphics().fillCircle(posX, pos.y, RADIO_CIRCULO);
                 aciertos--;
             } else if (aciertos_Color > 0) {
-                engine.getGraphics().setColor(Color.AZUL);
-                engine.getGraphics().fillCircle(posX, pos.y, RADIO_CIRCULO);
+                engine.getGraphics().setColor(Color.NEGRO);
+                engine.getGraphics().drawCircle(posX, pos.y, RADIO_CIRCULO);
+/*                engine.getGraphics().setColor(Color.NEGRO);
+                engine.getGraphics().fillCircle(posX, pos.y, RADIO_CIRCULO);*/
                 aciertos_Color--;
             } else {
                 engine.getGraphics().setColor(Color.GRIS);
@@ -65,8 +67,8 @@ public class Aciertos extends GameObject {
                 engine.getGraphics().fillCircle(posX, posY_NextLine, RADIO_CIRCULO);
                 aciertos--;
             } else if (aciertos_Color > 0) {
-                engine.getGraphics().setColor(Color.AZUL);
-                engine.getGraphics().fillCircle(posX, posY_NextLine, RADIO_CIRCULO);
+                engine.getGraphics().setColor(Color.NEGRO);
+                engine.getGraphics().drawCircle(posX, posY_NextLine, RADIO_CIRCULO);
                 aciertos_Color--;
             } else {
                 engine.getGraphics().setColor(Color.GRIS);

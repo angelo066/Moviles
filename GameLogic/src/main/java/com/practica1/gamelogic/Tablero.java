@@ -4,6 +4,7 @@ import com.practica1.engine.Color;
 import com.practica1.engine.Engine;
 import com.practica1.engine.Font;
 import com.practica1.engine.GameObject;
+import com.practica1.engine.Graphics;
 import com.practica1.engine.TouchEvent;
 import com.practica1.engine.Vector2;
 
@@ -14,7 +15,7 @@ import java.util.Random;
 public class Tablero extends GameObject {
     private int N_COLORS;
     private IntentoFila[] tablero;
-    private Circulo[] combinacion_ganadora;
+    private Color[] combinacion_ganadora;
     private Circulo[] colores_elegidos;
     private Random rand;
 
@@ -34,6 +35,8 @@ public class Tablero extends GameObject {
     private final int RADIO_CIRCULO = 50;
 
     private Circulo selectedCircle; //Circulo que elegimos al clickar
+
+    boolean daltonicos = false;
 
     private int currentPos = 0; //Ciruclo al que le toca recibir color
     Font fontTitulo;
@@ -126,22 +129,22 @@ public class Tablero extends GameObject {
     }
 
     private void combinacionConRep() {
-        combinacion_ganadora = new Circulo[NUM_CASILLAS];
+        combinacion_ganadora = new Color[NUM_CASILLAS];
 
         for (int i = 0; i < combinacion_ganadora.length; i++) {
-            combinacion_ganadora[i] = new Circulo(engine,sceneWidth,sceneHeight, i, fontTitulo);
+
             int index = rand.nextInt(N_COLORS + 1);
             //Mientras sea NO_COLOR
             while (index == 0) index = rand.nextInt(N_COLORS + 1);
 
             Color c = Color.values()[index];
 
-            combinacion_ganadora[i].setColor(c);
+            combinacion_ganadora[i] = c;
         }
     }
 
     private void combinacionSinRep() {
-        combinacion_ganadora = new Circulo[NUM_CASILLAS];
+        combinacion_ganadora = new Color[NUM_CASILLAS];
 
         // Creamos una lista con todos los colores disponibles
         ArrayList<Color> coloresAux = new ArrayList<>();
@@ -150,7 +153,6 @@ public class Tablero extends GameObject {
 
         // Cogemos colores aleatorios de la lista
         for (int i = 0; i < NUM_CASILLAS; i++) {
-            combinacion_ganadora[i] = new Circulo(engine,sceneWidth,sceneHeight, i, fontTitulo);
 
             // Cogemos un color aleatorio de la lista y lo quitamos
             int index = rand.nextInt(coloresAux.size());
@@ -160,14 +162,13 @@ public class Tablero extends GameObject {
 
             Color c = coloresAux.get(index);
             coloresAux.remove(index);
-
-            // Asignamos el color
-            combinacion_ganadora[i].setColor(c);
+            //Asignamos el color
+            combinacion_ganadora[i] = c;
         }
 
         //Debug
         for (int i = 0; i < combinacion_ganadora.length; i++) {
-            System.out.println(combinacion_ganadora[i].getColor());
+            System.out.println(combinacion_ganadora[i]);
         }
     }
 
@@ -197,14 +198,14 @@ public class Tablero extends GameObject {
         // Volcamos la combinacion ganadora en una lista Auxiliar
         ArrayList<Color> colores_elegidos = new ArrayList<>();
         for (int i = 0; i < NUM_CASILLAS; i++) {
-            colores_elegidos.add(combinacion_ganadora[i].getColor());
+            colores_elegidos.add(combinacion_ganadora[i]);
         }
 
         // Tenemos que comprobar la fila del tablero que coincida con el intento actual
         for (int i = 0; i < NUM_CASILLAS; i++) {
 
             // Acierta color y posicion
-            if (tablero[INTENTO_ACTUAL].combinacion[i].getColor() == combinacion_ganadora[i].getColor()) {
+            if (tablero[INTENTO_ACTUAL].combinacion[i].getColor() == combinacion_ganadora[i]) {
                 tablero[INTENTO_ACTUAL].aciertos_pos++;
             } else {   //Comprobamos si acierta solo color
                 // Comprobar colores -> para cada elemento de la comb del jugador, recorremos la lista hasta encontrar el color que buscamos
@@ -233,7 +234,7 @@ public class Tablero extends GameObject {
         else INTENTO_ACTUAL++;
 
         if (INTENTO_ACTUAL == NUM_INTENTOS || win) {                                        //+ 1 porque empezamos en 0
-            engine.setScene(new Final(combinacion_ganadora, win, NUM_CASILLAS, modo, INTENTO_ACTUAL + 1));
+            engine.setScene(new Final(combinacion_ganadora, win, NUM_CASILLAS, modo, INTENTO_ACTUAL + 1, daltonicos));
         }
     }
 
@@ -356,6 +357,12 @@ public class Tablero extends GameObject {
 
         tablero[i].number.render();
 
+        int starX = sceneWidth / 6;
+        int finX = (sceneWidth / 6) * 5;
+
+        engine.getGraphics().drawLine(starX,pos_intentos[i].y ,starX,pos_intentos[i].y + 100);
+        engine.getGraphics().drawLine(finX,pos_intentos[i].y ,finX,pos_intentos[i].y + 100);
+
     }
 
     private void dibujaColoresDisponibles() {
@@ -373,6 +380,8 @@ public class Tablero extends GameObject {
     }
 
     public void Daltonismo(boolean d) {
+
+        daltonicos = d;
         // Recorremos todo el tablero cambiando el modo a todos los circulos
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < NUM_CASILLAS; j++) {

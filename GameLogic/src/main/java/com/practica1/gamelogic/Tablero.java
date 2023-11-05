@@ -102,7 +102,8 @@ public class Tablero extends GameObject {
             tablero[i].combinacion = new Circulo[NUM_CASILLAS];
             tablero[i].aciertos = new Aciertos(engine,sceneWidth,sceneHeight, NUM_CASILLAS, pos_intentos[i]);
             int num_intento = i + 1;
-            tablero[i].number = new Texto(engine,sceneWidth,sceneHeight, pos_intentos[i], fontTitulo, String.valueOf(num_intento), Color.NEGRO);
+            Vector2 posn = new Vector2(sceneWidth/14, pos_intentos[i].y);
+            tablero[i].number = new Texto(engine,sceneWidth,sceneHeight, posn, fontTitulo, String.valueOf(num_intento), Color.NEGRO);
 
             for (int j = 0; j < NUM_CASILLAS; j++) {
 
@@ -353,7 +354,7 @@ public class Tablero extends GameObject {
         // RECTANGULO
         engine.getGraphics().setColor(Color.GRIS);
         int y = pos_intentos[i].y - V_OFFSET / 2;
-        engine.getGraphics().drawRoundRectangle(0, y, sceneWidth, RADIO_CIRCULO * 2 + V_OFFSET, 50);
+        engine.getGraphics().drawRoundRectangle(0, y, sceneWidth-3, RADIO_CIRCULO * 2 + V_OFFSET, 50);
 
         // CIRCULOS
         for (int j = 0; j < NUM_CASILLAS; j++) {

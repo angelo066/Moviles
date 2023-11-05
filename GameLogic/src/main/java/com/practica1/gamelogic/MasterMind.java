@@ -50,7 +50,7 @@ public class MasterMind implements Scene {
         boton_volver = new Boton(engine,width,height, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
         String text = "Te quedan " + tablero.getNUM_INTENTOS_RESTANTES() + " intentos";
         indicador_intentos = new Texto(engine, width, height, new Vector2(width/2, 0), font, text, Color.NEGRO);
-        indicador_intentos.centrar();
+        indicador_intentos.centrarEnHorizontal();
 
     }
 
@@ -78,7 +78,8 @@ public class MasterMind implements Scene {
         boton_volver.render();
 
         indicador_intentos.render();
-        indicador_intentos.setText("Te quedan " + tablero.getNUM_INTENTOS_RESTANTES() + " intentos");
+        String text = "Te quedan " + tablero.getNUM_INTENTOS_RESTANTES() + " intentos";
+        indicador_intentos.setText(text);
 
     }
 

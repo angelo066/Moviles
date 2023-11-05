@@ -28,8 +28,7 @@ public class MasterMind implements Scene {
 
     private boolean DALTONISMO = false;
 
-    public MasterMind(Dificultad modo)
-    {
+    public MasterMind(Dificultad modo) {
         this.modo = modo;
     }
 
@@ -45,19 +44,19 @@ public class MasterMind implements Scene {
 
         this.tablero = new Tablero(engine, width, height, modo);
 
-        font = graph.newFont("Nexa.ttf", 80, false, false);
-        boton_daltonismo = new Boton(engine,width,height, new Vector2(width - 120, 20), new Vector2(100, 100), "ojo.png");
-        boton_volver = new Boton(engine,width,height, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
+        font = graph.newFont("Nexa.ttf", 70, false, false);
+
+        boton_daltonismo = new Boton(engine, width, height, new Vector2(width - 120, 20), new Vector2(100, 100), "ojo.png");
+        boton_volver = new Boton(engine, width, height, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
+
         String text = "Te quedan " + tablero.getNUM_INTENTOS_RESTANTES() + " intentos";
-        indicador_intentos = new Texto(engine, width, height, new Vector2(width/2, 0), font, text, Color.NEGRO);
+        indicador_intentos = new Texto(engine, width, height, new Vector2(width / 2, 0), font, text, Color.NEGRO);
         indicador_intentos.centrarEnHorizontal();
 
     }
 
     @Override
     public void update(double deltaTime) {
-        //Crear los eventos digo yo
-        tablero.update(deltaTime);
     }
 
     @Override
@@ -71,7 +70,6 @@ public class MasterMind implements Scene {
         tablero.render();
 
         graph.setColor(Color.MARRON);
-        font.setSize(50);
         graph.setFont(font);
 
         boton_daltonismo.render();
@@ -85,9 +83,9 @@ public class MasterMind implements Scene {
 
     @Override
     public void handleInput(ArrayList<TouchEvent> events) {
-        //Recorremos el array de eventos mandandolos al tablero
         for (int i = 0; i < events.size(); i++) {
-            tablero.handleInput(events.get(i));
+            if(tablero.handleInput(events.get(i)))
+                break;
 
             if (boton_daltonismo.handleInput(events.get(i))) {
                 engine.getAudio().playSound("click", false);
@@ -99,9 +97,9 @@ public class MasterMind implements Scene {
                 DALTONISMO = !DALTONISMO;
             }
 
-            if(boton_volver.handleInput(events.get(i))){
-                engine.setScene(new MenuDificultad());
+            if (boton_volver.handleInput(events.get(i))) {
                 engine.getAudio().playSound("click", false);
+                engine.setScene(new MenuDificultad());
             }
         }
     }

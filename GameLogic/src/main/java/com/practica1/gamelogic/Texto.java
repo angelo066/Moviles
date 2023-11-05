@@ -34,6 +34,9 @@ public class Texto extends GameObject {
         pos.x = (int) (pos.x - textWidth / 2);
         pos.y = (int) (pos.y - textHeight / 1.3);
     }
+    public void centrarEnHorizontal() {
+        pos.x = (int) (pos.x - textWidth / 2);
+    }
 
     public void setText(String text) {
         this.text = text;

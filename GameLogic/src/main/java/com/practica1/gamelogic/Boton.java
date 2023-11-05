@@ -13,9 +13,11 @@ public class Boton extends GameObject {
     String textContent;
     boolean redondeado = false;
     boolean conTexto = false;
+    boolean conImagen = false;
     float arc;
     Font font;
     Texto text;
+    Imagen image;
 
     // Constructora para boton sin redondeo de bordes
     public Boton(Engine e, Vector2 size, Color colorBoton, Color colorTexto)
@@ -57,19 +59,33 @@ public class Boton extends GameObject {
         this.text = new Texto(e, new Vector2(pos), font, text, colorTexto);
         this.text.centrar();
     }
+    public Boton(Engine e, Vector2 pos, Vector2 size, String ruta)
+    {
+        super(e);
+        this.size = size;
+        this.image = new Imagen(e, pos, size, ruta);
+        conImagen = true;
+    }
 
     @Override
     public void render()
     {
-        engine.getGraphics().setColor(color);
 
-        if(redondeado)
-            engine.getGraphics().fillRoundRectangle(pos.x, pos.y, size.x, size.y, arc);
-        else
-            engine.getGraphics().fillRectangle(pos.x, pos.y, size.x, size.y);
+        if(conImagen)
+        {
+           this.image.render();
+        }
+        else {
+            engine.getGraphics().setColor(color);
+            if(redondeado)
+                engine.getGraphics().fillRoundRectangle(pos.x, pos.y, size.x, size.y, arc);
+            else
+                engine.getGraphics().fillRectangle(pos.x, pos.y, size.x, size.y);
 
-        if(conTexto)
-            text.render();
+            if(conTexto)
+                text.render();
+        }
+
     }
 
     public boolean handleInput(TouchEvent event)
@@ -84,7 +100,7 @@ public class Boton extends GameObject {
             if(touchX > pos.x && touchX < pos.x + size.x){
                 if(touchY > pos.y && touchY < pos.y + size.y){
                     inside = true;
-
+                    System.out.println("DENTRO");
                 }
             }
         }

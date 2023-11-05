@@ -37,6 +37,8 @@ public class Tablero extends GameObject {
 
     private int currentPos = 0; //Ciruclo al que le toca recibir color
 
+    Font fontTitulo;
+
     public Tablero(Engine e) {
         super(e);
 
@@ -87,8 +89,15 @@ public class Tablero extends GameObject {
 
     public void initTablero() {
         // Asignamos la dificultad
-        configuracion(Dificultad.IMPOSIBLE);
-        Font fontTitulo = engine.getGraphics().newFont("Nexa.ttf", 50, false, false);
+        configuracion(Dificultad.MEDIO);
+        fontTitulo = engine.getGraphics().newFont("Nexa.ttf", 50, false, false);
+
+        // Variables para posiciones
+        int w = engine.getGraphics().getSceneWidth();
+        int totalWidth = N_COLORS * RADIO_CIRCULO*2;
+        int totalWidthIntent = NUM_CASILLAS * RADIO_CIRCULO*2;
+        int spaceToEachSide = (w - totalWidth) / 2;
+        int spaceToEachSideIntent = (w - totalWidthIntent) / 2;
 
         // Rellenamos el tablero
         tablero = new IntentoFila[NUM_INTENTOS];
@@ -96,11 +105,14 @@ public class Tablero extends GameObject {
             tablero[i] = new IntentoFila();
             tablero[i].combinacion = new Circulo[NUM_CASILLAS];
             tablero[i].aciertos = new Aciertos(engine,NUM_CASILLAS, pos_intentos[i]);
-            int mierdon = i+1;
-            tablero[i].number = new Texto(engine,pos_intentos[i], fontTitulo, String.valueOf(mierdon), Color.NEGRO);
+            int num_intento = i+1;
+            tablero[i].number = new Texto(engine,pos_intentos[i], fontTitulo, String.valueOf(num_intento), Color.NEGRO);
 
             for (int j = 0; j < NUM_CASILLAS; j++) {
-                tablero[i].combinacion[j] = new Circulo(engine);
+
+                int x = spaceToEachSideIntent + j * (RADIO_CIRCULO*2);
+                Vector2 pos = new Vector2(x, pos_intentos[i].y);
+                tablero[i].combinacion[j] = new Circulo(engine, pos, i, fontTitulo);
                 tablero[i].combinacion[j].setColor(Color.NO_COLOR);
             }
         }
@@ -109,7 +121,10 @@ public class Tablero extends GameObject {
         colores_elegidos = new Circulo[N_COLORS];
         for(int i = 0; i< N_COLORS; i++)
         {
-            colores_elegidos[i] = new Circulo(engine);
+            int x = spaceToEachSide + i * (RADIO_CIRCULO*2);
+            Vector2 pos = new Vector2(x, pos_colores.y);
+            colores_elegidos[i] = new Circulo(engine, pos,  i+1, fontTitulo);
+            colores_elegidos[i].descubrir(true);
             colores_elegidos[i].setColor(Color.values()[i+1]);
         }
 
@@ -122,7 +137,7 @@ public class Tablero extends GameObject {
         combinacion_ganadora =  new Circulo[NUM_CASILLAS];
 
         for (int i = 0; i < combinacion_ganadora.length; i++) {
-            combinacion_ganadora[i] = new Circulo(engine);
+            combinacion_ganadora[i] = new Circulo(engine, i, fontTitulo);
             int index = rand.nextInt(N_COLORS + 1);
             //Mientras sea NO_COLOR
             while (index == 0) index = rand.nextInt(N_COLORS + 1);
@@ -143,7 +158,7 @@ public class Tablero extends GameObject {
 
         // Cogemos colores aleatorios de la lista
         for (int i = 0; i < NUM_CASILLAS; i++) {
-            combinacion_ganadora[i] = new Circulo(engine);
+            combinacion_ganadora[i] = new Circulo(engine, i, fontTitulo);
 
             // Cogemos un color aleatorio de la lista y lo quitamos
             int index = rand.nextInt(coloresAux.size());
@@ -261,18 +276,6 @@ public class Tablero extends GameObject {
         }
     }
 
-    public int getN_COLORS() {
-        return N_COLORS;
-    }
-
-    public int getNUM_CASILLAS() {
-        return NUM_CASILLAS;
-    }
-
-    public int getNUM_INTENTOS() {
-        return NUM_INTENTOS;
-    }
-
     public void handleInput(TouchEvent touchEvent){
         handleColors(touchEvent);
 
@@ -324,6 +327,7 @@ public class Tablero extends GameObject {
 
             //Cambiamos el color del combinacion al color del circulo seleccionado previamente
             seleccionado.descubrir(true);
+            seleccionado.setIdentificador(selectedCircle.getColor().getId());
             seleccionado.setColor(selectedCircle.getColor());
             selectedCircle.seleccionar(false);
             selectedCircle = null;
@@ -346,6 +350,8 @@ public class Tablero extends GameObject {
         int totalWidth = combinacion_ganadora.length * RADIO_CIRCULO*2;
         int spaceToEachSide = (w - totalWidth) / 2;
 
+
+
         // RECTANGULO
         engine.getGraphics().setColor(Color.GRIS);
         int y = pos_intentos[i].y - V_OFFSET / 2;
@@ -354,9 +360,6 @@ public class Tablero extends GameObject {
         // CIRCULOS
         for (int j = 0; j < NUM_CASILLAS; j++)
         {
-            int x = spaceToEachSide + j * RADIO_CIRCULO*2;
-            tablero[i].combinacion[j].pos.x = x;
-            tablero[i].combinacion[j].pos.y = pos_intentos[i].y;
             tablero[i].combinacion[j].render();
         }
         tablero[i].aciertos.render();
@@ -368,8 +371,6 @@ public class Tablero extends GameObject {
     private void dibujaColoresDisponibles()
     {
         int w = engine.getGraphics().getSceneWidth();
-        int totalWidth = N_COLORS * RADIO_CIRCULO*2;
-        int spaceToEachSide = (w - totalWidth) / 2;
 
         // Rectangulo de fondo
         engine.getGraphics().setColor(Color.GRIS);
@@ -377,14 +378,27 @@ public class Tablero extends GameObject {
 
         // Crear las bolas y establecer sus posiciones
         for (int i = 0; i < N_COLORS; i++) {
-            int x = spaceToEachSide + i * (RADIO_CIRCULO*2);
-            colores_elegidos[i].pos.x = x;
-            colores_elegidos[i].pos.y = pos_colores.y;
             colores_elegidos[i].descubrir(true);
             colores_elegidos[i].render();
 
         }
     }
+
+    public void Daltonismo(boolean d)
+    {
+        // Recorremos todo el tablero cambiando el modo a todos los circulos
+        for (int i = 0; i < tablero.length; i++) {
+            for (int j = 0; j < NUM_CASILLAS; j++) {
+                tablero[i].combinacion[j].daltonismo(d);
+            }
+        }
+
+        // Recorremos los colores de abajo
+        for (int i = 0; i < N_COLORS; i++) {
+            colores_elegidos[i].daltonismo(d);
+        }
+    }
+
 
 
 }

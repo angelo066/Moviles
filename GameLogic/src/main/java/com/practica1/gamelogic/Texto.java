@@ -45,5 +45,9 @@ public class Texto extends GameObject {
         //pos.y = pos.y - fheight/2;
     }
 
+    public void setText(String text){
+        this.text = text;
+    }
+
 
 }

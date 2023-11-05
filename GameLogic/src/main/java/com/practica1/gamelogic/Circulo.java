@@ -2,21 +2,33 @@ package com.practica1.gamelogic;
 
 import com.practica1.engine.Color;
 import com.practica1.engine.Engine;
+import com.practica1.engine.Font;
 import com.practica1.engine.GameObject;
 import com.practica1.engine.TouchEvent;
+import com.practica1.engine.Vector2;
 
 public class Circulo extends GameObject {
 
+    private Texto identificador;
     private Color color;
     private boolean descubierto = false; // para cuando asignamos un color al tablero
     private boolean seleccionado = false; // para cuando pinchamos encima
+    private boolean daltonismo = false; // para cuando pinchamos encima
     private final int RADIO_CIRCULO = 50;
     private final int RADIO_CIRCULO_INTERIOR = 15;
     private final int RADIO_SELECCION = 55;
 
-    public Circulo(Engine e)
+
+    public Circulo(Engine e, int id, Font font)
     {
         super(e);
+        identificador = new Texto(e, new Vector2(this.pos), font, String.valueOf(id), Color.NEGRO);
+    }
+
+    public Circulo(Engine e, Vector2 pos, int id, Font font)
+    {
+        super(e, pos);
+        identificador = new Texto(e, new Vector2(this.pos), font, String.valueOf(id), Color.NEGRO);
     }
 
     @Override
@@ -37,6 +49,10 @@ public class Circulo extends GameObject {
         {
             engine.getGraphics().setColor(color);
             engine.getGraphics().fillCircle(pos.x, pos.y, RADIO_CIRCULO);
+            if(daltonismo)
+            {
+                identificador.render();
+            }
         }
         // Si no lo pintamos bloqueado
         else
@@ -46,6 +62,8 @@ public class Circulo extends GameObject {
             engine.getGraphics().setColor(Color.GRIS_OSCURO);
             engine.getGraphics().fillCircle(pos.x + RADIO_CIRCULO - RADIO_CIRCULO_INTERIOR, pos.y +  RADIO_CIRCULO - RADIO_CIRCULO_INTERIOR, RADIO_CIRCULO_INTERIOR);
         }
+
+
     }
 
     @Override
@@ -78,6 +96,12 @@ public class Circulo extends GameObject {
     public void setColor(Color c){color = c;};
     public void seleccionar(boolean s){seleccionado=s;};
     public void descubrir(boolean d){descubierto=d;};
+    public void daltonismo(boolean d){daltonismo=d;};
 
     public boolean getDescubierto(){return descubierto;}
+
+    public void setIdentificador(int id)
+    {
+        this.identificador.setText(String.valueOf(id));
+    }
 }

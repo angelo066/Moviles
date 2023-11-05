@@ -227,13 +227,13 @@ public class Tablero extends GameObject {
 
         tablero[INTENTO_ACTUAL].aciertos.setCirculos(tablero[INTENTO_ACTUAL]);
 
-        // Si ha acertado todas ha ganao
-        if (tablero[INTENTO_ACTUAL].aciertos_pos == NUM_CASILLAS && tablero[INTENTO_ACTUAL].aciertos_color == NUM_CASILLAS)
+        // Si ha acertado todas ha ganado
+        if (tablero[INTENTO_ACTUAL].aciertos_pos == NUM_CASILLAS)
             win = true;
         else INTENTO_ACTUAL++;
 
-        if (INTENTO_ACTUAL == NUM_INTENTOS || win) {
-            engine.setScene(new Final(combinacion_ganadora, win, NUM_CASILLAS, modo));
+        if (INTENTO_ACTUAL == NUM_INTENTOS || win) {                                        //+ 1 porque empezamos en 0
+            engine.setScene(new Final(combinacion_ganadora, win, NUM_CASILLAS, modo, INTENTO_ACTUAL + 1));
         }
     }
 
@@ -269,15 +269,16 @@ public class Tablero extends GameObject {
 
     @Override
     public boolean handleInput(TouchEvent touchEvent) {
-        handleColors(touchEvent);
-
         handleCombination(touchEvent);
+
+        handleColors(touchEvent);
 
         return true;
     }
 
     //Metodo encarga de procesar el input sobre la combinacion actual
     private void handleCombination(TouchEvent touchEvent) {
+
         boolean removeColor = false;
         int intentoLong = tablero[INTENTO_ACTUAL].combinacion.length;
         for (int i = 0; i < intentoLong && !removeColor; i++) {

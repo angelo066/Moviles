@@ -31,13 +31,14 @@ public class Final implements Scene {
 
     Dificultad modo;
 
-    public Final(Circulo[] combinacion, boolean HaGanado, int casillas, Dificultad modo)
+    public Final(Circulo[] combinacion, boolean HaGanado, int casillas, Dificultad modo, int numIntentos)
     {
         super();
         this.HaGanado = HaGanado;
         combinacion_ganadora = combinacion;
         this.NUM_CASILLAS = casillas;
         this.modo = modo;
+        this.numIntentos = numIntentos;
     }
     @Override
     public void init(Engine engine)

@@ -20,12 +20,16 @@ public class MasterMind implements Scene {
 
     private int width;
     private int height;
-    private Image image;
     private Font font;
     private Boton boton_daltonismo;
+    Dificultad modo;
 
     private boolean DALTONISMO = false;
 
+    public MasterMind(Dificultad modo)
+    {
+        this.modo = modo;
+    }
     @Override
     public void init(Engine engine) {
         this.engine = engine;
@@ -35,7 +39,7 @@ public class MasterMind implements Scene {
         height = 1920;
 
         engine.getGraphics().setSceneSize(width, height);
-        this.tablero = new Tablero(engine);
+        this.tablero = new Tablero(engine, modo);
 
         font = graph.newFont("Nexa.ttf", 80, false, false);
         boton_daltonismo = new Boton(engine, new Vector2(0,0), new Vector2(100,100), "ojo.png");
@@ -85,9 +89,5 @@ public class MasterMind implements Scene {
         }
     }
 
-    void cargarHomer() {
-        graph.drawImage(image, 0, 0, 400, 400);
-
-    }
 
 }

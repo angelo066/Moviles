@@ -20,7 +20,10 @@ public class MenuDificultad implements Scene {
     private BotonEscena botonMedio;
     private BotonEscena botonDificil;
     private BotonEscena botonImposible;
+    private BotonEscena botonVolver;
     private Texto titulo;
+    Dificultad modo;
+    boolean seleccionado = false;
 
     @Override
     public void init(Engine engine)
@@ -57,6 +60,11 @@ public class MenuDificultad implements Scene {
         botonImposible = new BotonEscena(engine, posImposible, new Vector2(size), 70, fontBoton,"Imposible", Color.ROJO, Color.NEGRO);
         botonImposible.centrar();
 
+        Vector2 posVolver = new Vector2(0, 0);
+        /*botonImposible = new BotonEscena(engine, );
+        botonImposible.centrar();*/
+
+
         titulo = new Texto(engine, new Vector2(width/2,250), fontTitulo, "Selecciona la dificultad.", Color.NEGRO);
         titulo.centrar();
     }
@@ -83,10 +91,30 @@ public class MenuDificultad implements Scene {
     public void handleInput(ArrayList<TouchEvent> events) {
         //Recorremos el array de eventos mandandolos al tablero
         for(int i = 0; i < events.size(); i++){
-            botonFacil.handleInput(events.get(i));
-            botonMedio.handleInput(events.get(i));
-            botonDificil.handleInput(events.get(i));
-            botonImposible.handleInput(events.get(i));
+            if(botonFacil.handleInput(events.get(i)))
+            {
+                modo = Dificultad.FACIL;
+                seleccionado = true;
+            }
+            if(botonMedio.handleInput(events.get(i)))
+            {
+                modo = Dificultad.MEDIO;
+                seleccionado = true;
+            }
+            if(botonDificil.handleInput(events.get(i)))
+            {
+                modo = Dificultad.DIFICIL;
+                seleccionado = true;
+            }
+            if(botonImposible.handleInput(events.get(i)))
+            {
+                modo = Dificultad.IMPOSIBLE;
+                seleccionado = true;
+            }
+            if(seleccionado)
+            {
+                engine.setScene(new MasterMind(modo));
+            }
         }
     }
 }

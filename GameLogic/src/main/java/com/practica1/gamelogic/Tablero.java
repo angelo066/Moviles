@@ -39,7 +39,7 @@ public class Tablero extends GameObject {
 
     Font fontTitulo;
 
-    public Tablero(Engine e) {
+    public Tablero(Engine e, Dificultad modo) {
         super(e);
 
         pos_cabecera = new Vector2(0,0);
@@ -51,6 +51,9 @@ public class Tablero extends GameObject {
             pos_intentos[i] = new Vector2(0, (i+1) * separacion);
         }
         pos_colores = new Vector2(0, separacion * (N_DIVISIONES_PANTALLA-1));
+
+        // Asignamos la dificultad
+        configuracion(modo);
 
         rand = new Random();
         initTablero();
@@ -88,8 +91,7 @@ public class Tablero extends GameObject {
     }
 
     public void initTablero() {
-        // Asignamos la dificultad
-        configuracion(Dificultad.MEDIO);
+
         fontTitulo = engine.getGraphics().newFont("Nexa.ttf", 50, false, false);
 
         // Variables para posiciones

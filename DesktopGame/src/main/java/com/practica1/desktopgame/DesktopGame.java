@@ -3,6 +3,7 @@ package com.practica1.desktopgame;
 import com.practica1.desktopengine.EngineDesktop;
 import com.practica1.engine.Scene;
 import com.practica1.gamelogic.MasterMind;
+import com.practica1.gamelogic.MenuPrincipal;
 
 import javax.swing.JFrame;
 
@@ -13,7 +14,6 @@ import javax.swing.JFrame;
 //Pasar handleInput a GameObject
 //Renderizar los intentos <--
 //Enlazar las escenas
-//Modo daltonico
 //Sonido en android <--
 //Sacar clase colores a otro sitio <--
 //Revisar codigo y comentar <-- en pricipio
@@ -42,9 +42,7 @@ public class DesktopGame {
 
         EngineDesktop engine = new EngineDesktop(frame);
 
-        //Scene scene = new MenuPrincipal();
-        Scene scene = new MasterMind();
-        //Scene scene = new Final(null,true);
+        Scene scene = new MenuPrincipal();
         engine.setScene(scene);
 
         engine.resume();

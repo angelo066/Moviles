@@ -29,6 +29,7 @@ public class Texto extends GameObject {
         engine.getGraphics().drawText(text, pos.x+50, pos.y+50);
     }
 
+    @Override
     public boolean handleInput(TouchEvent event)
     {
         //....

@@ -88,6 +88,7 @@ public class Boton extends GameObject {
 
     }
 
+    @Override
     public boolean handleInput(TouchEvent event)
     {
         int touchX = event.x;

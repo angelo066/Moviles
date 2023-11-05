@@ -50,7 +50,7 @@ public class GameObject {
      *
      * @return
      */
-    public boolean handleInput() {
+    public boolean handleInput(TouchEvent event) {
         return false;
     }
 

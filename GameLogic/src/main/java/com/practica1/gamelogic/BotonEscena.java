@@ -22,6 +22,7 @@ public class BotonEscena extends Boton {
        super.render();
     }
 
+    @Override
     public boolean handleInput(TouchEvent event)
     {
         boolean pulsado = super.handleInput(event);

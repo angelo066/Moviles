@@ -25,6 +25,7 @@ public class Imagen extends GameObject {
         engine.getGraphics().drawImage(image, pos.x, pos.y, size.x, size.y);
     }
 
+    @Override
     public boolean handleInput(TouchEvent event)
     {
         //....

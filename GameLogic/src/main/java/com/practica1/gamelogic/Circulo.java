@@ -71,6 +71,7 @@ public class Circulo extends GameObject {
         super.update(deltaTime);
     }
 
+    @Override
     public boolean handleInput(TouchEvent event){
         int touchX = event.x;
         int touchY = event.y;

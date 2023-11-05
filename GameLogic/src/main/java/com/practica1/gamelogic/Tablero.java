@@ -276,11 +276,13 @@ public class Tablero extends GameObject {
         }
     }
 
-    public void handleInput(TouchEvent touchEvent){
+    @Override
+    public boolean handleInput(TouchEvent touchEvent){
         handleColors(touchEvent);
 
         handleCombination(touchEvent);
 
+        return true;
     }
 
     //Metodo encarga de procesar el input sobre la combinacion actual

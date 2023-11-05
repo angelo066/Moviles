@@ -62,6 +62,8 @@ public class MenuDificultad implements Scene {
 
         botonVolver = new Boton(engine, width, height, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
 
+        engine.getAudio().loadSound("clickboton.wav", "click");
+
     }
 
     @Override
@@ -91,7 +93,7 @@ public class MenuDificultad implements Scene {
         boolean selected = false;
         Dificultad modo = Dificultad.FACIL;
 
-        for (int i = 0; i < events.size(); i++) {
+        for (int i = 0; i < events.size() && !selected; i++) {
             if (botonFacil.handleInput(events.get(i))) {
                 modo = Dificultad.FACIL;
                 selected = true;
@@ -108,9 +110,12 @@ public class MenuDificultad implements Scene {
                 engine.setScene(new MenuPrincipal());
             }
 
-            if (selected)
-                engine.setScene(new MasterMind(modo));
-
         }
+
+        if (selected){
+            engine.setScene(new MasterMind(modo));
+            engine.getAudio().playSound("click", false);
+        }
+
     }
 }

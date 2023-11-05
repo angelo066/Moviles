@@ -1,10 +1,12 @@
 package com.practica1.gamelogic;
 
+import com.practica1.engine.Audio;
 import com.practica1.engine.Color;
 import com.practica1.engine.Engine;
 import com.practica1.engine.Font;
 import com.practica1.engine.Graphics;
 import com.practica1.engine.Scene;
+import com.practica1.engine.Sound;
 import com.practica1.engine.TouchEvent;
 import com.practica1.engine.Vector2;
 
@@ -17,6 +19,7 @@ public class MenuPrincipal implements Scene {
     private int height;
     private Boton botonJugar;
     private Texto titulo;
+
 
     @Override
     public void init(Engine engine)
@@ -35,6 +38,8 @@ public class MenuPrincipal implements Scene {
         Font fontBoton = engine.getGraphics().newFont("Nexa.ttf", 80, false, false);
         botonJugar = new Boton(engine,width,height, new Vector2(width/2,height/2), new Vector2(500,150), 70, fontBoton,"Jugar", Color.CYAN, Color.NEGRO);
         botonJugar.centrar();
+
+        engine.getAudio().loadSound("botonInterfaz.wav", "start");
     }
 
     @Override
@@ -57,8 +62,11 @@ public class MenuPrincipal implements Scene {
     @Override
     public void handleInput(ArrayList<TouchEvent> events) {
         for(int i = 0; i < events.size(); i++){
-            if(botonJugar.handleInput(events.get(i)))
+            if(botonJugar.handleInput(events.get(i))){
+                engine.getAudio().playSound("start", false);
                 engine.setScene(new MenuDificultad());
+            }
+
         }
     }
 }

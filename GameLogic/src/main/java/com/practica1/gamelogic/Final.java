@@ -160,10 +160,12 @@ public class Final implements Scene {
         for(int i = 0; i < events.size(); i++){
             if(botonRepetir.handleInput(events.get(i)))
             {
+                engine.getAudio().playSound("start", false);
                 engine.setScene(new MasterMind(modo));
             }
             if(botonVolverMenu.handleInput(events.get(i)))
             {
+                engine.getAudio().playSound("start", false);
                 engine.setScene(new MenuDificultad());
             }
         }

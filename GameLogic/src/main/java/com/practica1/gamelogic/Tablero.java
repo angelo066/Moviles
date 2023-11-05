@@ -141,6 +141,11 @@ public class Tablero extends GameObject {
 
             combinacion_ganadora[i] = c;
         }
+
+        //Debug
+        for (int i = 0; i < combinacion_ganadora.length; i++) {
+            System.out.println(combinacion_ganadora[i]);
+        }
     }
 
     private void combinacionSinRep() {
@@ -282,6 +287,7 @@ public class Tablero extends GameObject {
 
         boolean removeColor = false;
         int intentoLong = tablero[INTENTO_ACTUAL].combinacion.length;
+
         for (int i = 0; i < intentoLong && !removeColor; i++) {
 
             Circulo c = tablero[INTENTO_ACTUAL].combinacion[i];

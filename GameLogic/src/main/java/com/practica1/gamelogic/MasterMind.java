@@ -52,7 +52,6 @@ public class MasterMind implements Scene {
         indicador_intentos = new Texto(engine, width, height, new Vector2(width/2, 0), font, text, Color.NEGRO);
         indicador_intentos.centrar();
 
-        //engine.getAudio().loadSound("doFlauta.wav", "a");
     }
 
     @Override
@@ -90,6 +89,8 @@ public class MasterMind implements Scene {
             tablero.handleInput(events.get(i));
 
             if (boton_daltonismo.handleInput(events.get(i))) {
+                engine.getAudio().playSound("click", false);
+
                 if (!DALTONISMO)
                     tablero.Daltonismo(true);
                 else
@@ -97,8 +98,10 @@ public class MasterMind implements Scene {
                 DALTONISMO = !DALTONISMO;
             }
 
-            if(boton_volver.handleInput(events.get(i)))
+            if(boton_volver.handleInput(events.get(i))){
                 engine.setScene(new MenuDificultad());
+                engine.getAudio().playSound("click", false);
+            }
         }
     }
 

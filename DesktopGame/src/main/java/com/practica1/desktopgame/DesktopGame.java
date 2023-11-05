@@ -12,12 +12,7 @@ import javax.swing.JFrame;
 //Restore y save: en android no se apilan las transformaciones. Al principio y al final de cada frame <-- en principio
 
 //FALTA:
-//Pasar handleInput a GameObject
-//Renderizar los intentos <--
-//Enlazar las escenas
 //Sonido en android <--
-//Sacar clase colores a otro sitio <--
-//Revisar codigo y comentar <-- en pricipio
 //Hacer un clear en las escenas antes de pintar
 
 public class DesktopGame {
@@ -43,7 +38,7 @@ public class DesktopGame {
 
         EngineDesktop engine = new EngineDesktop(frame);
 
-        Scene scene = new MasterMind(Dificultad.FACIL);
+        Scene scene = new MenuPrincipal();
         engine.setScene(scene);
 
         engine.resume();

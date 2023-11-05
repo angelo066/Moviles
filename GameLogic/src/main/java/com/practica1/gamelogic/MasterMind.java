@@ -32,6 +32,7 @@ public class MasterMind implements Scene {
     {
         this.modo = modo;
     }
+
     @Override
     public void init(Engine engine) {
         this.engine = engine;
@@ -41,11 +42,12 @@ public class MasterMind implements Scene {
         height = 1920;
 
         engine.getGraphics().setSceneSize(width, height);
+
         this.tablero = new Tablero(engine, width, height, modo);
 
         font = graph.newFont("Nexa.ttf", 80, false, false);
-        boton_daltonismo = new Boton(engine,width,height, new Vector2(width - 100, 0), new Vector2(100, 100), "ojo.png");
-        boton_volver = new Boton(engine,width,height, new Vector2(0, 0), new Vector2(100, 100), "volver.png");
+        boton_daltonismo = new Boton(engine,width,height, new Vector2(width - 120, 20), new Vector2(100, 100), "ojo.png");
+        boton_volver = new Boton(engine,width,height, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
         String text = "Te quedan " + tablero.getNUM_INTENTOS_RESTANTES() + " intentos";
         indicador_intentos = new Texto(engine, width, height, new Vector2(width/2, 0), font, text, Color.NEGRO);
         indicador_intentos.centrar();

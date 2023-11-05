@@ -9,8 +9,8 @@ import com.practica1.engine.TouchEvent;
 import com.practica1.engine.Vector2;
 
 public class Imagen extends GameObject {
-    Image image;
-    Vector2 size;
+    private Image image;
+    private Vector2 size;
 
     // Constructora para boton sin redondeo de bordes
     public Imagen(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Vector2 size, String ruta) {
@@ -22,12 +22,6 @@ public class Imagen extends GameObject {
     @Override
     public void render() {
         engine.getGraphics().drawImage(image, pos.x, pos.y, size.x, size.y);
-    }
-
-    @Override
-    public boolean handleInput(TouchEvent event) {
-        //....
-        return true;
     }
 
     public void centrar() {

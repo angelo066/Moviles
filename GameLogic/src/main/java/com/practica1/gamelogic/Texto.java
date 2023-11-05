@@ -11,12 +11,9 @@ public class Texto extends GameObject {
     private Color color;
     private String text;
     private Font font;
-
     private float textWidth;
-
     private float textHeight;
 
-    // Constructora para boton sin redondeo de bordes
     public Texto(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Font font, String text, Color color) {
         super(e, sceneWidth, sceneHeight, pos);
         this.font = font;
@@ -33,12 +30,6 @@ public class Texto extends GameObject {
         engine.getGraphics().drawText(text, pos.x, pos.y);
     }
 
-    @Override
-    public boolean handleInput(TouchEvent event) {
-        //....
-        return true;
-    }
-
     public void centrar() {
         pos.x = (int) (pos.x - textWidth / 2);
         pos.y = (int) (pos.y - textHeight / 1.3);
@@ -46,6 +37,7 @@ public class Texto extends GameObject {
 
     public void setText(String text) {
         this.text = text;
+        textWidth = engine.getGraphics().getFontMetricWidth(font, text);
     }
 
 

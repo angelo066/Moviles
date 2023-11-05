@@ -8,53 +8,46 @@ import com.practica1.engine.TouchEvent;
 import com.practica1.engine.Vector2;
 
 public class Boton extends GameObject {
-    Vector2 size;
-    Color color;
-    String textContent;
-    boolean redondeado = false;
-    boolean conTexto = false;
-    boolean conImagen = false;
-    float arc;
-    Font font;
-    Texto text;
-    Imagen image;
+    private Vector2 size;
+    private Color color;
+    private float arc;
+    private Font font;
+    private Texto text;
+    private Imagen image;
 
     public Boton(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Vector2 size, float arc, Font font, String text, Color colorBoton, Color colorTexto) {
         super(e, sceneWidth, sceneHeight, pos);
         this.size = size;
         this.arc = arc;
-        redondeado = true;
-        conTexto = true;
-        this.font = font;
-        this.textContent = text;
         this.color = colorBoton;
-        this.text = new Texto(e,sceneWidth,sceneHeight, new Vector2(pos), font, text, colorTexto);
-        this.text.centrar();
+
+        this.font = font;
+        this.text = new Texto(e, sceneWidth, sceneHeight, new Vector2(pos), font, text, colorTexto);
+
+        this.image = null;
     }
 
-    public Boton(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Vector2 size, String ruta) {
+    public Boton(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Vector2 size, String imageFile) {
         super(e, sceneWidth, sceneHeight, pos);
         this.size = size;
-        this.image = new Imagen(e,sceneWidth,sceneHeight, pos, size, ruta);
-        conImagen = true;
+
+        this.text = null;
+
+        this.image = new Imagen(e, sceneWidth, sceneHeight, pos, size, imageFile);
     }
 
     @Override
     public void render() {
 
-        if (conImagen) {
-            this.image.render();
+        if (image != null) {
+            image.render();
         } else {
             engine.getGraphics().setColor(color);
-            if (redondeado)
-                engine.getGraphics().fillRoundRectangle(pos.x, pos.y, size.x, size.y, arc);
-            else
-                engine.getGraphics().fillRectangle(pos.x, pos.y, size.x, size.y);
+            engine.getGraphics().fillRoundRectangle(pos.x, pos.y, size.x, size.y, arc);
 
-            if (conTexto)
+            if (text != null)
                 text.render();
         }
-
     }
 
     @Override
@@ -64,24 +57,22 @@ public class Boton extends GameObject {
         boolean inside = false;
 
         if (event.type == TouchEvent.TouchEventType.CLICK) {
-            //Dentro de manera horizontal
-            if (touchX > pos.x && touchX < pos.x + size.x) {
-                if (touchY > pos.y && touchY < pos.y + size.y) {
-                    inside = true;
-                    System.out.println("DENTRO");
-                }
-            }
+            if (touchX > pos.x && touchX < pos.x + size.x &&
+                    touchY > pos.y && touchY < pos.y + size.y)
+                return true;
+
         }
-
-
-        //Entiendo que esto hay que devolverlo asi
-        return inside;
+        return false;
     }
 
-    // Modifica la posicion iniciar para que sea la centrada
     public void centrar() {
         pos.x = pos.x - size.x / 2;
         pos.y = pos.y - size.y / 2;
+
+        if (text != null)
+            text.centrar();
+        else if (image != null)
+            image.centrar();
     }
 
 

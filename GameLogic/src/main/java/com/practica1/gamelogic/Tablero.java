@@ -36,10 +36,10 @@ public class Tablero extends GameObject {
     private Circulo selectedCircle; //Circulo que elegimos al clickar
 
     private int currentPos = 0; //Ciruclo al que le toca recibir color
-
     Font fontTitulo;
+    Dificultad modo;
 
-    public Tablero(Engine e, int sceneWidth, int sceneHeight) {
+    public Tablero(Engine e, int sceneWidth, int sceneHeight, Dificultad modo) {
         super(e, sceneWidth, sceneHeight);
 
         pos_cabecera = new Vector2(0, 0);
@@ -52,6 +52,7 @@ public class Tablero extends GameObject {
         pos_colores = new Vector2(0, separacion * (N_DIVISIONES_PANTALLA - 1));
 
         // Asignamos la dificultad
+        this.modo = modo;
         configuracion(modo);
 
         rand = new Random();
@@ -232,7 +233,7 @@ public class Tablero extends GameObject {
         else INTENTO_ACTUAL++;
 
         if (INTENTO_ACTUAL == NUM_INTENTOS || win) {
-            engine.setScene(new Final(combinacion_ganadora, win, NUM_CASILLAS));
+            engine.setScene(new Final(combinacion_ganadora, win, NUM_CASILLAS, modo));
         }
     }
 

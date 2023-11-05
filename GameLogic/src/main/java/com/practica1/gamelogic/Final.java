@@ -16,8 +16,8 @@ public class Final implements Scene {
     private Graphics graph;
     private int width;
     private int height;
-    private BotonEscena botonRepetir;
-    private BotonEscena botonVolverMenu;
+    private Boton botonRepetir;
+    private Boton botonVolverMenu;
     private Texto MensajeFinal;
     private Texto MensajeDescripcion;
     private Texto Codigo;
@@ -29,20 +29,15 @@ public class Final implements Scene {
     int NUM_CASILLAS;
     int RADIO_CIRCULO = 30;
 
-    public Final(Circulo[] combinacion, boolean HaGanado, int casillas)
+    Dificultad modo;
+
+    public Final(Circulo[] combinacion, boolean HaGanado, int casillas, Dificultad modo)
     {
         super();
         this.HaGanado = HaGanado;
         combinacion_ganadora = combinacion;
         this.NUM_CASILLAS = casillas;
-        /*int NUM_CASILLAS = combinacion.length;
-        combinacion_ganadora =  new Circulo[NUM_CASILLAS];
-        for (int i = 0; i < NUM_CASILLAS; i++) {
-            combinacion_ganadora[i] = new Circulo(engine);
-            combinacion_ganadora[i].setColor(combinacion[i].getColor());
-        }*/
-
-
+        this.modo = modo;
     }
     @Override
     public void init(Engine engine)
@@ -67,11 +62,11 @@ public class Final implements Scene {
         Vector2 size = new Vector2(800,120);
 
         Vector2 posRep = new Vector2(width/2, height/2 + 300);
-        botonRepetir = new BotonEscena(engine, width,height,posRep, new Vector2(size), 70, fontBoton,"Volver a jugar", Color.CYAN, Color.NEGRO);
+        botonRepetir = new Boton(engine, width,height,posRep, new Vector2(size), 70, fontBoton,"Volver a jugar", Color.CYAN, Color.NEGRO);
         botonRepetir.centrar();
 
         Vector2 posVolver = new Vector2(width/2, height/2 + 450);
-        botonVolverMenu = new BotonEscena(engine,width,height, posVolver, new Vector2(size), 70, fontBoton,"Elegir Dificultad", Color.CYAN, Color.NEGRO);
+        botonVolverMenu = new Boton(engine,width,height, posVolver, new Vector2(size), 70, fontBoton,"Elegir Dificultad", Color.CYAN, Color.NEGRO);
         botonVolverMenu.centrar();
 
         String mensaje ="";
@@ -132,7 +127,14 @@ public class Final implements Scene {
     public void handleInput(ArrayList<TouchEvent> events) {
         //Recorremos el array de eventos mandandolos al tablero
         for(int i = 0; i < events.size(); i++){
-
+            if(botonRepetir.handleInput(events.get(i)))
+            {
+                engine.setScene(new MasterMind(modo));
+            }
+            if(botonVolverMenu.handleInput(events.get(i)))
+            {
+                engine.setScene(new MenuDificultad());
+            }
         }
     }
 

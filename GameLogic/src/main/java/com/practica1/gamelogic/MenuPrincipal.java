@@ -16,7 +16,7 @@ public class MenuPrincipal implements Scene {
     private Graphics graph;
     private int width;
     private int height;
-    private BotonEscena botonJugar;
+    private Boton botonJugar;
     private Texto titulo;
 
     @Override
@@ -33,7 +33,7 @@ public class MenuPrincipal implements Scene {
         Font fontBoton = graph.newFont("Nexa.ttf", 80, false, false);
         Font fontTitulo = graph.newFont("Nexa.ttf", 150, false, false);
 
-        botonJugar = new BotonEscena(engine,width,height, new Vector2(width/2,height/2), new Vector2(500,150), 70, fontBoton,"Jugar", Color.CYAN, Color.NEGRO);
+        botonJugar = new Boton(engine,width,height, new Vector2(width/2,height/2), new Vector2(500,150), 70, fontBoton,"Jugar", Color.CYAN, Color.NEGRO);
         botonJugar.centrar();
         titulo = new Texto(engine,width,height, new Vector2(width/2,250), fontTitulo, "Master Mind", Color.NEGRO);
         titulo.centrar();
@@ -60,7 +60,8 @@ public class MenuPrincipal implements Scene {
     public void handleInput(ArrayList<TouchEvent> events) {
         //Recorremos el array de eventos mandandolos al tablero
         for(int i = 0; i < events.size(); i++){
-            botonJugar.handleInput(events.get(i));
+            if(botonJugar.handleInput(events.get(i)))
+                engine.setScene(new MenuDificultad());
         }
     }
 }

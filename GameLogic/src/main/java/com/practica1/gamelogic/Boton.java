@@ -60,7 +60,7 @@ public class Boton extends GameObject {
     }
 
     public Boton(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Vector2 size, String ruta) {
-        super(e, sceneWidth, sceneHeight);
+        super(e, sceneWidth, sceneHeight, pos);
         this.size = size;
         this.image = new Imagen(e,sceneWidth,sceneHeight, pos, size, ruta);
         conImagen = true;

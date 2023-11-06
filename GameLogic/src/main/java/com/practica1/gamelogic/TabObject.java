@@ -247,36 +247,28 @@ public class TabObject extends GameObject {
      * Comprueba si al rellenar un intento por completo, se pasa al siguiente o hemos ganado
      */
     public void checkAttempt() {
-        boolean win = false;
 
-        // Volcamos la combinacion ganadora en una lista Auxiliar
-        ArrayList<Color> chosenCol = new ArrayList<>();
+        ArrayList<Integer> indexes = new ArrayList<>();
 
-        for (int i = 0; i < numSquares; i++)
-            chosenCol.add(combinationWin[i]);
-
-
-        // Tenemos que comprobar la fila del tablero que coincida con el intento actual
+        //Recorremos el intento viendo el numero de colores acertados en posicion
         for (int i = 0; i < numSquares; i++) {
-
-            // Acierta color y posicion
-            if (tab[actualAttempt].combination[i].getColor() == combinationWin[i]) {
+            // Se acierta color y posicion
+            if (tab[actualAttempt].combination[i].getColor() == combinationWin[i])
                 tab[actualAttempt].checksPos++;
-            } else {   //Comprobamos si acierta solo color
+            else
+                indexes.add(i);
+        }
 
-                // Comprobar colores -> para cada elemento de la comb del jugador, recorremos la lista hasta encontrar el color que buscamos
-                int j = 0;
-                boolean find = false;
-                while (j < chosenCol.size() && !find) {
-
-                    if (tab[actualAttempt].combination[i].getColor() == chosenCol.get(j)) {
-
-                        // Eliminamos el color de la lista
-                        chosenCol.remove(j);
-                        tab[actualAttempt].checksColor++;
-                        find = true;
-                    }
-                    j++;
+        //Recorremos los colores de la combinacion ganadora que no han sido acertados
+        //para ver si el intento contiene dichos colores
+        for (int i = 0; i < indexes.size(); i++) {
+            boolean found = false;
+            for (int j = 0; j < numSquares && !found; j++) {
+                if (tab[actualAttempt].combination[j].getColor() == combinationWin[indexes.get(i)]) {
+                    tab[actualAttempt].checksColor++;
+                    indexes.remove(i);
+                    found = true;
+                    i--;
                 }
             }
         }
@@ -284,16 +276,20 @@ public class TabObject extends GameObject {
         // Pasamos la info de los aciertos al objeto que los renderiza
         tab[actualAttempt].checks.setCirculos(tab[actualAttempt]);
 
+        boolean win = false;
+
         // Si ha acertado todas ha ganado
         if (tab[actualAttempt].checksPos == numSquares)
             win = true;
-        else actualAttempt++;
+        else
+            actualAttempt++;
 
         // Pasamos a la escena final si hemos agotado todos los intentos o hemos ganado
         if (actualAttempt == numAttempts || win) {                                        //+ 1 porque empezamos en 0
             engine.setScene(new EndScreen(combinationWin, win, numSquares, mode, actualAttempt + 1, colorBlind));
             finish = true;
         }
+
     }
 
     @Override

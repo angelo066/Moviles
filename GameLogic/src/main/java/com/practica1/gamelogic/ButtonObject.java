@@ -15,7 +15,7 @@ public class ButtonObject extends GameObject {
     private Color color;
     private float arc;
     private Font font;
-    private Texto text;
+    private TextObject text;
     private ImageObject image;
 
     // Constructora para Botones sin imagen
@@ -26,7 +26,7 @@ public class ButtonObject extends GameObject {
         this.color = colorButton;
 
         this.font = font;
-        this.text = new Texto(e, sceneWidth, sceneHeight, new Vector2(pos), font, text, colorText);
+        this.text = new TextObject(e, sceneWidth, sceneHeight, new Vector2(pos), font, text, colorText);
 
         this.image = null;
     }

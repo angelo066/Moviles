@@ -18,7 +18,7 @@ public class MainMenu implements Scene {
     private int width;
     private int height;
     private ButtonObject buttonPlay;
-    private Texto textTitle;
+    private TextObject textTitle;
 
 
     @Override
@@ -33,7 +33,7 @@ public class MainMenu implements Scene {
 
         // Creacion de los objetos de la escena
         Font fontTitulo = engine.getGraphics().newFont("Nexa.ttf", 150, false, false);
-        textTitle = new Texto(engine,width,height, new Vector2(width/2,250), fontTitulo, "Master Mind", Color.BLACK);
+        textTitle = new TextObject(engine,width,height, new Vector2(width/2,250), fontTitulo, "Master Mind", Color.BLACK);
         textTitle.center();
 
         Font fontBoton = engine.getGraphics().newFont("Nexa.ttf", 80, false, false);

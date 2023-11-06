@@ -23,7 +23,7 @@ public class SelectionMenu implements Scene {
     private ButtonObject buttonHard;
     private ButtonObject buttonImposible;
     private ButtonObject buttonBack;
-    private Texto textSelection;
+    private TextObject textSelection;
 
     @Override
     public void init(Engine engine) {
@@ -38,7 +38,7 @@ public class SelectionMenu implements Scene {
         // Creacion de los objetos de la escena
         // Mensaje de seleccion
         Font fontSelection = engine.getGraphics().newFont("Nexa.ttf", 50, false, false);
-        textSelection = new Texto(engine, width, height, new Vector2(width / 2, height/8), fontSelection, "Selecciona la dificultad.", Color.BLACK);
+        textSelection = new TextObject(engine, width, height, new Vector2(width / 2, height/8), fontSelection, "Selecciona la dificultad.", Color.BLACK);
         textSelection.center();
 
         // Botones

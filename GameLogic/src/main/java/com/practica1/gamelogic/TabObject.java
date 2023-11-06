@@ -18,7 +18,7 @@ import java.util.Random;
  * Gestiona los intentos que tiene el jugador
  * Comprueba en cada intento si ha ganado o perdido
  */
-public class Tablero extends GameObject {
+public class TabObject extends GameObject {
     private boolean DEBUG = true;
     private final int NUM_WINDOW_DIVISIONS = 12; // Divisiones de la pantalla (para calculos relativos de posiciones)
     boolean COLORBLIND = false; // Para el modo daltonismo
@@ -44,7 +44,7 @@ public class Tablero extends GameObject {
     boolean win = false;
 
 
-    public Tablero(Engine e, int sceneWidth, int sceneHeight, Difficulty MODE) {
+    public TabObject(Engine e, int sceneWidth, int sceneHeight, Difficulty MODE) {
         super(e, sceneWidth, sceneHeight);
 
         pos_attempts = new Vector2[NUM_WINDOW_DIVISIONS - 2];
@@ -106,7 +106,7 @@ public class Tablero extends GameObject {
             TAB[i].checks = new CheckObject(engine,sceneWidth,sceneHeight, NUM_SQUARES, pos_attempts[i]);
             int num_intento = i + 1;
             Vector2 posn = new Vector2(sceneWidth/14, pos_attempts[i].y);
-            TAB[i].textNumber = new Texto(engine,sceneWidth,sceneHeight, posn, font, String.valueOf(num_intento), Color.BLACK);
+            TAB[i].textNumber = new TextObject(engine,sceneWidth,sceneHeight, posn, font, String.valueOf(num_intento), Color.BLACK);
 
             // Para cada casilla creamos un circulo dentro de la lista de circulos del Intento
             for (int j = 0; j < NUM_SQUARES; j++)

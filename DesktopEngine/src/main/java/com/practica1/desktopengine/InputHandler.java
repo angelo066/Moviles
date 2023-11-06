@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 /**
  * Clase que gestiona los eventos de input recibidos en la ventana en desktop
  */
-public class InputHandler implements MouseListener, MouseMotionListener {
+public class InputHandler implements MouseListener {
 
     private ArrayList<TouchEvent> events;
 
@@ -70,14 +70,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseExited(MouseEvent mouseEvent) {
-        TouchEvent event = new TouchEvent();
-        event.x = mouseEvent.getX();
-        event.y = mouseEvent.getY();
-        event.type = TouchEvent.TouchEventType.ON_RELEASE;
 
-        synchronized (this) {
-            pendingEvents.add(event);
-        }
     }
 
     /**
@@ -96,15 +89,4 @@ public class InputHandler implements MouseListener, MouseMotionListener {
         return events;
     }
 
-
-    @Override
-    public void mouseDragged(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent mouseEvent) {
-
-
-    }
 }

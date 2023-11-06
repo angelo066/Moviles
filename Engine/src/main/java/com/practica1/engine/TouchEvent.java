@@ -7,13 +7,11 @@ public class TouchEvent {
     /**
      * Tipos de evento
      */
-    public static enum TouchEventType {
+    public enum TouchEventType {
         TOUCH_DOWN,
         TOUCH_UP,
         CLICK,
-        TOUCH_DRAG,
-        ON_HOVER,
-        ON_RELEASE
+        TOUCH_DRAG
     }
 
     public TouchEventType type;

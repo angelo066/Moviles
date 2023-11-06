@@ -21,13 +21,19 @@ public class FontAndroid implements Font {
      * @param italic       Italic?
      */
     public FontAndroid(String filename, AssetManager assetManager, int size, boolean bold, boolean italic) {
-        Typeface newFont = Typeface.createFromAsset(assetManager, filename);
+        try {
+            Typeface newFont = Typeface.createFromAsset(assetManager, filename);
 
-        int flags = 0;
-        if (bold) flags += Typeface.BOLD;
-        if (italic) flags += Typeface.ITALIC;
+            int flags = 0;
+            if (bold) flags += Typeface.BOLD;
+            if (italic) flags += Typeface.ITALIC;
 
-        font = Typeface.create(newFont, flags);
+            font = Typeface.create(newFont, flags);
+        }
+        catch (Exception e ){
+            throw new RuntimeException("ERROR AL CARGAR FUENTE EN ANDROID");
+        }
+
         this.size = size;
     }
 
@@ -46,5 +52,33 @@ public class FontAndroid implements Font {
     @Override
     public int getSize() {
         return size;
+    }
+
+    @Override
+    public void setBold(boolean bold) {
+        int flags = 0;
+        if (bold) flags += Typeface.BOLD;
+        if (isItalic()) flags += Typeface.ITALIC;
+
+        font = Typeface.create(font, flags);
+    }
+
+    @Override
+    public boolean isBold() {
+        return font.isBold();
+    }
+
+    @Override
+    public void setItalic(boolean italic) {
+        int flags = 0;
+        if (italic) flags += Typeface.ITALIC;
+        if (isItalic()) flags += Typeface.BOLD;
+
+        font = Typeface.create(font, flags);
+    }
+
+    @Override
+    public boolean isItalic() {
+        return font.isItalic();
     }
 }

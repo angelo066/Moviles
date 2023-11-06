@@ -30,5 +30,10 @@ public enum Color {
     public int getValue() {
         return value;
     }
-    public int getId(){return id;};
+
+    public int getId() {
+        return id;
+    }
+
+    ;
 }

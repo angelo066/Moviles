@@ -18,7 +18,20 @@ public class ButtonObject extends GameObject {
     private TextObject text;
     private ImageObject image;
 
-    // Constructora para Botones sin imagen
+    /**
+     * Constructora para Botones sin imagen, con o sin texto
+     *
+     * @param e           Engine de la aplicacion
+     * @param sceneWidth  Anchura de la escena
+     * @param sceneHeight Altura de la escena
+     * @param pos         Posicion del boton
+     * @param size        Tamanio del boton
+     * @param arc         Curvatura de las esquinas
+     * @param font        Fuente del texto
+     * @param text        Texto
+     * @param colorButton Color del boton
+     * @param colorText   Color del texto
+     */
     public ButtonObject(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Vector2 size, float arc, Font font, String text, Color colorButton, Color colorText) {
         super(e, sceneWidth, sceneHeight, pos);
         this.size = size;
@@ -31,7 +44,16 @@ public class ButtonObject extends GameObject {
         this.image = null;
     }
 
-    // Constructora para Botones con imagen
+    /**
+     * Constructora para Botones con imagen
+     *
+     * @param e           Engine de la aplicacion
+     * @param sceneWidth  Anchura de la escena
+     * @param sceneHeight Altura de la escena
+     * @param pos         Posicion del boton
+     * @param size        Tamanio del boton
+     * @param imageFile   Nombre delm archivo imagen
+     */
     public ButtonObject(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Vector2 size, String imageFile) {
         super(e, sceneWidth, sceneHeight, pos);
         this.size = size;
@@ -46,8 +68,7 @@ public class ButtonObject extends GameObject {
 
         if (image != null) {
             image.render();
-        }
-        else {
+        } else {
             engine.getGraphics().setColor(color);
             engine.getGraphics().fillRoundRectangle(pos.x, pos.y, size.x, size.y, arc);
 
@@ -60,17 +81,18 @@ public class ButtonObject extends GameObject {
     public boolean handleInput(TouchEvent event) {
         int touchX = event.x;
         int touchY = event.y;
-        boolean inside = false;
 
         if (event.type == TouchEvent.TouchEventType.TOUCH_DOWN) {
             if (touchX > pos.x && touchX < pos.x + size.x &&
                     touchY > pos.y && touchY < pos.y + size.y)
                 return true;
-
         }
         return false;
     }
 
+    /**
+     * Centra el boton en pos
+     */
     public void centrar() {
         pos.x = pos.x - size.x / 2;
         pos.y = pos.y - size.y / 2;

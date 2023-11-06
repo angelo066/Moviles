@@ -15,7 +15,6 @@ public class InputDesktop implements Input {
     private InputHandler handler;
 
     /**
-     *
      * @param view Ventana de la aplicacion
      */
     public InputDesktop(JFrame view) {
@@ -30,5 +29,7 @@ public class InputDesktop implements Input {
     /**
      * Limpia los eventos del frame pasado
      */
-    public void clearEvents(){handler.clearEvents();}
+    public void clearEvents() {
+        handler.clearEvents();
+    }
 }

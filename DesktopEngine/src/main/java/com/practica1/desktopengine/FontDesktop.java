@@ -2,9 +2,7 @@ package com.practica1.desktopengine;
 
 import com.practica1.engine.Font;
 
-import java.awt.FontFormatException;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -20,10 +18,9 @@ public class FontDesktop implements Font {
      * @param italic   Italic?
      */
     public FontDesktop(String filename, int size, boolean bold, boolean italic) {
-        InputStream is = null;
         java.awt.Font newFont = null;
         try {
-            is = new FileInputStream(filename);
+            InputStream is = new FileInputStream(filename);
 
             newFont = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, is);
 
@@ -33,8 +30,10 @@ public class FontDesktop implements Font {
 
             newFont = newFont.deriveFont(flags, (float) size);
 
-        } catch (FontFormatException | IOException e) {
-            throw new RuntimeException("ERROR AL CARGAR FUENTE");
+            is.close();
+
+        } catch (Exception e) {
+            throw new RuntimeException("ERROR AL CARGAR FUENTE EN DESKTOP");
         }
 
         font = newFont;
@@ -55,6 +54,34 @@ public class FontDesktop implements Font {
     @Override
     public int getSize() {
         return font.getSize();
+    }
+
+    @Override
+    public void setBold(boolean bold) {
+        int flags = 0;
+        if (bold) flags += java.awt.Font.BOLD;
+        if (isItalic()) flags += java.awt.Font.ITALIC;
+
+        font = font.deriveFont(flags, (float) getSize());
+    }
+
+    @Override
+    public boolean isBold() {
+        return font.isBold();
+    }
+
+    @Override
+    public void setItalic(boolean italic) {
+        int flags = 0;
+        if (italic) flags += java.awt.Font.ITALIC;
+        if (isBold()) flags += java.awt.Font.BOLD;
+
+        font = font.deriveFont(flags, (float) getSize());
+    }
+
+    @Override
+    public boolean isItalic() {
+        return font.isItalic();
     }
 
 }

@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 
 import com.practica1.engine.Image;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -14,17 +13,22 @@ import java.io.InputStream;
  */
 public class ImageAndroid implements Image {
 
+    private Bitmap bitmap;
+
     /**
      * @param filename     Nombre del archivo
      * @param assetManager AssetsManager en android
-     * @throws IOException
      */
-    public ImageAndroid(String filename, AssetManager assetManager) throws IOException {
-        InputStream is = assetManager.open(filename);
-        bitmap = BitmapFactory.decodeStream(is);
-    }
+    public ImageAndroid(String filename, AssetManager assetManager) {
+        try {
+            InputStream is = assetManager.open(filename);
+            bitmap = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (Exception e) {
+            throw new RuntimeException("ERROR AL CARGAR IMAGEN POR ANDROID");
+        }
 
-    private Bitmap bitmap;
+    }
 
     @Override
     public int getWidth() {

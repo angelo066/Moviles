@@ -49,12 +49,8 @@ public class InputHandler implements View.OnTouchListener {
             event.type = TouchEvent.TouchEventType.TOUCH_DOWN;
         else if (action == MotionEvent.ACTION_UP)
             event.type = TouchEvent.TouchEventType.TOUCH_UP;
-        else if (action == MotionEvent.ACTION_BUTTON_PRESS)
-            event.type = TouchEvent.TouchEventType.CLICK;
         else if (action == MotionEvent.ACTION_MOVE)
             event.type = TouchEvent.TouchEventType.TOUCH_DRAG;
-        else if (action == MotionEvent.ACTION_HOVER_ENTER)
-            event.type = TouchEvent.TouchEventType.ON_HOVER;
 
 
         synchronized (this) {
@@ -63,6 +59,7 @@ public class InputHandler implements View.OnTouchListener {
 
         return true;
     }
+
 
     /**
      * Limpia los eventos

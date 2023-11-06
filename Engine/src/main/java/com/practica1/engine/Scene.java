@@ -9,12 +9,14 @@ public interface Scene {
 
     /**
      * Inicializar
+     *
      * @param engine Engine de la aplicacion
      */
     public void init(Engine engine);
 
     /**
      * Update de la escena
+     *
      * @param deltaTime
      */
     public void update(double deltaTime);
@@ -26,6 +28,7 @@ public interface Scene {
 
     /**
      * Manejo de input de la escena
+     *
      * @param events
      */
     public void handleInput(ArrayList<TouchEvent> events);

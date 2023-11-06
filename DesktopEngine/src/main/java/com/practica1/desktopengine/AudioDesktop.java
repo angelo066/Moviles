@@ -44,5 +44,6 @@ public class AudioDesktop implements Audio {
     public void releaseSound(String id) {
         if (!soundsMap.containsKey(id)) return;
         soundsMap.get(id).release();
+        soundsMap.remove(id);
     }
 }

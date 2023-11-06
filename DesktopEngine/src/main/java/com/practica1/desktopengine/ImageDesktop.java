@@ -3,7 +3,6 @@ package com.practica1.desktopengine;
 import com.practica1.engine.Image;
 
 import java.io.File;
-import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
@@ -12,21 +11,20 @@ import javax.imageio.ImageIO;
  */
 public class ImageDesktop implements Image {
 
+    private java.awt.Image image;
+
     /**
      * @param filename Nombre del archivo
-     * @throws IOException
      */
-    public ImageDesktop(String filename) throws IOException {
+    public ImageDesktop(String filename) {
         java.awt.Image newImage = null;
         try {
             newImage = ImageIO.read(new File(filename));
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException("ERROR AL CARGAR IMAGEN POR DESKTOP");
         }
         image = newImage;
     }
-
-    private java.awt.Image image;
 
     @Override
     public int getWidth() {

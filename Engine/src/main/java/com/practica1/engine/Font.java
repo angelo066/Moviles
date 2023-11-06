@@ -16,4 +16,28 @@ public interface Font {
      * @return El tamanio de fuente
      */
     public int getSize();
+
+    /**
+     * Establece el bold del texto
+     *
+     * @param bold
+     */
+    public void setBold(boolean bold);
+
+    /**
+     * @return Si la fuente es bold
+     */
+    public boolean isBold();
+
+    /**
+     * Establece el italic del texto
+     *
+     * @param italic
+     */
+    public void setItalic(boolean italic);
+
+    /**
+     * @return Si la fuente es italic
+     */
+    public boolean isItalic();
 }

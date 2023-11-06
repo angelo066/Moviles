@@ -25,7 +25,7 @@ public class SoundDesktop implements Sound {
             audioClip = AudioSystem.getClip();
             audioClip.open(audioInputStream);
         } catch (Exception e) {
-            System.err.println("Couldn't load audio file");
+            System.err.println("ERROR AL CARGAR AUDIO EN DESKTOP");
             e.printStackTrace();
         }
     }
@@ -46,7 +46,7 @@ public class SoundDesktop implements Sound {
 
     @Override
     public void loop(boolean loop) {
-        if(loop)
+        if (loop)
             audioClip.loop(Clip.LOOP_CONTINUOUSLY);
         else
             audioClip.loop(0);

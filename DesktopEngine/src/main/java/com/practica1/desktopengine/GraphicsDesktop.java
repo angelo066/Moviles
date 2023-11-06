@@ -56,7 +56,11 @@ public class GraphicsDesktop implements Graphics {
     @Override
     public Font newFont(String name, int size, boolean isBold, boolean isItalic) {
         String filename = fontsRoute + name;
-        return new FontDesktop(filename, size, isBold, isItalic);
+        try {
+            return new FontDesktop(filename, size, isBold, isItalic);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
@@ -117,7 +121,7 @@ public class GraphicsDesktop implements Graphics {
 
     @Override
     public void fillRoundRectangle(float cx, float cy, float width, float height, float arc) {
-        g_graphics.fillRoundRect((int) cx, (int) cy, (int) width, (int) height, (int) (2 * arc),(int) (2 * arc));
+        g_graphics.fillRoundRect((int) cx, (int) cy, (int) width, (int) height, (int) (2 * arc), (int) (2 * arc));
     }
 
     @Override

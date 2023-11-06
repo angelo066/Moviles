@@ -49,13 +49,11 @@ public class GraphicsAndroid implements Graphics {
     @Override
     public Image newImage(String name) {
         String filename = imagesRoute + name;
-        ImageAndroid image = null;
         try {
-            image = new ImageAndroid(filename, assetManager);
-        } catch (IOException e) {
-            throw new RuntimeException("ERROR AL CARGAR IMAGEN POR ANDROID");
+            return new ImageAndroid(filename, assetManager);
+        } catch (Exception e) {
+            return null;
         }
-        return image;
     }
 
     @Override
@@ -72,7 +70,11 @@ public class GraphicsAndroid implements Graphics {
     @Override
     public Font newFont(String name, int size, boolean isBold, boolean isItalic) {
         String filename = fontsRoute + name;
-        return new FontAndroid(filename, assetManager, size, isBold, isItalic);
+        try {
+            return new FontAndroid(filename, assetManager, size, isBold, isItalic);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
@@ -190,7 +192,7 @@ public class GraphicsAndroid implements Graphics {
     @Override
     public float getFontMetricWidth(Font font, String texto) {
         setFont(font);
-        return  paint.measureText(texto);
+        return paint.measureText(texto);
     }
 
     @Override

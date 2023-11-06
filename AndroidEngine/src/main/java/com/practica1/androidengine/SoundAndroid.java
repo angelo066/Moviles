@@ -17,9 +17,8 @@ public class SoundAndroid implements Sound {
     private int soundId, streamId;
 
     /**
-     *
-     * @param file Nombre del archivo
-     * @param sPool Pool de sonidos de android
+     * @param file         Nombre del archivo
+     * @param sPool        Pool de sonidos de android
      * @param assetManager AssetsManager de android
      */
     public SoundAndroid(String file, SoundPool sPool, AssetManager assetManager) {
@@ -32,7 +31,7 @@ public class SoundAndroid implements Sound {
             soundId = soundPool.load(assetFileDescriptor, 1);
             assetFileDescriptor.close();
         } catch (IOException e) {
-            System.err.println("Couldn't load sound");
+            System.err.println("ERROR AL CARGAR AUDIO EN ANDROID");
             e.printStackTrace();
         }
     }

@@ -19,25 +19,21 @@ public class MasterMind implements Scene {
     private Graphics graph;
     private int width;
     private int height;
-
-    // Instancia al tablero (lleva la logica de juego)
-    private TabObject TAB;
-
+    private TabObject tab;     // Instancia al tablero (lleva la logica de juego)
     private ButtonObject buttonColorBlind;
+    private ButtonObject buttonColorBlindActive;
     private ButtonObject buttonBack;
     private TextObject textAttempts;
+    private TextObject title;
     private Difficulty mode;
+    private boolean colorBlind;
 
-    private boolean COLOR_BLIND = false;
-
-    public MasterMind(Difficulty mode)
-    {
+    public MasterMind(Difficulty mode) {
         this.mode = mode;
     }
 
     @Override
-    public void init(Engine engine)
-    {
+    public void init(Engine engine) {
         this.engine = engine;
         this.graph = engine.getGraphics();
         width = 1080;
@@ -45,71 +41,92 @@ public class MasterMind implements Scene {
         engine.getGraphics().setSceneSize(width, height);
 
         // Creacion del tablero de juego
-        this.TAB = new TabObject(engine, width, height, mode);
+        tab = new TabObject(engine, width, height, mode);
+        tab.init();
 
         // Botones
-        buttonColorBlind = new ButtonObject(engine,width,height, new Vector2(width -120, 20), new Vector2(100, 100), "ojo.png");
-        buttonBack = new ButtonObject(engine,width,height, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
+        buttonColorBlind = new ButtonObject(engine, width, height, new Vector2(width - 120, 20), new Vector2(100, 100), "ojo.png");
+        buttonColorBlindActive = new ButtonObject(engine, width, height, new Vector2(width - 120, 20), new Vector2(100, 100), "ojo2.png");
+
+        buttonBack = new ButtonObject(engine, width, height, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
 
         // Texto de indicacion de intentos restantes
-        Font font = graph.newFont("Nexa.ttf", 50, false, false);
-        String text = "Te quedan " + TAB.getNUM_INTENTOS_RESTANTES() + " intentos";
-        textAttempts = new TextObject(engine, width, height, new Vector2(width/2, 0), font, text, Color.BLACK);
+        Font font = graph.newFont("Nexa.ttf", 45, false, false);
+        String text = "Te quedan " + tab.getRemainingAttempts() + " intentos";
+        textAttempts = new TextObject(engine, width, height, new Vector2(width / 2, 72), font, text, Color.BLACK);
         textAttempts.centerHorizontal();
 
+        Font fontTitle = graph.newFont("BarlowCondensed-Regular.ttf", 60, true, false);
+        title = new TextObject(engine, width, height, new Vector2(width / 2, 50), fontTitle, "Averigua el código", Color.BLACK);
+        title.center();
+
+        colorBlind = false;
     }
 
     @Override
-    public void update(double deltaTime) {}
+    public void update(double deltaTime) {
+    }
 
     @Override
-    public void render()
-    {
+    public void render() {
         // Fondo APP
-        graph.clear(Color.DARK_GREY);
+        engine.getGraphics().clear(Color.WHITE);
 
         // Fondo Juego
         graph.setColor(Color.WHITE);
         graph.fillRectangle(0, 0, width, height);
 
         // Tablero con todos los intentos
-        TAB.render();
+        tab.render();
 
         // Botones
-        buttonColorBlind.render();
+        if (colorBlind)
+            buttonColorBlindActive.render();
+        else
+            buttonColorBlind.render();
+
         buttonBack.render();
 
         // Texto de los intentos restantes
-        String text = "Te quedan " + TAB.getNUM_INTENTOS_RESTANTES() + " intentos";
+        String text = "Te quedan " + tab.getRemainingAttempts() + " intentos";
         textAttempts.setText(text);
         textAttempts.render();
+
+        title.render();
     }
 
     @Override
     public void handleInput(ArrayList<TouchEvent> events) {
         for (int i = 0; i < events.size(); i++) {
-            if(TAB.handleInput(events.get(i)))
+            // Handle input del tablero, false si el juego no se ha acabado, true e.o.c
+            if (tab.handleInput(events.get(i)))
                 break;
 
             // Activar / Desactivar daltonismo
-            if (buttonColorBlind.handleInput(events.get(i))) {
-                engine.getAudio().playSound("click", false);
-
-                if (!COLOR_BLIND)
-                    TAB.colorblind(true);
-                else
-                    TAB.colorblind(false);
-                COLOR_BLIND = !COLOR_BLIND;
+            if (colorBlind) {
+                if (buttonColorBlindActive.handleInput(events.get(i))) {
+                    engine.getAudio().stopSound("click");
+                    engine.getAudio().playSound("click", false);
+                    tab.colorblind(false);
+                    colorBlind = !colorBlind;
+                }
+            } else {
+                if (buttonColorBlind.handleInput(events.get(i))) {
+                    engine.getAudio().stopSound("click");
+                    engine.getAudio().playSound("click", false);
+                    tab.colorblind(true);
+                    colorBlind = !colorBlind;
+                }
             }
 
+
             // Volver a la escena de seleccion
-            if(buttonBack.handleInput(events.get(i))){
-                engine.setScene(new SelectionMenu());
+            if (buttonBack.handleInput(events.get(i))) {
+                engine.getAudio().stopSound("click");
                 engine.getAudio().playSound("click", false);
                 engine.setScene(new SelectionMenu());
+                break;
             }
         }
     }
-
-
 }

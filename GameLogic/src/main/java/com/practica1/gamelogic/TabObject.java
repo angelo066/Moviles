@@ -248,27 +248,32 @@ public class TabObject extends GameObject {
      */
     public void checkAttempt() {
 
-        ArrayList<Integer> indexes = new ArrayList<>();
+        ArrayList<Integer> indexesComWin = new ArrayList<>();
+        ArrayList<Integer> indexesCom = new ArrayList<>();
 
         //Recorremos el intento viendo el numero de colores acertados en posicion
         for (int i = 0; i < numSquares; i++) {
             // Se acierta color y posicion
             if (tab[actualAttempt].combination[i].getColor() == combinationWin[i])
                 tab[actualAttempt].checksPos++;
-            else
-                indexes.add(i);
+            else {
+                indexesComWin.add(i);
+                indexesCom.add(i);
+            }
         }
 
         //Recorremos los colores de la combinacion ganadora que no han sido acertados
         //para ver si el intento contiene dichos colores
-        for (int i = 0; i < indexes.size(); i++) {
+        for (int i = 0; i < indexesComWin.size(); i++) {
             boolean found = false;
-            for (int j = 0; j < numSquares && !found; j++) {
-                if (tab[actualAttempt].combination[j].getColor() == combinationWin[indexes.get(i)]) {
+            for (int j = 0; j < indexesCom.size() && !found; j++) {
+                if (tab[actualAttempt].combination[indexesCom.get(j)].getColor() == combinationWin[indexesComWin.get(i)]) {
                     tab[actualAttempt].checksColor++;
-                    indexes.remove(i);
+                    indexesComWin.remove(i);
+                    indexesCom.remove(j);
                     found = true;
                     i--;
+                    j--;
                 }
             }
         }

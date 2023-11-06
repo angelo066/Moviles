@@ -21,11 +21,11 @@ public class MasterMind implements Scene {
     private int height;
 
     // Instancia al tablero (lleva la logica de juego)
-    private TabObject TAB;
+    private Tablero TAB;
 
     private ButtonObject buttonColorBlind;
     private ButtonObject buttonBack;
-    private TextObject textAttempts;
+    private Texto textAttempts;
     private Difficulty mode;
 
     private boolean COLOR_BLIND = false;
@@ -45,7 +45,7 @@ public class MasterMind implements Scene {
         engine.getGraphics().setSceneSize(width, height);
 
         // Creacion del tablero de juego
-        this.TAB = new TabObject(engine, width, height, mode);
+        this.TAB = new Tablero(engine, width, height, mode);
 
         // Botones
         buttonColorBlind = new ButtonObject(engine,width,height, new Vector2(width -120, 20), new Vector2(100, 100), "ojo.png");
@@ -54,7 +54,7 @@ public class MasterMind implements Scene {
         // Texto de indicacion de intentos restantes
         Font font = graph.newFont("Nexa.ttf", 50, false, false);
         String text = "Te quedan " + TAB.getNUM_INTENTOS_RESTANTES() + " intentos";
-        textAttempts = new TextObject(engine, width, height, new Vector2(width/2, 0), font, text, Color.BLACK);
+        textAttempts = new Texto(engine, width, height, new Vector2(width/2, 0), font, text, Color.BLACK);
         textAttempts.centerHorizontal();
 
     }

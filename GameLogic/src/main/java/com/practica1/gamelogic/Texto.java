@@ -9,14 +9,14 @@ import com.practica1.engine.Vector2;
 /**
  * GameObject Texto, encapsula las funcionalidades de pintar texto dentro de un objeto
  */
-public class TextObject extends GameObject {
+public class Texto extends GameObject {
     private Color color;
     private String text;
     private Font font;
     private float textWidth;
     private float textHeight;
 
-    public TextObject(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Font font, String text, Color color) {
+    public Texto(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Font font, String text, Color color) {
         super(e, sceneWidth, sceneHeight, pos);
         this.font = font;
         this.text = text;

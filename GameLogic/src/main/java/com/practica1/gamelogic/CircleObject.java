@@ -12,7 +12,7 @@ import com.practica1.engine.Vector2;
  */
 public class CircleObject extends GameObject {
 
-    private TextObject id;
+    private Texto id;
     private Color color;
     private boolean uncovered = false; // para cuando asignamos un color al tablero
     private boolean selected = false; // para cuando pinchamos encima
@@ -25,7 +25,7 @@ public class CircleObject extends GameObject {
     {
         super(e,sceneWidth,sceneHeight);
 
-        this.id = new TextObject(e,sceneWidth,sceneHeight,
+        this.id = new Texto(e,sceneWidth,sceneHeight,
                 new Vector2(this.pos.x + RADIO_CIRCULO, this.pos.y + RADIO_CIRCULO),
                 font, String.valueOf(id), Color.BLACK);
 
@@ -36,7 +36,7 @@ public class CircleObject extends GameObject {
     public CircleObject(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, int id, Font font)
     {
         super(e,sceneWidth,sceneHeight, pos);
-        this.id = new TextObject(e,sceneWidth,sceneHeight,
+        this.id = new Texto(e,sceneWidth,sceneHeight,
                 new Vector2(this.pos.x + CIRCLE_RADIUS, this.pos.y + CIRCLE_RADIUS),
                 font, String.valueOf(id), Color.BLACK);
 

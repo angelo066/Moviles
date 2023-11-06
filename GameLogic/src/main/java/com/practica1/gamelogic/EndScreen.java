@@ -18,10 +18,10 @@ public class EndScreen implements Scene {
     private int height;
     private ButtonObject buttonRepeat;
     private ButtonObject buttonBackMenu;
-    private TextObject textEndMessage;
-    private TextObject textDescriptionMessage;
-    private TextObject textCode;
-    private TextObject textUsedAttempts;
+    private Texto textEndMessage;
+    private Texto textDescriptionMessage;
+    private Texto textCode;
+    private Texto textUsedAttempts;
     private Color[] combination_win;
     int numAttempts = 0;
 
@@ -89,13 +89,13 @@ public class EndScreen implements Scene {
             engine.getAudio().loadSound("douh.wav", "douh");
             engine.getAudio().playSound("douh", false);
         }
-        textEndMessage = new TextObject(engine, width,height,new Vector2(width/2,height/10), fontMensaje, mensaje, Color.BLACK);
+        textEndMessage = new Texto(engine, width,height,new Vector2(width/2,height/10), fontMensaje, mensaje, Color.BLACK);
         textEndMessage.center();
-        textDescriptionMessage = new TextObject(engine,width,height, new Vector2(width/2,height/10 * 2), fontDescripcion, descripcion, Color.BLACK);
+        textDescriptionMessage = new Texto(engine,width,height, new Vector2(width/2,height/10 * 2), fontDescripcion, descripcion, Color.BLACK);
         textDescriptionMessage.center();
-        textUsedAttempts = new TextObject(engine, width,height,new Vector2(width/2,height/10 * 5/2), fontIntentos, intentos, Color.BLACK);
+        textUsedAttempts = new Texto(engine, width,height,new Vector2(width/2,height/10 * 5/2), fontIntentos, intentos, Color.BLACK);
         textUsedAttempts.center();
-        textCode = new TextObject(engine,width,height, new Vector2(width/2,height/10 * 7/2), fontDescripcion, "código:", Color.BLACK);
+        textCode = new Texto(engine,width,height, new Vector2(width/2,height/10 * 7/2), fontDescripcion, "código:", Color.BLACK);
         textCode.center();
 
         // Colocacion de los circulos

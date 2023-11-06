@@ -4,17 +4,19 @@ import com.practica1.engine.Color;
 import com.practica1.engine.Engine;
 import com.practica1.engine.Font;
 import com.practica1.engine.GameObject;
-import com.practica1.engine.TouchEvent;
 import com.practica1.engine.Vector2;
 
-public class Texto extends GameObject {
+/**
+ * GameObject Texto, encapsula las funcionalidades de pintar texto dentro de un objeto
+ */
+public class TextObject extends GameObject {
     private Color color;
     private String text;
     private Font font;
     private float textWidth;
     private float textHeight;
 
-    public Texto(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Font font, String text, Color color) {
+    public TextObject(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Font font, String text, Color color) {
         super(e, sceneWidth, sceneHeight, pos);
         this.font = font;
         this.text = text;
@@ -30,11 +32,11 @@ public class Texto extends GameObject {
         engine.getGraphics().drawText(text, pos.x, pos.y);
     }
 
-    public void centrar() {
+    public void center() {
         pos.x = (int) (pos.x - textWidth / 2);
         pos.y = (int) (pos.y - textHeight / 1.3);
     }
-    public void centrarEnHorizontal() {
+    public void centerHorizontal() {
         pos.x = (int) (pos.x - textWidth / 2);
     }
 

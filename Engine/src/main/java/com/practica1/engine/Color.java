@@ -5,19 +5,19 @@ package com.practica1.engine;
  */
 public enum Color {
     NO_COLOR(0xFF333333, 0),
-    ROJO(0xFFFF0000, 1),
-    NARANJA(0xFFFF8000, 2),
-    AMARILLO(0xFFFFFF00, 3),
-    VERDE(0xFF00FF00, 4),
+    RED(0xFFFF0000, 1),
+    ORANGE(0xFFFF8000, 2),
+    YELLOW(0xFFFFFF00, 3),
+    GREEN(0xFF00FF00, 4),
     CYAN(0xFF00FFFF, 5),
-    AZUL(0XFF0000FF, 6),
-    MORADO(0xFFFF00FF, 7),
-    ROSA(0xFFFF0080, 8),
-    MARRON(0xFF804000, 9),
-    BLANCO(0xFFFFFFFF, 10),
-    GRIS(0xFFC6C6C6, 11),
-    GRIS_OSCURO(0xFF8C8C8C, 12),
-    NEGRO(0xFF000000, 13);
+    BLUE(0XFF0000FF, 6),
+    PURPLE(0xFFFF00FF, 7),
+    PINK(0xFFFF0080, 8),
+    BROWN(0xFF804000, 9),
+    WHITE(0xFFFFFFFF, 10),
+    GREY(0xFFC6C6C6, 11),
+    DARK_GREY(0xFF8C8C8C, 12),
+    BLACK(0xFF000000, 13);
 
     private int value;
     private int id;

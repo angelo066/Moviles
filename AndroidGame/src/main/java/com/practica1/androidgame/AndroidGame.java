@@ -7,8 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.practica1.androidengine.EngineAndroid;
 import com.practica1.engine.Scene;
-import com.practica1.gamelogic.MasterMind;
-import com.practica1.gamelogic.MenuPrincipal;
+import com.practica1.gamelogic.MainMenu;
 
 public class AndroidGame extends AppCompatActivity {
 
@@ -24,7 +23,7 @@ public class AndroidGame extends AppCompatActivity {
 
         engine = new EngineAndroid(renderView);
 
-        Scene scene = new MenuPrincipal();
+        Scene scene = new MainMenu();
         engine.setScene(scene);
 
         engine.resume();

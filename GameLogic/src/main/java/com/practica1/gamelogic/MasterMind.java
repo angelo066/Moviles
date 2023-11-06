@@ -4,103 +4,109 @@ import com.practica1.engine.Color;
 import com.practica1.engine.Engine;
 import com.practica1.engine.Font;
 import com.practica1.engine.Graphics;
-import com.practica1.engine.Image;
 import com.practica1.engine.Scene;
 import com.practica1.engine.TouchEvent;
 import com.practica1.engine.Vector2;
 
 import java.util.ArrayList;
 
+/**
+ * Escena de juego
+ */
 public class MasterMind implements Scene {
 
     private Engine engine;
     private Graphics graph;
-
-    private Tablero tablero;
-
     private int width;
     private int height;
-    private Font font;
-    private Boton boton_daltonismo;
-    private Boton boton_volver;
-    private Texto indicador_intentos;
-    private Dificultad modo;
 
-    private boolean DALTONISMO = false;
+    // Instancia al tablero (lleva la logica de juego)
+    private TabObject TAB;
 
-    public MasterMind(Dificultad modo)
+    private ButtonObject buttonColorBlind;
+    private ButtonObject buttonBack;
+    private TextObject textAttempts;
+    private Difficulty mode;
+
+    private boolean COLOR_BLIND = false;
+
+    public MasterMind(Difficulty mode)
     {
-        this.modo = modo;
+        this.mode = mode;
     }
 
     @Override
-    public void init(Engine engine) {
+    public void init(Engine engine)
+    {
         this.engine = engine;
         this.graph = engine.getGraphics();
-
         width = 1080;
         height = 1920;
-
         engine.getGraphics().setSceneSize(width, height);
 
-        this.tablero = new Tablero(engine, width, height, modo);
+        // Creacion del tablero de juego
+        this.TAB = new TabObject(engine, width, height, mode);
 
-        font = graph.newFont("Nexa.ttf", 80, false, false);
-        boton_daltonismo = new Boton(engine,width,height, new Vector2(width - 120, 20), new Vector2(100, 100), "ojo.png");
-        boton_volver = new Boton(engine,width,height, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
-        String text = "Te quedan " + tablero.getNUM_INTENTOS_RESTANTES() + " intentos";
-        indicador_intentos = new Texto(engine, width, height, new Vector2(width/2, 0), font, text, Color.NEGRO);
-        indicador_intentos.centrarEnHorizontal();
+        // Botones
+        buttonColorBlind = new ButtonObject(engine,width,height, new Vector2(width -120, 20), new Vector2(100, 100), "ojo.png");
+        buttonBack = new ButtonObject(engine,width,height, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
+
+        // Texto de indicacion de intentos restantes
+        Font font = graph.newFont("Nexa.ttf", 50, false, false);
+        String text = "Te quedan " + TAB.getNUM_INTENTOS_RESTANTES() + " intentos";
+        textAttempts = new TextObject(engine, width, height, new Vector2(width/2, 0), font, text, Color.BLACK);
+        textAttempts.centerHorizontal();
 
     }
 
     @Override
-    public void update(double deltaTime) {
-        //Crear los eventos digo yo
-        tablero.update(deltaTime);
-    }
+    public void update(double deltaTime) {}
 
     @Override
-    public void render() {
+    public void render()
+    {
+        // Fondo APP
+        graph.clear(Color.DARK_GREY);
 
-        graph.clear(Color.GRIS_OSCURO);
-
-        graph.setColor(Color.BLANCO);
+        // Fondo Juego
+        graph.setColor(Color.WHITE);
         graph.fillRectangle(0, 0, width, height);
 
-        tablero.render();
+        // Tablero con todos los intentos
+        TAB.render();
 
-        graph.setColor(Color.MARRON);
-        font.setSize(50);
-        graph.setFont(font);
+        // Botones
+        buttonColorBlind.render();
+        buttonBack.render();
 
-        boton_daltonismo.render();
-        boton_volver.render();
-
-        indicador_intentos.render();
-        String text = "Te quedan " + tablero.getNUM_INTENTOS_RESTANTES() + " intentos";
-        indicador_intentos.setText(text);
-
+        // Texto de los intentos restantes
+        String text = "Te quedan " + TAB.getNUM_INTENTOS_RESTANTES() + " intentos";
+        textAttempts.setText(text);
+        textAttempts.render();
     }
 
     @Override
     public void handleInput(ArrayList<TouchEvent> events) {
         //Recorremos el array de eventos mandandolos al tablero
-        for (int i = 0; i < events.size(); i++) {
-            tablero.handleInput(events.get(i));
+        for (int i = 0; i < events.size(); i++)
+        {
+            // Input del tablero
+            TAB.handleInput(events.get(i));
 
-            if (boton_daltonismo.handleInput(events.get(i))) {
+            // Activar / Desactivar daltonismo
+            if (buttonColorBlind.handleInput(events.get(i))) {
                 engine.getAudio().playSound("click", false);
 
-                if (!DALTONISMO)
-                    tablero.Daltonismo(true);
+                if (!COLOR_BLIND)
+                    TAB.colorblind(true);
                 else
-                    tablero.Daltonismo(false);
-                DALTONISMO = !DALTONISMO;
+                    TAB.colorblind(false);
+                COLOR_BLIND = !COLOR_BLIND;
             }
 
-            if(boton_volver.handleInput(events.get(i))){
-                engine.setScene(new MenuDificultad());
+            // Volver a la escena de seleccion
+            if(buttonBack.handleInput(events.get(i))){
+                engine.setScene(new SelectionMenu());
                 engine.getAudio().playSound("click", false);
             }
         }

@@ -5,7 +5,7 @@ import com.practica1.engine.Engine;
 import com.practica1.engine.GameObject;
 import com.practica1.engine.Vector2;
 
-public class Aciertos extends GameObject {
+public class CheckObject extends GameObject {
 
     private final int RADIO_CIRCULO = 10;
     private int NUM_CASILLAS;
@@ -18,7 +18,7 @@ public class Aciertos extends GameObject {
     private int offset = 30;
 
 
-    public Aciertos(Engine e, int sceneWidth, int sceneHeight, int NUM_CASILLAS, Vector2 pos) {
+    public CheckObject(Engine e, int sceneWidth, int sceneHeight, int NUM_CASILLAS, Vector2 pos) {
 
         super(e, sceneWidth, sceneHeight);
         this.NUM_CASILLAS = NUM_CASILLAS;
@@ -41,17 +41,17 @@ public class Aciertos extends GameObject {
             int posX = (sceneWidth - 100) + offset * i;
 
             if (aciertos > 0) {
-                engine.getGraphics().setColor(Color.NEGRO);
+                engine.getGraphics().setColor(Color.BLACK);
                 engine.getGraphics().fillCircle(posX, pos.y, RADIO_CIRCULO);
                 aciertos--;
             } else if (aciertos_Color > 0) {
-                engine.getGraphics().setColor(Color.NEGRO);
+                engine.getGraphics().setColor(Color.BLACK);
                 engine.getGraphics().drawCircle(posX, pos.y, RADIO_CIRCULO);
 /*                engine.getGraphics().setColor(Color.NEGRO);
                 engine.getGraphics().fillCircle(posX, pos.y, RADIO_CIRCULO);*/
                 aciertos_Color--;
             } else {
-                engine.getGraphics().setColor(Color.GRIS);
+                engine.getGraphics().setColor(Color.GREY);
                 engine.getGraphics().fillCircle(posX, pos.y, RADIO_CIRCULO);
 
             }
@@ -63,15 +63,15 @@ public class Aciertos extends GameObject {
             int posY_NextLine = pos.y + RADIO_CIRCULO + offset; //Variable para los circulos de la parte inferior
 
             if (aciertos > 0) {
-                engine.getGraphics().setColor(Color.NEGRO);
+                engine.getGraphics().setColor(Color.BLACK);
                 engine.getGraphics().fillCircle(posX, posY_NextLine, RADIO_CIRCULO);
                 aciertos--;
             } else if (aciertos_Color > 0) {
-                engine.getGraphics().setColor(Color.NEGRO);
+                engine.getGraphics().setColor(Color.BLACK);
                 engine.getGraphics().drawCircle(posX, posY_NextLine, RADIO_CIRCULO);
                 aciertos_Color--;
             } else {
-                engine.getGraphics().setColor(Color.GRIS);
+                engine.getGraphics().setColor(Color.GREY);
                 engine.getGraphics().fillCircle(posX, posY_NextLine, RADIO_CIRCULO);
 
             }
@@ -84,11 +84,11 @@ public class Aciertos extends GameObject {
         super.update(deltaTime);
     }
 
-    public void setCirculos(IntentoFila intento) {
+    public void setCirculos(Attempt intento) {
         //Las dos cosas
-        num_AciertosPosicion = intento.aciertos_pos;
+        num_AciertosPosicion = intento.checks_pos;
         //Solo esta bien el color pero no la posicion
-        num_AciertosColor = intento.aciertos_color;
+        num_AciertosColor = intento.checks_color;
     }
 
 }

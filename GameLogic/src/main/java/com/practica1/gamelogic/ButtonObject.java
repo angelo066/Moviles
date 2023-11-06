@@ -7,33 +7,38 @@ import com.practica1.engine.GameObject;
 import com.practica1.engine.TouchEvent;
 import com.practica1.engine.Vector2;
 
-public class Boton extends GameObject {
+/**
+ * GameObject Boton, crea un boton por defecto, con diferentes formas
+ */
+public class ButtonObject extends GameObject {
     private Vector2 size;
     private Color color;
     private float arc;
     private Font font;
-    private Texto text;
-    private Imagen image;
+    private TextObject text;
+    private ImageObject image;
 
-    public Boton(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Vector2 size, float arc, Font font, String text, Color colorBoton, Color colorTexto) {
+    // Constructora para Botones sin imagen
+    public ButtonObject(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Vector2 size, float arc, Font font, String text, Color colorButton, Color colorText) {
         super(e, sceneWidth, sceneHeight, pos);
         this.size = size;
         this.arc = arc;
-        this.color = colorBoton;
+        this.color = colorButton;
 
         this.font = font;
-        this.text = new Texto(e, sceneWidth, sceneHeight, new Vector2(pos), font, text, colorTexto);
+        this.text = new TextObject(e, sceneWidth, sceneHeight, new Vector2(pos), font, text, colorText);
 
         this.image = null;
     }
 
-    public Boton(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Vector2 size, String imageFile) {
+    // Constructora para Botones con imagen
+    public ButtonObject(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Vector2 size, String imageFile) {
         super(e, sceneWidth, sceneHeight, pos);
         this.size = size;
 
         this.text = null;
 
-        this.image = new Imagen(e, sceneWidth, sceneHeight, pos, size, imageFile);
+        this.image = new ImageObject(e, sceneWidth, sceneHeight, pos, size, imageFile);
     }
 
     @Override
@@ -41,7 +46,8 @@ public class Boton extends GameObject {
 
         if (image != null) {
             image.render();
-        } else {
+        }
+        else {
             engine.getGraphics().setColor(color);
             engine.getGraphics().fillRoundRectangle(pos.x, pos.y, size.x, size.y, arc);
 
@@ -70,9 +76,9 @@ public class Boton extends GameObject {
         pos.y = pos.y - size.y / 2;
 
         if (text != null)
-            text.centrar();
+            text.center();
         else if (image != null)
-            image.centrar();
+            image.center();
     }
 
 

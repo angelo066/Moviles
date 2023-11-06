@@ -87,11 +87,9 @@ public class MasterMind implements Scene {
 
     @Override
     public void handleInput(ArrayList<TouchEvent> events) {
-        //Recorremos el array de eventos mandandolos al tablero
-        for (int i = 0; i < events.size(); i++)
-        {
-            // Input del tablero
-            TAB.handleInput(events.get(i));
+        for (int i = 0; i < events.size(); i++) {
+            if(TAB.handleInput(events.get(i)))
+                break;
 
             // Activar / Desactivar daltonismo
             if (buttonColorBlind.handleInput(events.get(i))) {
@@ -108,6 +106,7 @@ public class MasterMind implements Scene {
             if(buttonBack.handleInput(events.get(i))){
                 engine.setScene(new SelectionMenu());
                 engine.getAudio().playSound("click", false);
+                engine.setScene(new SelectionMenu());
             }
         }
     }

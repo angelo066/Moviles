@@ -41,6 +41,7 @@ public class Tablero extends GameObject {
     private int currentPos = 0; //Ciruclo al que le toca recibir color
 
     private Random rand; // Instancia del random
+    boolean win = false;
 
 
     public Tablero(Engine e, int sceneWidth, int sceneHeight, Difficulty MODE) {
@@ -281,7 +282,7 @@ public class Tablero extends GameObject {
 
         handleColors(touchEvent);
 
-        return true;
+        return ACTUAL_ATTEMPT == NUM_ATTEMPTS || win;
     }
 
     /**
@@ -292,7 +293,7 @@ public class Tablero extends GameObject {
         boolean removeColor = false;
         int intentoLong = TAB[ACTUAL_ATTEMPT].combination.length;
 
-        for (int i = 0; i < intentoLong && !removeColor; i++) {
+        for (int i = 0; i < intentoLong; i++) {
 
             CircleObject c = TAB[ACTUAL_ATTEMPT].combination[i];
 

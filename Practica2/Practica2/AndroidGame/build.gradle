@@ -14,11 +14,11 @@ android {
     }
 
     namespace 'com.practica1.androidgame'
-    compileSdk 34
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.practica1.androidgame"
-        minSdk 33
+        minSdk 30
         targetSdk 33
         versionCode 1
         versionName "1.0"

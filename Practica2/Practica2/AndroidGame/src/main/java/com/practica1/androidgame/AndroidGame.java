@@ -6,7 +6,6 @@ import android.view.SurfaceView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.practica1.androidengine.Engine;
-import com.practica1.gamelogic.MainMenu;
 import com.practica1.androidengine.Scene;
 
 public class AndroidGame extends AppCompatActivity {

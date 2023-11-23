@@ -1,9 +1,9 @@
-package com.practica1.gamelogic;
+package com.practica1.androidgame;
 
-import com.practica1.engine.Engine;
-import com.practica1.engine.GameObject;
-import com.practica1.engine.Image;
-import com.practica1.engine.Vector2;
+import com.practica1.androidengine.Engine;
+import com.practica1.androidengine.GameObject;
+import com.practica1.androidengine.Image;
+import com.practica1.androidengine.Vector2;
 
 /**
  * GameObject Imagen, encapsula las funcionalidades de pintar imagenes dentro de un objeto

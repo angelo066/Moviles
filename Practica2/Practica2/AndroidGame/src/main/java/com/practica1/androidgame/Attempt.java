@@ -1,4 +1,4 @@
-package com.practica1.gamelogic;
+package com.practica1.androidgame;
 
 /**
  * Clase que contiene la informacion relativa a un intento (una fila del tablero)

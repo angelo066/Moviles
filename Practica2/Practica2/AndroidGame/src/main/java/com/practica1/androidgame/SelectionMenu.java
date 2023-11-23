@@ -1,11 +1,11 @@
-package com.practica1.gamelogic;
+package com.practica1.androidgame;
 
-import com.practica1.engine.Color;
-import com.practica1.engine.Engine;
-import com.practica1.engine.Font;
-import com.practica1.engine.Scene;
-import com.practica1.engine.TouchEvent;
-import com.practica1.engine.Vector2;
+import com.practica1.androidengine.Color;
+import com.practica1.androidengine.Engine;
+import com.practica1.androidengine.Font;
+import com.practica1.androidengine.Scene;
+import com.practica1.androidengine.TouchEvent;
+import com.practica1.androidengine.Vector2;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.practica1.gamelogic;
+package com.practica1.androidgame;
 
 /**
  * Enum para definir los diferentes tipos de dificultad

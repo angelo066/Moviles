@@ -13,7 +13,6 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/AndroidEngine" />
             <option value="$PROJECT_DIR$/AndroidGame" />
-            <option value="$PROJECT_DIR$/GameLogic" />
           </set>
         </option>
       </GradleProjectSettings>

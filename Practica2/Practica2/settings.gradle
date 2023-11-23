@@ -16,4 +16,3 @@ dependencyResolutionManagement {
 rootProject.name = "Practica2"
 include ':AndroidGame'
 include ':AndroidEngine'
-include ':GameLogic'

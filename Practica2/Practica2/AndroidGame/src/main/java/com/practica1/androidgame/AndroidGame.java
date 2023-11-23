@@ -8,6 +8,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
 
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+
 public class AndroidGame extends AppCompatActivity {
 
     private SurfaceView renderView;
@@ -17,8 +21,15 @@ public class AndroidGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         renderView = new SurfaceView(this);
         setContentView(renderView);
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
 
         engine = new Engine(renderView);
 

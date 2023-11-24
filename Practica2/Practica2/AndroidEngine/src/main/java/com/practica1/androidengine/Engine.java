@@ -2,46 +2,49 @@ package com.practica1.androidengine;
 
 import android.view.SurfaceView;
 
+import java.util.ArrayList;
+
 /**
  * Clase motor de la aplicacion en android
  */
 public class Engine implements Runnable {
 
-    private boolean running = false;
+    private volatile boolean running = false;
     private Thread thread;
 
     private SurfaceView view;
 
     private Scene scene;
+    private Scene newScene;
 
-    private Graphics graphicsAndroid;
-    private Input inputAndroid;
-    private Audio audioAndroid;
+    private Graphics graphics;
+    private Input input;
+    private Audio audio;
 
     /**
      * @param view Ventana de la aplicacion
      */
     public Engine(SurfaceView view) {
         this.view = view;
-        graphicsAndroid = new Graphics(view);
-        inputAndroid = new Input(view);
-        audioAndroid = new Audio(view);
+        graphics = new Graphics(view);
+        input = new Input(view);
+        audio = new Audio(view.getContext().getAssets());
+        scene = null;
+        newScene = null;
     }
 
-
-
     public Graphics getGraphics() {
-        return graphicsAndroid;
+        return graphics;
     }
 
 
     public Input getInput() {
-        return inputAndroid;
+        return input;
     }
 
 
     public Audio getAudio() {
-        return audioAndroid;
+        return audio;
     }
 
 
@@ -51,24 +54,28 @@ public class Engine implements Runnable {
 
         while (running && view.getWidth() == 0) ;
 
-        if (scene == null) pause();
+        if (scene != null) {
 
-        long lastFrameTime = System.nanoTime();
+            long lastFrameTime = System.nanoTime();
 
-        while (running) {
+            while (running) {
 
-            //handleInput
-            handleInput();
+                //cambiar la escena
+                changeScene();
 
-            //update
-            long currentTime = System.nanoTime();
-            long nanoElapsedTime = currentTime - lastFrameTime;
-            lastFrameTime = currentTime;
-            double elapsedTime = (double) nanoElapsedTime / 1.0E9;
-            update(elapsedTime);
+                //handleInput
+                handleInput();
 
-            // renderizado
-            render();
+                //update
+                long currentTime = System.nanoTime();
+                long nanoElapsedTime = currentTime - lastFrameTime;
+                lastFrameTime = currentTime;
+                double elapsedTime = (double) nanoElapsedTime / 1.0E9;
+                update(elapsedTime);
+
+                // renderizado
+                render();
+            }
         }
     }
 
@@ -99,9 +106,19 @@ public class Engine implements Runnable {
 
 
     public void setScene(Scene scene) {
+        if(this.scene == null)
+            this.scene = scene;
+        else
+            newScene = scene;
 
-        this.scene = scene;
-        this.scene.init(this);
+        scene.init(this);
+    }
+
+    private void changeScene() {
+        if(newScene != null){
+            scene = newScene;
+            newScene = null;
+        }
     }
 
     /**
@@ -117,9 +134,9 @@ public class Engine implements Runnable {
      * Renderizado del motor
      */
     public void render() {
-        graphicsAndroid.prepareRender();
+        graphics.prepareRender();
         scene.render();
-        graphicsAndroid.releaseRender();
+        graphics.releaseRender();
     }
 
     /**
@@ -127,15 +144,14 @@ public class Engine implements Runnable {
      */
     private void handleInput() {
 
-        for (TouchEvent event : inputAndroid.getTouchEvents()) {
-            event.x -= graphicsAndroid.getTranslateX();
-            event.y -= graphicsAndroid.getTranslateY();
-            event.x /= graphicsAndroid.getScaleX();
-            event.y /= graphicsAndroid.getScaleY();
+        ArrayList<TouchEvent> inputEvents = input.getTouchEvents();
+
+        for (TouchEvent event : inputEvents) {
+            event.x -= graphics.getTranslateX();
+            event.y -= graphics.getTranslateY();
+            event.x /= graphics.getScaleX();
+            event.y /= graphics.getScaleY();
         }
-        scene.handleInput(inputAndroid.getTouchEvents());
-
-        inputAndroid.clearEvents();
-
+        scene.handleInput(inputEvents);
     }
 }

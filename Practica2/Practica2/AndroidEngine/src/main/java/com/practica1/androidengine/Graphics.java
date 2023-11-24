@@ -80,12 +80,12 @@ public class Graphics {
     }
 
 
-    public void setColor(Color color) {
-        paint.setColor(color.getValue());
+    public void setColor(int color) {
+        paint.setColor(color);
     }
 
-    public void clear(Color color) {
-        canvas.drawColor(color.getValue());
+    public void clear(int color) {
+        canvas.drawColor(color);
     }
 
     public void translate(float x, float y) {

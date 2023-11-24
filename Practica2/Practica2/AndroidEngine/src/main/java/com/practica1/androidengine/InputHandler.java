@@ -1,5 +1,6 @@
 package com.practica1.androidengine;
 
+import android.app.usage.UsageEvents;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
@@ -28,6 +29,7 @@ public class InputHandler implements View.OnTouchListener {
      * @return Devuelve los eventos ocurridos en el ultimo frame de la aplicacion
      */
     public synchronized ArrayList<TouchEvent> getTouchEvents() {
+        events.clear();
         events.addAll(pendingEvents);
         pendingEvents.clear();
         return events;
@@ -55,13 +57,5 @@ public class InputHandler implements View.OnTouchListener {
         }
 
         return true;
-    }
-
-
-    /**
-     * Limpia los eventos
-     */
-    public void clearEvents() {
-        events.clear();
     }
 }

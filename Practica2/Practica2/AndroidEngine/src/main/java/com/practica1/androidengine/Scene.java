@@ -32,4 +32,5 @@ public interface Scene {
      * @param events
      */
     public void handleInput(ArrayList<TouchEvent> events);
+
 }

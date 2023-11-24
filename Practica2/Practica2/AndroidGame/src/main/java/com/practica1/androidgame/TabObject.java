@@ -3,9 +3,7 @@ package com.practica1.androidgame;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Font;
-import com.practica1.androidengine.GameObject;
 import com.practica1.androidengine.TouchEvent;
-import com.practica1.androidengine.Vector2;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,7 +17,7 @@ import java.util.Random;
  * Comprueba en cada intento si ha ganado o perdido
  */
 public class TabObject extends GameObject {
-    private boolean debug = true;
+    private static final boolean DEBUG = true;
     private final int numWindowDivisions = 12; // Divisiones de la pantalla (para calculos relativos de posiciones)
     boolean colorBlind = false; // Para el modo daltonismo
     private int numColors; // Numero de colores disponibles en la partida
@@ -92,7 +90,7 @@ public class TabObject extends GameObject {
                 int x = spaceToEachSideIntent + j * (circleRadius * 2);
                 Vector2 pos = new Vector2(x, posAttempts[i].y);
                 tab[i].combination[j] = new CircleObject(engine, sceneWidth, sceneHeight, pos, i, font);
-                tab[i].combination[j].setColor(Color.NO_COLOR);
+                tab[i].combination[j].setColor(Color.LIGHT_GRAY);
             }
         }
 
@@ -132,7 +130,7 @@ public class TabObject extends GameObject {
         }
 
         //Debug de la combinacion ganadora
-        if (this.debug) {
+        if (this.DEBUG) {
             for (int i = 0; i < combinationWin.length; i++)
                 System.out.println(combinationWin[i]);
         }
@@ -166,7 +164,7 @@ public class TabObject extends GameObject {
         }
 
         //Debug de la combinacion ganadora
-        if (this.debug) {
+        if (this.DEBUG) {
             for (int i = 0; i < combinationWin.length; i++) {
                 System.out.println(combinationWin[i]);
             }
@@ -193,7 +191,7 @@ public class TabObject extends GameObject {
 
             if (c.handleInput(touchEvent)) {
                 c.uncover(false);
-                c.setColor(Color.NO_COLOR);
+                c.setColor(Color.LIGHT_GRAY);
                 if (i < currentPos) currentPos = i;
             }
         }
@@ -231,7 +229,7 @@ public class TabObject extends GameObject {
             currentPos++;
 
             //Vamos hasta la primera posicion libre
-            while (currentPos < numSquares && tab[actualAttempt].combination[currentPos].getColor() != Color.NO_COLOR)
+            while (currentPos < numSquares && tab[actualAttempt].combination[currentPos].getColor() != Color.LIGHT_GRAY)
                 currentPos++;
 
             //Comprueba si hemos ganado o hay que seguir intentando
@@ -290,7 +288,8 @@ public class TabObject extends GameObject {
             actualAttempt++;
 
         // Pasamos a la escena final si hemos agotado todos los intentos o hemos ganado
-        if (actualAttempt == numAttempts || win) {                                        //+ 1 porque empezamos en 0
+        if (actualAttempt == numAttempts || win) {
+            //+ 1 porque empezamos en 0
             engine.setScene(new EndScreen(combinationWin, win, numSquares, mode, actualAttempt + 1, colorBlind));
             finish = true;
         }
@@ -312,7 +311,7 @@ public class TabObject extends GameObject {
      */
     private void drawAttempt(int i) {
         // RECTANGULO
-        engine.getGraphics().setColor(Color.GREY);
+        engine.getGraphics().setColor(Color.GREY.getValue());
         int y = posAttempts[i].y - vOFFSET / 2;
         engine.getGraphics().drawRoundRectangle(0, y, sceneWidth - 3, circleRadius * 2 + vOFFSET, 20);
 
@@ -330,7 +329,7 @@ public class TabObject extends GameObject {
         // LINEAS DE DECORACION
         int starX = sceneWidth / 6;
         int finX = (sceneWidth / 6) * 5;
-        engine.getGraphics().setColor(Color.BLACK);
+        engine.getGraphics().setColor(Color.BLACK.getValue());
         engine.getGraphics().drawLine(starX, posAttempts[i].y, starX, posAttempts[i].y + 100);
         engine.getGraphics().drawLine(finX, posAttempts[i].y, finX, posAttempts[i].y + 100);
 
@@ -342,7 +341,7 @@ public class TabObject extends GameObject {
     private void drawAvaliableColors() {
 
         // RECTANGULO DE FONDO
-        engine.getGraphics().setColor(Color.GREY);
+        engine.getGraphics().setColor(Color.GREY.getValue());
         engine.getGraphics().fillRectangle(0, posChosenColors.y - vOFFSET / 2, sceneWidth, circleRadius * 2 + vOFFSET);
 
         // CIRCULOS

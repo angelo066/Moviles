@@ -6,7 +6,6 @@ import com.practica1.androidengine.Font;
 import com.practica1.androidengine.Graphics;
 import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.TouchEvent;
-import com.practica1.androidengine.Vector2;
 
 import java.util.ArrayList;
 
@@ -40,6 +39,8 @@ public class MasterMind implements Scene {
         height = 1920;
         engine.getGraphics().setSceneSize(width, height);
 
+        engine.getAudio().loadSound("clickboton.wav");
+
         // Creacion del tablero de juego
         tab = new TabObject(engine, width, height, mode);
         tab.init();
@@ -70,10 +71,10 @@ public class MasterMind implements Scene {
     @Override
     public void render() {
         // Fondo APP
-        engine.getGraphics().clear(Color.WHITE);
+        engine.getGraphics().clear(Color.WHITE.getValue());
 
         // Fondo Juego
-        graph.setColor(Color.WHITE);
+        graph.setColor(Color.WHITE.getValue());
         graph.fillRectangle(0, 0, width, height);
 
         // Tablero con todos los intentos
@@ -105,15 +106,15 @@ public class MasterMind implements Scene {
             // Activar / Desactivar daltonismo
             if (colorBlind) {
                 if (buttonColorBlindActive.handleInput(events.get(i))) {
-                    engine.getAudio().stopSound("click");
-                    engine.getAudio().playSound("click", false);
+                    engine.getAudio().stopSound("clickboton.wav");
+                    engine.getAudio().playSound("clickboton.wav", false);
                     tab.colorblind(false);
                     colorBlind = !colorBlind;
                 }
             } else {
                 if (buttonColorBlind.handleInput(events.get(i))) {
-                    engine.getAudio().stopSound("click");
-                    engine.getAudio().playSound("click", false);
+                    engine.getAudio().stopSound("clickboton.wav");
+                    engine.getAudio().playSound("clickboton.wav", false);
                     tab.colorblind(true);
                     colorBlind = !colorBlind;
                 }
@@ -122,8 +123,8 @@ public class MasterMind implements Scene {
 
             // Volver a la escena de seleccion
             if (buttonBack.handleInput(events.get(i))) {
-                engine.getAudio().stopSound("click");
-                engine.getAudio().playSound("click", false);
+                engine.getAudio().stopSound("clickboton.wav");
+                engine.getAudio().playSound("clickboton.wav", false);
                 engine.setScene(new SelectionMenu());
                 break;
             }

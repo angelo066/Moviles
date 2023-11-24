@@ -1,4 +1,7 @@
-package com.practica1.androidengine;
+package com.practica1.androidgame;
+
+import com.practica1.androidengine.Engine;
+import com.practica1.androidengine.TouchEvent;
 
 /**
  * Clase que representa una entidad de juego

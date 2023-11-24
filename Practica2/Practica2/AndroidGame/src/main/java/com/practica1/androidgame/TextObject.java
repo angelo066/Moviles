@@ -3,8 +3,6 @@ package com.practica1.androidgame;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Font;
-import com.practica1.androidengine.GameObject;
-import com.practica1.androidengine.Vector2;
 
 /**
  * GameObject Texto, encapsula las funcionalidades de pintar texto dentro de un objeto
@@ -33,7 +31,7 @@ public class TextObject extends GameObject {
 
     @Override
     public void render() {
-        engine.getGraphics().setColor(color);
+        engine.getGraphics().setColor(color.getValue());
         engine.getGraphics().setFont(font);
         engine.getGraphics().drawText(text, pos.x, pos.y);
     }

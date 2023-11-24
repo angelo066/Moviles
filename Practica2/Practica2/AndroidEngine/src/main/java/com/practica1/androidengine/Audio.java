@@ -18,20 +18,20 @@ public class Audio {
     private SoundPool soundPool;
 
     /**
-     * @param view Ventana de la aplicacion
+     * @param assetMngr AssetManager
      */
-    public Audio(SurfaceView view) {
-        assetManager = view.getContext().getAssets();
+    public Audio(AssetManager assetMngr) {
+        assetManager = assetMngr;
         soundPool = new SoundPool.Builder().setMaxStreams(10).build();
         soundsMap = new HashMap<>();
     }
 
 
-    public void loadSound(String file, String id) {
-        if (soundsMap.containsKey(id)) return;
+    public void loadSound(String file) {
+        if (soundsMap.containsKey(file)) return;
 
         Sound newSound = new Sound(soundsPath + file, soundPool, assetManager);
-        soundsMap.put(id, newSound);
+        soundsMap.put(file, newSound);
     }
 
 

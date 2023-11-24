@@ -2,8 +2,6 @@ package com.practica1.androidgame;
 
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
-import com.practica1.androidengine.GameObject;
-import com.practica1.androidengine.Vector2;
 
 /**
  * Clase que se encarga de dar pistas al jugador
@@ -45,15 +43,15 @@ public class CheckObject extends GameObject {
             int posX = iniX + (offsetX + radius) * i;
 
             if (numRightPos > 0) {
-                engine.getGraphics().setColor(Color.BLACK);
+                engine.getGraphics().setColor(Color.BLACK.getValue());
                 engine.getGraphics().fillCircle(posX, pos.y, radius);
                 numRightPos--;
             } else if (numRightCol > 0) {
-                engine.getGraphics().setColor(Color.BLACK);
+                engine.getGraphics().setColor(Color.BLACK.getValue());
                 engine.getGraphics().drawCircle(posX, pos.y, radius);
                 numRightCol--;
             } else {
-                engine.getGraphics().setColor(Color.GREY);
+                engine.getGraphics().setColor(Color.GREY.getValue());
                 engine.getGraphics().fillCircle(posX, pos.y, radius);
 
             }
@@ -65,15 +63,15 @@ public class CheckObject extends GameObject {
             int posYNextLine = pos.y + radius + offsetY; //Variable para los circulos de la parte inferior
 
             if (numRightPos > 0) {
-                engine.getGraphics().setColor(Color.BLACK);
+                engine.getGraphics().setColor(Color.BLACK.getValue());
                 engine.getGraphics().fillCircle(posX, posYNextLine, radius);
                 numRightPos--;
             } else if (numRightCol > 0) {
-                engine.getGraphics().setColor(Color.BLACK);
+                engine.getGraphics().setColor(Color.BLACK.getValue());
                 engine.getGraphics().drawCircle(posX, posYNextLine, radius);
                 numRightCol--;
             } else {
-                engine.getGraphics().setColor(Color.GREY);
+                engine.getGraphics().setColor(Color.GREY.getValue());
                 engine.getGraphics().fillCircle(posX, posYNextLine, radius);
 
             }

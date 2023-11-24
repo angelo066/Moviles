@@ -5,7 +5,6 @@ import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Font;
 import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.TouchEvent;
-import com.practica1.androidengine.Vector2;
 
 import java.util.ArrayList;
 
@@ -63,9 +62,6 @@ public class SelectionMenu implements Scene {
         buttonImpossible.centrar();
 
         buttonBack = new ButtonObject(engine, width, height, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
-
-        // Carga de audio
-        engine.getAudio().loadSound("clickboton.wav", "click");
     }
 
     @Override
@@ -76,10 +72,10 @@ public class SelectionMenu implements Scene {
     @Override
     public void render() {
         // Fondo de APP
-        engine.getGraphics().clear(Color.WHITE);
+        engine.getGraphics().clear(Color.WHITE.getValue());
 
         // Fondo de Juego
-        engine.getGraphics().setColor(Color.WHITE);
+        engine.getGraphics().setColor(Color.WHITE.getValue());
         engine.getGraphics().fillRectangle(0, 0, width, height);
 
         // Texto de seleccion
@@ -119,15 +115,15 @@ public class SelectionMenu implements Scene {
                 selected = true;
             } else if (buttonBack.handleInput(events.get(i))) {
                 engine.setScene(new MainMenu());
-                engine.getAudio().stopSound("click");
-                engine.getAudio().playSound("click", false);
+                engine.getAudio().stopSound("botonInterfaz.wav");
+                engine.getAudio().playSound("botonInterfaz.wav", false);
             }
 
         }
 
         if (selected) {
-            engine.getAudio().stopSound("click");
-            engine.getAudio().playSound("click", false);
+            engine.getAudio().stopSound("botonInterfaz.wav");
+            engine.getAudio().playSound("botonInterfaz.wav", false);
             engine.setScene(new MasterMind(mode));
         }
     }

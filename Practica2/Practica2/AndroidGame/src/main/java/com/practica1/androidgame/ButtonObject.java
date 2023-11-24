@@ -3,9 +3,7 @@ package com.practica1.androidgame;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Font;
-import com.practica1.androidengine.GameObject;
 import com.practica1.androidengine.TouchEvent;
-import com.practica1.androidengine.Vector2;
 
 /**
  * GameObject Boton, crea un boton por defecto, con diferentes formas
@@ -69,7 +67,7 @@ public class ButtonObject extends GameObject {
         if (image != null) {
             image.render();
         } else {
-            engine.getGraphics().setColor(color);
+            engine.getGraphics().setColor(color.getValue());
             engine.getGraphics().fillRoundRectangle(pos.x, pos.y, size.x, size.y, arc);
 
             if (text != null)

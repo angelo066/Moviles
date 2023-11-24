@@ -3,9 +3,7 @@ package com.practica1.androidgame;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Font;
-import com.practica1.androidengine.GameObject;
 import com.practica1.androidengine.TouchEvent;
-import com.practica1.androidengine.Vector2;
 
 /**
  * GameObject Circulo, encapsula la info y comportamientos relativos a un circulo del tablero
@@ -43,7 +41,7 @@ public class CircleObject extends GameObject {
 
         // Si se ha descubierto pintamos el color normal
         if (uncovered) {
-            engine.getGraphics().setColor(color);
+            engine.getGraphics().setColor(color.getValue());
             engine.getGraphics().fillCircle(pos.x, pos.y, circleRadius);
 
             // Si el modo daltonico esta activado pintamos el numero
@@ -53,9 +51,9 @@ public class CircleObject extends GameObject {
         }
         // Si no lo pintamos bloqueado
         else {
-            engine.getGraphics().setColor(Color.GREY);
+            engine.getGraphics().setColor(Color.GREY.getValue());
             engine.getGraphics().fillCircle(pos.x, pos.y, circleRadius);
-            engine.getGraphics().setColor(Color.DARK_GREY);
+            engine.getGraphics().setColor(Color.DARK_GREY.getValue());
             engine.getGraphics().fillCircle(pos.x + circleRadius - internCircleRadius, pos.y + circleRadius - internCircleRadius, internCircleRadius);
         }
 

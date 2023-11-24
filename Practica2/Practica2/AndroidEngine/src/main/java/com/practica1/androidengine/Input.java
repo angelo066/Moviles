@@ -20,12 +20,4 @@ public class Input {
     public ArrayList<TouchEvent> getTouchEvents() {
         return handler.getTouchEvents();
     }
-
-    /**
-     * Limpia los eventos del frame pasado
-     */
-    public void clearEvents() {
-        handler.clearEvents();
-    }
-
 }

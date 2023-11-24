@@ -1,4 +1,4 @@
-package com.practica1.androidengine;
+package com.practica1.androidgame;
 
 /**
  * Clase que representa una posicion en el espacio

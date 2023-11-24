@@ -4,7 +4,7 @@ package com.practica1.androidengine;
  * Enum que envuelve colores en forma de enteros (en hexadecimal)
  */
 public enum Color {
-    NO_COLOR(0xFF333333, 0),
+    LIGHT_GRAY(0xFF333333, 0),
     RED(0xFFFF0000, 1),
     ORANGE(0xFFFF8000, 2),
     YELLOW(0xFFFFFF00, 3),
@@ -17,7 +17,8 @@ public enum Color {
     WHITE(0xFFFFFFFF, 10),
     GREY(0xFFC6C6C6, 11),
     DARK_GREY(0xFF8C8C8C, 12),
-    BLACK(0xFF000000, 13);
+    BLACK(0xFF000000, 13),
+    NO_COLOR(0xFF000000,14);
 
     private int value;
     private int id;
@@ -34,6 +35,4 @@ public enum Color {
     public int getId() {
         return id;
     }
-
-    ;
 }

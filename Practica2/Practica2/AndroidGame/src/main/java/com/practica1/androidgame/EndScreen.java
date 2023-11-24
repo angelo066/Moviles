@@ -6,7 +6,6 @@ import com.practica1.androidengine.Font;
 import com.practica1.androidengine.Graphics;
 import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.TouchEvent;
-import com.practica1.androidengine.Vector2;
 
 import java.util.ArrayList;
 
@@ -66,6 +65,9 @@ public class EndScreen implements Scene {
         height = 1920;
         engine.getGraphics().setSceneSize(width, height);
 
+        engine.getAudio().loadSound("yuju.wav");
+        engine.getAudio().loadSound("douh.wav");
+
         // Creacion de las fuentes que utilizamos
         Font fontButton = graph.newFont("Nexa.ttf", 70, false, false);
         Font fontAttempt = graph.newFont("Nexa.ttf", 80, false, false);
@@ -91,13 +93,11 @@ public class EndScreen implements Scene {
             mensaje = "ENHORABUENA!!";
             description = "Has averiguado el codigo en";
             attempt = numAttempts + " intentos";
-            engine.getAudio().loadSound("yuju.wav", "yuju");
-            engine.getAudio().playSound("yuju", false);
+            engine.getAudio().playSound("yuju.wav", false);
         } else {
             mensaje = "GAME OVER";
             description = "Te has quedado sin intentos";
-            engine.getAudio().loadSound("douh.wav", "douh");
-            engine.getAudio().playSound("douh", false);
+            engine.getAudio().playSound("douh.wav", false);
         }
 
         textEndMessage = new TextObject(engine, width, height, new Vector2(width / 2, height / 10), fontMessage, mensaje, Color.BLACK);
@@ -149,10 +149,10 @@ public class EndScreen implements Scene {
     @Override
     public void render() {
         // Fondo APP
-        engine.getGraphics().clear(Color.WHITE);
+        engine.getGraphics().clear(Color.WHITE.getValue());
 
         // Fondo Juego
-        graph.setColor(Color.WHITE);
+        graph.setColor(Color.WHITE.getValue());
         graph.fillRectangle(0, 0, width, height);
 
         // Botones
@@ -175,13 +175,13 @@ public class EndScreen implements Scene {
     public void handleInput(ArrayList<TouchEvent> events) {
         for (int i = 0; i < events.size(); i++) {
             if (buttonRepeat.handleInput(events.get(i))) {
-                engine.getAudio().stopSound("start");
-                engine.getAudio().playSound("start", false);
+                engine.getAudio().stopSound("botonInterfaz.wav");
+                engine.getAudio().playSound("botonInterfaz.wav", false);
                 engine.setScene(new MasterMind(mode));
                 break;
             } else if (buttonBackMenu.handleInput(events.get(i))) {
-                engine.getAudio().stopSound("start");
-                engine.getAudio().playSound("start", false);
+                engine.getAudio().stopSound("botonInterfaz.wav");
+                engine.getAudio().playSound("botonInterfaz.wav", false);
                 engine.setScene(new SelectionMenu());
                 break;
             }

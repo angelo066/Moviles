@@ -40,8 +40,7 @@ public class Audio {
 
         Sound sound = soundsMap.get(id);
 
-        sound.play();
-        sound.loop(loop);
+        sound.play(loop);
     }
 
 

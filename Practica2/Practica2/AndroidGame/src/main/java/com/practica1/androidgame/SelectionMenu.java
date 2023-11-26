@@ -11,12 +11,7 @@ import java.util.ArrayList;
 /**
  * Escena de seleccion de dificultad
  */
-public class SelectionMenu implements Scene {
-
-    private Engine engine;
-    private int width;
-    private int height;
-
+public class SelectionMenu extends Scene {
     private ButtonObject buttonEasy;
     private ButtonObject buttonMedium;
     private ButtonObject buttonHard;
@@ -24,41 +19,48 @@ public class SelectionMenu implements Scene {
     private ButtonObject buttonBack;
     private TextObject textSelection;
 
-    @Override
-    public void init(Engine engine) {
-        this.engine = engine;
-
+    public SelectionMenu() {
         width = 1080;
         height = 1920;
-        engine.getGraphics().setSceneSize(width, height);
+    }
+
+    @Override
+    public void init(Engine engine) {
+        super.init(engine);
 
         int offset = 40;
 
-        // Creacion de los objetos de la escena
+        Font fontSelection = ResourceManager.getInstance().getFont("BarlowCondensed-Regular.ttf");
+        Font fontButton = ResourceManager.getInstance().getFont("Nexa.ttf");
+
+
         // Mensaje de seleccion
-        Font fontSelection = engine.getGraphics().newFont("BarlowCondensed-Regular.ttf", 75, true, false);
-        textSelection = new TextObject(engine, width, height, new Vector2(width / 2, height / 7), fontSelection, "¿En qué dificultad quieres jugar?", Color.BLACK);
+        textSelection = new TextObject(engine, width, height, new Vector2(width / 2, height / 7),
+                fontSelection, "¿En qué dificultad quieres jugar?", Color.BLACK, 75, true, false);
         textSelection.center();
 
         // Botones
-        Font fontButton = engine.getGraphics().newFont("Nexa.ttf", 80, false, false);
         Vector2 pos = new Vector2(width / 2, height / 2);
         Vector2 size = new Vector2(500, 150);
 
         Vector2 posEasy = new Vector2(pos.x, pos.y - (3 * size.y) / 2 - (3 * offset));
-        buttonEasy = new ButtonObject(engine, width, height, posEasy, new Vector2(size), 50, fontButton, "Fácil", Color.GREEN, Color.BLACK);
+        buttonEasy = new ButtonObject(engine, width, height, posEasy, size, 50, Color.GREEN,
+                new TextObject(engine, width, height, new Vector2(posEasy), fontButton, "Fácil", Color.BLACK, 80, false, false));
         buttonEasy.centrar();
 
         Vector2 posMedium = new Vector2(pos.x, pos.y - size.y / 2 - offset);
-        buttonMedium = new ButtonObject(engine, width, height, posMedium, new Vector2(size), 50, fontButton, "Medio", Color.YELLOW, Color.BLACK);
+        buttonMedium = new ButtonObject(engine, width, height, posMedium, size, 50, Color.YELLOW,
+                new TextObject(engine, width, height, new Vector2(posMedium), fontButton, "Medio", Color.BLACK, 80, false, false));
         buttonMedium.centrar();
 
         Vector2 posHard = new Vector2(pos.x, pos.y + size.y / 2 + offset);
-        buttonHard = new ButtonObject(engine, width, height, posHard, new Vector2(size), 50, fontButton, "Difícil", Color.ORANGE, Color.BLACK);
+        buttonHard = new ButtonObject(engine, width, height, posHard, size, 50, Color.ORANGE,
+                new TextObject(engine, width, height, new Vector2(posHard), fontButton, "Difícil", Color.BLACK, 80, false, false));
         buttonHard.centrar();
 
         Vector2 posimposible = new Vector2(pos.x, pos.y + (3 * size.y) / 2 + (3 * offset));
-        buttonImpossible = new ButtonObject(engine, width, height, posimposible, new Vector2(size), 50, fontButton, "Imposible", Color.RED, Color.BLACK);
+        buttonImpossible = new ButtonObject(engine, width, height, posimposible, size, 50, Color.RED,
+                new TextObject(engine, width, height, new Vector2(posimposible), fontButton, "Imposible", Color.BLACK, 80, false, false));
         buttonImpossible.centrar();
 
         buttonBack = new ButtonObject(engine, width, height, new Vector2(20, 20), new Vector2(100, 100), "volver.png");

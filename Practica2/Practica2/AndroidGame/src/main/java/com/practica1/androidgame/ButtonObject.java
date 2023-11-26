@@ -12,7 +12,6 @@ public class ButtonObject extends GameObject {
     private Vector2 size;
     private Color color;
     private float arc;
-    private Font font;
     private TextObject text;
     private ImageObject image;
 
@@ -25,19 +24,16 @@ public class ButtonObject extends GameObject {
      * @param pos         Posicion del boton
      * @param size        Tamanio del boton
      * @param arc         Curvatura de las esquinas
-     * @param font        Fuente del texto
-     * @param text        Texto
+     * @param text        Objeto de texto
      * @param colorButton Color del boton
-     * @param colorText   Color del texto
      */
-    public ButtonObject(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Vector2 size, float arc, Font font, String text, Color colorButton, Color colorText) {
+    public ButtonObject(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Vector2 size, float arc, Color colorButton, TextObject text) {
         super(e, sceneWidth, sceneHeight, pos);
         this.size = size;
         this.arc = arc;
         this.color = colorButton;
 
-        this.font = font;
-        this.text = new TextObject(e, sceneWidth, sceneHeight, new Vector2(pos), font, text, colorText);
+        this.text = text;
 
         this.image = null;
     }
@@ -50,7 +46,7 @@ public class ButtonObject extends GameObject {
      * @param sceneHeight Altura de la escena
      * @param pos         Posicion del boton
      * @param size        Tamanio del boton
-     * @param imageFile   Nombre delm archivo imagen
+     * @param imageFile   Nombre del archivo imagen
      */
     public ButtonObject(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Vector2 size, String imageFile) {
         super(e, sceneWidth, sceneHeight, pos);
@@ -97,7 +93,7 @@ public class ButtonObject extends GameObject {
 
         if (text != null)
             text.center();
-        else if (image != null)
+         if (image != null)
             image.center();
     }
 

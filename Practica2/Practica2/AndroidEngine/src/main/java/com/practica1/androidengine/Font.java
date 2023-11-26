@@ -70,7 +70,7 @@ public class Font {
     public void setItalic(boolean italic) {
         int flags = 0;
         if (italic) flags += Typeface.ITALIC;
-        if (isItalic()) flags += Typeface.BOLD;
+        if (isBold()) flags += Typeface.BOLD;
 
         font = Typeface.create(font, flags);
     }

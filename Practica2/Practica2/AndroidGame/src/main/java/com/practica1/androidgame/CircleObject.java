@@ -28,7 +28,7 @@ public class CircleObject extends GameObject {
         super(e, sceneWidth, sceneHeight, pos);
         this.id = new TextObject(e, sceneWidth, sceneHeight,
                 new Vector2(this.pos.x + circleRadius, this.pos.y + circleRadius),
-                font, String.valueOf(id), Color.BLACK);
+                font, String.valueOf(id), Color.BLACK,50,false,false);
 
         this.id.center();
 

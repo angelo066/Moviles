@@ -21,7 +21,6 @@ public class AndroidGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         renderView = new SurfaceView(this);
         setContentView(renderView);
 
@@ -32,6 +31,8 @@ public class AndroidGame extends AppCompatActivity {
         });
 
         engine = new Engine(renderView);
+
+        ResourceManager.Init(engine);
 
         Scene scene = new MainMenu();
         engine.setScene(scene);
@@ -49,5 +50,11 @@ public class AndroidGame extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         engine.pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ResourceManager.release();
     }
 }

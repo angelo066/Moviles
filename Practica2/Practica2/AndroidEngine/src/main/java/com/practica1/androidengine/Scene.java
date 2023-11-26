@@ -5,32 +5,46 @@ import java.util.ArrayList;
 /**
  * Clase que representa una escena del juego
  */
-public interface Scene {
+public class Scene {
+
+    protected int width = 1080;
+    protected int height = 1920;
+
+    protected Engine engine;
 
     /**
      * Inicializar
      *
      * @param engine Engine de la aplicacion
      */
-    public void init(Engine engine);
+    public void init(Engine engine){
+        this.engine = engine;
+        engine.getGraphics().setSceneSize(width, height);
+    }
 
     /**
      * Update de la escena
      *
      * @param deltaTime
      */
-    public void update(double deltaTime);
+    public void update(double deltaTime){
+
+    }
 
     /**
      * Renderizado de la escena
      */
-    public void render();
+    public void render(){
+
+    }
 
     /**
      * Manejo de input de la escena
      *
      * @param events
      */
-    public void handleInput(ArrayList<TouchEvent> events);
+    public void handleInput(ArrayList<TouchEvent> events){
+
+    }
 
 }

@@ -63,7 +63,7 @@ public class TabObject extends GameObject {
 
     @Override
     public void init() {
-        Font font = engine.getGraphics().newFont("Nexa.ttf", 50, false, false);
+        Font font = ResourceManager.getInstance().getFont("Nexa.ttf");
 
         // Variables para posiciones
         int totalWidth = numColors * circleRadius * 2;
@@ -83,7 +83,8 @@ public class TabObject extends GameObject {
 
             Vector2 posn = new Vector2(sceneWidth / 14, posAttempts[i].y);
 
-            tab[i].textNumber = new TextObject(engine, sceneWidth, sceneHeight, posn, font, String.valueOf((i + 1)), Color.BLACK);
+            tab[i].textNumber = new TextObject(engine, sceneWidth, sceneHeight, posn,
+                    font, String.valueOf((i + 1)), Color.BLACK, 50, false, false);
 
             // Para cada casilla creamos un circulo dentro de la lista de circulos del Intento
             for (int j = 0; j < numSquares; j++) {

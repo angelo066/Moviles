@@ -12,13 +12,7 @@ import java.util.ArrayList;
 /**
  * Escena final
  */
-public class EndScreen implements Scene {
-
-    private Engine engine;
-    private Graphics graph;
-    private int width;
-    private int height;
-
+public class EndScreen extends Scene {
     private ButtonObject buttonRepeat;
     private ButtonObject buttonBackMenu;
     private TextObject textEndMessage;
@@ -41,10 +35,10 @@ public class EndScreen implements Scene {
     /**
      * @param combination_win Combinacion elegida por el juego
      * @param win             Indica si el jugador ha ganado
-     * @param numSquares     Numero de casillas de un intento (tamanio de la combinacion)
+     * @param numSquares      Numero de casillas de un intento (tamanio de la combinacion)
      * @param mode            Modo de dificultad
      * @param numAttempts     Numero de intentos realizados por el jugador
-     * @param colorBlind     Indica si esta el modo daltonicos activado
+     * @param colorBlind      Indica si esta el modo daltonicos activado
      */
     public EndScreen(Color[] combination_win, boolean win, int numSquares, Difficulty mode, int numAttempts, boolean colorBlind) {
         this.win = win;
@@ -54,34 +48,31 @@ public class EndScreen implements Scene {
         this.numAttempts = numAttempts;
         this.colorBlind = colorBlind;
 
+        width = 1080;
+        height = 1920;
     }
 
     @Override
     public void init(Engine engine) {
-        this.engine = engine;
-        this.graph = engine.getGraphics();
+        super.init(engine);
 
-        width = 1080;
-        height = 1920;
-        engine.getGraphics().setSceneSize(width, height);
-
-        engine.getAudio().loadSound("yuju.wav");
-        engine.getAudio().loadSound("douh.wav");
 
         // Creacion de las fuentes que utilizamos
-        Font fontButton = graph.newFont("Nexa.ttf", 70, false, false);
-        Font fontAttempt = graph.newFont("Nexa.ttf", 80, false, false);
-        Font fontMessage = graph.newFont("BarlowCondensed-Regular.ttf", 150, true, false);
-        Font fontDescription = graph.newFont("Nexa.ttf", 50, false, false);
+        Font fontButton = ResourceManager.getInstance().getFont("Nexa.ttf");
+        Font fontMessage = ResourceManager.getInstance().getFont("BarlowCondensed-Regular.ttf");
+        Font fontDescription = ResourceManager.getInstance().getFont("Nexa.ttf");
+
 
         // Botones
         Vector2 size = new Vector2(700, 150);
         Vector2 posRep = new Vector2(width / 2, height / 10 * 6);
-        buttonRepeat = new ButtonObject(engine, width, height, posRep, new Vector2(size), 40, fontButton, "Volver a jugar", Color.CYAN, Color.BLACK);
+        buttonRepeat = new ButtonObject(engine, width, height, posRep, new Vector2(size), 40, Color.CYAN,
+                new TextObject(engine, width, height, new Vector2(posRep), fontButton, "Volver a jugar", Color.BLACK, 80, false, false));
         buttonRepeat.centrar();
 
         Vector2 posBack = new Vector2(width / 2, height / 10 * 7);
-        buttonBackMenu = new ButtonObject(engine, width, height, posBack, new Vector2(size), 40, fontButton, "Elegir Dificultad", Color.CYAN, Color.BLACK);
+        buttonBackMenu = new ButtonObject(engine, width, height, posBack, new Vector2(size), 40, Color.CYAN,
+                new TextObject(engine, width, height, new Vector2(posBack), fontButton, "Elegir Dificultad", Color.BLACK, 80, false, false));
         buttonBackMenu.centrar();
 
         // Textos
@@ -100,16 +91,20 @@ public class EndScreen implements Scene {
             engine.getAudio().playSound("douh.wav", false);
         }
 
-        textEndMessage = new TextObject(engine, width, height, new Vector2(width / 2, height / 10), fontMessage, mensaje, Color.BLACK);
+        textEndMessage = new TextObject(engine, width, height, new Vector2(width / 2, height / 10),
+                fontMessage, mensaje, Color.BLACK, 150, true, false);
         textEndMessage.center();
 
-        textDescriptionMessage = new TextObject(engine, width, height, new Vector2(width / 2, height / 10 * 2), fontDescription, description, Color.BLACK);
+        textDescriptionMessage = new TextObject(engine, width, height, new Vector2(width / 2, height / 10 * 2),
+                fontDescription, description, Color.BLACK, 50, false, false);
         textDescriptionMessage.center();
 
-        textUsedAttempts = new TextObject(engine, width, height, new Vector2(width / 2, height / 10 * 5 / 2), fontAttempt, attempt, Color.BLACK);
+        textUsedAttempts = new TextObject(engine, width, height, new Vector2(width / 2, height / 10 * 5 / 2),
+                fontButton, attempt, Color.BLACK, 45, false, false);
         textUsedAttempts.center();
 
-        textCode = new TextObject(engine, width, height, new Vector2(width / 2, height / 10 * 7 / 2), fontDescription, "Código:", Color.BLACK);
+        textCode = new TextObject(engine, width, height, new Vector2(width / 2, height / 10 * 7 / 2),
+                fontDescription, "Código:", Color.BLACK, 50, false, false);
         textCode.center();
 
         // Colocacion de los circulos
@@ -123,7 +118,7 @@ public class EndScreen implements Scene {
 
         // Creamos el array de circulos para colocarlos
         this.circles = new CircleObject[numSquares];
-        Font font = graph.newFont("Nexa.ttf", 50, false, false);
+        Font font = engine.getGraphics().newFont("Nexa.ttf", 50, false, false);
 
         // Calculos de posicion
         int totalWidth = numSquares * circleRadius * 2;
@@ -152,8 +147,8 @@ public class EndScreen implements Scene {
         engine.getGraphics().clear(Color.WHITE.getValue());
 
         // Fondo Juego
-        graph.setColor(Color.WHITE.getValue());
-        graph.fillRectangle(0, 0, width, height);
+        engine.getGraphics().setColor(Color.WHITE.getValue());
+        engine.getGraphics().fillRectangle(0, 0, width, height);
 
         // Botones
         buttonRepeat.render();

@@ -22,7 +22,7 @@ public class ImageObject extends GameObject {
     public ImageObject(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Vector2 size, String imageFile) {
         super(e, sceneWidth, sceneHeight, pos);
         this.size = size;
-        image = engine.getGraphics().newImage(imageFile);
+        image = ResourceManager.getInstance().getImage(imageFile);
     }
 
     @Override

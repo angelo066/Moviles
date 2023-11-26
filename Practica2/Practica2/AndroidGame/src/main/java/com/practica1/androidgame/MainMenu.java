@@ -3,6 +3,7 @@ package com.practica1.androidgame;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Font;
+import com.practica1.androidengine.Image;
 import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.TouchEvent;
 
@@ -11,32 +12,39 @@ import java.util.ArrayList;
 /**
  * Escena de inicio
  */
-public class MainMenu implements Scene {
-
-    private Engine engine;
-    private int width;
-    private int height;
+public class MainMenu extends Scene {
     private ButtonObject buttonPlay;
     private TextObject textTitle;
 
 
-    @Override
-    public void init(Engine engine) {
-        this.engine = engine;
-
+    public MainMenu(){
         width = 1080;
         height = 1920;
-        engine.getGraphics().setSceneSize(width, height);
+    }
+    @Override
+    public void init(Engine engine) {
+        super.init(engine);
 
         engine.getAudio().loadSound("botonInterfaz.wav");
+        engine.getAudio().loadSound("clickboton.wav");
+        engine.getAudio().loadSound("yuju.wav");
+        engine.getAudio().loadSound("douh.wav");
+
+        Font fontTitle = ResourceManager.getInstance().createFont("BarlowCondensed-Regular.ttf", 200, true, true);
+        Font fontButton = ResourceManager.getInstance().createFont("Nexa.ttf", 80, false, false);
+
+        ResourceManager.getInstance().createImage("volver.png");
+        ResourceManager.getInstance().createImage("ojo.png");
+        ResourceManager.getInstance().createImage("ojo2.png");
+
 
         // Creacion de los objetos de la escena
-        Font fontTitle = engine.getGraphics().newFont("BarlowCondensed-Regular.ttf", 200, true, true);
-        textTitle = new TextObject(engine, width, height, new Vector2(width / 2, 380), fontTitle, "Master Mind", Color.BLACK);
+        textTitle = new TextObject(engine, width, height, new Vector2(width / 2, 380),
+                fontTitle, "Master Mind", Color.BLACK,200,true,true);
         textTitle.center();
 
-        Font fontButton = engine.getGraphics().newFont("Nexa.ttf", 80, false, false);
-        buttonPlay = new ButtonObject(engine, width, height, new Vector2(width / 2, height / 2), new Vector2(500, 150), 40, fontButton, "Jugar", Color.CYAN, Color.BLACK);
+        buttonPlay = new ButtonObject(engine, width, height, new Vector2(width / 2, height / 2), new Vector2(500, 150), 40, Color.CYAN,
+                new TextObject(engine,width,height,new Vector2(width / 2, height / 2),fontButton,"Jugar",Color.BLACK,80,false,false));
         buttonPlay.centrar();
     }
 

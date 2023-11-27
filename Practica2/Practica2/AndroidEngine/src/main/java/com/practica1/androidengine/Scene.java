@@ -47,25 +47,4 @@ public class Scene {
 
     }
 
-    /**
-     * @return Anchura de la escena
-     */
-    public int getWidth(){
-        return width;
-    }
-
-    /**
-     * @return Altura de la escena
-     */
-    public int getHeight(){
-        return height;
-    }
-
-    /**
-     * @return Engine de la escena
-     */
-    public Engine getEngine(){
-        return engine;
-    }
-
 }

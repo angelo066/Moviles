@@ -2,6 +2,7 @@ package com.practica1.androidgame;
 
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
+import com.practica1.androidengine.Graphics;
 import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.TouchEvent;
 
@@ -71,6 +72,8 @@ public class MasterMind extends Scene {
 
         }
 
+        Graphics graphics = engine.getGraphics();
+
         //Creacion de intentos
         this.attempts = new Attempt[numAttempts];
 
@@ -78,7 +81,7 @@ public class MasterMind extends Scene {
         int heightOffset = attemptHeight / 10;
 
         for (int i = 0; i < this.numAttempts; i++) {
-            this.attempts[i] = new Attempt(this, numColorsPerAttempt, i + 1,
+            this.attempts[i] = new Attempt(graphics, numColorsPerAttempt, i + 1,
                     new Vector2(3, (attemptHeight * (i + 1))), new Vector2(width - 6, attemptHeight - heightOffset));
         }
 
@@ -94,7 +97,7 @@ public class MasterMind extends Scene {
         for (int i = 0; i < this.numColors; i++) {
             int x = startPosition + (offsetBetweenCircle * i) + (circleRadius * 2 * i);
             int y = (tamDivision * (numDivisions - 1)) + ((tamDivision - 2 * circleRadius) / 2);
-            this.availableColors[i] = new Circulo(this, new Vector2(x, y), circleRadius);
+            this.availableColors[i] = new Circulo(graphics, new Vector2(x, y), circleRadius);
             this.availableColors[i].setColor(Color.values()[i]);
             this.availableColors[i].setUncovered(true);
         }
@@ -123,16 +126,16 @@ public class MasterMind extends Scene {
             System.out.println(winningCombination[i]);
 
         // Botones
-        buttonColorBlind = new ButtonObject(engine, width, height, new Vector2(width - 120, 20), new Vector2(100, 100), "ojo.png");
+        buttonColorBlind = new ButtonObject(graphics, new Vector2(width - 120, 20), new Vector2(100, 100), "ojo.png");
 
-        buttonBack = new ButtonObject(engine, width, height, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
+        buttonBack = new ButtonObject(graphics, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
 
         // Texto de indicacion de intentos restantes
-        textAttempts = new TextObject(engine, width, height, new Vector2(width / 2, 72),
+        textAttempts = new TextObject(graphics, new Vector2(width / 2, 72),
                 "Nexa.ttf", "Te quedan " + (attempts.length - currentAttempt) + " intentos", Color.BLACK, 45, false, false);
         textAttempts.centerHorizontal();
 
-        title = new TextObject(engine, width, height, new Vector2(width / 2, 50),
+        title = new TextObject(graphics, new Vector2(width / 2, 50),
                 "BarlowCondensed-Regular.ttf", "Averigua el código", Color.BLACK, 60, true, false);
         title.center();
     }

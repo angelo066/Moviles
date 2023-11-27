@@ -2,6 +2,7 @@ package com.practica1.androidgame;
 
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
+import com.practica1.androidengine.Graphics;
 import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.TouchEvent;
 
@@ -29,8 +30,10 @@ public class SelectionMenu extends Scene {
 
         int offset = 40;
 
+        Graphics graphics = engine.getGraphics();
+
         // Mensaje de seleccion
-        textSelection = new TextObject(engine, width, height, new Vector2(width / 2, height / 7),
+        textSelection = new TextObject(graphics, new Vector2(width / 2, height / 7),
                 "BarlowCondensed-Regular.ttf", "¿En qué dificultad quieres jugar?", Color.BLACK, 75, true, false);
         textSelection.center();
 
@@ -39,26 +42,26 @@ public class SelectionMenu extends Scene {
         Vector2 size = new Vector2(500, 150);
 
         Vector2 posEasy = new Vector2(pos.x, pos.y - (3 * size.y) / 2 - (3 * offset));
-        buttonEasy = new ButtonObject(engine, width, height, posEasy, size, 50, Color.GREEN,
-                new TextObject(engine, width, height, new Vector2(posEasy), "Nexa.ttf", "Fácil", Color.BLACK, 80, false, false));
+        buttonEasy = new ButtonObject(graphics, posEasy, size, 50, Color.GREEN,
+                new TextObject(graphics, new Vector2(posEasy), "Nexa.ttf", "Fácil", Color.BLACK, 80, false, false));
         buttonEasy.center();
 
         Vector2 posMedium = new Vector2(pos.x, pos.y - size.y / 2 - offset);
-        buttonMedium = new ButtonObject(engine, width, height, posMedium, size, 50, Color.YELLOW,
-                new TextObject(engine, width, height, new Vector2(posMedium), "Nexa.ttf", "Medio", Color.BLACK, 80, false, false));
+        buttonMedium = new ButtonObject(graphics, posMedium, size, 50, Color.YELLOW,
+                new TextObject(graphics, new Vector2(posMedium), "Nexa.ttf", "Medio", Color.BLACK, 80, false, false));
         buttonMedium.center();
 
         Vector2 posHard = new Vector2(pos.x, pos.y + size.y / 2 + offset);
-        buttonHard = new ButtonObject(engine, width, height, posHard, size, 50, Color.ORANGE,
-                new TextObject(engine, width, height, new Vector2(posHard), "Nexa.ttf", "Difícil", Color.BLACK, 80, false, false));
+        buttonHard = new ButtonObject(graphics, posHard, size, 50, Color.ORANGE,
+                new TextObject(graphics, new Vector2(posHard), "Nexa.ttf", "Difícil", Color.BLACK, 80, false, false));
         buttonHard.center();
 
         Vector2 posimposible = new Vector2(pos.x, pos.y + (3 * size.y) / 2 + (3 * offset));
-        buttonImpossible = new ButtonObject(engine, width, height, posimposible, size, 50, Color.RED,
-                new TextObject(engine, width, height, new Vector2(posimposible), "Nexa.ttf", "Imposible", Color.BLACK, 80, false, false));
+        buttonImpossible = new ButtonObject(graphics, posimposible, size, 50, Color.RED,
+                new TextObject(graphics, new Vector2(posimposible), "Nexa.ttf", "Imposible", Color.BLACK, 80, false, false));
         buttonImpossible.center();
 
-        buttonBack = new ButtonObject(engine, width, height, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
+        buttonBack = new ButtonObject(graphics, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
     }
 
     @Override

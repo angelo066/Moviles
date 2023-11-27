@@ -1,33 +1,40 @@
 package com.practica1.androidgame;
 
 import com.practica1.androidengine.Engine;
+import com.practica1.androidengine.Graphics;
 import com.practica1.androidengine.Image;
+import com.practica1.androidengine.Scene;
 
 /**
  * GameObject Imagen, encapsula las funcionalidades de pintar imagenes dentro de un objeto
  */
-public class ImageObject extends GameObject {
+public class ImageObject {
     private Image image;
     private Vector2 size;
+    private Vector2 pos;
+    private Vector2 iniPos;
+    private Graphics graphics;
 
     /**
-     * @param e           Engine de la aplicacion
-     * @param sceneWidth  Anchura de la escena
-     * @param sceneHeight Altura de la escena
-     * @param pos         Posicion de la imagen
-     * @param size        Tamanio de la imagen
-     * @param imageFile   Archivo de la imagen
+     * @param graphics  Objeto graphics del engine
+     * @param pos       Posicion de la imagen
+     * @param size      Tamanio de la imagen
+     * @param imageFile Archivo de la imagen
      */
 
-    public ImageObject(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Vector2 size, String imageFile) {
-        super(e, sceneWidth, sceneHeight, pos);
+    public ImageObject(Graphics graphics, Vector2 pos, Vector2 size, String imageFile) {
         this.size = size;
-        image = ResourceManager.getInstance().getImage(imageFile);
+        this.image = ResourceManager.getInstance().getImage(imageFile);
+        this.graphics = graphics;
+        this.pos = new Vector2(pos);
+        this.iniPos = pos;
     }
 
-    @Override
+    /**
+     * Render de la imagen
+     */
     public void render() {
-        engine.getGraphics().drawImage(image, pos.x, pos.y, size.x, size.y);
+        graphics.drawImage(image, pos.x, pos.y, size.x, size.y);
     }
 
     /**
@@ -38,7 +45,7 @@ public class ImageObject extends GameObject {
         pos.y = iniPos.y - size.y / 2;
     }
 
-    public void changeImage(String imageFile){
+    public void changeImage(String imageFile) {
         image = ResourceManager.getInstance().getImage(imageFile);
     }
 }

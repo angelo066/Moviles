@@ -5,12 +5,10 @@ import com.practica1.androidengine.Graphics;
 import com.practica1.androidengine.Scene;
 
 public class Clue {
-
     private int numFoundCircles;
     private int numFoundColors;
-    private Scene scene;
+    private Graphics graphics;
     private Vector2 pos;
-    private Vector2 size;
     private int circleRadius;
     private int numColorsPerAttempt;
     private int startPositionX;
@@ -18,12 +16,11 @@ public class Clue {
     private int offsetBetweenCirclesX;
     private int offsetBetweenCirclesY;
 
-    public Clue(Scene scene, Vector2 pos, Vector2 size, int numColorsPerAttempt) {
+    public Clue(Graphics graphics, Vector2 pos, Vector2 size, int numColorsPerAttempt) {
         this.numFoundCircles = 0;
         this.numFoundColors = 0;
-        this.scene = scene;
+        this.graphics = graphics;
         this.pos = pos;
-        this.size = size;
         this.circleRadius = 15;
         this.numColorsPerAttempt = numColorsPerAttempt;
 
@@ -39,8 +36,6 @@ public class Clue {
     }
 
     public void render() {
-        Graphics graphics = scene.getEngine().getGraphics();
-
         int numRightCir = numFoundCircles;
         int numRightCol = numFoundColors;
         int x = startPositionX + pos.x;

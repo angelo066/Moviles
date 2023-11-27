@@ -3,6 +3,7 @@ package com.practica1.androidgame;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Font;
+import com.practica1.androidengine.Graphics;
 import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.TouchEvent;
 
@@ -52,16 +53,18 @@ public class GameOver extends Scene {
     public void init(Engine engine) {
         super.init(engine);
 
+        Graphics graphics = engine.getGraphics();
+
         // Botones
         Vector2 size = new Vector2(700, 150);
         Vector2 posRep = new Vector2(width / 2, height / 10 * 6);
-        buttonRepeat = new ButtonObject(engine, width, height, posRep, new Vector2(size), 40, Color.CYAN,
-                new TextObject(engine, width, height, new Vector2(posRep), "Nexa.ttf", "Volver a jugar", Color.BLACK, 80, false, false));
+        buttonRepeat = new ButtonObject(graphics, posRep, new Vector2(size), 40, Color.CYAN,
+                new TextObject(graphics, new Vector2(posRep), "Nexa.ttf", "Volver a jugar", Color.BLACK, 80, false, false));
         buttonRepeat.center();
 
         Vector2 posBack = new Vector2(width / 2, height / 10 * 7);
-        buttonBackMenu = new ButtonObject(engine, width, height, posBack, new Vector2(size), 40, Color.CYAN,
-                new TextObject(engine, width, height, new Vector2(posBack), "Nexa.ttf", "Elegir Dificultad", Color.BLACK, 80, false, false));
+        buttonBackMenu = new ButtonObject(graphics, posBack, new Vector2(size), 40, Color.CYAN,
+                new TextObject(graphics, new Vector2(posBack), "Nexa.ttf", "Elegir Dificultad", Color.BLACK, 80, false, false));
         buttonBackMenu.center();
 
         // Textos
@@ -80,19 +83,19 @@ public class GameOver extends Scene {
             engine.getAudio().playSound("douh.wav", false);
         }
 
-        textEndMessage = new TextObject(engine, width, height, new Vector2(width / 2, height / 10),
+        textEndMessage = new TextObject(graphics, new Vector2(width / 2, height / 10),
                 "BarlowCondensed-Regular.ttf", mensaje, Color.BLACK, 150, true, false);
         textEndMessage.center();
 
-        textDescriptionMessage = new TextObject(engine, width, height, new Vector2(width / 2, height / 10 * 2),
+        textDescriptionMessage = new TextObject(graphics, new Vector2(width / 2, height / 10 * 2),
                 "Nexa.ttf", description, Color.BLACK, 50, false, false);
         textDescriptionMessage.center();
 
-        textUsedAttempts = new TextObject(engine, width, height, new Vector2(width / 2, height / 10 * 5 / 2),
+        textUsedAttempts = new TextObject(graphics, new Vector2(width / 2, height / 10 * 5 / 2),
                 "Nexa.ttf", attempt, Color.BLACK, 45, false, false);
         textUsedAttempts.center();
 
-        textCode = new TextObject(engine, width, height, new Vector2(width / 2, height / 10 * 7 / 2),
+        textCode = new TextObject(graphics, new Vector2(width / 2, height / 10 * 7 / 2),
                 "Nexa.ttf", "Código:", Color.BLACK, 50, false, false);
         textCode.center();
 
@@ -117,7 +120,7 @@ public class GameOver extends Scene {
         for (int i = 0; i < combination_win.length; i++) {
             int x = spaceToEachSide + i * (circleRadius * 2);
 
-            circles[i] = new Circulo(this, new Vector2(x, 800), circleRadius);
+            circles[i] = new Circulo(engine.getGraphics(), new Vector2(x, 800), circleRadius);
             circles[i].setColorblind(colorBlind);
             circles[i].setColor(combination_win[i]);
             circles[i].setUncovered(true);

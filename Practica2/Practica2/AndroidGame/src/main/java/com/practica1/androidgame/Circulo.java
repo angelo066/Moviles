@@ -14,22 +14,20 @@ public class Circulo {
     private boolean uncovered; // para cuando asignamos un color al tablero
     private boolean colorblind; // para cuando pinchamos encima
     private int circleRadius;
-    private Scene scene;
     private Vector2 pos;
+    private Graphics graphics;
 
     /**
-     * @param scene
      * @param pos          Posicion del circulo
      * @param circleRadius
      */
-    public Circulo(Scene scene, Vector2 pos, int circleRadius) {
-        this.scene = scene;
+    public Circulo(Graphics graphics, Vector2 pos, int circleRadius) {
+        this.graphics = graphics;
         this.circleRadius = circleRadius;
         this.pos = pos;
         this.color = Color.NO_COLOR;
 
-        this.id = new TextObject(scene.getEngine(), scene.getWidth(), scene.getHeight(),
-                new Vector2(pos.x + circleRadius, pos.y + circleRadius),
+        this.id = new TextObject(graphics, new Vector2(pos.x + circleRadius, pos.y + circleRadius),
                 "Nexa.ttf", String.valueOf(this.color.getId()), Color.BLACK, 50, false, false);
         this.id.center();
 
@@ -38,9 +36,6 @@ public class Circulo {
     }
 
     public void render() {
-
-        Graphics graphics = scene.getEngine().getGraphics();
-
         // Si se ha descubierto pintamos el color normal
         if (uncovered) {
             graphics.setColor(color.getValue());

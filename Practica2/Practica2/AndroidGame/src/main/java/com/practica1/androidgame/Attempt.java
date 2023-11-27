@@ -11,7 +11,7 @@ public class Attempt {
     private Circulo[] combination;
     private TextObject attemptNumber;
     private Clue clue;
-    private Scene scene;
+    private Graphics graphics;
     private Vector2 pos;
     private Vector2 size;
     private int numDivisions;
@@ -20,8 +20,8 @@ public class Attempt {
     private int currentIndex;
     private boolean correctCombination;
 
-    public Attempt(Scene scene, int numColorsPerAttempt, int id, Vector2 pos, Vector2 size) {
-        this.scene = scene;
+    public Attempt(Graphics graphics, int numColorsPerAttempt, int id, Vector2 pos, Vector2 size) {
+        this.graphics = graphics;
         this.pos = pos;
         this.size = size;
         this.uncoveredCircles = 0;
@@ -40,21 +40,18 @@ public class Attempt {
         for (int i = 0; i < numColorsPerAttempt; i++) {
             int x = startPosition + (offsetBetweenCircle * i) + (circleRadius * 2 * i);
             int y = pos.y + ((size.y - (circleRadius * 2)) / 2);
-            this.combination[i] = new Circulo(scene, new Vector2(x, y), circleRadius);
+            this.combination[i] = new Circulo(graphics, new Vector2(x, y), circleRadius);
         }
 
-        this.attemptNumber = new TextObject(scene.getEngine(), scene.getWidth(), scene.getHeight(),
-                new Vector2(pos.x + widthPerDivision / 2, pos.y + size.y / 2), "Nexa.ttf",
+        this.attemptNumber = new TextObject(graphics, new Vector2(pos.x + widthPerDivision / 2, pos.y + size.y / 2), "Nexa.ttf",
                 String.valueOf(id), Color.BLACK, 50, false, false);
         this.attemptNumber.center();
 
-        clue = new Clue(this.scene, new Vector2(pos.x + (widthPerDivision * (numDivisions - 1)), pos.y), new Vector2(widthPerDivision, size.y), numColorsPerAttempt);
+        clue = new Clue(graphics, new Vector2(pos.x + (widthPerDivision * (numDivisions - 1)), pos.y), new Vector2(widthPerDivision, size.y), numColorsPerAttempt);
 
     }
 
     public void render() {
-        Graphics graphics = scene.getEngine().getGraphics();
-
         graphics.setColor(Color.GREY.getValue());
         graphics.drawRoundRectangle(pos.x, pos.y, size.x, size.y, 20);
 

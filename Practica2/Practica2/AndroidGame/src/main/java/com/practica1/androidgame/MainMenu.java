@@ -2,6 +2,7 @@ package com.practica1.androidgame;
 
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
+import com.practica1.androidengine.Graphics;
 import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.TouchEvent;
 
@@ -36,13 +37,15 @@ public class MainMenu extends Scene {
         ResourceManager.getInstance().createImage("ojo2.png");
 
 
+        Graphics graphics = engine.getGraphics();
+
         // Creacion de los objetos de la escena
-        textTitle = new TextObject(engine, width, height, new Vector2(width / 2, 380),
+        textTitle = new TextObject(graphics, new Vector2(width / 2, 380),
                 "BarlowCondensed-Regular.ttf", "Master Mind", Color.BLACK,200,true,true);
         textTitle.center();
 
-        buttonPlay = new ButtonObject(engine, width, height, new Vector2(width / 2, height / 2), new Vector2(500, 150), 40, Color.CYAN,
-                new TextObject(engine,width,height,new Vector2(width / 2, height / 2),"Nexa.ttf","Jugar",Color.BLACK,80,false,false));
+        buttonPlay = new ButtonObject(graphics, new Vector2(width / 2, height / 2), new Vector2(500, 150), 40, Color.CYAN,
+                new TextObject(graphics,new Vector2(width / 2, height / 2),"Nexa.ttf","Jugar",Color.BLACK,80,false,false));
         buttonPlay.center();
     }
 

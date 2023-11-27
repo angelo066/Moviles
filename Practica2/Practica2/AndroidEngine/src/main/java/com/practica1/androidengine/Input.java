@@ -17,6 +17,9 @@ public class Input {
         handler = new InputHandler(view);
     }
 
+    /**
+     * @return Devuelve los eventos ocurridos en el ultimo frame de la aplicacion
+     */
     public ArrayList<TouchEvent> getTouchEvents() {
         return handler.getTouchEvents();
     }

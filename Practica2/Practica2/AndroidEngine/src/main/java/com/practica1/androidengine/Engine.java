@@ -33,16 +33,23 @@ public class Engine implements Runnable {
         newScene = null;
     }
 
+    /**
+     * @return Objeto Graphics de la aplicacion
+     */
     public Graphics getGraphics() {
         return graphics;
     }
 
-
+    /**
+     * @return Objeto Input de la aplicacion
+     */
     public Input getInput() {
         return input;
     }
 
-
+    /**
+     * @return Objeto Audio de la aplicacion
+     */
     public Audio getAudio() {
         return audio;
     }
@@ -79,7 +86,9 @@ public class Engine implements Runnable {
         }
     }
 
-
+    /**
+     * Reanuda la ejecucion de la aplicacion
+     */
     public void resume() {
         if (!running) {
             running = true;
@@ -88,7 +97,9 @@ public class Engine implements Runnable {
         }
     }
 
-
+    /**
+     * Pausa la ejecucion de la aplicacion
+     */
     public void pause() {
         if (running) {
             running = false;
@@ -104,9 +115,13 @@ public class Engine implements Runnable {
         }
     }
 
-
+    /**
+     * Establece la escena de la aplicacion
+     *
+     * @param scene Escena a establecer
+     */
     public void setScene(Scene scene) {
-        if(this.scene == null)
+        if (this.scene == null)
             this.scene = scene;
         else
             newScene = scene;
@@ -114,8 +129,11 @@ public class Engine implements Runnable {
         scene.init(this);
     }
 
+    /**
+     * Cambia, si es necesario, la escena al principio de frame
+     */
     private void changeScene() {
-        if(newScene != null){
+        if (newScene != null) {
             scene = newScene;
             newScene = null;
         }

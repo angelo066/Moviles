@@ -27,8 +27,7 @@ public class Font {
             if (italic) flags += Typeface.ITALIC;
 
             font = Typeface.create(newFont, flags);
-        }
-        catch (Exception e ){
+        } catch (Exception e) {
             throw new RuntimeException("ERROR AL CARGAR FUENTE EN ANDROID");
         }
 
@@ -42,17 +41,27 @@ public class Font {
         return font;
     }
 
-
+    /**
+     * Establece el nuevo tamanio de fuente
+     *
+     * @param newSize
+     */
     public void setSize(int newSize) {
         size = newSize;
     }
 
-
+    /**
+     * @return El tamanio de fuente
+     */
     public int getSize() {
         return size;
     }
 
-
+    /**
+     * Establece el bold del texto
+     *
+     * @param bold
+     */
     public void setBold(boolean bold) {
         int flags = 0;
         if (bold) flags += Typeface.BOLD;
@@ -61,12 +70,19 @@ public class Font {
         font = Typeface.create(font, flags);
     }
 
-
+    /**
+     * @return Si la fuente es bold
+     */
     public boolean isBold() {
         return font.isBold();
     }
 
 
+    /**
+     * Establece el italic del texto
+     *
+     * @param italic
+     */
     public void setItalic(boolean italic) {
         int flags = 0;
         if (italic) flags += Typeface.ITALIC;
@@ -75,6 +91,9 @@ public class Font {
         font = Typeface.create(font, flags);
     }
 
+    /**
+     * @return Si la fuente es italic
+     */
     public boolean isItalic() {
         return font.isItalic();
     }

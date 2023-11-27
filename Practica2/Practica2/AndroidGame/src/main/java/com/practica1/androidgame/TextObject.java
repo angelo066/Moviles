@@ -28,15 +28,14 @@ public class TextObject extends GameObject {
      * @param isBold      Bold
      * @param isItalic    Italic
      */
-    public TextObject(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, Font font, String text, Color color, int textSize, boolean isBold, boolean isItalic) {
+    public TextObject(Engine e, int sceneWidth, int sceneHeight, Vector2 pos, String font, String text, Color color, int textSize, boolean isBold, boolean isItalic) {
         super(e, sceneWidth, sceneHeight, pos);
-        this.font = font;
+        this.font = ResourceManager.getInstance().getFont(font);
         this.text = text;
         this.color = color;
         this.textSize = textSize;
         this.isItalic = isItalic;
         this.isBold = isBold;
-
     }
 
     @Override
@@ -46,7 +45,6 @@ public class TextObject extends GameObject {
         font.setSize(textSize);
         font.setBold(isBold);
         font.setItalic(isItalic);
-
         engine.getGraphics().setFont(font);
 
         engine.getGraphics().drawText(text, pos.x, pos.y);
@@ -59,11 +57,10 @@ public class TextObject extends GameObject {
         font.setSize(textSize);
         font.setBold(isBold);
         font.setItalic(isItalic);
-
         engine.getGraphics().setFont(font);
 
-        pos.x = (int) (pos.x - engine.getGraphics().getFontMetricWidth(font, text) / 2);
-        pos.y = (int) (pos.y - engine.getGraphics().getFontMetricHeight(font) / 1.4);
+        pos.x = (int) (iniPos.x - engine.getGraphics().getFontMetricWidth(font, text) / 2);
+        pos.y = (int) (iniPos.y - engine.getGraphics().getFontMetricHeight(font) / 1.35);
     }
 
     /**
@@ -73,10 +70,9 @@ public class TextObject extends GameObject {
         font.setSize(textSize);
         font.setBold(isBold);
         font.setItalic(isItalic);
-
         engine.getGraphics().setFont(font);
 
-        pos.x = (int) (pos.x - engine.getGraphics().getFontMetricWidth(font, text) / 2);
+        pos.x = (int) (iniPos.x - engine.getGraphics().getFontMetricWidth(font, text) / 2);
     }
 
     /**
@@ -87,6 +83,4 @@ public class TextObject extends GameObject {
     public void setText(String text) {
         this.text = text;
     }
-
-
 }

@@ -26,7 +26,11 @@ public class Audio {
         soundsMap = new HashMap<>();
     }
 
-
+    /**
+     * Carga un sonido y lo guarda en el hashmap de la clase
+     *
+     * @param file Nombre del archivo
+     */
     public void loadSound(String file) {
         if (soundsMap.containsKey(file)) return;
 
@@ -34,7 +38,12 @@ public class Audio {
         soundsMap.put(file, newSound);
     }
 
-
+    /**
+     * Reproduce un sonido guardado en el hashmap de la clase
+     *
+     * @param id   Id asociado al sonido en el hashmap
+     * @param loop
+     */
     public void playSound(String id, boolean loop) {
         if (!soundsMap.containsKey(id)) return;
 
@@ -43,13 +52,21 @@ public class Audio {
         sound.play(loop);
     }
 
-
+    /**
+     * Para la reproduccion de un sonido guardado en el hashmap de la clase
+     *
+     * @param id Id asociado al sonido en el hashmap
+     */
     public void stopSound(String id) {
         if (!soundsMap.containsKey(id)) return;
         soundsMap.get(id).stop();
     }
 
-
+    /**
+     * Libera un sonido guardado en el hashmap de la clase
+     *
+     * @param id Id asociado al sonido en el hashmap
+     */
     public void releaseSound(String id) {
         if (!soundsMap.containsKey(id)) return;
         soundsMap.get(id).release();

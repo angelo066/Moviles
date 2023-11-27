@@ -7,17 +7,11 @@ import com.practica1.androidengine.TouchEvent;
  * Clase que representa una entidad de juego
  */
 public class GameObject {
-    /**
-     * @param eng         Objeto engine de la aplicacion
-     * @param sceneWidth  Anchura de la escena
-     * @param sceneHeight Altura de la escena
-     */
-    public GameObject(Engine eng, int sceneWidth, int sceneHeight) {
-        engine = eng;
-        pos = new Vector2(0, 0);
-        this.sceneWidth = sceneWidth;
-        this.sceneHeight = sceneHeight;
-    }
+
+    public Engine engine;
+    protected Vector2 iniPos;
+    public Vector2 pos;
+    protected int sceneWidth, sceneHeight;
 
     /**
      * @param eng         Objeto engine de la aplicacion
@@ -27,14 +21,11 @@ public class GameObject {
      */
     public GameObject(Engine eng, int sceneWidth, int sceneHeight, Vector2 pos) {
         engine = eng;
+        this.iniPos = new Vector2(pos);
         this.pos = pos;
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
     }
-
-    public Engine engine = null;
-    public Vector2 pos;
-    protected int sceneWidth, sceneHeight;
 
     /**
      * Metodo para inicializar la entidad
@@ -66,22 +57,4 @@ public class GameObject {
         return false;
     }
 
-    /**
-     * Cambia la posicion en x de la entidad
-     *
-     * @param x
-     */
-    public void setPosX(int x) {
-        pos.x = x;
-    }
-
-
-    /**
-     * Cambia la posicion en y de la entidad
-     *
-     * @param y
-     */
-    public void setPosY(int y) {
-        pos.y = y;
-    }
 }

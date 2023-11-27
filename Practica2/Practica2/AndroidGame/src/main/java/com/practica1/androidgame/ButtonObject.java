@@ -2,7 +2,6 @@ package com.practica1.androidgame;
 
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
-import com.practica1.androidengine.Font;
 import com.practica1.androidengine.TouchEvent;
 
 /**
@@ -87,15 +86,24 @@ public class ButtonObject extends GameObject {
     /**
      * Centra el boton en pos
      */
-    public void centrar() {
-        pos.x = pos.x - size.x / 2;
-        pos.y = pos.y - size.y / 2;
+    public void center() {
+        pos.x = iniPos.x - size.x / 2;
+        pos.y = iniPos.y - size.y / 2;
 
         if (text != null)
             text.center();
-         if (image != null)
+        if (image != null)
             image.center();
     }
 
+    public void changeText(String text){
+        if(this.text != null)
+            this.text.setText(text);
+    }
+
+    public void changeImage(String image){
+        if(this.image != null)
+            this.image.changeImage(image);
+    }
 
 }

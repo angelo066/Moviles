@@ -34,9 +34,11 @@ public class ImageObject extends GameObject {
      * Centra la imagen en pos
      */
     public void center() {
-        pos.x = pos.x - size.x / 2;
-        pos.y = pos.y - size.y / 2;
+        pos.x = iniPos.x - size.x / 2;
+        pos.y = iniPos.y - size.y / 2;
     }
 
-
+    public void changeImage(String imageFile){
+        image = ResourceManager.getInstance().getImage(imageFile);
+    }
 }

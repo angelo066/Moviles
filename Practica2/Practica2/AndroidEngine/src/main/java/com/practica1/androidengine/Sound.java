@@ -34,17 +34,30 @@ public class Sound {
         }
     }
 
+    /**
+     * Reproduce el sonido
+     *
+     * @param loop Establece el loop
+     */
     public void play(boolean loop) {
-        if(loop)
+        if (loop)
             streamId = soundPool.play(soundId, 1, 1, 1, -1, 1);
         else
             streamId = soundPool.play(soundId, 1, 1, 1, 0, 1);
     }
 
+    /**
+     * Para el sonido
+     */
     public void stop() {
         soundPool.stop(streamId);
     }
 
+    /**
+     * Establece el loop del sonido a True/False
+     *
+     * @param loop
+     */
     public void loop(boolean loop) {
         if (loop)
             soundPool.setLoop(streamId, -1);
@@ -52,6 +65,9 @@ public class Sound {
             soundPool.setLoop(streamId, 0);
     }
 
+    /**
+     * Libera los recursos del sonido
+     */
     public void release() {
         soundPool.unload(soundId);
     }

@@ -28,10 +28,16 @@ public class Image {
 
     }
 
+    /**
+     * @return Anchura de la imagen
+     */
     public int getWidth() {
         return bitmap.getWidth();
     }
 
+    /**
+     * @return Altura de la imagen
+     */
     public int getHeight() {
         return bitmap.getHeight();
     }

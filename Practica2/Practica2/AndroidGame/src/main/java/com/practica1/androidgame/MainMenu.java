@@ -1,5 +1,7 @@
 package com.practica1.androidgame;
 
+import android.app.Activity;
+
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Graphics;
@@ -13,6 +15,8 @@ import java.util.ArrayList;
  */
 public class MainMenu extends Scene {
     private ButtonObject buttonPlay;
+    private ButtonObject buttonExit;
+
     private TextObject textTitle;
 
     public MainMenu() {
@@ -37,16 +41,25 @@ public class MainMenu extends Scene {
         ResourceManager.getInstance().createImage("ojo.png");
         ResourceManager.getInstance().createImage("ojo2.png");
 
+        createTexts();
 
-        // Titulo
+        createButtons();
+    }
+
+    private void createButtons() {
+        buttonPlay = new ButtonObject(graphics, new Vector2(width / 2, height / 2), new Vector2(width / 4 * 3, height / 10), 40, Color.CYAN,
+                new TextObject(graphics, new Vector2(width / 2, height / 2), "Nexa.ttf", "Jugar", Color.BLACK, 80, false, false));
+        buttonPlay.center();
+
+        buttonExit = new ButtonObject(graphics, new Vector2(width / 2, height / 6 * 4), new Vector2(width / 4 * 2, height / 10), 40, Color.RED,
+                new TextObject(graphics, new Vector2(width / 2, height / 6 * 4), "Nexa.ttf", "Salir", Color.BLACK, 80, false, false));
+        buttonExit.center();
+    }
+
+    private void createTexts() {
         textTitle = new TextObject(graphics, new Vector2(width / 2, height / 5), "BarlowCondensed-Regular.ttf", "Master Mind",
                 Color.BLACK, 200, true, true);
         textTitle.center();
-
-        // Boton de jugar
-        buttonPlay = new ButtonObject(graphics, new Vector2(width / 2, height / 2), new Vector2(width / 2, height / 10), 40, Color.CYAN,
-                new TextObject(graphics, new Vector2(width / 2, height / 2), "Nexa.ttf", "Jugar", Color.BLACK, 80, false, false));
-        buttonPlay.center();
     }
 
     @Override
@@ -61,6 +74,7 @@ public class MainMenu extends Scene {
         // Objetos
         textTitle.render();
         buttonPlay.render();
+        buttonExit.render();
     }
 
     @Override
@@ -70,6 +84,12 @@ public class MainMenu extends Scene {
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
                 engine.setScene(new SelectionMenu());
+                break;
+            }
+            else if(buttonExit.handleInput(events.get(i))) {
+                audio.stopSound("botonInterfaz.wav");
+                audio.playSound("botonInterfaz.wav", false);
+                System.exit(0);
                 break;
             }
         }

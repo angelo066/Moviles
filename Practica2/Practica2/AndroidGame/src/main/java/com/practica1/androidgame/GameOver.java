@@ -19,16 +19,12 @@ public class GameOver extends Scene {
     private TextObject textDescriptionMessage;
     private TextObject textCode;
     private TextObject textUsedAttempts;
-
     private Color[] combination_win;
     private int numAttempts;
-
     private boolean win;
     private int circleRadius = 50;
-
-    private Circulo[] circles;
+    private Circle[] circles;
     private Difficulty mode;
-
     private boolean colorBlind;
 
     /**
@@ -39,35 +35,31 @@ public class GameOver extends Scene {
      * @param colorBlind      Indica si esta el modo daltonicos activado
      */
     public GameOver(Color[] combination_win, boolean win, Difficulty mode, int numAttempts, boolean colorBlind) {
+        this.width = 1080;
+        this.height = 1920;
+
         this.win = win;
         this.combination_win = combination_win;
         this.mode = mode;
         this.numAttempts = numAttempts;
         this.colorBlind = colorBlind;
-
-        width = 1080;
-        height = 1920;
     }
 
     @Override
     public void init(Engine engine) {
         super.init(engine);
 
-        Graphics graphics = engine.getGraphics();
-
         // Botones
-        Vector2 size = new Vector2(700, 150);
-        Vector2 posRep = new Vector2(width / 2, height / 10 * 6);
-        buttonRepeat = new ButtonObject(graphics, posRep, new Vector2(size), 40, Color.CYAN,
-                new TextObject(graphics, new Vector2(posRep), "Nexa.ttf", "Volver a jugar", Color.BLACK, 80, false, false));
-        buttonRepeat.center();
-
-        Vector2 posBack = new Vector2(width / 2, height / 10 * 7);
-        buttonBackMenu = new ButtonObject(graphics, posBack, new Vector2(size), 40, Color.CYAN,
-                new TextObject(graphics, new Vector2(posBack), "Nexa.ttf", "Elegir Dificultad", Color.BLACK, 80, false, false));
-        buttonBackMenu.center();
+        createButtons();
 
         // Textos
+        createTexts();
+
+        // Colocacion de los circulos
+        setCircles();
+    }
+
+    private void createTexts() {
         String mensaje = "";
         String description = "";
         String attempt = "";
@@ -76,11 +68,11 @@ public class GameOver extends Scene {
             mensaje = "ENHORABUENA!!";
             description = "Has averiguado el codigo en";
             attempt = numAttempts + " intentos";
-            engine.getAudio().playSound("yuju.wav", false);
+            audio.playSound("yuju.wav", false);
         } else {
             mensaje = "GAME OVER";
             description = "Te has quedado sin intentos";
-            engine.getAudio().playSound("douh.wav", false);
+            audio.playSound("douh.wav", false);
         }
 
         textEndMessage = new TextObject(graphics, new Vector2(width / 2, height / 10),
@@ -98,9 +90,20 @@ public class GameOver extends Scene {
         textCode = new TextObject(graphics, new Vector2(width / 2, height / 10 * 7 / 2),
                 "Nexa.ttf", "Código:", Color.BLACK, 50, false, false);
         textCode.center();
+    }
 
-        // Colocacion de los circulos
-        setCircles();
+    private void createButtons() {
+        Vector2 size = new Vector2(width/4*3, height/10);
+        Vector2 posRep = new Vector2(width / 2, height / 10 * 6);
+
+        buttonRepeat = new ButtonObject(graphics, posRep, size, 40, Color.CYAN,
+                new TextObject(graphics, new Vector2(posRep), "Nexa.ttf", "Volver a jugar", Color.BLACK, 80, false, false));
+        buttonRepeat.center();
+
+        Vector2 posBack = new Vector2(width / 2, height / 11 * 8);
+        buttonBackMenu = new ButtonObject(graphics, posBack, size, 40, Color.CYAN,
+                new TextObject(graphics, new Vector2(posBack), "Nexa.ttf", "Elegir Dificultad", Color.BLACK, 80, false, false));
+        buttonBackMenu.center();
     }
 
     /**
@@ -109,8 +112,7 @@ public class GameOver extends Scene {
     private void setCircles() {
 
         // Creamos el array de circulos para colocarlos
-        this.circles = new Circulo[combination_win.length];
-        Font font = engine.getGraphics().newFont("Nexa.ttf", 50, false, false);
+        this.circles = new Circle[combination_win.length];
 
         // Calculos de posicion
         int totalWidth = combination_win.length * circleRadius * 2;
@@ -120,7 +122,7 @@ public class GameOver extends Scene {
         for (int i = 0; i < combination_win.length; i++) {
             int x = spaceToEachSide + i * (circleRadius * 2);
 
-            circles[i] = new Circulo(engine.getGraphics(), new Vector2(x, 800), circleRadius);
+            circles[i] = new Circle(engine.getGraphics(), new Vector2(x, 800), circleRadius);
             circles[i].setColorblind(colorBlind);
             circles[i].setColor(combination_win[i]);
             circles[i].setUncovered(true);
@@ -128,17 +130,13 @@ public class GameOver extends Scene {
     }
 
     @Override
-    public void update(double deltaTime) {
-    }
-
-    @Override
     public void render() {
         // Fondo APP
-        engine.getGraphics().clear(Color.WHITE.getValue());
+        graphics.clear(Color.WHITE.getValue());
 
         // Fondo Juego
-        engine.getGraphics().setColor(Color.WHITE.getValue());
-        engine.getGraphics().fillRectangle(0, 0, width, height);
+        graphics.setColor(Color.WHITE.getValue());
+        graphics.fillRectangle(0, 0, width, height);
 
         // Botones
         buttonRepeat.render();
@@ -160,13 +158,13 @@ public class GameOver extends Scene {
     public void handleInput(ArrayList<TouchEvent> events) {
         for (int i = 0; i < events.size(); i++) {
             if (buttonRepeat.handleInput(events.get(i))) {
-                engine.getAudio().stopSound("botonInterfaz.wav");
-                engine.getAudio().playSound("botonInterfaz.wav", false);
+                audio.stopSound("botonInterfaz.wav");
+                audio.playSound("botonInterfaz.wav", false);
                 engine.setScene(new MasterMind(mode));
                 break;
             } else if (buttonBackMenu.handleInput(events.get(i))) {
-                engine.getAudio().stopSound("botonInterfaz.wav");
-                engine.getAudio().playSound("botonInterfaz.wav", false);
+                audio.stopSound("botonInterfaz.wav");
+                audio.playSound("botonInterfaz.wav", false);
                 engine.setScene(new SelectionMenu());
                 break;
             }

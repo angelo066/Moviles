@@ -12,6 +12,9 @@ public class Scene {
 
     protected Engine engine;
 
+    protected  Graphics graphics;
+    protected Audio audio;
+
     /**
      * Inicializar
      *
@@ -19,6 +22,8 @@ public class Scene {
      */
     public void init(Engine engine){
         this.engine = engine;
+        this.graphics = engine.getGraphics();
+        this.audio = engine.getAudio();
         engine.getGraphics().setSceneSize(width, height);
     }
 

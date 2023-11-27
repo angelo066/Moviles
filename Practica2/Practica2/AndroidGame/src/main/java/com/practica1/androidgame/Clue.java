@@ -2,7 +2,6 @@ package com.practica1.androidgame;
 
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Graphics;
-import com.practica1.androidengine.Scene;
 
 public class Clue {
     private int numFoundCircles;

@@ -2,13 +2,12 @@ package com.practica1.androidgame;
 
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Graphics;
-import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.TouchEvent;
 
 /**
  * GameObject Circulo, encapsula la info y comportamientos relativos a un circulo del tablero
  */
-public class Circulo {
+public class Circle {
     private TextObject id;
     private Color color;
     private boolean uncovered; // para cuando asignamos un color al tablero
@@ -21,7 +20,7 @@ public class Circulo {
      * @param pos          Posicion del circulo
      * @param circleRadius
      */
-    public Circulo(Graphics graphics, Vector2 pos, int circleRadius) {
+    public Circle(Graphics graphics, Vector2 pos, int circleRadius) {
         this.graphics = graphics;
         this.circleRadius = circleRadius;
         this.pos = pos;

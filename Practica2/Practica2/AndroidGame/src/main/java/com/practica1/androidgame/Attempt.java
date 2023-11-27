@@ -2,13 +2,12 @@ package com.practica1.androidgame;
 
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Graphics;
-import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.TouchEvent;
 
 import java.util.ArrayList;
 
 public class Attempt {
-    private Circulo[] combination;
+    private Circle[] combination;
     private TextObject attemptNumber;
     private Clue clue;
     private Graphics graphics;
@@ -36,11 +35,11 @@ public class Attempt {
         int widthCombination = (2 * circleRadius * numColorsPerAttempt) + ((numColorsPerAttempt - 1) * offsetBetweenCircle);
         int startPosition = (pos.x + widthPerDivision) + ((size.x - (widthPerDivision * 2) - widthCombination) / 2);
 
-        this.combination = new Circulo[numColorsPerAttempt];
+        this.combination = new Circle[numColorsPerAttempt];
         for (int i = 0; i < numColorsPerAttempt; i++) {
             int x = startPosition + (offsetBetweenCircle * i) + (circleRadius * 2 * i);
             int y = pos.y + ((size.y - (circleRadius * 2)) / 2);
-            this.combination[i] = new Circulo(graphics, new Vector2(x, y), circleRadius);
+            this.combination[i] = new Circle(graphics, new Vector2(x, y), circleRadius);
         }
 
         this.attemptNumber = new TextObject(graphics, new Vector2(pos.x + widthPerDivision / 2, pos.y + size.y / 2), "Nexa.ttf",

@@ -21,7 +21,6 @@ public class ImageObject {
      * @param size      Tamanio de la imagen
      * @param imageFile Archivo de la imagen
      */
-
     public ImageObject(Graphics graphics, Vector2 pos, Vector2 size, String imageFile) {
         this.size = size;
         this.image = ResourceManager.getInstance().getImage(imageFile);
@@ -45,6 +44,11 @@ public class ImageObject {
         pos.y = iniPos.y - size.y / 2;
     }
 
+    /**
+     * Cambia la imagen
+     *
+     * @param imageFile
+     */
     public void changeImage(String imageFile) {
         image = ResourceManager.getInstance().getImage(imageFile);
     }

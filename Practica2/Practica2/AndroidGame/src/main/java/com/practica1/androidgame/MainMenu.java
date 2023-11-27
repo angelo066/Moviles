@@ -15,15 +15,16 @@ public class MainMenu extends Scene {
     private ButtonObject buttonPlay;
     private TextObject textTitle;
 
-
-    public MainMenu(){
-        width = 1080;
-        height = 1920;
+    public MainMenu() {
+        this.width = 1080;
+        this.height = 1920;
     }
+
     @Override
     public void init(Engine engine) {
         super.init(engine);
 
+        //Carga de assets
         engine.getAudio().loadSound("botonInterfaz.wav");
         engine.getAudio().loadSound("clickboton.wav");
         engine.getAudio().loadSound("yuju.wav");
@@ -37,30 +38,25 @@ public class MainMenu extends Scene {
         ResourceManager.getInstance().createImage("ojo2.png");
 
 
-        Graphics graphics = engine.getGraphics();
-
-        // Creacion de los objetos de la escena
-        textTitle = new TextObject(graphics, new Vector2(width / 2, 380),
-                "BarlowCondensed-Regular.ttf", "Master Mind", Color.BLACK,200,true,true);
+        // Titulo
+        textTitle = new TextObject(graphics, new Vector2(width / 2, height / 5), "BarlowCondensed-Regular.ttf", "Master Mind",
+                Color.BLACK, 200, true, true);
         textTitle.center();
 
-        buttonPlay = new ButtonObject(graphics, new Vector2(width / 2, height / 2), new Vector2(500, 150), 40, Color.CYAN,
-                new TextObject(graphics,new Vector2(width / 2, height / 2),"Nexa.ttf","Jugar",Color.BLACK,80,false,false));
+        // Boton de jugar
+        buttonPlay = new ButtonObject(graphics, new Vector2(width / 2, height / 2), new Vector2(width / 2, height / 10), 40, Color.CYAN,
+                new TextObject(graphics, new Vector2(width / 2, height / 2), "Nexa.ttf", "Jugar", Color.BLACK, 80, false, false));
         buttonPlay.center();
-    }
-
-    @Override
-    public void update(double deltaTime) {
     }
 
     @Override
     public void render() {
         // Fondo de la APP
-        engine.getGraphics().clear(Color.WHITE.getValue());
+        graphics.clear(Color.WHITE.getValue());
 
         // Fondo del juego
-        engine.getGraphics().setColor(Color.WHITE.getValue());
-        engine.getGraphics().fillRectangle(0, 0, width, height);
+        graphics.setColor(Color.WHITE.getValue());
+        graphics.fillRectangle(0, 0, width, height);
 
         // Objetos
         textTitle.render();
@@ -71,8 +67,8 @@ public class MainMenu extends Scene {
     public void handleInput(ArrayList<TouchEvent> events) {
         for (int i = 0; i < events.size(); i++) {
             if (buttonPlay.handleInput(events.get(i))) {
-                engine.getAudio().stopSound("botonInterfaz.wav");
-                engine.getAudio().playSound("botonInterfaz.wav", false);
+                audio.stopSound("botonInterfaz.wav");
+                audio.playSound("botonInterfaz.wav", false);
                 engine.setScene(new SelectionMenu());
                 break;
             }

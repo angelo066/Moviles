@@ -1,10 +1,7 @@
 package com.practica1.androidgame;
 
-import android.app.Activity;
-
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
-import com.practica1.androidengine.Graphics;
 import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.TouchEvent;
 
@@ -14,7 +11,9 @@ import java.util.ArrayList;
  * Escena de inicio
  */
 public class MainMenu extends Scene {
-    private ButtonObject buttonPlay;
+    private ButtonObject buttonQuickMatch;
+    private ButtonObject buttonExploreWorlds;
+    private ButtonObject buttonPersonalize;
     private ButtonObject buttonExit;
 
     private TextObject textTitle;
@@ -47,12 +46,27 @@ public class MainMenu extends Scene {
     }
 
     private void createButtons() {
-        buttonPlay = new ButtonObject(graphics, new Vector2(width / 2, height / 2), new Vector2(width / 4 * 3, height / 10), 40, Color.CYAN,
-                new TextObject(graphics, new Vector2(width / 2, height / 2), "Nexa.ttf", "Jugar", Color.BLACK, 80, false, false));
-        buttonPlay.center();
+        Vector2 size = new Vector2(width / 4 * 3, height / 10);
+        Vector2 pos = new Vector2(width / 2, height / 2);
+        int offsetY = 50;
 
-        buttonExit = new ButtonObject(graphics, new Vector2(width / 2, height / 6 * 4), new Vector2(width / 4 * 2, height / 10), 40, Color.RED,
-                new TextObject(graphics, new Vector2(width / 2, height / 6 * 4), "Nexa.ttf", "Salir", Color.BLACK, 80, false, false));
+        buttonQuickMatch = new ButtonObject(graphics, new Vector2(pos), size, 40, Color.CYAN,
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Partida rápida", Color.BLACK, 80, false, false));
+        buttonQuickMatch.center();
+
+        pos.y += size.y + offsetY;
+        buttonExploreWorlds = new ButtonObject(graphics, new Vector2(pos), size, 40, Color.CYAN,
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Explorar mundos", Color.BLACK, 80, false, false));
+        buttonExploreWorlds.center();
+
+        pos.y += size.y + offsetY;
+        buttonPersonalize = new ButtonObject(graphics, new Vector2(pos), size, 40, Color.BLACK,
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Personalizar", Color.CYAN, 80, false, false));
+        buttonPersonalize.center();
+
+        pos.y += size.y + offsetY;
+        buttonExit = new ButtonObject(graphics, new Vector2(pos), size, 40, Color.RED,
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Salir", Color.BLACK, 80, false, false));
         buttonExit.center();
     }
 
@@ -73,20 +87,21 @@ public class MainMenu extends Scene {
 
         // Objetos
         textTitle.render();
-        buttonPlay.render();
+        buttonQuickMatch.render();
+        buttonExploreWorlds.render();
+        buttonPersonalize.render();
         buttonExit.render();
     }
 
     @Override
     public void handleInput(ArrayList<TouchEvent> events) {
         for (int i = 0; i < events.size(); i++) {
-            if (buttonPlay.handleInput(events.get(i))) {
+            if (buttonQuickMatch.handleInput(events.get(i))) {
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
                 engine.setScene(new SelectionMenu());
                 break;
-            }
-            else if(buttonExit.handleInput(events.get(i))) {
+            } else if (buttonExit.handleInput(events.get(i))) {
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
                 System.exit(0);

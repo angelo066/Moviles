@@ -1,10 +1,15 @@
 package com.practica1.androidgame;
 
+import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.SurfaceView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
 
@@ -16,19 +21,27 @@ public class AndroidGame extends AppCompatActivity {
 
     private SurfaceView renderView;
     private Engine engine;
+    private AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        renderView = new SurfaceView(this);
-        setContentView(renderView);
+        setContentView(R.layout.activity_android_game);
+
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+
+        adView = (AdView) findViewById(R.id.adView);
+        renderView = (SurfaceView) findViewById(R.id.surfaceView);
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
         engine = new Engine(renderView);
 
@@ -56,5 +69,6 @@ public class AndroidGame extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         ResourceManager.release();
+        adView.destroy();
     }
 }

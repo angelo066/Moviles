@@ -40,7 +40,7 @@ public class MainMenu extends Scene {
         ResourceManager.getInstance().createImage("volver.png");
         ResourceManager.getInstance().createImage("ojo.png");
         ResourceManager.getInstance().createImage("ojo2.png");
-
+        ResourceManager.getInstance().createImage("coins.png");
         createTexts();
 
         createButtons();
@@ -103,12 +103,20 @@ public class MainMenu extends Scene {
                 SceneManager.getInstance().addScene(new SelectionMenu());
                 SceneManager.getInstance().setSceneChange(true);
                 break;
-            } else if (buttonExit.handleInput(events.get(i))) {
+            }else if(buttonPersonalize.handleInput(events.get(i))){
+                audio.stopSound("botonInterfaz.wav");
+                audio.playSound("botonInterfaz.wav", false);
+                SceneManager.getInstance().addScene(new Shop());
+                SceneManager.getInstance().setSceneChange(true);
+                break;
+            }
+            else if (buttonExit.handleInput(events.get(i))) {
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
                 System.exit(0);
                 break;
             }
+
         }
     }
 }

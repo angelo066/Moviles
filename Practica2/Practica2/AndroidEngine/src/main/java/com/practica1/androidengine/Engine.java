@@ -11,15 +11,11 @@ public class Engine implements Runnable {
 
     private volatile boolean running = false;
     private Thread thread;
-
     private SurfaceView view;
-
-    private Scene scene;
-    private Scene newScene;
-
     private Graphics graphics;
     private Input input;
     private Audio audio;
+    private Scene scene;
 
     /**
      * @param view Ventana de la aplicacion
@@ -30,7 +26,6 @@ public class Engine implements Runnable {
         input = new Input(view);
         audio = new Audio(view.getContext().getAssets());
         scene = null;
-        newScene = null;
     }
 
     /**
@@ -61,29 +56,29 @@ public class Engine implements Runnable {
 
         while (running && view.getWidth() == 0) ;
 
-        if (scene != null) {
+        long lastFrameTime = System.nanoTime();
 
-            long lastFrameTime = System.nanoTime();
+        while (running) {
 
-            while (running) {
+            //cambiar la escena
+            changeScene();
 
-                //cambiar la escena
-                changeScene();
+            if (scene == null) break;
 
-                //handleInput
-                handleInput();
+            //handleInput
+            handleInput();
 
-                //update
-                long currentTime = System.nanoTime();
-                long nanoElapsedTime = currentTime - lastFrameTime;
-                lastFrameTime = currentTime;
-                double elapsedTime = (double) nanoElapsedTime / 1.0E9;
-                update(elapsedTime);
+            //update
+            long currentTime = System.nanoTime();
+            long nanoElapsedTime = currentTime - lastFrameTime;
+            lastFrameTime = currentTime;
+            double elapsedTime = (double) nanoElapsedTime / 1.0E9;
+            update(elapsedTime);
 
-                // renderizado
-                render();
-            }
+            // renderizado
+            render();
         }
+
     }
 
     /**
@@ -116,26 +111,13 @@ public class Engine implements Runnable {
     }
 
     /**
-     * Establece la escena de la aplicacion
-     *
-     * @param scene Escena a establecer
-     */
-    public void setScene(Scene scene) {
-        if (this.scene == null)
-            this.scene = scene;
-        else
-            newScene = scene;
-
-        scene.init(this);
-    }
-
-    /**
      * Cambia, si es necesario, la escena al principio de frame
      */
     private void changeScene() {
-        if (newScene != null) {
-            scene = newScene;
-            newScene = null;
+        if (SceneManager.getInstance().doChangeScene()) {
+            scene = SceneManager.getInstance().getScene();
+            SceneManager.getInstance().setSceneChange(false);
+            SceneManager.getInstance().removeScene();
         }
     }
 

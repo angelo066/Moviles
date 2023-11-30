@@ -5,6 +5,7 @@ import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Font;
 import com.practica1.androidengine.Graphics;
 import com.practica1.androidengine.Scene;
+import com.practica1.androidengine.SceneManager;
 import com.practica1.androidengine.TouchEvent;
 
 import java.util.ArrayList;
@@ -160,12 +161,14 @@ public class GameOver extends Scene {
             if (buttonRepeat.handleInput(events.get(i))) {
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
-                engine.setScene(new MasterMind(mode));
+                SceneManager.getInstance().addScene(new MasterMind(mode));
+                SceneManager.getInstance().setSceneChange(true);
                 break;
             } else if (buttonBackMenu.handleInput(events.get(i))) {
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
-                engine.setScene(new SelectionMenu());
+                SceneManager.getInstance().addScene(new SelectionMenu());
+                SceneManager.getInstance().setSceneChange(true);
                 break;
             }
         }

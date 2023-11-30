@@ -4,6 +4,7 @@ import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Graphics;
 import com.practica1.androidengine.Scene;
+import com.practica1.androidengine.SceneManager;
 import com.practica1.androidengine.TouchEvent;
 
 import java.util.ArrayList;
@@ -219,13 +220,16 @@ public class MasterMind extends Scene {
                     if (attempts[currentAttempt].getUncoveredCircles() == numColorsPerAttempt) {
 
                         if (attempts[currentAttempt].isCorrectCombination()) {
-                            engine.setScene(new GameOver(winningCombination, true, difficultyMode, currentAttempt + 1, colorBlind));
+                            SceneManager.getInstance().addScene(new GameOver(winningCombination, true, difficultyMode, currentAttempt + 1, colorBlind));
+                            SceneManager.getInstance().setSceneChange(true);
                             break outerloop;
                         } else {
                             currentAttempt++;
 
                             if (currentAttempt == numAttempts) {
-                                engine.setScene(new GameOver(winningCombination, false, difficultyMode, currentAttempt + 1, colorBlind));
+                                SceneManager.getInstance().addScene(new GameOver(winningCombination, false, difficultyMode, currentAttempt + 1, colorBlind));
+                                SceneManager.getInstance().addScene(this);
+                                SceneManager.getInstance().setSceneChange(true);
                                 break outerloop;
                             }
                         }
@@ -237,7 +241,8 @@ public class MasterMind extends Scene {
             if (buttonBack.handleInput(events.get(i))) {
                 audio.stopSound("clickboton.wav");
                 audio.playSound("clickboton.wav", false);
-                engine.setScene(new SelectionMenu());
+                SceneManager.getInstance().addScene(new SelectionMenu());
+                SceneManager.getInstance().setSceneChange(true);
                 break;
             }
         }

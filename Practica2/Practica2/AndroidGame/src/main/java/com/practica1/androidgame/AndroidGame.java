@@ -1,6 +1,5 @@
 package com.practica1.androidgame;
 
-import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.SurfaceView;
@@ -8,14 +7,13 @@ import android.view.SurfaceView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.practica1.androidengine.Engine;
-import com.practica1.androidengine.Scene;
 
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.practica1.androidengine.SceneManager;
 
 public class AndroidGame extends AppCompatActivity {
 
@@ -39,16 +37,16 @@ public class AndroidGame extends AppCompatActivity {
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
 
         engine = new Engine(renderView);
 
         ResourceManager.Init(engine);
+        SceneManager.Init(engine);
 
-        Scene scene = new MainMenu();
-        engine.setScene(scene);
+        SceneManager.getInstance().addScene(new MainMenu());
+        SceneManager.getInstance().setSceneChange(true);
 
         engine.resume();
     }
@@ -68,7 +66,8 @@ public class AndroidGame extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ResourceManager.release();
+        ResourceManager.Release();
+        SceneManager.Release();
         adView.destroy();
     }
 }

@@ -4,7 +4,6 @@ import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Font;
 import com.practica1.androidengine.Image;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -36,10 +35,11 @@ public class ResourceManager {
     /**
      * Libera el gestor
      */
-    public static void release() {
+    public static void Release() {
         Instance.images.clear();
         Instance.fonts.clear();
         Instance.engine = null;
+        Instance = null;
     }
 
     /**

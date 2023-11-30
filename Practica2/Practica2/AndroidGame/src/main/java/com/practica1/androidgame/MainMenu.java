@@ -3,6 +3,7 @@ package com.practica1.androidgame;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
+import com.practica1.androidengine.SceneManager;
 import com.practica1.androidengine.TouchEvent;
 
 import java.util.ArrayList;
@@ -99,7 +100,8 @@ public class MainMenu extends Scene {
             if (buttonQuickMatch.handleInput(events.get(i))) {
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
-                engine.setScene(new SelectionMenu());
+                SceneManager.getInstance().addScene(new SelectionMenu());
+                SceneManager.getInstance().setSceneChange(true);
                 break;
             } else if (buttonExit.handleInput(events.get(i))) {
                 audio.stopSound("botonInterfaz.wav");

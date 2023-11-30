@@ -4,6 +4,7 @@ import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Graphics;
 import com.practica1.androidengine.Scene;
+import com.practica1.androidengine.SceneManager;
 import com.practica1.androidengine.TouchEvent;
 
 import java.util.ArrayList;
@@ -99,7 +100,8 @@ public class SelectionMenu extends Scene {
         for (int i = 0; i < events.size() && !selected; i++) {
 
             if (buttonBack.handleInput(events.get(i))) {
-                engine.setScene(new MainMenu());
+                SceneManager.getInstance().addScene(new MainMenu());
+                SceneManager.getInstance().setSceneChange(true);
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
                 break;
@@ -121,7 +123,8 @@ public class SelectionMenu extends Scene {
         if (selected) {
             audio.stopSound("botonInterfaz.wav");
             audio.playSound("botonInterfaz.wav", false);
-            engine.setScene(new MasterMind(mode));
+            SceneManager.getInstance().addScene(new MasterMind(mode));
+            SceneManager.getInstance().setSceneChange(true);
         }
     }
 }

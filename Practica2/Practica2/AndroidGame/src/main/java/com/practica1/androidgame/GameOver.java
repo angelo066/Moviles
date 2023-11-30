@@ -15,6 +15,7 @@ import java.util.ArrayList;
  */
 public class GameOver extends Scene {
     private ButtonObject buttonRepeat;
+    private ButtonObject buttonShare;
     private ButtonObject buttonBackMenu;
     private ButtonObject buttonMoreAttempts;
     private TextObject textEndMessage;
@@ -58,7 +59,7 @@ public class GameOver extends Scene {
         createTexts();
 
         // Colocacion de los circulos
-        setCircles();
+        if (win) setCircles();
     }
 
     private void createTexts() {
@@ -70,6 +71,17 @@ public class GameOver extends Scene {
             mensaje = "ENHORABUENA!!";
             description = "Has averiguado el codigo en";
             attempt = numAttempts + " intentos";
+
+
+            textUsedAttempts = new TextObject(graphics, new Vector2(width / 2, height / 10 * 5 / 2),
+                    "Nexa.ttf", attempt, Color.BLACK, 45, false, false);
+            textUsedAttempts.center();
+
+            textCode = new TextObject(graphics, new Vector2(width / 2, height / 10 * 7 / 2),
+                    "Nexa.ttf", "Código:", Color.BLACK, 50, false, false);
+            textCode.center();
+
+
             audio.playSound("yuju.wav", false);
         } else {
             mensaje = "GAME OVER";
@@ -85,22 +97,22 @@ public class GameOver extends Scene {
                 "Nexa.ttf", description, Color.BLACK, 50, false, false);
         textDescriptionMessage.center();
 
-        textUsedAttempts = new TextObject(graphics, new Vector2(width / 2, height / 10 * 5 / 2),
-                "Nexa.ttf", attempt, Color.BLACK, 45, false, false);
-        textUsedAttempts.center();
-
-        textCode = new TextObject(graphics, new Vector2(width / 2, height / 10 * 7 / 2),
-                "Nexa.ttf", "Código:", Color.BLACK, 50, false, false);
-        textCode.center();
     }
 
     private void createButtons() {
         Vector2 size = new Vector2(width / 4 * 3, height / 10);
 
-        Vector2 posAtt = new Vector2(width / 2, height / 14 * 9);
-        buttonMoreAttempts = new ButtonObject(graphics, posAtt, size, 40, Color.CYAN,
-                new TextObject(graphics, new Vector2(posAtt), "Nexa.ttf", "+2 intentos", Color.BLACK, 80, false, false));
-        buttonMoreAttempts.center();
+        if (!win) {
+            Vector2 posAtt = new Vector2(width / 2, height / 14 * 7);
+            buttonMoreAttempts = new ButtonObject(graphics, posAtt, size, 40, Color.CYAN,
+                    new TextObject(graphics, new Vector2(posAtt), "Nexa.ttf", "+2 intentos", Color.BLACK, 80, false, false));
+            buttonMoreAttempts.center();
+        } else {
+            Vector2 posShare = new Vector2(width / 2, height / 14 * 9);
+            buttonShare = new ButtonObject(graphics, posShare, size, 40, Color.CYAN,
+                    new TextObject(graphics, new Vector2(posShare), "Nexa.ttf", "Compartir", Color.BLACK, 80, false, false));
+            buttonShare.center();
+        }
 
         Vector2 posRep = new Vector2(width / 2, height / 14 * 11);
         buttonRepeat = new ButtonObject(graphics, posRep, size, 40, Color.CYAN,
@@ -129,7 +141,7 @@ public class GameOver extends Scene {
         for (int i = 0; i < combination_win.length; i++) {
             int x = spaceToEachSide + i * (circleRadius * 2);
 
-            circles[i] = new Circle(engine.getGraphics(), new Vector2(x, 800), circleRadius);
+            circles[i] = new Circle(graphics, new Vector2(x, 800), circleRadius);
             circles[i].setColorblind(colorBlind);
             circles[i].setColor(combination_win[i]);
             circles[i].setUncovered(true);
@@ -146,26 +158,33 @@ public class GameOver extends Scene {
         graphics.fillRectangle(0, 0, width, height);
 
         // Botones
-        buttonMoreAttempts.render();
+        if (!win)
+            buttonMoreAttempts.render();
+        else
+            buttonShare.render();
+
         buttonRepeat.render();
         buttonBackMenu.render();
 
         // Textos
         textEndMessage.render();
         textDescriptionMessage.render();
-        textUsedAttempts.render();
-        textCode.render();
 
-        // Codigo colores
-        for (int i = 0; i < circles.length; i++)
-            circles[i].render();
+        if (this.win) {
+            textUsedAttempts.render();
+            textCode.render();
+
+            // Codigo colores
+            for (int i = 0; i < circles.length; i++)
+                circles[i].render();
+        }
 
     }
 
     @Override
     public void handleInput(ArrayList<TouchEvent> events) {
         for (int i = 0; i < events.size(); i++) {
-            if (buttonMoreAttempts.handleInput(events.get(i))) {
+            if (!win && buttonMoreAttempts.handleInput(events.get(i))) {
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
                 ((MasterMind) SceneManager.getInstance().getScene()).addAttempts(2);

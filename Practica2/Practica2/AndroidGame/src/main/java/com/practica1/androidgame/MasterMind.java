@@ -110,14 +110,15 @@ public class MasterMind extends Scene {
 
     }
 
-    private void addAttempts(int newAttempts) {
-        this.numAttempts += numAttempts;
+    public void addAttempts(int newAttempts) {
+        this.numAttempts += newAttempts;
 
         int size = this.attempts.size();
 
-        for (int i = size; i < numAttempts; i++) {
+        for (int i = size; i < this.numAttempts; i++) {
             this.attempts.add(new Attempt(graphics, numColorsPerAttempt, i + 1,
                     new Vector2(3, (attemptHeight * (i + 1))), new Vector2(width - 6, attemptHeight - heightOffset)));
+            if (colorBlind) this.attempts.get(i).setColorblind(true);
         }
 
     }
@@ -181,6 +182,7 @@ public class MasterMind extends Scene {
 
     @Override
     public void render() {
+
         // Fondo de APP
         graphics.clear(Color.WHITE.getValue());
 
@@ -190,8 +192,9 @@ public class MasterMind extends Scene {
 
         // Intentos
         for (int i = 0; i < this.numAttempts; i++) {
-            if ((i * attemptHeight) + attemptsRenderOffsetY > -attemptHeight) // solo renderizar el attempt si esta dentro del area de juego
-                attempts.get(i).render(attemptsRenderOffsetY);
+            if (((i * attemptHeight) + attemptsRenderOffsetY > -attemptHeight)
+                    && ((i * attemptHeight) + attemptsRenderOffsetY < ((numDivisions - 2) * attemptHeight))) // solo renderizar el attempt si esta dentro del area de juego
+                attempts.get(i).render();
         }
 
 
@@ -200,7 +203,7 @@ public class MasterMind extends Scene {
         graphics.fillRectangle(0, (numDivisions - 1) * attemptHeight, width, attemptHeight);
 
         for (int i = 0; i < availableColors.length; i++)
-            availableColors[i].render(0);
+            availableColors[i].render();
 
         // Texto de los intentos restantes
         graphics.setColor(Color.WHITE.getValue());
@@ -232,6 +235,9 @@ public class MasterMind extends Scene {
                 else if (attemptsRenderOffsetY > 0)
                     attemptsRenderOffsetY = 0;
 
+                for (int j = 0; j < numAttempts; j++)
+                    attempts.get(j).setOffsetY(attemptsRenderOffsetY);
+
                 lastYPosition = events.get(i).y;
             }
 
@@ -252,8 +258,6 @@ public class MasterMind extends Scene {
                 else
                     buttonColorBlind.changeImage("ojo.png");
             }
-
-            attempts.get(currentAttempt).handleInput(events.get(i));
 
             for (int j = 0; j < availableColors.length; j++) {
                 if (availableColors[j].handleInput(events.get(i))) {
@@ -281,6 +285,8 @@ public class MasterMind extends Scene {
 
                 }
             }
+
+            attempts.get(currentAttempt).handleInput(events.get(i));
 
             if (buttonBack.handleInput(events.get(i))) {
                 audio.stopSound("clickboton.wav");

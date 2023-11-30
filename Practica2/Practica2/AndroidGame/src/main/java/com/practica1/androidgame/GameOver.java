@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class GameOver extends Scene {
     private ButtonObject buttonRepeat;
     private ButtonObject buttonBackMenu;
+    private ButtonObject buttonMoreAttempts;
     private TextObject textEndMessage;
     private TextObject textDescriptionMessage;
     private TextObject textCode;
@@ -94,14 +95,19 @@ public class GameOver extends Scene {
     }
 
     private void createButtons() {
-        Vector2 size = new Vector2(width/4*3, height/10);
-        Vector2 posRep = new Vector2(width / 2, height / 10 * 6);
+        Vector2 size = new Vector2(width / 4 * 3, height / 10);
 
+        Vector2 posAtt = new Vector2(width / 2, height / 14 * 9);
+        buttonMoreAttempts = new ButtonObject(graphics, posAtt, size, 40, Color.CYAN,
+                new TextObject(graphics, new Vector2(posAtt), "Nexa.ttf", "+2 intentos", Color.BLACK, 80, false, false));
+        buttonMoreAttempts.center();
+
+        Vector2 posRep = new Vector2(width / 2, height / 14 * 11);
         buttonRepeat = new ButtonObject(graphics, posRep, size, 40, Color.CYAN,
                 new TextObject(graphics, new Vector2(posRep), "Nexa.ttf", "Volver a jugar", Color.BLACK, 80, false, false));
         buttonRepeat.center();
 
-        Vector2 posBack = new Vector2(width / 2, height / 11 * 8);
+        Vector2 posBack = new Vector2(width / 2, height / 14 * 13);
         buttonBackMenu = new ButtonObject(graphics, posBack, size, 40, Color.CYAN,
                 new TextObject(graphics, new Vector2(posBack), "Nexa.ttf", "Elegir Dificultad", Color.BLACK, 80, false, false));
         buttonBackMenu.center();
@@ -140,6 +146,7 @@ public class GameOver extends Scene {
         graphics.fillRectangle(0, 0, width, height);
 
         // Botones
+        buttonMoreAttempts.render();
         buttonRepeat.render();
         buttonBackMenu.render();
 
@@ -151,14 +158,20 @@ public class GameOver extends Scene {
 
         // Codigo colores
         for (int i = 0; i < circles.length; i++)
-            circles[i].render(0);
+            circles[i].render();
 
     }
 
     @Override
     public void handleInput(ArrayList<TouchEvent> events) {
         for (int i = 0; i < events.size(); i++) {
-            if (buttonRepeat.handleInput(events.get(i))) {
+            if (buttonMoreAttempts.handleInput(events.get(i))) {
+                audio.stopSound("botonInterfaz.wav");
+                audio.playSound("botonInterfaz.wav", false);
+                ((MasterMind) SceneManager.getInstance().getScene()).addAttempts(2);
+                SceneManager.getInstance().setSceneChange(true);
+                break;
+            } else if (buttonRepeat.handleInput(events.get(i))) {
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
                 SceneManager.getInstance().addScene(new MasterMind(mode));
@@ -173,6 +186,7 @@ public class GameOver extends Scene {
                 SceneManager.getInstance().setSceneChange(true);
                 break;
             }
+
         }
     }
 

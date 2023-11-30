@@ -14,6 +14,7 @@ public class Clue {
     private int startPositionY;
     private int offsetBetweenCirclesX;
     private int offsetBetweenCirclesY;
+    private int offsetY;
 
     public Clue(Graphics graphics, Vector2 pos, Vector2 size, int numColorsPerAttempt) {
         this.numFoundCircles = 0;
@@ -22,6 +23,7 @@ public class Clue {
         this.pos = pos;
         this.circleRadius = 15;
         this.numColorsPerAttempt = numColorsPerAttempt;
+        this.offsetY = 0;
 
         int numCirclesPerRow = (int) Math.ceil(numColorsPerAttempt / 2.0);
 
@@ -34,11 +36,11 @@ public class Clue {
         this.startPositionY = (size.y - heightClues) / 2;
     }
 
-    public void render(int renderOffset) {
+    public void render() {
         int numRightCir = numFoundCircles;
         int numRightCol = numFoundColors;
         int x = startPositionX + pos.x;
-        int y = startPositionY + pos.y + renderOffset;
+        int y = startPositionY + pos.y + offsetY;
 
         int aux = (int) Math.ceil(numColorsPerAttempt / 2.0);
         for (int i = 0; i < aux; i++) {
@@ -82,5 +84,9 @@ public class Clue {
     public void setClue(int numFoundCircles, int numFoundColors) {
         this.numFoundCircles = numFoundCircles;
         this.numFoundColors = numFoundColors;
+    }
+
+    public void setOffsetY(int newOffset){
+        offsetY = newOffset;
     }
 }

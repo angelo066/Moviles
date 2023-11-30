@@ -18,6 +18,7 @@ public class Attempt {
     private int uncoveredCircles;
     private int currentIndex;
     private boolean correctCombination;
+    private int offsetY;
 
     public Attempt(Graphics graphics, int numColorsPerAttempt, int id, Vector2 pos, Vector2 size) {
         this.graphics = graphics;
@@ -50,13 +51,13 @@ public class Attempt {
 
     }
 
-    public void render(int renderOffset) {
-        int y = pos.y + renderOffset;
+    public void render() {
+        int y = pos.y + offsetY;
 
         graphics.setColor(Color.GREY.getValue());
         graphics.drawRoundRectangle(pos.x, y, size.x, size.y, 20);
 
-        attemptNumber.render(renderOffset);
+        attemptNumber.render();
 
         graphics.setColor(Color.BLACK.getValue());
         graphics.drawLine(pos.x + widthPerDivision, y + 10, pos.x + widthPerDivision, y + size.y - 10);
@@ -64,10 +65,10 @@ public class Attempt {
 
 
         for (int i = 0; i < combination.length; i++)
-            combination[i].render(renderOffset);
+            combination[i].render();
 
         if (uncoveredCircles == combination.length)
-            clue.render(renderOffset);
+            clue.render();
     }
 
     public void handleInput(TouchEvent touchEvent) {
@@ -147,6 +148,14 @@ public class Attempt {
     public void setColorblind(boolean set) {
         for (int i = 0; i < combination.length; i++)
             combination[i].setColorblind(set);
+    }
+
+    public void setOffsetY(int newOffset){
+        offsetY = newOffset;
+        this.attemptNumber.setOffsetY(newOffset);
+        clue.setOffsetY(newOffset);
+        for (int i = 0; i < combination.length; i++)
+            combination[i].setOffsetY(newOffset);
     }
 }
 

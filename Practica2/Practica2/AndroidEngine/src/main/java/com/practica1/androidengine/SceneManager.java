@@ -52,7 +52,7 @@ public class SceneManager {
     public void addScene(Scene newScene) {
         if (newScene == null) return;
         Instance.sceneQueue.add(newScene);
-        newScene.init(engine);
+        if(!newScene.isInitialized())newScene.init(engine);
     }
 
     public Scene getScene() {

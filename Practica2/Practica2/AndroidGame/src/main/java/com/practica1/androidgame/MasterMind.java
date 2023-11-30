@@ -36,6 +36,7 @@ public class MasterMind extends Scene {
     private int attemptHeight;
     private int heightOffset;
     private int attemptsRenderOffsetY;
+    private int lastYPosition;
 
     public MasterMind(Difficulty mode) {
         this.width = 1080;
@@ -99,7 +100,8 @@ public class MasterMind extends Scene {
 
         this.attemptHeight = height / this.numDivisions;
         this.heightOffset = attemptHeight / (this.numDivisions - 2);
-        this.attemptsRenderOffsetY = -attemptHeight * 4 - 80;
+        this.attemptsRenderOffsetY = 0;
+        this.lastYPosition = 0;
 
         for (int i = 0; i < this.numAttempts; i++) {
             this.attempts.add(new Attempt(graphics, numColorsPerAttempt, i + 1,
@@ -218,6 +220,20 @@ public class MasterMind extends Scene {
     public void handleInput(ArrayList<TouchEvent> events) {
         outerloop:
         for (int i = 0; i < events.size(); i++) {
+
+            if (events.get(i).type == TouchEvent.TouchEventType.TOUCH_DOWN)
+                lastYPosition = events.get(i).y;
+
+            if (events.get(i).type == TouchEvent.TouchEventType.TOUCH_DRAG) {
+                attemptsRenderOffsetY -= (lastYPosition - events.get(i).y);
+
+                if (attemptsRenderOffsetY < -(attemptHeight * (numAttempts - 1)))
+                    attemptsRenderOffsetY = -(attemptHeight * (numAttempts - 1));
+                else if (attemptsRenderOffsetY > 0)
+                    attemptsRenderOffsetY = 0;
+
+                lastYPosition = events.get(i).y;
+            }
 
             if (buttonColorBlind.handleInput(events.get(i))) {
                 colorBlind = !colorBlind;

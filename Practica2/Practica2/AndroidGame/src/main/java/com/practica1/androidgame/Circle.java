@@ -15,6 +15,7 @@ public class Circle {
     private int circleRadius;
     private Vector2 pos;
     private Graphics graphics;
+    private int offsetY;
 
     /**
      * @param pos          Posicion del circulo
@@ -25,6 +26,7 @@ public class Circle {
         this.circleRadius = circleRadius;
         this.pos = pos;
         this.color = Color.NO_COLOR;
+        this.offsetY = 0;
 
         this.id = new TextObject(graphics, new Vector2(pos.x + circleRadius, pos.y + circleRadius),
                 "Nexa.ttf", String.valueOf(this.color.getId()), Color.BLACK, 50, false, false);
@@ -34,9 +36,9 @@ public class Circle {
         this.colorblind = false;
     }
 
-    public void render(int renderOffset) {
+    public void render() {
 
-        int y = pos.y + renderOffset;
+        int y = pos.y + offsetY;
 
         // Si se ha descubierto pintamos el color normal
         if (uncovered) {
@@ -45,7 +47,7 @@ public class Circle {
 
             // Si el modo daltonico esta activado pintamos el numero
             if (colorblind)
-                id.render(renderOffset);
+                id.render();
 
         }
         // Si no lo pintamos bloqueado
@@ -67,7 +69,7 @@ public class Circle {
 
             //Dentro de manera horizontal
             if (touchX > pos.x && touchX < pos.x + circleRadius * 2) {
-                if (touchY > pos.y && touchY < pos.y + circleRadius * 2)
+                if (touchY > pos.y + offsetY && touchY < pos.y + offsetY + circleRadius * 2)
                     return true;
             }
         }
@@ -113,6 +115,11 @@ public class Circle {
      */
     public boolean getUncovered() {
         return this.uncovered;
+    }
+
+    public void setOffsetY(int newOffset){
+        offsetY = newOffset;
+        this.id.setOffsetY(newOffset);
     }
 
 }

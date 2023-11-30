@@ -25,12 +25,12 @@ public class AndroidGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        renderView = (SurfaceView) findViewById(R.id.surfaceView);
+        adView = (AdView) findViewById(R.id.adView);
         setContentView(R.layout.activity_android_game);
 
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
-        adView = (AdView) findViewById(R.id.adView);
-        renderView = (SurfaceView) findViewById(R.id.surfaceView);
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override

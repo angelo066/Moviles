@@ -12,19 +12,21 @@ public class Scene {
 
     protected Engine engine;
 
-    protected  Graphics graphics;
+    protected Graphics graphics;
     protected Audio audio;
+    private boolean initialized = false;
 
     /**
      * Inicializar
      *
      * @param engine Engine de la aplicacion
      */
-    public void init(Engine engine){
+    public void init(Engine engine) {
         this.engine = engine;
         this.graphics = engine.getGraphics();
         this.audio = engine.getAudio();
         engine.getGraphics().setSceneSize(width, height);
+        initialized = true;
     }
 
     /**
@@ -32,14 +34,14 @@ public class Scene {
      *
      * @param deltaTime
      */
-    public void update(double deltaTime){
+    public void update(double deltaTime) {
 
     }
 
     /**
      * Renderizado de la escena
      */
-    public void render(){
+    public void render() {
 
     }
 
@@ -48,8 +50,12 @@ public class Scene {
      *
      * @param events
      */
-    public void handleInput(ArrayList<TouchEvent> events){
+    public void handleInput(ArrayList<TouchEvent> events) {
 
+    }
+
+    public boolean isInitialized() {
+        return initialized;
     }
 
 }

@@ -2,7 +2,6 @@ package com.practica1.androidgame;
 
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
-import com.practica1.androidengine.Graphics;
 import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.SceneManager;
 import com.practica1.androidengine.TouchEvent;
@@ -33,6 +32,10 @@ public class MasterMind extends Scene {
     private ButtonObject buttonBack;
     private TextObject textAttempts;
     private TextObject title;
+
+    private int attemptHeight;
+    private int heightOffset;
+    private int attemptsRenderOffsetY;
 
     public MasterMind(Difficulty mode) {
         this.width = 1080;
@@ -94,8 +97,9 @@ public class MasterMind extends Scene {
     private void createAttempts() {
         this.attempts = new ArrayList<>();
 
-        int attemptHeight = height / this.numDivisions;
-        int heightOffset = attemptHeight / 10;
+        this.attemptHeight = height / this.numDivisions;
+        this.heightOffset = attemptHeight / (this.numDivisions - 2);
+        this.attemptsRenderOffsetY = -attemptHeight * 5;
 
         for (int i = 0; i < this.numAttempts; i++) {
             this.attempts.add(new Attempt(graphics, numColorsPerAttempt, i + 1,
@@ -107,8 +111,6 @@ public class MasterMind extends Scene {
     private void addAttempts(int newAttempts) {
         this.numAttempts += numAttempts;
 
-        int attemptHeight = height / this.numDivisions;
-        int heightOffset = attemptHeight / 10;
         int size = this.attempts.size();
 
         for (int i = size; i < numAttempts; i++) {
@@ -186,7 +188,8 @@ public class MasterMind extends Scene {
 
         // Intentos
         for (int i = 0; i < this.numAttempts; i++)
-            attempts.get(i).render();
+            attempts.get(i).render(attemptsRenderOffsetY);
+
 
         // Colores disponibles
         int tamDivision = height / numDivisions;
@@ -195,7 +198,7 @@ public class MasterMind extends Scene {
         graphics.fillRectangle(0, (numDivisions - 1) * tamDivision, width, tamDivision);
 
         for (int i = 0; i < availableColors.length; i++)
-            availableColors[i].render();
+            availableColors[i].render(0);
 
         // Botones
         buttonColorBlind.render();

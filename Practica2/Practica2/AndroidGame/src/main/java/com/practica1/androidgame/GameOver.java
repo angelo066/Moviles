@@ -151,7 +151,7 @@ public class GameOver extends Scene {
 
         // Codigo colores
         for (int i = 0; i < circles.length; i++)
-            circles[i].render();
+            circles[i].render(0);
 
     }
 
@@ -162,12 +162,14 @@ public class GameOver extends Scene {
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
                 SceneManager.getInstance().addScene(new MasterMind(mode));
+                SceneManager.getInstance().removeScene();
                 SceneManager.getInstance().setSceneChange(true);
                 break;
             } else if (buttonBackMenu.handleInput(events.get(i))) {
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
                 SceneManager.getInstance().addScene(new SelectionMenu());
+                SceneManager.getInstance().removeScene();
                 SceneManager.getInstance().setSceneChange(true);
                 break;
             }

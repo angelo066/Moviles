@@ -34,24 +34,27 @@ public class Circle {
         this.colorblind = false;
     }
 
-    public void render() {
+    public void render(int renderOffset) {
+
+        int y = pos.y + renderOffset;
+
         // Si se ha descubierto pintamos el color normal
         if (uncovered) {
             graphics.setColor(color.getValue());
-            graphics.fillCircle(pos.x, pos.y, circleRadius);
+            graphics.fillCircle(pos.x, y, circleRadius);
 
             // Si el modo daltonico esta activado pintamos el numero
             if (colorblind)
-                id.render();
+                id.render(renderOffset);
 
         }
         // Si no lo pintamos bloqueado
         else {
             int internCircleRadius = circleRadius / 4;
             graphics.setColor(Color.GREY.getValue());
-            graphics.fillCircle(pos.x, pos.y, circleRadius);
+            graphics.fillCircle(pos.x, y, circleRadius);
             graphics.setColor(Color.DARK_GREY.getValue());
-            graphics.fillCircle(pos.x + circleRadius - internCircleRadius, pos.y + circleRadius - internCircleRadius, internCircleRadius);
+            graphics.fillCircle(pos.x + circleRadius - internCircleRadius, y + circleRadius - internCircleRadius, internCircleRadius);
         }
 
     }

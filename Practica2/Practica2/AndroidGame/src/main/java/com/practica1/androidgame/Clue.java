@@ -34,11 +34,11 @@ public class Clue {
         this.startPositionY = (size.y - heightClues) / 2;
     }
 
-    public void render() {
+    public void render(int renderOffset) {
         int numRightCir = numFoundCircles;
         int numRightCol = numFoundColors;
         int x = startPositionX + pos.x;
-        int y = startPositionY + pos.y;
+        int y = startPositionY + pos.y + renderOffset;
 
         int aux = (int) Math.ceil(numColorsPerAttempt / 2.0);
         for (int i = 0; i < aux; i++) {

@@ -48,22 +48,24 @@ public class TextObject {
     public void render() {
         graphics.setColor(color.getValue());
 
-        font.setSize(textSize);
-        font.setBold(isBold);
-        font.setItalic(isItalic);
-        graphics.setFont(font);
+        setFont();
 
         graphics.drawText(text, pos.x, pos.y);
+    }
+
+    public void render(int renderOffset){
+        graphics.setColor(color.getValue());
+
+        setFont();
+
+        graphics.drawText(text, pos.x, pos.y + renderOffset);
     }
 
     /**
      * Centra el texto en pos
      */
     public void center() {
-        font.setSize(textSize);
-        font.setBold(isBold);
-        font.setItalic(isItalic);
-        graphics.setFont(font);
+        setFont();
 
         pos.x = (int) (iniPos.x - graphics.getFontMetricWidth(font, text) / 2);
         pos.y = (int) (iniPos.y - graphics.getFontMetricHeight(font) / 1.35);
@@ -73,10 +75,7 @@ public class TextObject {
      * Centra el texto en pos horizontalmente
      */
     public void centerHorizontal() {
-        font.setSize(textSize);
-        font.setBold(isBold);
-        font.setItalic(isItalic);
-        graphics.setFont(font);
+        setFont();
 
         pos.x = (int) (iniPos.x - graphics.getFontMetricWidth(font, text) / 2);
     }
@@ -88,5 +87,12 @@ public class TextObject {
      */
     public void setText(String text) {
         this.text = text;
+    }
+
+    private void setFont() {
+        font.setSize(textSize);
+        font.setBold(isBold);
+        font.setItalic(isItalic);
+        graphics.setFont(font);
     }
 }

@@ -50,22 +50,24 @@ public class Attempt {
 
     }
 
-    public void render() {
-        graphics.setColor(Color.GREY.getValue());
-        graphics.drawRoundRectangle(pos.x, pos.y, size.x, size.y, 20);
+    public void render(int renderOffset) {
+        int y = pos.y + renderOffset;
 
-        attemptNumber.render();
+        graphics.setColor(Color.GREY.getValue());
+        graphics.drawRoundRectangle(pos.x, y, size.x, size.y, 20);
+
+        attemptNumber.render(renderOffset);
 
         graphics.setColor(Color.BLACK.getValue());
-        graphics.drawLine(pos.x + widthPerDivision, pos.y + 10, pos.x + widthPerDivision, pos.y + size.y - 10);
-        graphics.drawLine(pos.x + widthPerDivision * 5, pos.y + 10, pos.x + widthPerDivision * 5, pos.y + size.y - 10);
+        graphics.drawLine(pos.x + widthPerDivision, y + 10, pos.x + widthPerDivision, y + size.y - 10);
+        graphics.drawLine(pos.x + widthPerDivision * 5, y + 10, pos.x + widthPerDivision * 5, y + size.y - 10);
 
 
         for (int i = 0; i < combination.length; i++)
-            combination[i].render();
+            combination[i].render(renderOffset);
 
         if (uncoveredCircles == combination.length)
-            clue.render();
+            clue.render(renderOffset);
     }
 
     public void handleInput(TouchEvent touchEvent) {
@@ -142,8 +144,8 @@ public class Attempt {
         return correctCombination;
     }
 
-    public void setColorblind(boolean set){
-        for(int i = 0;i<combination.length;i++)
+    public void setColorblind(boolean set) {
+        for (int i = 0; i < combination.length; i++)
             combination[i].setColorblind(set);
     }
 }

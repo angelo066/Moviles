@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.practica1.androidengine.Ads;
 import com.practica1.androidengine.Engine;
 
 import com.google.android.gms.ads.MobileAds;
@@ -19,26 +20,19 @@ public class AndroidGame extends AppCompatActivity {
 
     private SurfaceView renderView;
     private Engine engine;
-    private AdView adView;
+    private Ads ads;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        renderView = (SurfaceView) findViewById(R.id.surfaceView);
-        adView = (AdView) findViewById(R.id.adView);
         setContentView(R.layout.activity_android_game);
+        renderView = (SurfaceView) findViewById(R.id.surfaceView);
 
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
-
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
+        ads = new Ads(this, findViewById(R.id.adView));
+        ads.loadBanner();
 
         engine = new Engine(renderView);
 
@@ -68,6 +62,6 @@ public class AndroidGame extends AppCompatActivity {
         super.onDestroy();
         ResourceManager.Release();
         SceneManager.Release();
-        adView.destroy();
+        ads.destroy();
     }
 }

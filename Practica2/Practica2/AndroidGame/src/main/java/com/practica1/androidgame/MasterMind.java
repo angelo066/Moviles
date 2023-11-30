@@ -202,11 +202,6 @@ public class MasterMind extends Scene {
         for (int i = 0; i < availableColors.length; i++)
             availableColors[i].render(0);
 
-        // Botones
-        buttonColorBlind.render();
-
-        buttonBack.render();
-
         // Texto de los intentos restantes
         graphics.setColor(Color.WHITE.getValue());
         graphics.fillRectangle(0, 0, width, attemptHeight);
@@ -214,6 +209,11 @@ public class MasterMind extends Scene {
         textAttempts.render();
 
         title.render();
+
+        // Botones
+        buttonColorBlind.render();
+
+        buttonBack.render();
     }
 
     @Override
@@ -264,6 +264,7 @@ public class MasterMind extends Scene {
 
                         if (attempts.get(currentAttempt).isCorrectCombination()) {
                             SceneManager.getInstance().addScene(new GameOver(winningCombination, true, difficultyMode, currentAttempt + 1, colorBlind));
+                            SceneManager.getInstance().addScene(this);
                             SceneManager.getInstance().setSceneChange(true);
                             break outerloop;
                         } else {

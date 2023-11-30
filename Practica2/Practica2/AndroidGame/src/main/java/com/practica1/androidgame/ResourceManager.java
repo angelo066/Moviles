@@ -15,6 +15,9 @@ public class ResourceManager {
     protected HashMap<String, Image> images;
     protected HashMap<String, Font> fonts;
 
+    //PROVISIONAL
+    int n_Images;
+
     private ResourceManager() {
         images = new HashMap<>();
         fonts = new HashMap<>();
@@ -60,6 +63,7 @@ public class ResourceManager {
         if (images.containsKey(file)) {
             return images.get(file);
         } else {
+            n_Images++;
             Image newImage = engine.getGraphics().newImage(file);
             images.put(file, newImage);
             return newImage;
@@ -121,6 +125,11 @@ public class ResourceManager {
         return false;
     }
 
+    public void assetsChargeFinalized(){
+        //Cambiar luego
+        GameManager.getInstance().setN_skins_Background(n_Images);
+    }
+
     /**
      * Borra la fuente con ese id
      *
@@ -135,4 +144,5 @@ public class ResourceManager {
         return false;
     }
 
+    public int getN_Images() {return n_Images;}
 }

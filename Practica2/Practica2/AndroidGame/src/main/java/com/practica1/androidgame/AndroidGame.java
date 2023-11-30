@@ -38,6 +38,7 @@ public class AndroidGame extends AppCompatActivity {
 
         ResourceManager.Init(engine);
         SceneManager.Init(engine);
+        GameManager.Init(engine);
 
         SceneManager.getInstance().addScene(new MainMenu());
         SceneManager.getInstance().setSceneChange(true);

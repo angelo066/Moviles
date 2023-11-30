@@ -41,6 +41,9 @@ public class MainMenu extends Scene {
         ResourceManager.getInstance().createImage("ojo.png");
         ResourceManager.getInstance().createImage("ojo2.png");
         ResourceManager.getInstance().createImage("coins.png");
+
+        ResourceManager.getInstance().assetsChargeFinalized();
+
         createTexts();
 
         createButtons();

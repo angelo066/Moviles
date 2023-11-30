@@ -99,7 +99,7 @@ public class MasterMind extends Scene {
 
         this.attemptHeight = height / this.numDivisions;
         this.heightOffset = attemptHeight / (this.numDivisions - 2);
-        this.attemptsRenderOffsetY = -attemptHeight * 5;
+        this.attemptsRenderOffsetY = -attemptHeight * 4 - 80;
 
         for (int i = 0; i < this.numAttempts; i++) {
             this.attempts.add(new Attempt(graphics, numColorsPerAttempt, i + 1,
@@ -187,15 +187,15 @@ public class MasterMind extends Scene {
         graphics.fillRectangle(0, 0, width, height);
 
         // Intentos
-        for (int i = 0; i < this.numAttempts; i++)
-            attempts.get(i).render(attemptsRenderOffsetY);
+        for (int i = 0; i < this.numAttempts; i++) {
+            if ((i * attemptHeight) + attemptsRenderOffsetY > -attemptHeight) // solo renderizar el attempt si esta dentro del area de juego
+                attempts.get(i).render(attemptsRenderOffsetY);
+        }
 
 
         // Colores disponibles
-        int tamDivision = height / numDivisions;
-
         graphics.setColor(Color.GREY.getValue());
-        graphics.fillRectangle(0, (numDivisions - 1) * tamDivision, width, tamDivision);
+        graphics.fillRectangle(0, (numDivisions - 1) * attemptHeight, width, attemptHeight);
 
         for (int i = 0; i < availableColors.length; i++)
             availableColors[i].render(0);
@@ -206,6 +206,8 @@ public class MasterMind extends Scene {
         buttonBack.render();
 
         // Texto de los intentos restantes
+        graphics.setColor(Color.WHITE.getValue());
+        graphics.fillRectangle(0, 0, width, attemptHeight);
         textAttempts.setText("Te quedan " + (numAttempts - currentAttempt) + " intentos");
         textAttempts.render();
 

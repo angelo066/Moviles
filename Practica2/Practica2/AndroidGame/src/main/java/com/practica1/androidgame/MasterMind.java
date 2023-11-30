@@ -17,12 +17,18 @@ public class MasterMind extends Scene {
     private int numColorsPerAttempt;
     private int numAttempts;
     private int numDivisions;
+
+
     private Color[] winningCombination;
     private Circle[] availableColors;
-    private Attempt[] attempts;
+    private ArrayList<Attempt> attempts;
+
+
     private Random random;
     private int currentAttempt;
     private boolean colorBlind;
+
+
     private ButtonObject buttonColorBlind;
     private ButtonObject buttonBack;
     private TextObject textAttempts;
@@ -86,15 +92,30 @@ public class MasterMind extends Scene {
     }
 
     private void createAttempts() {
-        this.attempts = new Attempt[numAttempts];
+        this.attempts = new ArrayList<>();
 
         int attemptHeight = height / this.numDivisions;
         int heightOffset = attemptHeight / 10;
 
         for (int i = 0; i < this.numAttempts; i++) {
-            this.attempts[i] = new Attempt(graphics, numColorsPerAttempt, i + 1,
-                    new Vector2(3, (attemptHeight * (i + 1))), new Vector2(width - 6, attemptHeight - heightOffset));
+            this.attempts.add(new Attempt(graphics, numColorsPerAttempt, i + 1,
+                    new Vector2(3, (attemptHeight * (i + 1))), new Vector2(width - 6, attemptHeight - heightOffset)));
         }
+
+    }
+
+    private void addAttempts(int newAttempts) {
+        this.numAttempts += numAttempts;
+
+        int attemptHeight = height / this.numDivisions;
+        int heightOffset = attemptHeight / 10;
+        int size = this.attempts.size();
+
+        for (int i = size; i < numAttempts; i++) {
+            this.attempts.add(new Attempt(graphics, numColorsPerAttempt, i + 1,
+                    new Vector2(3, (attemptHeight * (i + 1))), new Vector2(width - 6, attemptHeight - heightOffset)));
+        }
+
     }
 
     private void createAvailableColors() {
@@ -134,16 +155,16 @@ public class MasterMind extends Scene {
             }
         }
 
-        for(int i = 0;i<winningCombination.length;i++)
+        for (int i = 0; i < winningCombination.length; i++)
             System.out.println(winningCombination[i]);
     }
 
     private void createTexts() {
-        textAttempts = new TextObject(graphics, new Vector2(width / 2, height/numDivisions/2),
-                "Nexa.ttf", "Te quedan " + (attempts.length - currentAttempt) + " intentos", Color.BLACK, 45, false, false);
+        textAttempts = new TextObject(graphics, new Vector2(width / 2, height / numDivisions / 2),
+                "Nexa.ttf", "Te quedan " + (numAttempts - currentAttempt) + " intentos", Color.BLACK, 45, false, false);
         textAttempts.centerHorizontal();
 
-        title = new TextObject(graphics, new Vector2(width / 2, height/numDivisions/3),
+        title = new TextObject(graphics, new Vector2(width / 2, height / numDivisions / 3),
                 "BarlowCondensed-Regular.ttf", "Averigua el código", Color.BLACK, 60, true, false);
         title.center();
     }
@@ -165,7 +186,7 @@ public class MasterMind extends Scene {
 
         // Intentos
         for (int i = 0; i < this.numAttempts; i++)
-            attempts[i].render();
+            attempts.get(i).render();
 
         // Colores disponibles
         int tamDivision = height / numDivisions;
@@ -182,7 +203,7 @@ public class MasterMind extends Scene {
         buttonBack.render();
 
         // Texto de los intentos restantes
-        textAttempts.setText("Te quedan " + (attempts.length - currentAttempt) + " intentos");
+        textAttempts.setText("Te quedan " + (numAttempts - currentAttempt) + " intentos");
         textAttempts.render();
 
         title.render();
@@ -190,7 +211,8 @@ public class MasterMind extends Scene {
 
     @Override
     public void handleInput(ArrayList<TouchEvent> events) {
-        outerloop: for (int i = 0; i < events.size(); i++) {
+        outerloop:
+        for (int i = 0; i < events.size(); i++) {
 
             if (buttonColorBlind.handleInput(events.get(i))) {
                 colorBlind = !colorBlind;
@@ -198,10 +220,10 @@ public class MasterMind extends Scene {
                 audio.stopSound("clickboton.wav");
                 audio.playSound("clickboton.wav", false);
 
-                for(int j=0;j<attempts.length;j++)
-                    attempts[j].setColorblind(colorBlind);
+                for (int j = 0; j < numAttempts; j++)
+                    attempts.get(j).setColorblind(colorBlind);
 
-                for (int j = 0;j<availableColors.length;j++)
+                for (int j = 0; j < availableColors.length; j++)
                     availableColors[j].setColorblind(colorBlind);
 
                 if (colorBlind)
@@ -210,16 +232,16 @@ public class MasterMind extends Scene {
                     buttonColorBlind.changeImage("ojo.png");
             }
 
-            attempts[currentAttempt].handleInput(events.get(i));
+            attempts.get(currentAttempt).handleInput(events.get(i));
 
             for (int j = 0; j < availableColors.length; j++) {
                 if (availableColors[j].handleInput(events.get(i))) {
 
-                    attempts[currentAttempt].setCircle(availableColors[j].getColor(), winningCombination);
+                    attempts.get(currentAttempt).setCircle(availableColors[j].getColor(), winningCombination);
 
-                    if (attempts[currentAttempt].getUncoveredCircles() == numColorsPerAttempt) {
+                    if (attempts.get(currentAttempt).getUncoveredCircles() == numColorsPerAttempt) {
 
-                        if (attempts[currentAttempt].isCorrectCombination()) {
+                        if (attempts.get(currentAttempt).isCorrectCombination()) {
                             SceneManager.getInstance().addScene(new GameOver(winningCombination, true, difficultyMode, currentAttempt + 1, colorBlind));
                             SceneManager.getInstance().setSceneChange(true);
                             break outerloop;

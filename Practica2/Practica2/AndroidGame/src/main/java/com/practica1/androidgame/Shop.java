@@ -1,14 +1,10 @@
 package com.practica1.androidgame;
 
 import com.practica1.androidengine.Engine;
-import com.practica1.androidengine.Graphics;
 import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.Color;
-import com.practica1.androidengine.SceneManager;
 import com.practica1.androidengine.TouchEvent;
 
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -108,7 +104,7 @@ public class Shop extends Scene {
 
             if (buttonBack.handleInput(events.get(i))) {
                 SceneManager.getInstance().addScene(new MainMenu());
-                SceneManager.getInstance().setSceneChange(true);
+                SceneManager.getInstance().goToNextScene();
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
                 break;
@@ -119,7 +115,7 @@ public class Shop extends Scene {
             audio.stopSound("botonInterfaz.wav");
             audio.playSound("botonInterfaz.wav", false);
             SceneManager.getInstance().addScene(new MasterMind(mode));
-            SceneManager.getInstance().setSceneChange(true);
+            SceneManager.getInstance().goToNextScene();
         }
     }
 

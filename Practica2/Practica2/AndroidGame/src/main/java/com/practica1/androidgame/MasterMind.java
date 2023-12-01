@@ -3,7 +3,6 @@ package com.practica1.androidgame;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
-import com.practica1.androidengine.SceneManager;
 import com.practica1.androidengine.TouchEvent;
 
 import java.util.ArrayList;
@@ -269,7 +268,7 @@ public class MasterMind extends Scene {
                         if (attempts.get(currentAttempt).isCorrectCombination()) {
                             SceneManager.getInstance().addScene(new GameOver(winningCombination, true, difficultyMode, currentAttempt + 1, colorBlind));
                             SceneManager.getInstance().addScene(this);
-                            SceneManager.getInstance().setSceneChange(true);
+                            SceneManager.getInstance().goToNextScene();
                             break outerloop;
                         } else {
                             currentAttempt++;
@@ -277,7 +276,7 @@ public class MasterMind extends Scene {
                             if (currentAttempt == numAttempts) {
                                 SceneManager.getInstance().addScene(new GameOver(winningCombination, false, difficultyMode, currentAttempt + 1, colorBlind));
                                 SceneManager.getInstance().addScene(this);
-                                SceneManager.getInstance().setSceneChange(true);
+                                SceneManager.getInstance().goToNextScene();
                                 break outerloop;
                             }
                         }
@@ -292,7 +291,7 @@ public class MasterMind extends Scene {
                 audio.stopSound("clickboton.wav");
                 audio.playSound("clickboton.wav", false);
                 SceneManager.getInstance().addScene(new SelectionMenu());
-                SceneManager.getInstance().setSceneChange(true);
+                SceneManager.getInstance().goToNextScene();
                 break;
             }
         }

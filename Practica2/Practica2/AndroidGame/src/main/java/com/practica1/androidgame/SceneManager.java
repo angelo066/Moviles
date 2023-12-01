@@ -1,4 +1,7 @@
-package com.practica1.androidengine;
+package com.practica1.androidgame;
+
+import com.practica1.androidengine.Engine;
+import com.practica1.androidengine.Scene;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -41,13 +44,11 @@ public class SceneManager {
         return Instance;
     }
 
-    public void setSceneChange(boolean changeScene) {
-        Instance.changeScene = changeScene;
+    public void goToNextScene(){
+        engine.setScene(getScene());
+        removeScene();
     }
 
-    public boolean doChangeScene() {
-        return Instance.changeScene;
-    }
 
     public void addScene(Scene newScene) {
         if (newScene == null) return;

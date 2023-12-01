@@ -2,10 +2,7 @@ package com.practica1.androidgame;
 
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
-import com.practica1.androidengine.Font;
-import com.practica1.androidengine.Graphics;
 import com.practica1.androidengine.Scene;
-import com.practica1.androidengine.SceneManager;
 import com.practica1.androidengine.TouchEvent;
 
 import java.util.ArrayList;
@@ -188,21 +185,21 @@ public class GameOver extends Scene {
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
                 ((MasterMind) SceneManager.getInstance().getScene()).addAttempts(2);
-                SceneManager.getInstance().setSceneChange(true);
+                SceneManager.getInstance().goToNextScene();
                 break;
             } else if (buttonRepeat.handleInput(events.get(i))) {
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
-                SceneManager.getInstance().addScene(new MasterMind(mode));
                 SceneManager.getInstance().removeScene();
-                SceneManager.getInstance().setSceneChange(true);
+                SceneManager.getInstance().addScene(new MasterMind(mode));
+                SceneManager.getInstance().goToNextScene();
                 break;
             } else if (buttonBackMenu.handleInput(events.get(i))) {
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
-                SceneManager.getInstance().addScene(new SelectionMenu());
                 SceneManager.getInstance().removeScene();
-                SceneManager.getInstance().setSceneChange(true);
+                SceneManager.getInstance().addScene(new SelectionMenu());
+                SceneManager.getInstance().goToNextScene();
                 break;
             }
 

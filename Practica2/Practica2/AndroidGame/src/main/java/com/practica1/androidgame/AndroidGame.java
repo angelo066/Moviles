@@ -6,15 +6,8 @@ import android.view.SurfaceView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.practica1.androidengine.Ads;
 import com.practica1.androidengine.Engine;
-
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
-import com.practica1.androidengine.SceneManager;
 
 public class AndroidGame extends AppCompatActivity {
 
@@ -41,7 +34,7 @@ public class AndroidGame extends AppCompatActivity {
         GameManager.Init(engine);
 
         SceneManager.getInstance().addScene(new MainMenu());
-        SceneManager.getInstance().setSceneChange(true);
+        SceneManager.getInstance().goToNextScene();
 
         engine.resume();
     }

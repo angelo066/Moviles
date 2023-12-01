@@ -16,6 +16,7 @@ public class Engine implements Runnable {
     private Input input;
     private Audio audio;
     private Scene scene;
+    private Scene newScene;
 
     /**
      * @param view Ventana de la aplicacion
@@ -26,6 +27,7 @@ public class Engine implements Runnable {
         input = new Input(view);
         audio = new Audio(view.getContext().getAssets());
         scene = null;
+        newScene = null;
     }
 
     /**
@@ -111,13 +113,23 @@ public class Engine implements Runnable {
     }
 
     /**
+     * Establece la escena de la aplicacion
+     *
+     * @param scene Escena a establecer
+     */
+    public void setScene(Scene scene) {
+        if (this.scene == null)
+            this.scene = scene;
+        else
+            newScene = scene;
+    }
+    /**
      * Cambia, si es necesario, la escena al principio de frame
      */
     private void changeScene() {
-        if (SceneManager.getInstance().doChangeScene()) {
-            scene = SceneManager.getInstance().getScene();
-            SceneManager.getInstance().setSceneChange(false);
-            SceneManager.getInstance().removeScene();
+        if (newScene != null) {
+            scene = newScene;
+            newScene = null;
         }
     }
 

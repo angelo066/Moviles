@@ -2,7 +2,11 @@ package com.practica1.androidengine;
 
 import android.view.SurfaceView;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Clase motor de la aplicacion en android
@@ -174,4 +178,45 @@ public class Engine implements Runnable {
         scene.handleInput(inputEvents);
     }
 
+    /**
+     * Apertura de archivos
+     */
+    public BufferedReader openAssetFile(String fileName) throws IOException
+    {
+        BufferedReader br = new BufferedReader(new InputStreamReader(graphics.getAssetManager().open(fileName), "UTF-8"));
+        if(br ==  null)
+            System.out.println("NO FUNCIONO");
+        else
+            System.out.println("wtf");
+
+        return br;
+    }
+
+    /**
+     * Devuelve las rutas de todos los archivos de una carpeta
+     */
+    public List<String> obtainFolderFiles(String baseRoute)
+    {
+        List<String> nameFiles = new ArrayList<>();
+
+        try{
+            // Obtenemos la lista de archivos
+            String[] fileList = graphics.getAssetManager().list(baseRoute);
+
+            // Si la carpeta no estaba vacia
+            if(fileList != null)
+            {
+                // Creamos la ruta completa
+                for(String file : fileList)
+                {
+                    String completeRoute = baseRoute + "/" + file;
+                    nameFiles.add(completeRoute);
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return nameFiles;
+    }
 }

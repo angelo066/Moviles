@@ -4,7 +4,9 @@ import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Font;
 import com.practica1.androidengine.Image;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Gestor de recursos
@@ -14,6 +16,7 @@ public class ResourceManager {
     protected Engine engine;
     protected HashMap<String, Image> images;
     protected HashMap<String, Font> fonts;
+    protected List<List<String>> levels;
 
     //PROVISIONAL
     int n_Images;
@@ -21,6 +24,7 @@ public class ResourceManager {
     private ResourceManager() {
         images = new HashMap<>();
         fonts = new HashMap<>();
+        levels = new ArrayList<>();
     }
 
     /**
@@ -145,4 +149,25 @@ public class ResourceManager {
     }
 
     public int getN_Images() {return n_Images;}
+
+    void loadLevels()
+    {
+        // Cargar numero de mundos
+        String baseRoute = "levels";
+        List<String> files = engine.obtainFolderFiles(baseRoute);
+
+        // Cargar niveles por mundo
+        for(String world : files)
+        {
+            levels.add(engine.obtainFolderFiles(world));
+        }
+    }
+
+    public String getLevel(int worldIndex, int levelIndex)
+    {
+        return levels.get(worldIndex).get(levelIndex);
+    }
+
+    public int getNumWorlds(){return levels.size();}
+    public int getNumLevels(int worldIndex){return levels.get(worldIndex).size();}
 }

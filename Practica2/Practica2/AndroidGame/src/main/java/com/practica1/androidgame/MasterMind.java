@@ -1,10 +1,15 @@
 package com.practica1.androidgame;
 
+import com.google.gson.Gson;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.TouchEvent;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -15,6 +20,7 @@ public class MasterMind extends Scene {
     private int numColorsPerAttempt;
     private int numAttempts;
     private int numDivisions;
+    private boolean repeatColors;
 
 
     private Color[] winningCombination;
@@ -36,6 +42,7 @@ public class MasterMind extends Scene {
     private int heightOffset;
     private int attemptsRenderOffsetY;
     private int lastYPosition;
+    private String levelName = "";
 
     public MasterMind(Difficulty mode) {
         this.width = 1080;
@@ -50,12 +57,28 @@ public class MasterMind extends Scene {
 
         this.colorBlind = false;
     }
+    public MasterMind(String levelName) {
+        this.width = 1080;
+        this.height = 1920;
+
+        this.numDivisions = 12;
+
+        this.random = new Random();
+
+        this.currentAttempt = 0;
+
+        this.colorBlind = false;
+
+        this.levelName = levelName;
+    }
 
     @Override
     public void init(Engine engine) {
         super.init(engine);
 
         selectConfiguration();
+
+        //createLevel();
 
         createAttempts();
 
@@ -66,6 +89,8 @@ public class MasterMind extends Scene {
         createButtons();
 
         createTexts();
+
+
     }
 
     private void selectConfiguration() {
@@ -74,21 +99,25 @@ public class MasterMind extends Scene {
                 this.numColors = 4;
                 this.numColorsPerAttempt = 4;
                 this.numAttempts = 6;
+                this.repeatColors = false;
                 break;
             case MEDIUM:
                 this.numColors = 6;
                 this.numColorsPerAttempt = 4;
                 this.numAttempts = 8;
+                this.repeatColors = false;
                 break;
             case HARD:
                 this.numColors = 8;
                 this.numColorsPerAttempt = 5;
                 this.numAttempts = 10;
+                this.repeatColors = true;
                 break;
             case IMPOSSIBLE:
                 this.numColors = 9;
                 this.numColorsPerAttempt = 6;
                 this.numAttempts = 10;
+                this.repeatColors = true;
                 break;
 
         }
@@ -141,7 +170,7 @@ public class MasterMind extends Scene {
 
     private void selectWinningCombination() {
         winningCombination = new Color[numColorsPerAttempt];
-        if (difficultyMode == Difficulty.HARD || difficultyMode == Difficulty.IMPOSSIBLE) {
+        if (repeatColors) {
             for (int i = 0; i < numColorsPerAttempt; i++) {
                 int index = random.nextInt(numColors);
                 winningCombination[i] = Color.values()[index];
@@ -301,5 +330,31 @@ public class MasterMind extends Scene {
                 break;
             }
         }
+    }
+
+    private void createLevel()
+    {
+        // Creamos el parser del json
+        Gson gson  = new Gson();
+        BufferedReader br = null;
+        String json = "";
+        String levelname = "levels/world1/level_1_01.json";
+        // Leemos el json
+        try {
+            br = engine.openAssetFile(levelname);
+        }
+        catch (IOException ex)
+        {
+            System.out.println("Error creating level");
+        }
+
+        // Deserializamos el json en un objeto con la info del nivel
+        LevelInfo levelInfo = gson.fromJson(br, LevelInfo.class);
+
+        // Asignamos los valores que hemos recogido a nuestra partida
+        this.numColors = levelInfo.getCodeOpt();
+        this.numColorsPerAttempt = levelInfo.getCodeSize();
+        this.numAttempts = levelInfo.getAttempts();
+        this.repeatColors = levelInfo.getRepeat();
     }
 }

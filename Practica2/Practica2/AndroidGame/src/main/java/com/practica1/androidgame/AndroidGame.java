@@ -32,6 +32,8 @@ public class AndroidGame extends AppCompatActivity {
         SceneManager.getInstance().goToNextScene();
 
         engine.resume();
+
+        ResourceManager.getInstance().loadLevels();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.practica1.androidgame;
 
+import com.practica1.androidengine.AdCallback;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
@@ -184,8 +185,10 @@ public class GameOver extends Scene {
             if (!win && buttonMoreAttempts.handleInput(events.get(i))) {
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
-                ((MasterMind) SceneManager.getInstance().getScene()).addAttempts(2);
-                SceneManager.getInstance().goToNextScene();
+                engine.getAds().showRewardedAd(() -> {
+                    ((MasterMind) SceneManager.getInstance().getScene()).addAttempts(2);
+                    SceneManager.getInstance().goToNextScene();
+                });
                 break;
             } else if (buttonRepeat.handleInput(events.get(i))) {
                 audio.stopSound("botonInterfaz.wav");

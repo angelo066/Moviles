@@ -17,12 +17,14 @@ public class Engine implements Runnable {
     private Audio audio;
     private Scene scene;
     private Scene newScene;
+    private AdManager ads;
 
     /**
      * @param view Ventana de la aplicacion
      */
-    public Engine(SurfaceView view) {
+    public Engine(SurfaceView view, AdManager ads) {
         this.view = view;
+        this.ads = ads;
         graphics = new Graphics(view);
         input = new Input(view);
         audio = new Audio(view.getContext().getAssets());
@@ -49,6 +51,10 @@ public class Engine implements Runnable {
      */
     public Audio getAudio() {
         return audio;
+    }
+
+    public AdManager getAds() {
+        return ads;
     }
 
 
@@ -123,6 +129,7 @@ public class Engine implements Runnable {
         else
             newScene = scene;
     }
+
     /**
      * Cambia, si es necesario, la escena al principio de frame
      */
@@ -166,4 +173,5 @@ public class Engine implements Runnable {
         }
         scene.handleInput(inputEvents);
     }
+
 }

@@ -223,40 +223,30 @@ public class MasterMind extends Scene {
         outerloop:
         for (int i = 0; i < events.size(); i++) {
 
-            if (events.get(i).type == TouchEvent.TouchEventType.TOUCH_DOWN)
-                lastYPosition = events.get(i).y;
+            //Manejo de input para el scroll del tablero
+            if (events.get(i).y >= attemptHeight && events.get(i).y <= height - attemptHeight) {
 
-            if (events.get(i).type == TouchEvent.TouchEventType.TOUCH_DRAG) {
-                attemptsRenderOffsetY -= (lastYPosition - events.get(i).y);
+                if (events.get(i).type == TouchEvent.TouchEventType.TOUCH_DOWN)
+                    lastYPosition = events.get(i).y;
 
-                if (attemptsRenderOffsetY < -(attemptHeight * (numAttempts - 1)))
-                    attemptsRenderOffsetY = -(attemptHeight * (numAttempts - 1));
-                else if (attemptsRenderOffsetY > 0)
-                    attemptsRenderOffsetY = 0;
+                if (events.get(i).type == TouchEvent.TouchEventType.TOUCH_DRAG) {
+                    attemptsRenderOffsetY -= (lastYPosition - events.get(i).y);
 
-                for (int j = 0; j < numAttempts; j++)
-                    attempts.get(j).setOffsetY(attemptsRenderOffsetY);
+                    if (attemptsRenderOffsetY < -(attemptHeight * (numAttempts - 1)))
+                        attemptsRenderOffsetY = -(attemptHeight * (numAttempts - 1));
+                    else if (attemptsRenderOffsetY > 0)
+                        attemptsRenderOffsetY = 0;
 
-                lastYPosition = events.get(i).y;
+                    for (int j = 0; j < numAttempts; j++)
+                        attempts.get(j).setOffsetY(attemptsRenderOffsetY);
+
+                    lastYPosition = events.get(i).y;
+                }
             }
 
-            if (buttonColorBlind.handleInput(events.get(i))) {
-                colorBlind = !colorBlind;
 
-                audio.stopSound("clickboton.wav");
-                audio.playSound("clickboton.wav", false);
+            attempts.get(currentAttempt).handleInput(events.get(i));
 
-                for (int j = 0; j < numAttempts; j++)
-                    attempts.get(j).setColorblind(colorBlind);
-
-                for (int j = 0; j < availableColors.length; j++)
-                    availableColors[j].setColorblind(colorBlind);
-
-                if (colorBlind)
-                    buttonColorBlind.changeImage("ojo2.png");
-                else
-                    buttonColorBlind.changeImage("ojo.png");
-            }
 
             for (int j = 0; j < availableColors.length; j++) {
                 if (availableColors[j].handleInput(events.get(i))) {
@@ -285,7 +275,23 @@ public class MasterMind extends Scene {
                 }
             }
 
-            attempts.get(currentAttempt).handleInput(events.get(i));
+            if (buttonColorBlind.handleInput(events.get(i))) {
+                colorBlind = !colorBlind;
+
+                audio.stopSound("clickboton.wav");
+                audio.playSound("clickboton.wav", false);
+
+                for (int j = 0; j < numAttempts; j++)
+                    attempts.get(j).setColorblind(colorBlind);
+
+                for (int j = 0; j < availableColors.length; j++)
+                    availableColors[j].setColorblind(colorBlind);
+
+                if (colorBlind)
+                    buttonColorBlind.changeImage("ojo2.png");
+                else
+                    buttonColorBlind.changeImage("ojo.png");
+            }
 
             if (buttonBack.handleInput(events.get(i))) {
                 audio.stopSound("clickboton.wav");

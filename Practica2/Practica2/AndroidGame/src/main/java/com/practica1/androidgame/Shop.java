@@ -18,7 +18,7 @@ public class Shop extends Scene {
     private enum Skin_Type {BACKGROUND, CODE, COLORS}
 
     //Botones con los que compramos skins
-    private ButtonObject[] skins;
+    private BuyObject[] skins;
 
     //Precios de las skins
     private TextObject[] prices;
@@ -48,6 +48,7 @@ public class Shop extends Scene {
     private Vector2 skin_Pos = new Vector2(20,450);
 
     private int offset = 200;
+    private final int N_SKIN_COLUMN = 3;
 
     public Shop(){
         this.width = 1080;
@@ -58,7 +59,7 @@ public class Shop extends Scene {
     public void init(Engine engine){
         super.init(engine);
 
-        skins = new ButtonObject[GameManager.getInstance().getN_skins_Background()];
+        skins = new BuyObject[GameManager.getInstance().getN_skins_Background()];
         prices = new TextObject[GameManager.getInstance().getN_skins_Background()];
 
         Vector2 pos_Coin = new Vector2(900, 200);
@@ -93,7 +94,6 @@ public class Shop extends Scene {
 
         for(int i = 0; i < skins.length; i++){
             skins[i].render();
-            prices[i].render();
         }
     }
 
@@ -127,8 +127,8 @@ public class Shop extends Scene {
     private void createButtons(){
         Vector2 pos = skin_Pos;
 
-        for(int i = 0; i < GameManager.getInstance().getN_skins_Background();i++){
-            pos.x = (skin_Size.x * i) + offset * i;
+        /*for(int i = 0; i < GameManager.getInstance().getN_skins_Background();i++){
+            pos.x *= i;
 
             if(pos.x > width){
                 pos.x = 0;
@@ -136,10 +136,26 @@ public class Shop extends Scene {
                 pos.y += skin_Size.y + offset;
             }
 
-            skins[i] = new ButtonObject(graphics, pos, skin_Size, "coins.png");
-            Vector2 pricePos = new Vector2(pos.x + skin_Size.x/2, pos.y + 50 + skin_Size.y);
-            prices[i] = new TextObject(graphics, pricePos, "Nexa.ttf", String.valueOf(100 * (i +1)), Color.BLACK, 50, false, false);
-            prices[i].center();
+            skins[i] = new BuyObject(graphics, pos, skin_Size);
+        }*/
+
+        int aux = width / N_SKIN_COLUMN;
+        Vector2 size = new Vector2(aux-100, aux-100);
+        int xIndex = 0;
+        for(int i = 0; i < GameManager.getInstance().getN_skins_Background();i++)
+        {
+            int xua = aux*xIndex + aux/2;
+            pos.x = xua - size.x/2;
+
+            xIndex++;
+
+            // Si has llenado los huecos disponibles en esta fila pasas a la siguiente
+            if(i > 0 && i % N_SKIN_COLUMN == 0){
+                xIndex = 0;
+                pos.y += size.y + offset;
+            }
+
+            skins[i] = new BuyObject(graphics, pos, size);
         }
 
     }

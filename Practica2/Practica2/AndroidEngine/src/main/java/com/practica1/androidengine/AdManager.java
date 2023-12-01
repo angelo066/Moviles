@@ -62,20 +62,20 @@ public class AdManager {
 
     // Método para mostrar un anuncio recompensado
     public void showRewardedAd(AdCallback adCallback) {
-        context.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (rewardedAd != null) {
+        if (rewardedAd != null) {
+            context.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
                     rewardedAd.show(context, new OnUserEarnedRewardListener() {
                         @Override
                         public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
                             adCallback.execute();
+                            loadRewardedAd();
                         }
                     });
                 }
-            }
-        });
-
+            });
+        }
     }
 
     public void destroy() {

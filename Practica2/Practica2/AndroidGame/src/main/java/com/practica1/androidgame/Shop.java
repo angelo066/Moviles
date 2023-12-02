@@ -14,16 +14,12 @@ public class Shop extends Scene {
     private enum Skin_Type {BACKGROUND, CODE, COLORS}
 
     //Botones con los que compramos skins
-    private BuyObject[] skins;
-
-    //Precios de las skins
-    private TextObject[] prices;
-
-    //Imagenes que muestran lo que contiene la skin
-    private ImageObject[] skin_Images;
+    private BuyObject[] skins_Back;
+    private BuyObject[] skins_Code;
+    private BuyObject[] skins_Color;
 
     //Para tener en cuenta que estamos vendiendo
-    private Skin_Type type;
+    private int type;
 
     //Mostrar el icono de las monedas
     private ImageObject coins;
@@ -36,6 +32,7 @@ public class Shop extends Scene {
 
     //Boton para pasar a la siguiente pantalla
     private ButtonObject buttonForward;
+    private ButtonObject buttonBackward;
 
     //Boton para volver a la pantalla anterior
     private ButtonObject buttonBack;
@@ -55,8 +52,10 @@ public class Shop extends Scene {
     public void init(Engine engine){
         super.init(engine);
 
-        skins = new BuyObject[GameManager.getInstance().getN_skins_Background()];
-        prices = new TextObject[GameManager.getInstance().getN_skins_Background()];
+        //Provisional, hay que cambiar numeros y demás
+        skins_Back = new BuyObject[GameManager.getInstance().getN_skins_Background()];
+        skins_Code = new BuyObject[GameManager.getInstance().getN_skins_Background()];
+        skins_Color = new BuyObject[GameManager.getInstance().getN_skins_Background()];
 
         Vector2 pos_Coin = new Vector2(900, 200);
         Vector2 size_Coin = new Vector2(100, 100);
@@ -68,7 +67,13 @@ public class Shop extends Scene {
         coin_cuantity = new TextObject(graphics, new Vector2(pos_Coin.x, pos_Coin.y + size_Coin.y),
                 "Nexa.ttf", "1000", Color.BLACK, 60, false, false);
 
+        type_Text = new TextObject(graphics, new Vector2(width/2, 140),
+                "Nexa.ttf", "Fondos", Color.BLACK, 60, false, false);
+
+        type_Text.center();
+
         createButtons();
+        createNavigators();
     }
 
     public void render(){
@@ -84,13 +89,31 @@ public class Shop extends Scene {
 
         /// Botones
         buttonBack.render();
+        buttonForward.render();
+        buttonBackward.render();
 
         //Texto
         coin_cuantity.render();
+        type_Text.render();
 
-        for(int i = 0; i < skins.length; i++){
-            skins[i].render();
+        //Revisable
+        if(Skin_Type.values()[type] == Skin_Type.BACKGROUND){
+            for(int i = 0; i < skins_Back.length; i++){
+                skins_Back[i].render();
+            }
         }
+        else if(Skin_Type.values()[type] == Skin_Type.CODE){
+            for(int i = 0; i < skins_Code.length; i++){
+                skins_Code[i].render();
+            }
+        }
+        else{
+            for(int i = 0; i < skins_Color.length; i++){
+                skins_Color[i].render();
+            }
+        }
+
+
     }
 
     public void handleInput(ArrayList<TouchEvent> events) {
@@ -109,6 +132,18 @@ public class Shop extends Scene {
                 audio.playSound("botonInterfaz.wav", false);
                 break;
             }
+
+            if(buttonBackward.handleInput(events.get(i))){
+                type--;
+                if(type < 0) type = Skin_Type.values().length;
+                break;
+            }
+
+            if(buttonForward.handleInput(events.get(i))){
+                type++;
+                if(type > Skin_Type.values().length) type = 0;
+                break;
+            }
         }
 
         if (selected) {
@@ -121,40 +156,42 @@ public class Shop extends Scene {
 
 
     private void createButtons(){
-        Vector2 pos = skin_Pos;
+        createBuyObjects(skins_Back, "central.png");
+        createBuyObjects(skins_Code, "autobus.png");
+        createBuyObjects(skins_Color, "taberna.png");
 
-        /*for(int i = 0; i < GameManager.getInstance().getN_skins_Background();i++){
-            pos.x *= i;
+    }
 
-            if(pos.x > width){
-                pos.x = 0;
+    private void createBuyObjects(BuyObject[] skins, String image) {
+        //Vector2 pos = skin_Pos;   (Esto hace que si cambias pos cambien los valores de skin_Pos)
 
-                pos.y += skin_Size.y + offset;
-            }
-
-            skins[i] = new BuyObject(graphics, pos, skin_Size);
-        }*/
+        Vector2 pos = new Vector2(skin_Pos.x, skin_Pos.y);
 
         int aux = width / N_SKIN_COLUMN;
-        Vector2 size = new Vector2(aux-100, aux-100);
+        Vector2 size = new Vector2(aux - 100, aux - 100);
         int xIndex = 0;
-        for(int i = 0; i < GameManager.getInstance().getN_skins_Background();i++)
-        {
-            int diff = aux * (xIndex)+ aux/2;
-            pos.x = diff - size.x/2;
+
+        for (int i = 0; i < GameManager.getInstance().getN_skins_Background(); i++) {
+            int diff = aux * (xIndex) + aux / 2;
+            pos.x = diff - size.x / 2;
 
             // Si has llenado los huecos disponibles en esta fila pasas a la siguiente
-            if(xIndex >= N_SKIN_COLUMN){
+            if (xIndex >= N_SKIN_COLUMN) {
                 xIndex = 0;
                 pos.y += size.y + offset;
-                diff = aux/2;
-                pos.x = diff - size.x/2;
+                diff = aux / 2;
+                pos.x = diff - size.x / 2;
             }
             xIndex++;
 
 
-            skins[i] = new BuyObject(graphics, pos, size);
+            skins[i] = new BuyObject(graphics, pos, size, image);
+            skins[i].setPrice(100 * i);
         }
+    }
 
+    private void createNavigators(){
+        buttonForward = new ButtonObject(graphics, new Vector2(width/2 + 100, 100), new Vector2(80,80), "ArrowNavigators.png");
+        buttonBackward = new ButtonObject(graphics, new Vector2(width/2 - 200, 100), new Vector2(80,80), "ArrowNavigators_Left.png");
     }
 }

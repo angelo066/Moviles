@@ -29,8 +29,12 @@ public class AssetsLoad extends Scene {
         ResourceManager.getInstance().createImage("ojo2.png");
         ResourceManager.getInstance().createImage("coins.png");
         ResourceManager.getInstance().createImage("central.png");
+        ResourceManager.getInstance().createImage("autobus.png");
+        ResourceManager.getInstance().createImage("taberna.png");
         ResourceManager.getInstance().createImage("select_skin.png");
         ResourceManager.getInstance().createImage("lock.png");
+        ResourceManager.getInstance().createImage("ArrowNavigators.png");
+        ResourceManager.getInstance().createImage("ArrowNavigators_Left.png");
 
         ResourceManager.getInstance().assetsChargeFinalized();
 

@@ -1,7 +1,6 @@
 package com.practica1.androidgame;
 
 import com.practica1.androidengine.Color;
-import com.practica1.androidengine.Font;
 import com.practica1.androidengine.Graphics;
 
 
@@ -24,13 +23,13 @@ public class BuyObject {
      * @param graphics Objeto graphics del engine
      * @param pos      Posicion del texto
      */
-    public BuyObject(Graphics graphics, Vector2 pos, Vector2 size) {
+    public BuyObject(Graphics graphics, Vector2 pos, Vector2 size, String image) {
 
         this.graphics = graphics;
         this.pos = new Vector2(pos);
         this.iniPos = pos;
 
-        this.buyButton = new ButtonObject(graphics, pos, size, "central.png");
+        this.buyButton = new ButtonObject(graphics, pos, size, image);
         this.selectedImage = new ImageObject(graphics, pos, size, "select_skin.png");
         Vector2 pricePos = new Vector2(pos.x + size.x/2, pos.y + 50 + size.y);
         this.priceText = new TextObject(graphics, pricePos, "Nexa.ttf", String.valueOf(100), Color.BLACK, 50, false, false);
@@ -58,6 +57,10 @@ public class BuyObject {
             coinImage.render();
         }
 
+    }
+
+    public void setPrice(int p){
+        priceText.setText(String.valueOf(p));
     }
 
     public void setSelected(boolean s)

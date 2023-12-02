@@ -6,6 +6,9 @@ import com.practica1.androidengine.TouchEvent;
 
 import java.util.ArrayList;
 
+/**
+ * Clase que representa un intento en el juego
+ */
 public class Attempt {
     private Circle[] combination;
     private TextObject attemptNumber;
@@ -20,6 +23,13 @@ public class Attempt {
     private boolean correctCombination;
     private int offsetY;
 
+    /**
+     * @param graphics Objeto graphics del motor
+     * @param numColorsPerAttempt Numero de casillas del intento
+     * @param id Numero del intento
+     * @param pos Posicion del intento
+     * @param size Tamanio del intento
+     */
     public Attempt(Graphics graphics, int numColorsPerAttempt, int id, Vector2 pos, Vector2 size) {
         this.graphics = graphics;
         this.pos = pos;

@@ -16,7 +16,7 @@ public class AndroidGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_android_game);
-        SurfaceView renderView = (SurfaceView) findViewById(R.id.surfaceView);
+        SurfaceView renderView = findViewById(R.id.surfaceView);
 
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
@@ -28,12 +28,12 @@ public class AndroidGame extends AppCompatActivity {
         SceneManager.Init(engine);
         GameManager.Init(engine);
 
-        SceneManager.getInstance().addScene(new MainMenu());
+        ResourceManager.getInstance().loadLevels();
+        SceneManager.getInstance().addScene(new AssetsLoad());
         SceneManager.getInstance().goToNextScene();
 
         engine.resume();
 
-        ResourceManager.getInstance().loadLevels();
     }
 
     @Override

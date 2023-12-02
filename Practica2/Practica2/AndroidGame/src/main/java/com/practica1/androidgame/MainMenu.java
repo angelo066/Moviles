@@ -27,25 +27,6 @@ public class MainMenu extends Scene {
     public void init(Engine engine) {
         super.init(engine);
 
-        //Carga de assets
-        engine.getAudio().loadSound("botonInterfaz.wav");
-        engine.getAudio().loadSound("clickboton.wav");
-        engine.getAudio().loadSound("yuju.wav");
-        engine.getAudio().loadSound("douh.wav");
-
-        ResourceManager.getInstance().createFont("BarlowCondensed-Regular.ttf", 200, true, true);
-        ResourceManager.getInstance().createFont("Nexa.ttf", 80, false, false);
-
-        ResourceManager.getInstance().createImage("volver.png");
-        ResourceManager.getInstance().createImage("ojo.png");
-        ResourceManager.getInstance().createImage("ojo2.png");
-        ResourceManager.getInstance().createImage("coins.png");
-        ResourceManager.getInstance().createImage("central.png");
-        ResourceManager.getInstance().createImage("select_skin.png");
-        ResourceManager.getInstance().createImage("lock.png");
-
-        ResourceManager.getInstance().assetsChargeFinalized();
-
         createTexts();
 
         createButtons();

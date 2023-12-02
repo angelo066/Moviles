@@ -149,7 +149,6 @@ public class MasterMind extends Scene {
                     new Vector2(3, (attemptHeight * (i + 1))), new Vector2(width - 6, attemptHeight - heightOffset)));
             if (colorBlind) this.attempts.get(i).setColorblind(true);
         }
-
     }
 
     private void createAvailableColors() {
@@ -253,12 +252,14 @@ public class MasterMind extends Scene {
         outerloop:
         for (int i = 0; i < events.size(); i++) {
 
-            //Manejo de input para el scroll del tablero
+            //Manejo de input dentro del area de juego
             if (events.get(i).y >= attemptHeight && events.get(i).y <= height - attemptHeight) {
 
+                //Manejo de input para el scroll del tablero
                 if (events.get(i).type == TouchEvent.TouchEventType.TOUCH_DOWN)
                     lastYPosition = events.get(i).y;
 
+                //Manejo de input para el scroll del tablero
                 if (events.get(i).type == TouchEvent.TouchEventType.TOUCH_DRAG) {
                     attemptsRenderOffsetY -= (lastYPosition - events.get(i).y);
 
@@ -272,10 +273,9 @@ public class MasterMind extends Scene {
 
                     lastYPosition = events.get(i).y;
                 }
+
+                attempts.get(currentAttempt).handleInput(events.get(i));
             }
-
-
-            attempts.get(currentAttempt).handleInput(events.get(i));
 
 
             for (int j = 0; j < availableColors.length; j++) {

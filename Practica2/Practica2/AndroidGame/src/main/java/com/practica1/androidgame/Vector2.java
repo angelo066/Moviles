@@ -8,6 +8,14 @@ public class Vector2 {
     public int y = 0;
 
     /**
+     * Por defecto
+     */
+    public Vector2() {
+        x = 0;
+        y = 0;
+    }
+
+    /**
      * @param _x Posicion en el eje x
      * @param _y Posicion en el eje y
      */

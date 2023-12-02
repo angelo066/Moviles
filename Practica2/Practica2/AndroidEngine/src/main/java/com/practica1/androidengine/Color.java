@@ -20,7 +20,7 @@ public enum Color {
 
     BLACK(0xFF000000, 13),
     NO_COLOR(0xFF000000, 14),
-    OPACITY_GREY(0x55C6C6C6, 15);
+    OPACITY_GREY(0x88FFFFFF, 15);
 
     private int value;
     private int id;

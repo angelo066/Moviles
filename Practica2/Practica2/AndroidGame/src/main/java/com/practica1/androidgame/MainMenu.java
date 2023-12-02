@@ -42,6 +42,7 @@ public class MainMenu extends Scene {
         ResourceManager.getInstance().createImage("coins.png");
         ResourceManager.getInstance().createImage("central.png");
         ResourceManager.getInstance().createImage("select_skin.png");
+        ResourceManager.getInstance().createImage("lock.png");
 
         ResourceManager.getInstance().assetsChargeFinalized();
 
@@ -113,6 +114,15 @@ public class MainMenu extends Scene {
                 SceneManager.getInstance().addScene(new Shop());
                 SceneManager.getInstance().goToNextScene();
                 break;
+
+            }
+            else if (buttonExploreWorlds.handleInput(events.get(i))) {
+                audio.stopSound("botonInterfaz.wav");
+                audio.playSound("botonInterfaz.wav", false);
+                SceneManager.getInstance().addScene(new WorldSelectionMenu());
+                SceneManager.getInstance().goToNextScene();
+                break;
+
             } else if (buttonExit.handleInput(events.get(i))) {
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);

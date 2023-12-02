@@ -76,9 +76,10 @@ public class MasterMind extends Scene {
     public void init(Engine engine) {
         super.init(engine);
 
-        selectConfiguration();
-
-        //createLevel();
+        if(levelName == "")
+            selectConfiguration();
+        else
+            createLevel();
 
         createAttempts();
 

@@ -12,12 +12,13 @@ public class ButtonObject {
     private Vector2 size;
     private Color color;
     private float arc;
+    boolean showText = true;
     private TextObject text;
     private ImageObject image;
 
+    private Graphics graphics;
     private Vector2 pos;
     private Vector2 iniPos;
-    private Graphics graphics;
 
     /**
      * Constructora para Botones sin imagen, con o sin texto
@@ -74,7 +75,7 @@ public class ButtonObject {
             graphics.setColor(color.getValue());
             graphics.fillRoundRectangle(pos.x, pos.y, size.x, size.y, arc);
 
-            if (text != null)
+            if (text != null && showText)
                 text.render();
         }
     }
@@ -128,6 +129,11 @@ public class ButtonObject {
     public void changeImage(String image) {
         if (this.image != null)
             this.image.changeImage(image);
+    }
+
+    public void setVisibleText(boolean show)
+    {
+        this.showText = show;
     }
 
 }

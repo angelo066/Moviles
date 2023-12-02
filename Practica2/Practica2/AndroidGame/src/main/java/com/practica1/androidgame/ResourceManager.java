@@ -169,5 +169,5 @@ public class ResourceManager {
     }
 
     public int getNumWorlds(){return levels.size();}
-    public int getNumLevels(int worldIndex){return levels.get(worldIndex).size();}
+    public int getNumLevels(int worldIndex){return levels.get(worldIndex).size() - 1;} // el ultimo archivo es el style.json
 }

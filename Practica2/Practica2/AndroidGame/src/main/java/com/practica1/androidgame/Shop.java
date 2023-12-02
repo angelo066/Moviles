@@ -140,16 +140,18 @@ public class Shop extends Scene {
         int xIndex = 0;
         for(int i = 0; i < GameManager.getInstance().getN_skins_Background();i++)
         {
-            int xua = aux*xIndex + aux/2;
-            pos.x = xua - size.x/2;
-
-            xIndex++;
+            int diff = aux * (xIndex)+ aux/2;
+            pos.x = diff - size.x/2;
 
             // Si has llenado los huecos disponibles en esta fila pasas a la siguiente
-            if(i > 0 && i % N_SKIN_COLUMN == 0){
+            if(xIndex >= N_SKIN_COLUMN){
                 xIndex = 0;
                 pos.y += size.y + offset;
+                diff = aux/2;
+                pos.x = diff - size.x/2;
             }
+            xIndex++;
+
 
             skins[i] = new BuyObject(graphics, pos, size);
         }

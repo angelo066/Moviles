@@ -7,8 +7,6 @@ import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.TouchEvent;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -46,6 +44,9 @@ public class MasterMind extends Scene {
     private int indexWorld = -1;
     private int indexLevel;
 
+    //Booleano para controlar a donde nos envía el boton de hacia atras.
+    boolean world_Level = false;
+
     public MasterMind(Difficulty mode) {
         this.width = 1080;
         this.height = 1920;
@@ -74,6 +75,9 @@ public class MasterMind extends Scene {
         this.levelName = levelName;
         this.indexWorld = indexWorld;
         this.indexLevel = indexLevel;
+
+        //Por ser la constructora que usan los mundos
+        this.world_Level = true;
     }
 
     @Override
@@ -330,7 +334,12 @@ public class MasterMind extends Scene {
             if (buttonBack.handleInput(events.get(i))) {
                 audio.stopSound("clickboton.wav");
                 audio.playSound("clickboton.wav", false);
-                SceneManager.getInstance().addScene(new SelectionMenu());
+                if(!world_Level)SceneManager.getInstance().addScene(new SelectionMenu());
+                else{
+                    WorldSelectionMenu next_Scene = new WorldSelectionMenu();
+                    next_Scene.changeWorld(indexWorld);
+                    SceneManager.getInstance().addScene(next_Scene);
+                }
                 SceneManager.getInstance().goToNextScene();
                 break;
             }
@@ -360,5 +369,9 @@ public class MasterMind extends Scene {
         this.numColorsPerAttempt = levelInfo.getCodeSize();
         this.numAttempts = levelInfo.getAttempts();
         this.repeatColors = levelInfo.getRepeat();
+    }
+
+    public void setIndexWorld(int world){
+        indexWorld = world;
     }
 }

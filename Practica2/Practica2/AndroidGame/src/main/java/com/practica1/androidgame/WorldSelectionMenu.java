@@ -59,7 +59,7 @@ public class WorldSelectionMenu extends Scene {
         buttonLastWorld = new ButtonObject(graphics, new Vector2(banner_Pos.x - 270, banner_Pos.y), new Vector2(100, 100), "ArrowNavigators_Left.png");
         buttonLastWorld.center();
 
-        textWorld = new TextObject(graphics, new Vector2(banner_Pos.x, banner_Pos.y), "Nexa.ttf", "Mundo 1", Color.BLACK, 70, false, false);
+        textWorld = new TextObject(graphics, new Vector2(banner_Pos.x, banner_Pos.y), "Nexa.ttf", "Mundo " + String.valueOf(actual_WORLD+1), Color.BLACK, 70, false, false);
         textWorld.center();
 
         createButtons();
@@ -139,7 +139,11 @@ public class WorldSelectionMenu extends Scene {
                     if(levels.get(actual_WORLD).get(j).handleInput(events.get(i)))
                     {
                         String levelName = ResourceManager.getInstance().getLevel(actual_WORLD, j);
-                        SceneManager.getInstance().addScene(new MasterMind(levelName));
+
+                        MasterMind next_Scene = new MasterMind(levelName);
+                        next_Scene.setIndexWorld(actual_WORLD);
+
+                        SceneManager.getInstance().addScene(next_Scene);
                         SceneManager.getInstance().goToNextScene();
                         break;
                     }
@@ -148,9 +152,11 @@ public class WorldSelectionMenu extends Scene {
 
         }
 
+        //Que hace esto (Ahora mismo selected siempre es false)
         if (selected) {
             audio.stopSound("botonInterfaz.wav");
             audio.playSound("botonInterfaz.wav", false);
+
             SceneManager.getInstance().addScene(new MasterMind(mode));
             SceneManager.getInstance().goToNextScene();
         }
@@ -233,5 +239,9 @@ public class WorldSelectionMenu extends Scene {
             worldBackgrounds.add(background);
             int a = 0;
         }
+    }
+
+    public void changeWorld(int world){
+        actual_WORLD = world;
     }
 }

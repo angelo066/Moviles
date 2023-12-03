@@ -10,7 +10,6 @@ public class TouchEvent {
     public enum TouchEventType {
         TOUCH_DOWN,
         TOUCH_UP,
-        CLICK,
         TOUCH_DRAG
     }
 

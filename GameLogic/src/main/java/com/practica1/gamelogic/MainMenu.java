@@ -2,57 +2,55 @@ package com.practica1.gamelogic;
 
 import com.practica1.engine.Color;
 import com.practica1.engine.Engine;
-import com.practica1.engine.Font;
 import com.practica1.engine.Scene;
 import com.practica1.engine.TouchEvent;
-import com.practica1.engine.Vector2;
 
 import java.util.ArrayList;
 
 /**
  * Escena de inicio
  */
-public class MainMenu implements Scene {
-
-    private Engine engine;
-    private int width;
-    private int height;
+public class MainMenu extends Scene {
     private ButtonObject buttonPlay;
     private TextObject textTitle;
 
-
-    @Override
-    public void init(Engine engine) {
-        this.engine = engine;
-
-        width = 1080;
-        height = 1920;
-        engine.getGraphics().setSceneSize(width, height);
-
-        // Creacion de los objetos de la escena
-        Font fontTitle = engine.getGraphics().newFont("BarlowCondensed-Regular.ttf", 200, true, true);
-        textTitle = new TextObject(engine, width, height, new Vector2(width / 2, 380), fontTitle, "Master Mind", Color.BLACK);
-        textTitle.center();
-
-        Font fontButton = engine.getGraphics().newFont("Nexa.ttf", 80, false, false);
-        buttonPlay = new ButtonObject(engine, width, height, new Vector2(width / 2, height / 2), new Vector2(500, 150), 40, fontButton, "Jugar", Color.CYAN, Color.BLACK);
-        buttonPlay.centrar();
-
-        engine.getAudio().loadSound("botonInterfaz.wav", "start");
+    public MainMenu() {
+        this.width = 1080;
+        this.height = 1920;
     }
 
     @Override
-    public void update(double deltaTime) {
+    public void init(Engine engine) {
+        super.init(engine);
+
+        createTexts();
+
+        createButtons();
+    }
+
+    private void createButtons() {
+        Vector2 size = new Vector2(width / 2, height / 10);
+        Vector2 pos = new Vector2(width / 2, height / 2);
+
+        buttonPlay = new ButtonObject(graphics, new Vector2(pos), size, 40, Color.CYAN,
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Jugar", Color.BLACK, 80, false, false));
+        buttonPlay.center();
+    }
+
+    private void createTexts() {
+        textTitle = new TextObject(graphics, new Vector2(width / 2, height / 5), "BarlowCondensed-Regular.ttf", "Master Mind",
+                Color.BLACK, 200, true, true);
+        textTitle.center();
     }
 
     @Override
     public void render() {
         // Fondo de la APP
-        engine.getGraphics().clear(Color.WHITE);
+        graphics.clear(Color.WHITE.getValue());
 
         // Fondo del juego
-        engine.getGraphics().setColor(Color.WHITE);
-        engine.getGraphics().fillRectangle(0, 0, width, height);
+        graphics.setColor(Color.WHITE.getValue());
+        graphics.fillRectangle(0, 0, width, height);
 
         // Objetos
         textTitle.render();
@@ -62,10 +60,9 @@ public class MainMenu implements Scene {
     @Override
     public void handleInput(ArrayList<TouchEvent> events) {
         for (int i = 0; i < events.size(); i++) {
-            // Pasamos a la escena de seleccion
             if (buttonPlay.handleInput(events.get(i))) {
-                engine.getAudio().stopSound("start");
-                engine.getAudio().playSound("start", false);
+                audio.stopSound("botonInterfaz.wav");
+                audio.playSound("botonInterfaz.wav", false);
                 engine.setScene(new SelectionMenu());
                 break;
             }

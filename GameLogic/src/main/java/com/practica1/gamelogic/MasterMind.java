@@ -1,129 +1,261 @@
 package com.practica1.gamelogic;
 
+
 import com.practica1.engine.Color;
 import com.practica1.engine.Engine;
-import com.practica1.engine.Font;
-import com.practica1.engine.Graphics;
 import com.practica1.engine.Scene;
 import com.practica1.engine.TouchEvent;
-import com.practica1.engine.Vector2;
 
 import java.util.ArrayList;
+import java.util.Random;
 
-/**
- * Escena de juego
- */
-public class MasterMind implements Scene {
+public class MasterMind extends Scene {
 
-    private Engine engine;
-    private Graphics graph;
-    private int width;
-    private int height;
-    private TabObject tab;     // Instancia al tablero (lleva la logica de juego)
+    private Difficulty difficultyMode;
+    private int numColors;
+    private int numColorsPerAttempt;
+    private int numAttempts;
+    private int numDivisions;
+    private boolean repeatColors;
+
+
+    private Color[] winningCombination;
+    private Circle[] availableColors;
+    private ArrayList<Attempt> attempts;
+
+
+    private Random random;
+    private int currentAttempt;
+    private boolean colorBlind;
+
+
     private ButtonObject buttonColorBlind;
-    private ButtonObject buttonColorBlindActive;
     private ButtonObject buttonBack;
     private TextObject textAttempts;
     private TextObject title;
-    private Difficulty mode;
-    private boolean colorBlind;
+
+    private int attemptHeight;
+    private int heightOffset;
 
     public MasterMind(Difficulty mode) {
-        this.mode = mode;
+        this.width = 1080;
+        this.height = 1920;
+
+        this.numDivisions = 12;
+        this.difficultyMode = mode;
+
+        this.random = new Random();
+
+        this.currentAttempt = 0;
+
+        this.colorBlind = false;
     }
 
     @Override
     public void init(Engine engine) {
-        this.engine = engine;
-        this.graph = engine.getGraphics();
-        width = 1080;
-        height = 1920;
-        engine.getGraphics().setSceneSize(width, height);
+        super.init(engine);
 
-        // Creacion del tablero de juego
-        tab = new TabObject(engine, width, height, mode);
-        tab.init();
+        selectConfiguration();
 
-        // Botones
-        buttonColorBlind = new ButtonObject(engine, width, height, new Vector2(width - 120, 20), new Vector2(100, 100), "ojo.png");
-        buttonColorBlindActive = new ButtonObject(engine, width, height, new Vector2(width - 120, 20), new Vector2(100, 100), "ojo2.png");
+        createAttempts();
 
-        buttonBack = new ButtonObject(engine, width, height, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
+        createAvailableColors();
 
-        // Texto de indicacion de intentos restantes
-        Font font = graph.newFont("Nexa.ttf", 45, false, false);
-        String text = "Te quedan " + tab.getRemainingAttempts() + " intentos";
-        textAttempts = new TextObject(engine, width, height, new Vector2(width / 2, 72), font, text, Color.BLACK);
-        textAttempts.centerHorizontal();
+        selectWinningCombination();
 
-        Font fontTitle = graph.newFont("BarlowCondensed-Regular.ttf", 60, true, false);
-        title = new TextObject(engine, width, height, new Vector2(width / 2, 50), fontTitle, "Averigua el código", Color.BLACK);
-        title.center();
+        createButtons();
 
-        colorBlind = false;
+        createTexts();
     }
 
-    @Override
-    public void update(double deltaTime) {
+    private void selectConfiguration() {
+        switch (difficultyMode) {
+            case EASY:
+                this.numColors = 4;
+                this.numColorsPerAttempt = 4;
+                this.numAttempts = 6;
+                this.repeatColors = false;
+                break;
+            case MEDIUM:
+                this.numColors = 6;
+                this.numColorsPerAttempt = 4;
+                this.numAttempts = 8;
+                this.repeatColors = false;
+                break;
+            case HARD:
+                this.numColors = 8;
+                this.numColorsPerAttempt = 5;
+                this.numAttempts = 10;
+                this.repeatColors = true;
+                break;
+            case IMPOSSIBLE:
+                this.numColors = 9;
+                this.numColorsPerAttempt = 6;
+                this.numAttempts = 10;
+                this.repeatColors = true;
+                break;
+
+        }
+    }
+
+    private void createAttempts() {
+        this.attempts = new ArrayList<>();
+
+        this.attemptHeight = height / this.numDivisions;
+        this.heightOffset = attemptHeight / (this.numDivisions - 2);
+
+        for (int i = 0; i < this.numAttempts; i++) {
+            this.attempts.add(new Attempt(graphics, numColorsPerAttempt, i + 1,
+                    new Vector2(3, (attemptHeight * (i + 1))), new Vector2(width - 6, attemptHeight - heightOffset)));
+        }
+
+    }
+
+
+    private void createAvailableColors() {
+        int circleRadius = 50;
+        int offsetBetweenCircle = circleRadius / 3;
+        int widthCombination = (2 * circleRadius * numColors) + ((numColors - 1) * offsetBetweenCircle);
+        int startPosition = (width - widthCombination) / 2;
+        int tamDivision = height / numDivisions;
+
+        this.availableColors = new Circle[numColors];
+        for (int i = 0; i < this.numColors; i++) {
+            int x = startPosition + (offsetBetweenCircle * i) + (circleRadius * 2 * i);
+            int y = (tamDivision * (numDivisions - 1)) + ((tamDivision - 2 * circleRadius) / 2);
+            this.availableColors[i] = new Circle(graphics, new Vector2(x, y), circleRadius);
+            this.availableColors[i].setColor(Color.values()[i]);
+            this.availableColors[i].setUncovered(true);
+        }
+    }
+
+    private void selectWinningCombination() {
+        winningCombination = new Color[numColorsPerAttempt];
+        if (repeatColors) {
+            for (int i = 0; i < numColorsPerAttempt; i++) {
+                int index = random.nextInt(numColors);
+                winningCombination[i] = Color.values()[index];
+            }
+        } else {
+            ArrayList<Color> colorsAux = new ArrayList<>();
+            for (int i = 0; i < numColors; i++) {
+                colorsAux.add(Color.values()[i]);
+            }
+
+            for (int i = 0; i < numColorsPerAttempt; i++) {
+                int index = random.nextInt(colorsAux.size());
+                winningCombination[i] = colorsAux.get(index);
+                colorsAux.remove(index);
+            }
+        }
+
+        for (int i = 0; i < winningCombination.length; i++)
+            System.out.println(winningCombination[i]);
+    }
+
+    private void createTexts() {
+        textAttempts = new TextObject(graphics, new Vector2(width / 2, height / numDivisions / 2),
+                "Nexa.ttf", "Te quedan " + (numAttempts - currentAttempt) + " intentos", Color.BLACK, 45, false, false);
+        textAttempts.centerHorizontal();
+
+        title = new TextObject(graphics, new Vector2(width / 2, height / numDivisions / 3),
+                "BarlowCondensed-Regular.ttf", "Averigua el código", Color.BLACK, 60, true, false);
+        title.center();
+    }
+
+    private void createButtons() {
+        buttonColorBlind = new ButtonObject(graphics, new Vector2(width - 120, 20), new Vector2(100, 100), "ojo.png");
+
+        buttonBack = new ButtonObject(graphics, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
     }
 
     @Override
     public void render() {
-        // Fondo APP
-        engine.getGraphics().clear(Color.WHITE);
 
-        // Fondo Juego
-        graph.setColor(Color.WHITE);
-        graph.fillRectangle(0, 0, width, height);
+        // Fondo de APP
+        graphics.clear(Color.WHITE.getValue());
 
-        // Tablero con todos los intentos
-        tab.render();
+        // Fondo de Juego
+        graphics.setColor(Color.WHITE.getValue());
+        graphics.fillRectangle(0, 0, width, height);
 
-        // Botones
-        if (colorBlind)
-            buttonColorBlindActive.render();
-        else
-            buttonColorBlind.render();
+        // Intentos
+        for (int i = 0; i < this.numAttempts; i++)
+            attempts.get(i).render();
 
-        buttonBack.render();
+
+        // Colores disponibles
+        graphics.setColor(Color.GREY.getValue());
+        graphics.fillRectangle(0, (numDivisions - 1) * attemptHeight, width, attemptHeight);
+
+        for (int i = 0; i < availableColors.length; i++)
+            availableColors[i].render();
 
         // Texto de los intentos restantes
-        String text = "Te quedan " + tab.getRemainingAttempts() + " intentos";
-        textAttempts.setText(text);
+        graphics.setColor(Color.WHITE.getValue());
+        graphics.fillRectangle(0, 0, width, attemptHeight);
+        textAttempts.setText("Te quedan " + (numAttempts - currentAttempt) + " intentos");
         textAttempts.render();
 
         title.render();
+
+        // Botones
+        buttonColorBlind.render();
+
+        buttonBack.render();
     }
 
     @Override
     public void handleInput(ArrayList<TouchEvent> events) {
+        outerloop:
         for (int i = 0; i < events.size(); i++) {
-            // Handle input del tablero, false si el juego no se ha acabado, true e.o.c
-            if (tab.handleInput(events.get(i)))
-                break;
 
-            // Activar / Desactivar daltonismo
-            if (colorBlind) {
-                if (buttonColorBlindActive.handleInput(events.get(i))) {
-                    engine.getAudio().stopSound("click");
-                    engine.getAudio().playSound("click", false);
-                    tab.colorblind(false);
-                    colorBlind = !colorBlind;
-                }
-            } else {
-                if (buttonColorBlind.handleInput(events.get(i))) {
-                    engine.getAudio().stopSound("click");
-                    engine.getAudio().playSound("click", false);
-                    tab.colorblind(true);
-                    colorBlind = !colorBlind;
+            attempts.get(currentAttempt).handleInput(events.get(i));
+
+            for (int j = 0; j < availableColors.length; j++) {
+                if (availableColors[j].handleInput(events.get(i))) {
+
+                    attempts.get(currentAttempt).setCircle(availableColors[j].getColor(), winningCombination);
+
+                    if (attempts.get(currentAttempt).getUncoveredCircles() == numColorsPerAttempt) {
+
+                        if (attempts.get(currentAttempt).isCorrectCombination()) {
+                            engine.setScene(new GameOver(winningCombination, true, difficultyMode, currentAttempt + 1, colorBlind));
+                            break outerloop;
+                        } else {
+                            currentAttempt++;
+
+                            if (currentAttempt == numAttempts) {
+                                engine.setScene(new GameOver(winningCombination, false, difficultyMode, currentAttempt + 1, colorBlind));
+                                break outerloop;
+                            }
+                        }
+                    }
+
                 }
             }
 
+            if (buttonColorBlind.handleInput(events.get(i))) {
+                colorBlind = !colorBlind;
 
-            // Volver a la escena de seleccion
+                audio.stopSound("clickboton.wav");
+                audio.playSound("clickboton.wav", false);
+
+                for (int j = 0; j < numAttempts; j++)
+                    attempts.get(j).setColorblind(colorBlind);
+
+                for (int j = 0; j < availableColors.length; j++)
+                    availableColors[j].setColorblind(colorBlind);
+
+                if (colorBlind)
+                    buttonColorBlind.changeImage("ojo2.png");
+                else
+                    buttonColorBlind.changeImage("ojo.png");
+            }
+
             if (buttonBack.handleInput(events.get(i))) {
-                engine.getAudio().stopSound("click");
-                engine.getAudio().playSound("click", false);
+                audio.stopSound("clickboton.wav");
+                audio.playSound("clickboton.wav", false);
                 engine.setScene(new SelectionMenu());
                 break;
             }

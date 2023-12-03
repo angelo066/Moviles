@@ -2,7 +2,8 @@ package com.practica1.desktopgame;
 
 import com.practica1.desktopengine.EngineDesktop;
 import com.practica1.engine.Scene;
-import com.practica1.gamelogic.MainMenu;
+import com.practica1.gamelogic.AssetsLoad;
+import com.practica1.gamelogic.ResourceManager;
 
 import javax.swing.JFrame;
 
@@ -28,8 +29,9 @@ public class DesktopGame {
         }
 
         EngineDesktop engine = new EngineDesktop(frame);
+        ResourceManager.Init(engine);
 
-        Scene scene = new MainMenu();
+        Scene scene = new AssetsLoad();
         engine.setScene(scene);
 
         engine.resume();

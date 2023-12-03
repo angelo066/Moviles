@@ -43,5 +43,4 @@ public class ImageDesktop implements Image {
         return image;
     }
 
-    ;
 }

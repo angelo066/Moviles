@@ -29,14 +29,6 @@ public class InputHandler implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
-        TouchEvent event = new TouchEvent();
-        event.x = mouseEvent.getX();
-        event.y = mouseEvent.getY();
-        event.type = TouchEvent.TouchEventType.CLICK;
-
-        synchronized (this) {
-            pendingEvents.add(event);
-        }
     }
 
     @Override
@@ -74,16 +66,10 @@ public class InputHandler implements MouseListener {
     }
 
     /**
-     * Limpia los eventos
-     */
-    public void clearEvents() {
-        events.clear();
-    }
-
-    /**
      * @return Devuelve los eventos ocurridos en el ultimo frame de la aplicacion
      */
     public synchronized ArrayList<TouchEvent> getTouchEvents() {
+        events.clear();
         events.addAll(pendingEvents);
         pendingEvents.clear();
         return events;

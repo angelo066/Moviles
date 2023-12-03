@@ -19,15 +19,6 @@ public interface Engine {
      */
     Audio getAudio();
 
-    /**
-     * Reanuda la ejecucion de la aplicacion
-     */
-    void resume();
-
-    /**
-     * Pausa la ejecucion de la aplicacion
-     */
-    void pause();
 
     /**
      * Establece la escena de la aplicacion

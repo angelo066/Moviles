@@ -20,20 +20,20 @@ public class AudioAndroid implements Audio {
     private SoundPool soundPool;
 
     /**
-     * @param view Ventana de la aplicacion
+     * @param assetMngr AssetManager
      */
-    public AudioAndroid(SurfaceView view) {
-        assetManager = view.getContext().getAssets();
+    public AudioAndroid(AssetManager assetMngr) {
+        assetManager = assetMngr;
         soundPool = new SoundPool.Builder().setMaxStreams(10).build();
         soundsMap = new HashMap<>();
     }
 
     @Override
-    public void loadSound(String file, String id) {
-        if (soundsMap.containsKey(id)) return;
+    public void loadSound(String file) {
+        if (soundsMap.containsKey(file)) return;
 
         SoundAndroid newSound = new SoundAndroid(soundsPath + file, soundPool, assetManager);
-        soundsMap.put(id, newSound);
+        soundsMap.put(file, newSound);
     }
 
     @Override
@@ -42,8 +42,7 @@ public class AudioAndroid implements Audio {
 
         SoundAndroid sound = soundsMap.get(id);
 
-        sound.play();
-        sound.loop(loop);
+        sound.play(loop);
     }
 
     @Override

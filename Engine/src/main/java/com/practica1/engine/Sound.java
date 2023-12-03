@@ -8,7 +8,7 @@ public interface Sound {
     /**
      * Reproduce el sonido
      */
-    void play();
+    void play(boolean loop);
 
     /**
      * Para el sonido

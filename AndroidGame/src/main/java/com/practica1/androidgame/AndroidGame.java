@@ -7,7 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.practica1.androidengine.EngineAndroid;
 import com.practica1.engine.Scene;
-import com.practica1.gamelogic.MainMenu;
+import com.practica1.gamelogic.AssetsLoad;
+import com.practica1.gamelogic.ResourceManager;
 
 public class AndroidGame extends AppCompatActivity {
 
@@ -23,7 +24,9 @@ public class AndroidGame extends AppCompatActivity {
 
         engine = new EngineAndroid(renderView);
 
-        Scene scene = new MainMenu();
+        ResourceManager.Init(engine);
+
+        Scene scene = new AssetsLoad();
         engine.setScene(scene);
 
         engine.resume();
@@ -39,5 +42,11 @@ public class AndroidGame extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         engine.pause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ResourceManager.Release();
     }
 }

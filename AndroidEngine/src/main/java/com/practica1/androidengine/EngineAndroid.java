@@ -9,17 +9,21 @@ import com.practica1.engine.Input;
 import com.practica1.engine.Scene;
 import com.practica1.engine.TouchEvent;
 
+import java.util.ArrayList;
+
 /**
  * Clase motor de la aplicacion en android
  */
 public class EngineAndroid implements Engine, Runnable {
 
-    private boolean running = false;
+    private volatile boolean running = false;
     private Thread thread;
 
     private SurfaceView view;
 
     private Scene scene;
+    private Scene newScene;
+
 
     private GraphicsAndroid graphicsAndroid;
     private InputAndroid inputAndroid;
@@ -32,7 +36,9 @@ public class EngineAndroid implements Engine, Runnable {
         this.view = view;
         graphicsAndroid = new GraphicsAndroid(view);
         inputAndroid = new InputAndroid(view);
-        audioAndroid = new AudioAndroid(view);
+        audioAndroid = new AudioAndroid(view.getContext().getAssets());
+        scene = null;
+        newScene = null;
     }
 
 
@@ -59,11 +65,14 @@ public class EngineAndroid implements Engine, Runnable {
 
         while (running && view.getWidth() == 0) ;
 
-        if (scene == null) pause();
-
         long lastFrameTime = System.nanoTime();
 
         while (running) {
+
+            //cambiar la escena
+            changeScene();
+
+            if (scene == null) break;
 
             //handleInput
             handleInput();
@@ -80,7 +89,9 @@ public class EngineAndroid implements Engine, Runnable {
         }
     }
 
-    @Override
+    /**
+     * Reanuda la ejecucion de la aplicacion
+     */
     public void resume() {
         if (!running) {
             running = true;
@@ -89,7 +100,9 @@ public class EngineAndroid implements Engine, Runnable {
         }
     }
 
-    @Override
+    /**
+     * Pausa la ejecucion de la aplicacion
+     */
     public void pause() {
         if (running) {
             running = false;
@@ -107,9 +120,22 @@ public class EngineAndroid implements Engine, Runnable {
 
     @Override
     public void setScene(Scene scene) {
+        if (this.scene == null)
+            this.scene = scene;
+        else
+            newScene = scene;
 
-        this.scene = scene;
-        this.scene.init(this);
+        scene.init(this);
+    }
+
+    /**
+     * Cambia, si es necesario, la escena al principio de frame
+     */
+    private void changeScene() {
+        if (newScene != null) {
+            scene = newScene;
+            newScene = null;
+        }
     }
 
     /**
@@ -135,15 +161,16 @@ public class EngineAndroid implements Engine, Runnable {
      */
     private void handleInput() {
 
-        for (TouchEvent event : inputAndroid.getTouchEvents()) {
+        ArrayList<TouchEvent> inputEvents = inputAndroid.getTouchEvents();
+
+        for (TouchEvent event : inputEvents) {
             event.x -= graphicsAndroid.getTranslateX();
             event.y -= graphicsAndroid.getTranslateY();
             event.x /= graphicsAndroid.getScaleX();
             event.y /= graphicsAndroid.getScaleY();
-        }
-        scene.handleInput(inputAndroid.getTouchEvents());
 
-        inputAndroid.clearEvents();
+        }
+        scene.handleInput(inputEvents);
 
     }
 }

@@ -17,11 +17,11 @@ public class AudioDesktop implements Audio {
     }
 
     @Override
-    public void loadSound(String file, String id) {
-        if (soundsMap.containsKey(id)) return;
+    public void loadSound(String file) {
+        if (soundsMap.containsKey(file)) return;
 
         SoundDesktop newSound = new SoundDesktop(soundsPath + file);
-        soundsMap.put(id, newSound);
+        soundsMap.put(file, newSound);
     }
 
     @Override
@@ -30,8 +30,7 @@ public class AudioDesktop implements Audio {
 
         SoundDesktop sound = soundsMap.get(id);
 
-        sound.play();
-        sound.loop(loop);
+        sound.play(loop);
     }
 
     @Override

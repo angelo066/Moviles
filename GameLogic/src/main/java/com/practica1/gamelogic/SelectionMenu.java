@@ -1,23 +1,17 @@
 package com.practica1.gamelogic;
 
+
 import com.practica1.engine.Color;
 import com.practica1.engine.Engine;
-import com.practica1.engine.Font;
 import com.practica1.engine.Scene;
 import com.practica1.engine.TouchEvent;
-import com.practica1.engine.Vector2;
 
 import java.util.ArrayList;
 
 /**
  * Escena de seleccion de dificultad
  */
-public class SelectionMenu implements Scene {
-
-    private Engine engine;
-    private int width;
-    private int height;
-
+public class SelectionMenu extends Scene {
     private ButtonObject buttonEasy;
     private ButtonObject buttonMedium;
     private ButtonObject buttonHard;
@@ -25,62 +19,61 @@ public class SelectionMenu implements Scene {
     private ButtonObject buttonBack;
     private TextObject textSelection;
 
-    @Override
-    public void init(Engine engine) {
-        this.engine = engine;
-
-        width = 1080;
-        height = 1920;
-        engine.getGraphics().setSceneSize(width, height);
-
-        int offset = 40;
-
-        // Creacion de los objetos de la escena
-        // Mensaje de seleccion
-        Font fontSelection = engine.getGraphics().newFont("BarlowCondensed-Regular.ttf", 75, true, false);
-        textSelection = new TextObject(engine, width, height, new Vector2(width / 2, height / 7), fontSelection, "¿En qué dificultad quieres jugar?", Color.BLACK);
-        textSelection.center();
-
-        // Botones
-        Font fontButton = engine.getGraphics().newFont("Nexa.ttf", 80, false, false);
-        Vector2 pos = new Vector2(width / 2, height / 2);
-        Vector2 size = new Vector2(500, 150);
-
-        Vector2 posEasy = new Vector2(pos.x, pos.y - (3 * size.y) / 2 - (3 * offset));
-        buttonEasy = new ButtonObject(engine, width, height, posEasy, new Vector2(size), 50, fontButton, "Fácil", Color.GREEN, Color.BLACK);
-        buttonEasy.centrar();
-
-        Vector2 posMedium = new Vector2(pos.x, pos.y - size.y / 2 - offset);
-        buttonMedium = new ButtonObject(engine, width, height, posMedium, new Vector2(size), 50, fontButton, "Medio", Color.YELLOW, Color.BLACK);
-        buttonMedium.centrar();
-
-        Vector2 posHard = new Vector2(pos.x, pos.y + size.y / 2 + offset);
-        buttonHard = new ButtonObject(engine, width, height, posHard, new Vector2(size), 50, fontButton, "Difícil", Color.ORANGE, Color.BLACK);
-        buttonHard.centrar();
-
-        Vector2 posimposible = new Vector2(pos.x, pos.y + (3 * size.y) / 2 + (3 * offset));
-        buttonImpossible = new ButtonObject(engine, width, height, posimposible, new Vector2(size), 50, fontButton, "Imposible", Color.RED, Color.BLACK);
-        buttonImpossible.centrar();
-
-        buttonBack = new ButtonObject(engine, width, height, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
-
-        // Carga de audio
-        engine.getAudio().loadSound("clickboton.wav", "click");
+    public SelectionMenu() {
+        this.width = 1080;
+        this.height = 1920;
     }
 
     @Override
-    public void update(double deltaTime) {
+    public void init(Engine engine) {
+        super.init(engine);
 
+        createTexts();
+
+        createButtons();
+    }
+
+    private void createTexts() {
+        textSelection = new TextObject(graphics, new Vector2(width / 2, height / 7),
+                "BarlowCondensed-Regular.ttf", "¿En qué dificultad quieres jugar?", Color.BLACK, 75, true, false);
+        textSelection.center();
+    }
+
+    private void createButtons() {
+        int offsetY = 40;
+        Vector2 pos = new Vector2(width / 2, height / 10 * 3);
+        Vector2 size = new Vector2(width / 2, height / 10);
+
+        buttonEasy = new ButtonObject(graphics, new Vector2(pos), size, 50, Color.GREEN,
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Fácil", Color.BLACK, 80, false, false));
+        buttonEasy.center();
+
+        pos.y += (height / 10 + offsetY);
+        buttonMedium = new ButtonObject(graphics, new Vector2(pos), size, 50, Color.YELLOW,
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Medio", Color.BLACK, 80, false, false));
+        buttonMedium.center();
+
+        pos.y += (height / 10 + offsetY);
+        buttonHard = new ButtonObject(graphics, new Vector2(pos), size, 50, Color.ORANGE,
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Difícil", Color.BLACK, 80, false, false));
+        buttonHard.center();
+
+        pos.y += (height / 10 + offsetY);
+        buttonImpossible = new ButtonObject(graphics, new Vector2(pos), size, 50, Color.RED,
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Imposible", Color.BLACK, 80, false, false));
+        buttonImpossible.center();
+
+        buttonBack = new ButtonObject(graphics, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
     }
 
     @Override
     public void render() {
         // Fondo de APP
-        engine.getGraphics().clear(Color.WHITE);
+        graphics.clear(Color.WHITE.getValue());
 
         // Fondo de Juego
-        engine.getGraphics().setColor(Color.WHITE);
-        engine.getGraphics().fillRectangle(0, 0, width, height);
+        graphics.setColor(Color.WHITE.getValue());
+        graphics.fillRectangle(0, 0, width, height);
 
         // Texto de seleccion
         textSelection.render();
@@ -105,7 +98,12 @@ public class SelectionMenu implements Scene {
         // Si es un boton de juego asignamos la dificultad
         for (int i = 0; i < events.size() && !selected; i++) {
 
-            if (buttonEasy.handleInput(events.get(i))) {
+            if (buttonBack.handleInput(events.get(i))) {
+                engine.setScene(new MainMenu());
+                audio.stopSound("botonInterfaz.wav");
+                audio.playSound("botonInterfaz.wav", false);
+                break;
+            } else if (buttonEasy.handleInput(events.get(i))) {
                 mode = Difficulty.EASY;
                 selected = true;
             } else if (buttonMedium.handleInput(events.get(i))) {
@@ -117,17 +115,12 @@ public class SelectionMenu implements Scene {
             } else if (buttonImpossible.handleInput(events.get(i))) {
                 mode = Difficulty.IMPOSSIBLE;
                 selected = true;
-            } else if (buttonBack.handleInput(events.get(i))) {
-                engine.setScene(new MainMenu());
-                engine.getAudio().stopSound("click");
-                engine.getAudio().playSound("click", false);
             }
-
         }
 
         if (selected) {
-            engine.getAudio().stopSound("click");
-            engine.getAudio().playSound("click", false);
+            audio.stopSound("botonInterfaz.wav");
+            audio.playSound("botonInterfaz.wav", false);
             engine.setScene(new MasterMind(mode));
         }
     }

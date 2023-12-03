@@ -37,8 +37,11 @@ public class SoundAndroid implements Sound {
     }
 
     @Override
-    public void play() {
-        streamId = soundPool.play(soundId, 1, 1, 1, 0, 1);
+    public void play(boolean loop) {
+        if (loop)
+            streamId = soundPool.play(soundId, 1, 1, 1, -1, 1);
+        else
+            streamId = soundPool.play(soundId, 1, 1, 1, 0, 1);
     }
 
     @Override

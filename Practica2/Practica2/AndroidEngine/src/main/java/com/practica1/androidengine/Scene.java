@@ -13,6 +13,7 @@ public class Scene {
     protected Engine engine;
 
     protected Graphics graphics;
+
     protected Audio audio;
     private boolean initialized = false;
 

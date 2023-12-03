@@ -26,10 +26,4 @@ public class InputDesktop implements Input {
         return handler.getTouchEvents();
     }
 
-    /**
-     * Limpia los eventos del frame pasado
-     */
-    public void clearEvents() {
-        handler.clearEvents();
-    }
 }

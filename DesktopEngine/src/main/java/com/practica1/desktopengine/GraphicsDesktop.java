@@ -75,13 +75,13 @@ public class GraphicsDesktop implements Graphics {
     }
 
     @Override
-    public void setColor(Color color) {
-        java.awt.Color newColor = new java.awt.Color(color.getValue());
+    public void setColor(int color) {
+        java.awt.Color newColor = new java.awt.Color(color);
         g_graphics.setColor(newColor);
     }
 
     @Override
-    public void clear(Color color) {
+    public void clear(int color) {
         AffineTransform transform = g_graphics.getTransform();
         g_graphics.setTransform(frameTransform);
         setColor(color);

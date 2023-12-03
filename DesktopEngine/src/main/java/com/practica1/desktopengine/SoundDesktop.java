@@ -31,10 +31,11 @@ public class SoundDesktop implements Sound {
     }
 
     @Override
-    public void play() {
+    public void play(boolean loop) {
         if (!audioClip.isRunning()) {
             audioClip.setFramePosition(0);
             audioClip.start();
+            loop(loop);
         }
     }
 

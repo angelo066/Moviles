@@ -57,14 +57,14 @@ public interface Graphics {
      *
      * @param color
      */
-    void setColor(Color color);
+    void setColor(int color);
 
     /**
      * Limpia el canvas y lo pinta de un color
      *
      * @param color Color para el canvas
      */
-    void clear(Color color);
+    void clear(int color);
 
     /**
      * Translada el canvas

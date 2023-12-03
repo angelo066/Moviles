@@ -11,7 +11,7 @@ public interface Audio {
      * @param file Nombre del archivo
      * @param id   Id asociado para el hashmap
      */
-    void loadSound(String file, String id);
+    void loadSound(String file);
 
     /**
      * Reproduce un sonido guardado en el hashmap de la clase

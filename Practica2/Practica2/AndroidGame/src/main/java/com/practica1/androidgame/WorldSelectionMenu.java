@@ -1,10 +1,13 @@
 package com.practica1.androidgame;
 
+import com.google.gson.Gson;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.TouchEvent;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -193,21 +196,40 @@ public class WorldSelectionMenu extends Scene {
 
     private void createBackgrounds()
     {
+        // Cargar todos los estilos de los fondos
+        // Creamos el parser del json
+        Gson gson  = new Gson();
+        BufferedReader br = null; // -> esto igual se puede sacar al resource manager o hacer algo en el motor ?
+
+        // Guardamos los nombres de las imagenes en una array
+        String[] styleNames = new String[num_WORLDS];
+        for(int i = 0; i < num_WORLDS; i++)
+        {
+            String styleName = ResourceManager.getInstance().getWorldSytle(i);
+
+            // Leemos el json
+            try {
+                br = engine.openAssetFile(styleName);
+            }
+            catch (IOException ex)
+            {
+                System.out.println("Error loading world style");
+            }
+
+            // Deserializamos el json en un objeto con la info del mundo
+            WordlInfo worldStyle = gson.fromJson(br, WordlInfo.class);
+            styleNames[i] = worldStyle.getStyle();
+        }
+
+        // Inicializamos la lista de imagenes de fondos
         worldBackgrounds = new ArrayList<>();
 
+        // Creamos las imagenes
         for(int i = 0; i < num_WORLDS; i++)
         {
             Vector2 pos = new Vector2(0, 200);
             Vector2 size = new Vector2(width, height-200);
-            //String name = ResourceManager.getInstance().getImage("moe_background");
-            ImageObject background;
-            if(i == 0)
-                background = new ImageObject(graphics, pos, size, "moe_background.png");
-            else if(i == 1)
-                background = new ImageObject(graphics, pos, size, "nuclear_background.png");
-            else
-                background = new ImageObject(graphics, pos, size, "otto_background.png");
-
+            ImageObject background = new ImageObject(graphics, pos, size, styleNames[i] + ".png");
             worldBackgrounds.add(background);
             int a = 0;
         }

@@ -43,6 +43,8 @@ public class MasterMind extends Scene {
     private int attemptsRenderOffsetY;
     private int lastYPosition;
     private String levelName = "";
+    private int indexWorld = -1;
+    private int indexLevel;
 
     public MasterMind(Difficulty mode) {
         this.width = 1080;
@@ -70,13 +72,15 @@ public class MasterMind extends Scene {
         this.colorBlind = false;
 
         this.levelName = levelName;
+        this.indexWorld = indexWorld;
+        this.indexLevel = indexLevel;
     }
 
     @Override
     public void init(Engine engine) {
         super.init(engine);
 
-        if(levelName == "")
+        if(levelName == "" && indexWorld == -1)
             selectConfiguration();
         else
             createLevel();
@@ -338,11 +342,10 @@ public class MasterMind extends Scene {
         // Creamos el parser del json
         Gson gson  = new Gson();
         BufferedReader br = null;
-        String json = "";
-        String levelname = "levels/world1/level_1_01.json";
+
         // Leemos el json
         try {
-            br = engine.openAssetFile(levelname);
+            br = engine.openAssetFile(levelName);
         }
         catch (IOException ex)
         {

@@ -167,6 +167,10 @@ public class ResourceManager {
     {
         return levels.get(worldIndex).get(levelIndex);
     }
+    public String getWorldSytle(int worldIndex)
+    {
+        return levels.get(worldIndex).get(levels.get(worldIndex).size()-1);
+    }
 
     public int getNumWorlds(){return levels.size();}
     public int getNumLevels(int worldIndex){return levels.get(worldIndex).size() - 1;} // el ultimo archivo es el style.json

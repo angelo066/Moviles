@@ -10,23 +10,22 @@ import com.practica1.androidengine.TouchEvent;
 public class Circle {
     private TextObject id;
     private Color color;
-    private boolean uncovered; // para cuando asignamos un color al tablero
-    private boolean colorblind; // para cuando pinchamos encima
+    private boolean uncovered;
+    private boolean colorblind;
     private int circleRadius;
     private Vector2 pos;
     private Graphics graphics;
-    private int offsetY;
 
     /**
+     * @param graphics     Objecto graphics del motor
      * @param pos          Posicion del circulo
-     * @param circleRadius
+     * @param circleRadius Radio del circulo
      */
     public Circle(Graphics graphics, Vector2 pos, int circleRadius) {
         this.graphics = graphics;
         this.circleRadius = circleRadius;
         this.pos = pos;
         this.color = Color.NO_COLOR;
-        this.offsetY = 0;
 
         this.id = new TextObject(graphics, new Vector2(pos.x + circleRadius, pos.y + circleRadius),
                 "Nexa.ttf", String.valueOf(this.color.getId()), Color.BLACK, 50, false, false);
@@ -36,14 +35,15 @@ public class Circle {
         this.colorblind = false;
     }
 
+    /**
+     * Renderizado
+     */
     public void render() {
-
-        int y = pos.y + offsetY;
 
         // Si se ha descubierto pintamos el color normal
         if (uncovered) {
             graphics.setColor(color.getValue());
-            graphics.fillCircle(pos.x, y, circleRadius);
+            graphics.fillCircle(pos.x, pos.y, circleRadius);
 
             // Si el modo daltonico esta activado pintamos el numero
             if (colorblind)
@@ -54,22 +54,27 @@ public class Circle {
         else {
             int internCircleRadius = circleRadius / 4;
             graphics.setColor(Color.GREY.getValue());
-            graphics.fillCircle(pos.x, y, circleRadius);
+            graphics.fillCircle(pos.x, pos.y, circleRadius);
             graphics.setColor(Color.DARK_GREY.getValue());
-            graphics.fillCircle(pos.x + circleRadius - internCircleRadius, y + circleRadius - internCircleRadius, internCircleRadius);
+            graphics.fillCircle(pos.x + circleRadius - internCircleRadius, pos.y + circleRadius - internCircleRadius, internCircleRadius);
         }
 
     }
 
+    /**
+     * Manejo de input
+     *
+     * @param event
+     * @return Si se ha pulsado el objeto
+     */
     public boolean handleInput(TouchEvent event) {
         int touchX = event.x;
         int touchY = event.y;
 
         if (event.type == TouchEvent.TouchEventType.TOUCH_DOWN) {
 
-            //Dentro de manera horizontal
             if (touchX > pos.x && touchX < pos.x + circleRadius * 2) {
-                if (touchY > pos.y + offsetY && touchY < pos.y + offsetY + circleRadius * 2)
+                if (touchY > pos.y && touchY < pos.y + circleRadius * 2)
                     return true;
             }
         }
@@ -117,9 +122,23 @@ public class Circle {
         return this.uncovered;
     }
 
-    public void setOffsetY(int newOffset){
-        offsetY = newOffset;
-        this.id.setOffsetY(newOffset);
+    /**
+     * Traslada el objeto
+     *
+     * @param translateX
+     * @param translateY
+     */
+    public void translate(int translateX, int translateY) {
+        pos.x += translateX;
+        pos.y += translateY;
+        id.translate(translateX, translateY);
+    }
+
+    /**
+     * @return Posicion del objeto
+     */
+    public Vector2 getPos() {
+        return pos;
     }
 
 }

@@ -21,14 +21,13 @@ public class Attempt {
     private int uncoveredCircles;
     private int currentIndex;
     private boolean correctCombination;
-    private int offsetY;
 
     /**
-     * @param graphics Objeto graphics del motor
+     * @param graphics            Objeto graphics del motor
      * @param numColorsPerAttempt Numero de casillas del intento
-     * @param id Numero del intento
-     * @param pos Posicion del intento
-     * @param size Tamanio del intento
+     * @param id                  Numero del intento
+     * @param pos                 Posicion del intento
+     * @param size                Tamanio del intento
      */
     public Attempt(Graphics graphics, int numColorsPerAttempt, int id, Vector2 pos, Vector2 size) {
         this.graphics = graphics;
@@ -37,10 +36,11 @@ public class Attempt {
         this.uncoveredCircles = 0;
         this.currentIndex = 0;
         this.correctCombination = false;
-
         this.numDivisions = 6;
         this.widthPerDivision = size.x / numDivisions;
 
+
+        //Crea los circulos
         int circleRadius = 50;
         int offsetBetweenCircle = circleRadius / 3;
         int widthCombination = (2 * circleRadius * numColorsPerAttempt) + ((numColorsPerAttempt - 1) * offsetBetweenCircle);
@@ -53,38 +53,54 @@ public class Attempt {
             this.combination[i] = new Circle(graphics, new Vector2(x, y), circleRadius);
         }
 
+
+        //Texto para el numero de intento
         this.attemptNumber = new TextObject(graphics, new Vector2(pos.x + widthPerDivision / 2, pos.y + size.y / 2), "Nexa.ttf",
                 String.valueOf(id), Color.BLACK, 50, false, false);
         this.attemptNumber.center();
 
-        clue = new Clue(graphics, new Vector2(pos.x + (widthPerDivision * (numDivisions - 1)), pos.y), new Vector2(widthPerDivision, size.y), numColorsPerAttempt);
 
+        //Objeto clue para las pistas
+        clue = new Clue(graphics, new Vector2(pos.x + (widthPerDivision * (numDivisions - 1)), pos.y), new Vector2(widthPerDivision, size.y), numColorsPerAttempt);
     }
 
+    /**
+     * Render del intento
+     */
     public void render() {
-        int y = pos.y + offsetY;
 
+        //Recuadro
         graphics.setColor(Color.GREY.getValue());
-        graphics.drawRoundRectangle(pos.x, y, size.x, size.y, 20);
+        graphics.drawRoundRectangle(pos.x, pos.y, size.x, size.y, 20);
 
+        //Numero de intento
         attemptNumber.render();
 
+        //Lineas separadoras
         graphics.setColor(Color.BLACK.getValue());
-        graphics.drawLine(pos.x + widthPerDivision, y + 10, pos.x + widthPerDivision, y + size.y - 10);
-        graphics.drawLine(pos.x + widthPerDivision * 5, y + 10, pos.x + widthPerDivision * 5, y + size.y - 10);
+        graphics.drawLine(pos.x + widthPerDivision, pos.y + 10, pos.x + widthPerDivision, pos.y + size.y - 10);
+        graphics.drawLine(pos.x + widthPerDivision * 5, pos.y + 10, pos.x + widthPerDivision * 5, pos.y + size.y - 10);
 
-
+        //Combinacion
         for (int i = 0; i < combination.length; i++)
             combination[i].render();
 
+        //Si se ha descubierto toda la combinacion, renderizar pistas
         if (uncoveredCircles == combination.length)
             clue.render();
     }
 
+    /**
+     * Manejo de input del intento
+     *
+     * @param touchEvent
+     */
     public void handleInput(TouchEvent touchEvent) {
         for (int i = 0; i < combination.length; i++) {
+            //Si no se ha descubierto ese circulo
             if (!combination[i].getUncovered()) continue;
 
+            //Si se toca un circulo del intento
             if (combination[i].handleInput(touchEvent)) {
                 combination[i].setUncovered(false);
                 uncoveredCircles--;
@@ -93,10 +109,17 @@ public class Attempt {
         }
     }
 
+    /**
+     * Establece el siguiente circulo del intento a "color"
+     * Establece el objeto pista si se han rellenado todos los circulos del intento
+     *
+     * @param color
+     * @param winningCombination Combinacion ganadora
+     */
     public void setCircle(Color color, Color[] winningCombination) {
+        uncoveredCircles++;
         combination[currentIndex].setUncovered(true);
         combination[currentIndex].setColor(color);
-        uncoveredCircles++;
 
         for (int i = currentIndex + 1; i < combination.length; i++) {
             if (!combination[i].getUncovered()) {
@@ -105,7 +128,15 @@ public class Attempt {
             }
         }
 
-        //Set Clue
+        setClue(winningCombination);
+    }
+
+    /**
+     * Establece el objeto pista
+     *
+     * @param winningCombination Combinacion ganadora
+     */
+    private void setClue(Color[] winningCombination) {
         if (uncoveredCircles == winningCombination.length) {
             int numFoundCircles = 0, numFoundColors = 0;
 
@@ -147,25 +178,53 @@ public class Attempt {
         }
     }
 
+    /**
+     * @return Numero de circulos descubiertos
+     */
     public int getUncoveredCircles() {
         return uncoveredCircles;
     }
 
+    /**
+     * @return Si la combinacion del intento es la ganadora
+     */
     public boolean isCorrectCombination() {
         return correctCombination;
     }
 
+    /**
+     * Establece el modo daltonicos
+     *
+     * @param set
+     */
     public void setColorblind(boolean set) {
         for (int i = 0; i < combination.length; i++)
             combination[i].setColorblind(set);
     }
 
-    public void setOffsetY(int newOffset){
-        offsetY = newOffset;
-        this.attemptNumber.setOffsetY(newOffset);
-        clue.setOffsetY(newOffset);
+    /**
+     * Traslada el objeto
+     *
+     * @param translateX
+     * @param translateY
+     */
+    public void translate(int translateX, int translateY) {
+        pos.x += translateX;
+        pos.y += translateY;
+
+        attemptNumber.translate(translateX, translateY);
+
+        clue.translate(translateX, translateY);
+
         for (int i = 0; i < combination.length; i++)
-            combination[i].setOffsetY(newOffset);
+            combination[i].translate(translateX, translateY);
+    }
+
+    /**
+     * @return Posicion del objeto
+     */
+    public Vector2 getPos() {
+        return pos;
     }
 }
 

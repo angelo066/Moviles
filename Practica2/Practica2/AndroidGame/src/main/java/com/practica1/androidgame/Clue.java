@@ -10,12 +10,19 @@ public class Clue {
     private Vector2 pos;
     private int circleRadius;
     private int numColorsPerAttempt;
+
+
     private int startPositionX;
     private int startPositionY;
     private int offsetBetweenCirclesX;
     private int offsetBetweenCirclesY;
-    private int offsetY;
 
+    /**
+     * @param graphics            Objeto graphics del motor
+     * @param pos                 Posicion del objeto
+     * @param size                Tamanio del objeto
+     * @param numColorsPerAttempt Numero de casillas del intento
+     */
     public Clue(Graphics graphics, Vector2 pos, Vector2 size, int numColorsPerAttempt) {
         this.numFoundCircles = 0;
         this.numFoundColors = 0;
@@ -23,7 +30,6 @@ public class Clue {
         this.pos = pos;
         this.circleRadius = 15;
         this.numColorsPerAttempt = numColorsPerAttempt;
-        this.offsetY = 0;
 
         int numCirclesPerRow = (int) Math.ceil(numColorsPerAttempt / 2.0);
 
@@ -36,14 +42,22 @@ public class Clue {
         this.startPositionY = (size.y - heightClues) / 2;
     }
 
+    /**
+     * Render del objeto
+     */
     public void render() {
         int numRightCir = numFoundCircles;
         int numRightCol = numFoundColors;
+
         int x = startPositionX + pos.x;
-        int y = startPositionY + pos.y + offsetY;
+        int y = startPositionY + pos.y;
 
         int aux = (int) Math.ceil(numColorsPerAttempt / 2.0);
-        for (int i = 0; i < aux; i++) {
+        for (int i = 0; i < numColorsPerAttempt; i++) {
+            if (i == aux) { //segunda fila
+                y += (circleRadius * 2) + offsetBetweenCirclesY;
+                x = startPositionX + pos.x;
+            }
 
             if (numRightCir > 0) {
                 graphics.setColor(Color.BLACK.getValue());
@@ -61,32 +75,34 @@ public class Clue {
             x += (circleRadius * 2) + offsetBetweenCirclesX;
         }
 
-        x = startPositionX + pos.x;
-        y += (circleRadius * 2) + offsetBetweenCirclesY;
-
-        for (int i = aux; i < numColorsPerAttempt; i++) {
-            if (numRightCir > 0) {
-                graphics.setColor(Color.BLACK.getValue());
-                graphics.fillCircle(x, y, circleRadius);
-                numRightCir--;
-            } else if (numRightCol > 0) {
-                graphics.setColor(Color.BLACK.getValue());
-                graphics.drawCircle(x, y, circleRadius);
-                numRightCol--;
-            } else {
-                graphics.setColor(Color.GREY.getValue());
-                graphics.fillCircle(x, y, circleRadius);
-            }
-            x += (circleRadius * 2) + offsetBetweenCirclesX;
-        }
     }
 
+    /**
+     * Establece el numero de aciertos del intento para su representacion
+     *
+     * @param numFoundCircles Numero de aciertos en posicion y color
+     * @param numFoundColors  Numero de aciertos en color pero no en posicion
+     */
     public void setClue(int numFoundCircles, int numFoundColors) {
         this.numFoundCircles = numFoundCircles;
         this.numFoundColors = numFoundColors;
     }
 
-    public void setOffsetY(int newOffset){
-        offsetY = newOffset;
+    /**
+     * Traslada el objeto
+     *
+     * @param translateX
+     * @param translateY
+     */
+    public void translate(int translateX, int translateY) {
+        pos.x += translateX;
+        pos.y += translateY;
+    }
+
+    /**
+     * @return Posicion del objeto
+     */
+    public Vector2 getPos() {
+        return pos;
     }
 }

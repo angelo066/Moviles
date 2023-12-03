@@ -132,12 +132,13 @@ public class GameOver extends Scene {
         this.circles = new Circle[combination_win.length];
 
         // Calculos de posicion
-        int totalWidth = combination_win.length * circleRadius * 2;
+        int offset = circleRadius / 2;
+        int totalWidth = (combination_win.length * circleRadius * 2) + ((combination_win.length - 1) * offset);
         int spaceToEachSide = (width - totalWidth) / 2;
 
         // Creacion de cada circulo
         for (int i = 0; i < combination_win.length; i++) {
-            int x = spaceToEachSide + i * (circleRadius * 2);
+            int x = spaceToEachSide + i * (circleRadius * 2) + i * offset;
 
             circles[i] = new Circle(graphics, new Vector2(x, 800), circleRadius);
             circles[i].setColorblind(colorBlind);

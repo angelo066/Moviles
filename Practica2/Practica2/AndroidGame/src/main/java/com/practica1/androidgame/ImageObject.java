@@ -13,6 +13,7 @@ public class ImageObject {
     private Vector2 size;
     private Vector2 pos;
     private Vector2 iniPos;
+
     private Graphics graphics;
 
     /**
@@ -51,5 +52,26 @@ public class ImageObject {
      */
     public void changeImage(String imageFile) {
         image = ResourceManager.getInstance().getImage(imageFile);
+    }
+
+    /**
+     * Traslada el objeto
+     *
+     * @param translateX
+     * @param translateY
+     */
+    public void translate(int translateX, int translateY) {
+        pos.x += translateX;
+        pos.y += translateY;
+
+        iniPos.x += translateX;
+        iniPos.y += translateY;
+    }
+
+    /**
+     * @return Posicion del objeto
+     */
+    public Vector2 getPos() {
+        return pos;
     }
 }

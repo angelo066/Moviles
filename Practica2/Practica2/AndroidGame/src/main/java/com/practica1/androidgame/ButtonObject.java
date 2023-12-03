@@ -12,7 +12,7 @@ public class ButtonObject {
     private Vector2 size;
     private Color color;
     private float arc;
-    boolean showText = true;
+    boolean showText;
     private TextObject text;
     private ImageObject image;
 
@@ -32,10 +32,11 @@ public class ButtonObject {
      */
     public ButtonObject(Graphics graphics, Vector2 pos, Vector2 size, float arc, Color colorButton, TextObject text) {
         this.size = size;
+
         this.arc = arc;
         this.color = colorButton;
-
         this.text = text;
+        this.showText = true;
 
         this.image = null;
 
@@ -56,6 +57,7 @@ public class ButtonObject {
         this.size = size;
 
         this.text = null;
+        this.showText = false;
 
         this.image = new ImageObject(graphics, pos, size, imageFile);
 
@@ -131,9 +133,29 @@ public class ButtonObject {
             this.image.changeImage(image);
     }
 
-    public void setVisibleText(boolean show)
-    {
+    public void setVisibleText(boolean show) {
         this.showText = show;
+    }
+
+    /**
+     * Traslada el objeto
+     *
+     * @param translateX
+     * @param translateY
+     */
+    public void translate(int translateX, int translateY) {
+        pos.x += translateX;
+        pos.y += translateY;
+
+        iniPos.x += translateX;
+        iniPos.y += translateY;
+    }
+
+    /**
+     * @return Posicion del objeto
+     */
+    public Vector2 getPos() {
+        return pos;
     }
 
 }

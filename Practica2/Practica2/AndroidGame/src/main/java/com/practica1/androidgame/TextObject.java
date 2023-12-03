@@ -20,8 +20,6 @@ public class TextObject {
     private Vector2 iniPos;
     private Graphics graphics;
 
-    private int offsetY;
-
     /**
      * @param graphics Objeto graphics del engine
      * @param pos      Posicion del texto
@@ -42,7 +40,6 @@ public class TextObject {
         this.graphics = graphics;
         this.pos = new Vector2(pos);
         this.iniPos = pos;
-        this.offsetY = 0;
     }
 
     /**
@@ -53,7 +50,7 @@ public class TextObject {
 
         setFont();
 
-        graphics.drawText(text, pos.x, pos.y + offsetY);
+        graphics.drawText(text, pos.x, pos.y);
     }
 
     /**
@@ -84,6 +81,9 @@ public class TextObject {
         this.text = text;
     }
 
+    /**
+     * Setea la informacion de la fuente
+     */
     private void setFont() {
         font.setSize(textSize);
         font.setBold(isBold);
@@ -91,7 +91,24 @@ public class TextObject {
         graphics.setFont(font);
     }
 
-    public void setOffsetY(int newOffset){
-        offsetY = newOffset;
+    /**
+     * Traslada el objeto
+     *
+     * @param translateX
+     * @param translateY
+     */
+    public void translate(int translateX, int translateY) {
+        pos.x += translateX;
+        pos.y += translateY;
+
+        iniPos.x += translateX;
+        iniPos.y += translateY;
+    }
+
+    /**
+     * @return Posicion del objeto
+     */
+    public Vector2 getPos() {
+        return pos;
     }
 }

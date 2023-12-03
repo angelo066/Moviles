@@ -1,5 +1,6 @@
 package com.practica1.androidgame;
 
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.SurfaceView;
@@ -11,6 +12,7 @@ import com.practica1.androidengine.Engine;
 
 public class AndroidGame extends AppCompatActivity {
     private Engine engine;
+    private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +29,10 @@ public class AndroidGame extends AppCompatActivity {
         ResourceManager.Init(engine);
         SceneManager.Init(engine);
         GameManager.Init(engine);
+
+        // Yo esto no se si va a aqui aviso soy un garrulo
+        context = getApplicationContext();
+        GameManager.getInstance().setContext(context);
 
         ResourceManager.getInstance().loadLevels();
         SceneManager.getInstance().addScene(new AssetsLoad());

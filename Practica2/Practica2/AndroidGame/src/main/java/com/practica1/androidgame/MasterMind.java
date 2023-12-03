@@ -73,8 +73,6 @@ public class MasterMind extends Scene {
         this.colorBlind = false;
 
         this.levelName = levelName;
-        this.indexWorld = indexWorld;
-        this.indexLevel = indexLevel;
 
         //Por ser la constructora que usan los mundos
         this.world_Level = true;

@@ -184,11 +184,6 @@ public class Engine implements Runnable {
     public BufferedReader openAssetFile(String fileName) throws IOException
     {
         BufferedReader br = new BufferedReader(new InputStreamReader(graphics.getAssetManager().open(fileName), "UTF-8"));
-        if(br ==  null)
-            System.out.println("NO FUNCIONO");
-        else
-            System.out.println("wtf");
-
         return br;
     }
 

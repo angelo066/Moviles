@@ -40,7 +40,6 @@ public class MasterMind extends Scene {
 
     private int attemptHeight;
     private int heightOffset;
-    private int attemptsRenderOffsetY;
     private int lastYPosition;
     private String levelName = "";
     private int indexWorld = -1;
@@ -59,6 +58,7 @@ public class MasterMind extends Scene {
 
         this.colorBlind = false;
     }
+
     public MasterMind(String levelName) {
         this.width = 1080;
         this.height = 1920;
@@ -80,7 +80,7 @@ public class MasterMind extends Scene {
     public void init(Engine engine) {
         super.init(engine);
 
-        if(levelName == "" && indexWorld == -1)
+        if (levelName == "" && indexWorld == -1)
             selectConfiguration();
         else
             createLevel();
@@ -94,8 +94,6 @@ public class MasterMind extends Scene {
         createButtons();
 
         createTexts();
-
-
     }
 
     private void selectConfiguration() {
@@ -133,7 +131,6 @@ public class MasterMind extends Scene {
 
         this.attemptHeight = height / this.numDivisions;
         this.heightOffset = attemptHeight / (this.numDivisions - 2);
-        this.attemptsRenderOffsetY = 0;
         this.lastYPosition = 0;
 
         for (int i = 0; i < this.numAttempts; i++) {
@@ -146,11 +143,10 @@ public class MasterMind extends Scene {
     public void addAttempts(int newAttempts) {
         this.numAttempts += newAttempts;
 
-        int size = this.attempts.size();
-
-        for (int i = size; i < this.numAttempts; i++) {
+        for (int i = this.attempts.size(); i < this.numAttempts; i++) {
+            int y = this.attempts.get(i - 1).getPos().y;
             this.attempts.add(new Attempt(graphics, numColorsPerAttempt, i + 1,
-                    new Vector2(3, (attemptHeight * (i + 1))), new Vector2(width - 6, attemptHeight - heightOffset)));
+                    new Vector2(3, y + attemptHeight), new Vector2(width - 6, attemptHeight - heightOffset)));
             if (colorBlind) this.attempts.get(i).setColorblind(true);
         }
     }
@@ -224,8 +220,9 @@ public class MasterMind extends Scene {
 
         // Intentos
         for (int i = 0; i < this.numAttempts; i++) {
-            if (((i * attemptHeight) + attemptsRenderOffsetY > -attemptHeight)
-                    && ((i * attemptHeight) + attemptsRenderOffsetY < ((numDivisions - 2) * attemptHeight))) // solo renderizar el attempt si esta dentro del area de juego
+
+            if ((attempts.get(i).getPos().y > 0)
+                    && ((attempts.get(i).getPos().y < height - attemptHeight))) // solo renderizar el attempt si esta dentro del area de juego
                 attempts.get(i).render();
         }
 
@@ -255,7 +252,6 @@ public class MasterMind extends Scene {
     public void handleInput(ArrayList<TouchEvent> events) {
         outerloop:
         for (int i = 0; i < events.size(); i++) {
-
             //Manejo de input dentro del area de juego
             if (events.get(i).y >= attemptHeight && events.get(i).y <= height - attemptHeight) {
 
@@ -265,15 +261,18 @@ public class MasterMind extends Scene {
 
                 //Manejo de input para el scroll del tablero
                 if (events.get(i).type == TouchEvent.TouchEventType.TOUCH_DRAG) {
-                    attemptsRenderOffsetY -= (lastYPosition - events.get(i).y);
+                    int offset = events.get(i).y - lastYPosition;
 
-                    if (attemptsRenderOffsetY < -(attemptHeight * (numAttempts - 1)))
-                        attemptsRenderOffsetY = -(attemptHeight * (numAttempts - 1));
-                    else if (attemptsRenderOffsetY > 0)
-                        attemptsRenderOffsetY = 0;
+                    int posLastAttempt = attempts.get(numAttempts - 1).getPos().y;
+                    int posFirstAttempt = attempts.get(0).getPos().y;
+
+                    if (posLastAttempt + offset < attemptHeight)
+                        offset = attemptHeight - posLastAttempt;
+                    else if (posFirstAttempt + offset > attemptHeight)
+                        offset = attemptHeight - posFirstAttempt;
 
                     for (int j = 0; j < numAttempts; j++)
-                        attempts.get(j).setOffsetY(attemptsRenderOffsetY);
+                        attempts.get(j).translate(0, offset);
 
                     lastYPosition = events.get(i).y;
                 }
@@ -337,18 +336,15 @@ public class MasterMind extends Scene {
         }
     }
 
-    private void createLevel()
-    {
+    private void createLevel() {
         // Creamos el parser del json
-        Gson gson  = new Gson();
+        Gson gson = new Gson();
         BufferedReader br = null;
 
         // Leemos el json
         try {
             br = engine.openAssetFile(levelName);
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             System.out.println("Error creating level");
         }
 

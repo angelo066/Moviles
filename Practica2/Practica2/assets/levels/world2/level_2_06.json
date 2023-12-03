@@ -1,6 +1,6 @@
 {
-    "codeSize": 4,
-    "codeOpt": 4,
-    "repeat": false,
-    "attempts": 8
+  "codeSize": 7,
+  "codeOpt": 9,
+  "repeat": true,
+  "attempts": 10
 }

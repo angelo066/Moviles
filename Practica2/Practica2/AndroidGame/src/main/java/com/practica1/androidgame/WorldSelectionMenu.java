@@ -115,21 +115,26 @@ public class WorldSelectionMenu extends Scene {
             // Botones de avanzar o retroceder mundo
             else if(buttonNextWorld.handleInput(events.get(i)))
             {
-                if(actual_WORLD < num_WORLDS-1)
-                {
-                    actual_WORLD++;
-                    textWorld.setText("Mundo " + String.valueOf(actual_WORLD+1));
-                    break;
+                actual_WORLD++;
+                if(actual_WORLD > num_WORLDS - 1){
+                    actual_WORLD = 0;
                 }
+
+                textWorld.setText("Mundo " + String.valueOf(actual_WORLD+1));
+                break;
+
             }
             else if(buttonLastWorld.handleInput(events.get(i)))
             {
-                if(actual_WORLD > 0 )
-                {
-                    actual_WORLD--;
-                    textWorld.setText("Mundo " + String.valueOf(actual_WORLD+1));
-                    break;
+
+                actual_WORLD--;
+                if(actual_WORLD < 0){
+                    actual_WORLD = num_WORLDS -1;
                 }
+
+                textWorld.setText("Mundo " + String.valueOf(actual_WORLD+1));
+                break;
+
             }
             else {
                 // Recorrer los botones del mundo en el que estamos

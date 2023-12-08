@@ -135,15 +135,25 @@ public class Shop extends Scene {
 
             if(buttonBackward.handleInput(events.get(i))){
                 type--;
-                if(type < 0) type = Skin_Type.values().length;
+                if(type < 0){
+                    type = Skin_Type.values().length - 1;
+                }
+
+                changeText();
+
                 break;
             }
 
             if(buttonForward.handleInput(events.get(i))){
                 type++;
-                if(type > Skin_Type.values().length) type = 0;
+                if(type > Skin_Type.values().length - 1){
+                    type = 0;
+                }
+
+                changeText();
                 break;
             }
+
         }
 
         if (selected) {
@@ -151,6 +161,18 @@ public class Shop extends Scene {
             audio.playSound("botonInterfaz.wav", false);
             SceneManager.getInstance().addScene(new MasterMind(mode));
             SceneManager.getInstance().goToNextScene();
+        }
+    }
+
+    private void changeText() {
+        if(Skin_Type.values()[type] == Skin_Type.BACKGROUND){
+            type_Text.setText("Fondos");
+        }
+        else if(Skin_Type.values()[type] == Skin_Type.CODE){
+            type_Text.setText("Codigos");
+        }
+        else{
+            type_Text.setText("Colores");
         }
     }
 

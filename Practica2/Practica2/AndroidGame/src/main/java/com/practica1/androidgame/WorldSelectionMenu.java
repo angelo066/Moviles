@@ -203,6 +203,13 @@ public class WorldSelectionMenu extends Scene {
             // Anadimos la lista de niveles a la lista de mundos
             levels.add(levels_of_world);
         }
+
+
+        for(int i = 0; i < GameManager.getInstance().getUnlocked_lvls();i++){
+            //Desbloqueamos los mundos
+            levels.get(0).get(i).setUnlock(true);
+        }
+
     }
 
     private void createBackgrounds()
@@ -249,4 +256,5 @@ public class WorldSelectionMenu extends Scene {
     public void changeWorld(int world){
         actual_WORLD = world;
     }
+
 }

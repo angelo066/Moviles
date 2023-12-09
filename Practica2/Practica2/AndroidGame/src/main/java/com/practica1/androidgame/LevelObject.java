@@ -16,7 +16,7 @@ public class LevelObject {
     ButtonObject levelButton;
     ImageObject lockImage;
     TextObject levelText;
-    boolean unlock = true;
+    boolean unlock = false;
     boolean completed = true;
 
 

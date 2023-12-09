@@ -28,6 +28,10 @@ public class GameOver extends Scene {
     private Difficulty mode;
     private boolean colorBlind;
 
+    private int coins = 0;
+    private TextObject coins_Earned;
+    private ImageObject coin_Image;
+
     /**
      * @param combination_win Combinacion elegida por el juego
      * @param win             Indica si el jugador ha ganado
@@ -35,7 +39,7 @@ public class GameOver extends Scene {
      * @param numAttempts     Numero de intentos realizados por el jugador
      * @param colorBlind      Indica si esta el modo daltonicos activado
      */
-    public GameOver(Color[] combination_win, boolean win, Difficulty mode, int numAttempts, boolean colorBlind) {
+    public GameOver(Color[] combination_win, boolean win, Difficulty mode, int numAttempts, boolean colorBlind, int coins) {
         this.width = 1080;
         this.height = 1920;
 
@@ -44,6 +48,7 @@ public class GameOver extends Scene {
         this.mode = mode;
         this.numAttempts = numAttempts;
         this.colorBlind = colorBlind;
+        this.coins = coins;
     }
 
     @Override
@@ -79,6 +84,16 @@ public class GameOver extends Scene {
                     "Nexa.ttf", "Código:", Color.BLACK, 50, false, false);
             textCode.center();
 
+            String coins_String = "+" + String.valueOf(coins) + "- Total" + String.valueOf(GameManager.getInstance().getCoins());
+
+            coins_Earned = new TextObject(graphics, new Vector2(width/2, (height / 10 * 7 / 2) + 350),
+                    "Nexa.ttf", coins_String, Color.BLACK, 100, false, false);
+
+            coin_Image = new ImageObject(graphics, new Vector2(width/2 - 310, (height / 10 * 7 / 2) + 350), new Vector2(100,100),
+                    "coins.png");
+
+            coins_Earned.center();
+            coin_Image.center();
 
             audio.playSound("yuju.wav", false);
         } else {
@@ -172,7 +187,8 @@ public class GameOver extends Scene {
         if (this.win) {
             textUsedAttempts.render();
             textCode.render();
-
+            coins_Earned.render();
+            coin_Image.render();
             // Codigo colores
             for (int i = 0; i < circles.length; i++)
                 circles[i].render();

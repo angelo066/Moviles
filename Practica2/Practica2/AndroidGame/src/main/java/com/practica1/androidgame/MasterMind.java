@@ -44,7 +44,9 @@ public class MasterMind extends Scene {
     private int indexLevel;
 
     //Booleano para controlar a donde nos envía el boton de hacia atras.
-    boolean world_Level = false;
+    private boolean world_Level = false;
+
+    private int lvl_coins = 0; //Inicializado a 0 para los niveles de partida rapida
 
     public MasterMind(Difficulty mode) {
         this.width = 1080;
@@ -84,8 +86,10 @@ public class MasterMind extends Scene {
 
         if (levelName == "" && indexWorld == -1)
             selectConfiguration();
-        else
+        else{
             createLevel();
+            lvl_coins = this.random.nextInt(6) + 1;    //Seteamos las monedas que va a ganar si se pasa el nivel
+        }
 
         createAttempts();
 
@@ -291,7 +295,11 @@ public class MasterMind extends Scene {
                     if (attempts.get(currentAttempt).getUncoveredCircles() == numColorsPerAttempt) {
 
                         if (attempts.get(currentAttempt).isCorrectCombination()) {
-                            SceneManager.getInstance().addScene(new GameOver(winningCombination, true, difficultyMode, currentAttempt + 1, colorBlind));
+                            if(world_Level){
+                                GameManager.getInstance().addCoins(lvl_coins);
+                                GameManager.getInstance().level_Completed();
+                            }
+                            SceneManager.getInstance().addScene(new GameOver(winningCombination, true, difficultyMode, currentAttempt + 1, colorBlind, lvl_coins));
                             SceneManager.getInstance().addScene(this);
                             SceneManager.getInstance().goToNextScene();
                             break outerloop;
@@ -299,7 +307,7 @@ public class MasterMind extends Scene {
                             currentAttempt++;
 
                             if (currentAttempt == numAttempts) {
-                                SceneManager.getInstance().addScene(new GameOver(winningCombination, false, difficultyMode, currentAttempt + 1, colorBlind));
+                                SceneManager.getInstance().addScene(new GameOver(winningCombination, false, difficultyMode, currentAttempt + 1, colorBlind, lvl_coins));
                                 SceneManager.getInstance().addScene(this);
                                 SceneManager.getInstance().goToNextScene();
                                 break outerloop;

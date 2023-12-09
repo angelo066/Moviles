@@ -18,6 +18,8 @@ public class GameManager {
     Context context;
 
     private int coins;
+    //Está desbloqueado el primer nivel
+    private int unlocked_lvls = 1;
 
     //Numero total de skins;
     private int n_skins_Background;
@@ -92,4 +94,15 @@ public class GameManager {
     public void setContext(Context context){
         this.context = context;
     }
+
+    public void addCoins(int n){
+        coins = coins + n;
+    }
+
+    public int getCoins(){
+        return coins;
+    }
+
+    public int getUnlocked_lvls(){return unlocked_lvls;}
+    public void level_Completed(){unlocked_lvls++;}
 }

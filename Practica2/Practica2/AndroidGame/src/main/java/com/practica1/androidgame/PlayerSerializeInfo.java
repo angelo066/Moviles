@@ -4,21 +4,16 @@ import java.io.Serializable;
 
 public class PlayerSerializeInfo implements Serializable {
 
-    private int coins;
-    private int num_worlds;
-    private int unlock_levels;
-    private int complete_levels;
+    private int coins; // Dinero
+    private int unlock_levels; // Numero de niveles desbloqueados // van en orden por mundos
 
 
-    public PlayerSerializeInfo(int coins, int num_worlds, int unlock_levels, int complete_levels)
+    public PlayerSerializeInfo(int coins, int unlock_levels)
     {
         this.coins = coins;
-        this.num_worlds = num_worlds;
         this.unlock_levels = unlock_levels;
-        this.complete_levels = complete_levels;
     }
 
-    /*
     // GETTERS
     public int getCoins() {
         return coins;
@@ -26,9 +21,7 @@ public class PlayerSerializeInfo implements Serializable {
     public int getUnlockLevels() {
         return unlock_levels;
     }
-    public int getCompleteLevels() {
-        return complete_levels;
-    }
+    /*
 
     // SETTERS
     public void setCoins(int coins) {
@@ -44,6 +37,6 @@ public class PlayerSerializeInfo implements Serializable {
 
     public void print()
     {
-        System.out.println(coins + " " + num_worlds + " " + unlock_levels + " " + complete_levels);
+        System.out.println(coins + " " + unlock_levels);
     }
 }

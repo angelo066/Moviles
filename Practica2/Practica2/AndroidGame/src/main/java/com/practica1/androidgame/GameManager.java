@@ -56,8 +56,11 @@ public class GameManager {
 
     public void savePlayerData()
     {
+        // Cuidado que el el archivo que creamos, como indica, el context, es : PRIVADO
+        // Que yo el otro dia me tire 2 horas buscando el archivito 💀
+        // Que que quiere decir privado, pues efectivamente que no aparece en el explorador de archivos
 
-        PlayerSerializeInfo playerSerializeInfo = new PlayerSerializeInfo(coins, 10, coins, coins);
+        PlayerSerializeInfo playerSerializeInfo = new PlayerSerializeInfo(50, 80);
 
         try{
             FileOutputStream fout = context.openFileOutput("player.txt", Context.MODE_PRIVATE);
@@ -88,7 +91,10 @@ public class GameManager {
             throw new RuntimeException(e);
         }
 
+        // Cargamos la info deserializada
         playerSerializeInfo.print();
+        coins = playerSerializeInfo.getCoins();
+        unlocked_lvls = playerSerializeInfo.getUnlockLevels();
     }
 
     public void setContext(Context context){

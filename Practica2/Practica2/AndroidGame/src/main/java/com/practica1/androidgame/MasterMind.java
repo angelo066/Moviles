@@ -168,7 +168,8 @@ public class MasterMind extends Scene {
         for (int i = 0; i < this.numColors; i++) {
             int x = startPosition + (offsetBetweenCircle * i) + (circleRadius * 2 * i);
             int y = (tamDivision * (numDivisions - 1)) + ((tamDivision - 2 * circleRadius) / 2);
-            this.availableColors[i] = new Circle(graphics, new Vector2(x, y), circleRadius);
+            //this.availableColors[i] = new Circle(graphics, new Vector2(x, y), circleRadius);
+            this.availableColors[i] = new Circle(graphics, new Vector2(x, y), circleRadius,"pack_1/pack_1_" + (i+1) +".png");
             this.availableColors[i].setColor(Color.values()[i]);
             this.availableColors[i].setUncovered(true);
         }
@@ -290,7 +291,10 @@ public class MasterMind extends Scene {
             for (int j = 0; j < availableColors.length; j++) {
                 if (availableColors[j].handleInput(events.get(i))) {
 
-                    attempts.get(currentAttempt).setCircle(availableColors[j].getColor(), winningCombination);
+                    if(world_Level)
+                        attempts.get(currentAttempt).setCircle(availableColors[j].getColor(), winningCombination, availableColors[j].getImage());
+                    else
+                        attempts.get(currentAttempt).setCircle(availableColors[j].getColor(), winningCombination, null);
 
                     if (attempts.get(currentAttempt).getUncoveredCircles() == numColorsPerAttempt) {
 

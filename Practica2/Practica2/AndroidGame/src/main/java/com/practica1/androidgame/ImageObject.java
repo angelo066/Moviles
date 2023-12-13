@@ -30,6 +30,14 @@ public class ImageObject {
         this.iniPos = pos;
     }
 
+    public ImageObject(Graphics graphics, Vector2 pos, Vector2 size, Image image) {
+        this.size = size;
+        this.image = image;
+        this.graphics = graphics;
+        this.pos = new Vector2(pos);
+        this.iniPos = pos;
+    }
+
     /**
      * Render de la imagen
      */
@@ -73,5 +81,9 @@ public class ImageObject {
      */
     public Vector2 getPos() {
         return pos;
+    }
+
+    public Image getImage(){
+        return image;
     }
 }

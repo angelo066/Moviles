@@ -60,7 +60,7 @@ public class GameManager {
         // Que yo el otro dia me tire 2 horas buscando el archivito 💀
         // Que que quiere decir privado, pues efectivamente que no aparece en el explorador de archivos
 
-        PlayerSerializeInfo playerSerializeInfo = new PlayerSerializeInfo(50, 80);
+        PlayerSerializeInfo playerSerializeInfo = new PlayerSerializeInfo(50, 0);
 
         try{
             FileOutputStream fout = context.openFileOutput("player.txt", Context.MODE_PRIVATE);

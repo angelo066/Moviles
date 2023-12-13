@@ -2,6 +2,7 @@ package com.practica1.androidgame;
 
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Graphics;
+import com.practica1.androidengine.Image;
 import com.practica1.androidengine.TouchEvent;
 
 /**
@@ -12,8 +13,10 @@ public class Circle {
     private Color color;
     private boolean uncovered;
     private boolean colorblind;
+    private boolean imageMode = false;
     private int circleRadius;
     private Vector2 pos;
+    private ImageObject image;
     private Graphics graphics;
 
     /**
@@ -34,6 +37,23 @@ public class Circle {
         this.uncovered = false;
         this.colorblind = false;
     }
+    public Circle(Graphics graphics, Vector2 pos, int circleRadius, String imageRoute) {
+        this.graphics = graphics;
+        this.circleRadius = circleRadius;
+        this.pos = pos;
+
+        this.color = Color.NO_COLOR;
+        this.id = new TextObject(graphics, new Vector2(pos.x + circleRadius, pos.y + circleRadius),
+                "Nexa.ttf", String.valueOf(this.color.getId()), Color.BLACK, 50, false, false);
+        this.id.center();
+
+        this.uncovered = false;
+        this.colorblind = false;
+
+        // Creacion de la imagen
+        image = new ImageObject(graphics, new Vector2(pos), new Vector2(circleRadius*2, circleRadius*2), imageRoute);
+        imageMode = true;
+    }
 
     /**
      * Renderizado
@@ -42,8 +62,14 @@ public class Circle {
 
         // Si se ha descubierto pintamos el color normal
         if (uncovered) {
-            graphics.setColor(color.getValue());
-            graphics.fillCircle(pos.x, pos.y, circleRadius);
+
+            if(imageMode)
+                image.render();
+            else
+            {
+                graphics.setColor(color.getValue());
+                graphics.fillCircle(pos.x, pos.y, circleRadius);
+            }
 
             // Si el modo daltonico esta activado pintamos el numero
             if (colorblind)
@@ -58,6 +84,7 @@ public class Circle {
             graphics.setColor(Color.DARK_GREY.getValue());
             graphics.fillCircle(pos.x + circleRadius - internCircleRadius, pos.y + circleRadius - internCircleRadius, internCircleRadius);
         }
+
 
     }
 
@@ -139,6 +166,17 @@ public class Circle {
      */
     public Vector2 getPos() {
         return pos;
+    }
+
+    public void setImage(Image image)
+    {
+        this.image = new ImageObject(graphics, new Vector2(pos), new Vector2(circleRadius*2, circleRadius*2), image);
+        imageMode = true;
+    }
+
+    public Image getImage()
+    {
+        return image.getImage();
     }
 
 }

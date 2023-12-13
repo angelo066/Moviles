@@ -2,6 +2,7 @@ package com.practica1.androidgame;
 
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Graphics;
+import com.practica1.androidengine.Image;
 import com.practica1.androidengine.TouchEvent;
 
 import java.util.ArrayList;
@@ -116,10 +117,13 @@ public class Attempt {
      * @param color
      * @param winningCombination Combinacion ganadora
      */
-    public void setCircle(Color color, Color[] winningCombination) {
+    public void setCircle(Color color, Color[] winningCombination, Image imageRoute) {
         uncoveredCircles++;
         combination[currentIndex].setUncovered(true);
         combination[currentIndex].setColor(color);
+
+        if(imageRoute != null)
+            combination[currentIndex].setImage(imageRoute);
 
         for (int i = currentIndex + 1; i < combination.length; i++) {
             if (!combination[i].getUncovered()) {

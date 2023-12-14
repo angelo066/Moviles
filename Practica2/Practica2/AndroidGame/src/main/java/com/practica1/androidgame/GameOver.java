@@ -1,5 +1,7 @@
 package com.practica1.androidgame;
 
+import android.widget.Button;
+
 import com.practica1.androidengine.AdCallback;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
@@ -28,9 +30,14 @@ public class GameOver extends Scene {
     private Difficulty mode;
     private boolean colorBlind;
 
+    private boolean isWorld = false;
+    private String worldName;
+
     private int coins = 0;
     private TextObject coins_Earned;
     private ImageObject coin_Image;
+
+    private ButtonObject buttonNext_Level;
 
     /**
      * @param combination_win Combinacion elegida por el juego
@@ -39,7 +46,7 @@ public class GameOver extends Scene {
      * @param numAttempts     Numero de intentos realizados por el jugador
      * @param colorBlind      Indica si esta el modo daltonicos activado
      */
-    public GameOver(Color[] combination_win, boolean win, Difficulty mode, int numAttempts, boolean colorBlind, int coins) {
+    public GameOver(Color[] combination_win, boolean win, Difficulty mode, int numAttempts, boolean colorBlind, int coins, boolean world, String worldName) {
         this.width = 1080;
         this.height = 1920;
 
@@ -49,6 +56,9 @@ public class GameOver extends Scene {
         this.numAttempts = numAttempts;
         this.colorBlind = colorBlind;
         this.coins = coins;
+        this.isWorld = world;
+        this.worldName = worldName;
+
     }
 
     @Override
@@ -120,17 +130,24 @@ public class GameOver extends Scene {
             buttonMoreAttempts = new ButtonObject(graphics, posAtt, size, 40, Color.CYAN,
                     new TextObject(graphics, new Vector2(posAtt), "Nexa.ttf", "+2 intentos", Color.BLACK, 80, false, false));
             buttonMoreAttempts.center();
+            Vector2 posRep = new Vector2(width / 2, height / 14 * 11);
+            buttonRepeat = new ButtonObject(graphics, posRep, size, 40, Color.CYAN,
+                    new TextObject(graphics, new Vector2(posRep), "Nexa.ttf", "Volver a jugar", Color.BLACK, 80, false, false));
+            buttonRepeat.center();
         } else {
             Vector2 posShare = new Vector2(width / 2, height / 14 * 9);
             buttonShare = new ButtonObject(graphics, posShare, size, 40, Color.CYAN,
                     new TextObject(graphics, new Vector2(posShare), "Nexa.ttf", "Compartir", Color.BLACK, 80, false, false));
             buttonShare.center();
+
+            Vector2 posNext = new Vector2(width / 2, height / 14 * 11);
+            buttonNext_Level = new ButtonObject(graphics, posNext, size, 40, Color.CYAN,
+                    new TextObject(graphics, new Vector2(posNext),"Nexa.ttf", "Siguiente nivel", Color.BLACK, 80, false, false));
+
+            buttonNext_Level.center();
         }
 
-        Vector2 posRep = new Vector2(width / 2, height / 14 * 11);
-        buttonRepeat = new ButtonObject(graphics, posRep, size, 40, Color.CYAN,
-                new TextObject(graphics, new Vector2(posRep), "Nexa.ttf", "Volver a jugar", Color.BLACK, 80, false, false));
-        buttonRepeat.center();
+
 
         Vector2 posBack = new Vector2(width / 2, height / 14 * 13);
         buttonBackMenu = new ButtonObject(graphics, posBack, size, 40, Color.CYAN,
@@ -177,7 +194,7 @@ public class GameOver extends Scene {
         else
             buttonShare.render();
 
-        buttonRepeat.render();
+        //buttonRepeat.render();
         buttonBackMenu.render();
 
         // Textos
@@ -189,6 +206,7 @@ public class GameOver extends Scene {
             textCode.render();
             coins_Earned.render();
             coin_Image.render();
+            buttonNext_Level.render();
             // Codigo colores
             for (int i = 0; i < circles.length; i++)
                 circles[i].render();
@@ -199,22 +217,49 @@ public class GameOver extends Scene {
     @Override
     public void handleInput(ArrayList<TouchEvent> events) {
         for (int i = 0; i < events.size(); i++) {
-            if (!win && buttonMoreAttempts.handleInput(events.get(i))) {
-                audio.stopSound("botonInterfaz.wav");
-                audio.playSound("botonInterfaz.wav", false);
-                engine.getAds().showRewardedAd(() -> {
-                    ((MasterMind) SceneManager.getInstance().getScene()).addAttempts(2);
+            if(!win){
+                if (buttonMoreAttempts.handleInput(events.get(i))) {
+                    audio.stopSound("botonInterfaz.wav");
+                    audio.playSound("botonInterfaz.wav", false);
+                    engine.getAds().showRewardedAd(() -> {
+                        ((MasterMind) SceneManager.getInstance().getScene()).addAttempts(2);
+                        SceneManager.getInstance().goToNextScene();
+                    });
+                    break;
+                } else if (buttonRepeat.handleInput(events.get(i))) {
+                    audio.stopSound("botonInterfaz.wav");
+                    audio.playSound("botonInterfaz.wav", false);
+                    SceneManager.getInstance().removeScene();
+                    if(!isWorld)SceneManager.getInstance().addScene(new MasterMind(mode));
+                    else SceneManager.getInstance().addScene(new MasterMind(worldName));
                     SceneManager.getInstance().goToNextScene();
-                });
-                break;
-            } else if (buttonRepeat.handleInput(events.get(i))) {
-                audio.stopSound("botonInterfaz.wav");
-                audio.playSound("botonInterfaz.wav", false);
-                SceneManager.getInstance().removeScene();
-                SceneManager.getInstance().addScene(new MasterMind(mode));
-                SceneManager.getInstance().goToNextScene();
-                break;
-            } else if (buttonBackMenu.handleInput(events.get(i))) {
+                    break;
+                }
+            }
+
+            else{
+                if(buttonNext_Level.handleInput(events.get(i))){
+                    SceneManager.getInstance().removeScene();
+
+                    int world = GameManager.getInstance().getActualWorld();
+                    int lvl = GameManager.getInstance().getActualLvl();
+                    lvl++;
+
+                    if(lvl >= ResourceManager.getInstance().getNumLevels(world)){
+                        world++;
+                        lvl = 0;
+                        GameManager.getInstance().setActualWorld(world);
+                    }
+                    GameManager.getInstance().setActualLvl(lvl);
+
+                    String next_lvl = ResourceManager.getInstance().getLevel(world,lvl);
+                    SceneManager.getInstance().addScene(new MasterMind(next_lvl));
+                    SceneManager.getInstance().goToNextScene();
+                    break;
+                }
+            }
+
+            if (buttonBackMenu.handleInput(events.get(i))) {
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
                 SceneManager.getInstance().removeScene();
@@ -222,6 +267,9 @@ public class GameOver extends Scene {
                 SceneManager.getInstance().goToNextScene();
                 break;
             }
+
+
+
 
         }
     }

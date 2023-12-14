@@ -145,6 +145,11 @@ public class WorldSelectionMenu extends Scene {
                     {
                         String levelName = ResourceManager.getInstance().getLevel(actual_WORLD, j);
 
+                        GameManager gm = GameManager.getInstance();
+
+                        gm.setActualWorld(actual_WORLD);
+                        gm.setActualLvl(j);
+
                         MasterMind next_Scene = new MasterMind(levelName);
                         next_Scene.setIndexWorld(actual_WORLD);
 
@@ -205,9 +210,13 @@ public class WorldSelectionMenu extends Scene {
         }
 
 
-        for(int i = 0; i < GameManager.getInstance().getUnlocked_lvls();i++){
-            //Desbloqueamos los mundos
-            levels.get(0).get(i).setUnlock(true);
+        for(int i = 0; i <= GameManager.getInstance().getUnlocked_lvls().first;i++){
+
+            for(int j=0; j <= GameManager.getInstance().getUnlocked_lvls().second;j++){
+                //Desbloqueamos los mundos
+                levels.get(i).get(j).setUnlock(true);
+            }
+
         }
 
     }

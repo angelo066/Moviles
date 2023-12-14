@@ -1,5 +1,6 @@
 package com.practica1.androidgame;
 
+import com.google.android.gms.common.internal.ServiceSpecificExtraArgs;
 import com.google.gson.Gson;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
@@ -301,11 +302,12 @@ public class MasterMind extends Scene {
                     if (attempts.get(currentAttempt).getUncoveredCircles() == numColorsPerAttempt) {
 
                         if (attempts.get(currentAttempt).isCorrectCombination()) {
-                            if(world_Level){
+
+                            if(world_Level && GameManager.getInstance().isLasLevel()){
                                 GameManager.getInstance().addCoins(lvl_coins);
                                 GameManager.getInstance().level_Completed();
                             }
-                            SceneManager.getInstance().addScene(new GameOver(winningCombination, true, difficultyMode, currentAttempt + 1, colorBlind, lvl_coins));
+                            SceneManager.getInstance().addScene(new GameOver(winningCombination, true, difficultyMode, currentAttempt + 1, colorBlind, lvl_coins, world_Level, levelName));
                             SceneManager.getInstance().addScene(this);
                             SceneManager.getInstance().goToNextScene();
                             break outerloop;
@@ -313,7 +315,7 @@ public class MasterMind extends Scene {
                             currentAttempt++;
 
                             if (currentAttempt == numAttempts) {
-                                SceneManager.getInstance().addScene(new GameOver(winningCombination, false, difficultyMode, currentAttempt + 1, colorBlind, lvl_coins));
+                                SceneManager.getInstance().addScene(new GameOver(winningCombination, false, difficultyMode, currentAttempt + 1, colorBlind, lvl_coins, world_Level, levelName));
                                 SceneManager.getInstance().addScene(this);
                                 SceneManager.getInstance().goToNextScene();
                                 break outerloop;
@@ -348,7 +350,7 @@ public class MasterMind extends Scene {
                 if(!world_Level)SceneManager.getInstance().addScene(new SelectionMenu());
                 else{
                     WorldSelectionMenu next_Scene = new WorldSelectionMenu();
-                    next_Scene.changeWorld(indexWorld);
+                    //next_Scene.changeWorld(indexWorld);
                     SceneManager.getInstance().addScene(next_Scene);
                 }
                 SceneManager.getInstance().goToNextScene();

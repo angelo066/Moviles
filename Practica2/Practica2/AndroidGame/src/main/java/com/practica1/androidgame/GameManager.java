@@ -1,6 +1,7 @@
 package com.practica1.androidgame;
 
 import android.content.Context;
+import android.util.Pair;
 
 import com.practica1.androidengine.Engine;
 
@@ -31,6 +32,11 @@ public class GameManager {
     private int actual_Skin_Code;
     private int actual_Skin_Color;
 
+    private int actualLvl = 0;
+    private int actualWorld = 0;
+
+    private Pair<Integer,Integer> lastLevelUnlocked = new Pair<>(0,0);
+
     private GameManager(){
 
     }
@@ -60,7 +66,7 @@ public class GameManager {
         // Que yo el otro dia me tire 2 horas buscando el archivito 💀
         // Que que quiere decir privado, pues efectivamente que no aparece en el explorador de archivos
 
-        PlayerSerializeInfo playerSerializeInfo = new PlayerSerializeInfo(50, 0);
+        PlayerSerializeInfo playerSerializeInfo = new PlayerSerializeInfo(coins, unlocked_lvls);
 
         try{
             FileOutputStream fout = context.openFileOutput("player.txt", Context.MODE_PRIVATE);
@@ -109,6 +115,24 @@ public class GameManager {
         return coins;
     }
 
-    public int getUnlocked_lvls(){return unlocked_lvls;}
-    public void level_Completed(){unlocked_lvls++;}
+    public Pair<Integer,Integer> getUnlocked_lvls(){return lastLevelUnlocked;}
+    public void level_Completed(){
+        //Pasas de mundo
+        if(lastLevelUnlocked.second == ResourceManager.getInstance().getNumLevels(lastLevelUnlocked.first) - 1){
+            lastLevelUnlocked = new Pair<Integer, Integer>(lastLevelUnlocked.first + 1, 0);
+        }
+        else{
+            lastLevelUnlocked = new Pair<Integer, Integer>(lastLevelUnlocked.first, lastLevelUnlocked.second + 1);
+        }
+    }
+
+    public void setActualLvl(int lvl){actualLvl = lvl;}
+    public void setActualWorld(int wrld){actualWorld = wrld;}
+
+    public int getActualLvl(){return actualLvl;}
+    public int getActualWorld(){return actualWorld;}
+
+    public boolean isLasLevel(){
+        return actualLvl == lastLevelUnlocked.second && actualWorld == lastLevelUnlocked.first;
+    }
 }

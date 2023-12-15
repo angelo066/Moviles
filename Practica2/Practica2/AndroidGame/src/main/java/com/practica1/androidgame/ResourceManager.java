@@ -207,11 +207,17 @@ public class ResourceManager {
             System.out.println("Error loading shop backgrounds");
         }
 
-        // Deserializamos el json en un objeto con la info del mundo
-        BackgroundInfo[] mieldaloco = gson.fromJson(br, BackgroundInfo[].class);
-        for(int i = 0; i < mieldaloco.length; i++)
+        // Deserializamos el json en una lista de fondos
+        BackgroundInfo[] backgroundList = gson.fromJson(br, BackgroundInfo[].class);
+        for(int i = 0; i < backgroundList.length; i++)
         {
-            System.out.println(mieldaloco[i].getThumbnail() + " " + mieldaloco[i].getBackground());
+            shop_backgrounds.add(new Pair<String, String>(backgroundList[i].getThumbnail(), backgroundList[i].getBackground()));
+            System.out.println(backgroundList[i].getThumbnail() + " " + backgroundList[i].getBackground());
+
+            // Creamos las imagenes de los fondos
+            String baseRoute = "backgrounds/";
+            // createImage(baseRoute + backgroundList[i].getThumbnail()); <<-- esto habra que descomentarlo cuando tengamos los pngs
+            createImage(baseRoute + backgroundList[i].getBackground());
         }
     }
 

@@ -35,9 +35,9 @@ public class AssetsLoad extends Scene {
         ResourceManager.getInstance().createImage("lock.png");
         ResourceManager.getInstance().createImage("ArrowNavigators.png");
         ResourceManager.getInstance().createImage("ArrowNavigators_Left.png");
-        ResourceManager.getInstance().createImage("moe_background.png");
+        /*ResourceManager.getInstance().createImage("moe_background.png");
         ResourceManager.getInstance().createImage("nuclear_background.png");
-        ResourceManager.getInstance().createImage("otto_background.png");
+        ResourceManager.getInstance().createImage("otto_background.png");*/
 
         /*
         ResourceManager.getInstance().createImage("pack_1/pack_1_1.png");

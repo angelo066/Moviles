@@ -71,6 +71,8 @@ public class Attempt {
     public void render() {
 
         //Recuadro
+        graphics.setColor(Color.OPACITY_GREY.getValue());
+        graphics.fillRoundRectangle(pos.x, pos.y, size.x, size.y, 20);
         graphics.setColor(Color.GREY.getValue());
         graphics.drawRoundRectangle(pos.x, pos.y, size.x, size.y, 20);
 

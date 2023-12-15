@@ -256,9 +256,8 @@ public class WorldSelectionMenu extends Scene {
         {
             Vector2 pos = new Vector2(0, 200);
             Vector2 size = new Vector2(width, height-200);
-            ImageObject background = new ImageObject(graphics, pos, size, styleNames[i] + ".png");
+            ImageObject background = new ImageObject(graphics, pos, size, "backgrounds/" + styleNames[i] + ".png");
             worldBackgrounds.add(background);
-            int a = 0;
         }
     }
 

@@ -1,6 +1,5 @@
 package com.practica1.androidgame;
 
-import com.google.android.gms.common.internal.ServiceSpecificExtraArgs;
 import com.google.gson.Gson;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
@@ -48,6 +47,8 @@ public class MasterMind extends Scene {
     private boolean world_Level = false;
 
     private int lvl_coins = 0; //Inicializado a 0 para los niveles de partida rapida
+
+    ImageObject imageBackground;
 
     public MasterMind(Difficulty mode) {
         this.width = 1080;
@@ -101,6 +102,8 @@ public class MasterMind extends Scene {
         createButtons();
 
         createTexts();
+
+        createBackground();
     }
 
     private void selectConfiguration() {
@@ -218,6 +221,32 @@ public class MasterMind extends Scene {
         buttonBack = new ButtonObject(graphics, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
     }
 
+    private void createBackground()
+    {
+        // Si es un nivel de mundo cargamos el style.json del mundo
+        if(world_Level)
+        {
+            // Creamos el parser del json
+            Gson gson = new Gson();
+            BufferedReader br = null;
+
+            // Leemos el json
+            try {
+                br = engine.openAssetFile("levels/world" + (GameManager.getInstance().getActualWorld()+1) + "/style.json");
+            } catch (IOException ex) {
+                System.out.println("Error loading World Style");
+            }
+
+            // Deserializamos el json en un objeto con la info del nivel
+            WordlInfo levelInfo = gson.fromJson(br, WordlInfo.class);
+
+            // Asignamos los valores que hemos recogido a nuestra partida
+            String background = levelInfo.getStyle();
+            imageBackground = new ImageObject(graphics, new Vector2(0,0), new Vector2(width, height), "backgrounds/" + background + ".png");
+        }
+
+    }
+
     @Override
     public void render() {
 
@@ -227,6 +256,10 @@ public class MasterMind extends Scene {
         // Fondo de Juego
         graphics.setColor(Color.WHITE.getValue());
         graphics.fillRectangle(0, 0, width, height);
+
+        // Background si hay
+        if(imageBackground != null)
+            imageBackground.render();
 
         // Intentos
         for (int i = 0; i < this.numAttempts; i++) {

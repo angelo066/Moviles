@@ -39,13 +39,16 @@ public class AssetsLoad extends Scene {
         ResourceManager.getInstance().createImage("nuclear_background.png");
         ResourceManager.getInstance().createImage("otto_background.png");
 
+        /*
         ResourceManager.getInstance().createImage("pack_1/pack_1_1.png");
         ResourceManager.getInstance().createImage("pack_1/pack_1_2.png");
         ResourceManager.getInstance().createImage("pack_1/pack_1_3.png");
         ResourceManager.getInstance().createImage("pack_1/pack_1_4.png");
         ResourceManager.getInstance().createImage("pack_1/pack_1_5.png");
         ResourceManager.getInstance().createImage("pack_1/pack_1_6.png");
-        ResourceManager.getInstance().createImage("pack_1/pack_1_7.png");
+        ResourceManager.getInstance().createImage("pack_1/pack_1_7.png");*/
+
+        ResourceManager.getInstance().loadShop();
 
         ResourceManager.getInstance().assetsChargeFinalized();
 

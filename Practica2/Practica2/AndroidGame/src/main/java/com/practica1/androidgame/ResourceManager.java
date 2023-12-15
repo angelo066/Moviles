@@ -1,9 +1,14 @@
 package com.practica1.androidgame;
 
+import android.util.Pair;
+
+import com.google.gson.Gson;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Font;
 import com.practica1.androidengine.Image;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +22,8 @@ public class ResourceManager {
     protected HashMap<String, Image> images;
     protected HashMap<String, Font> fonts;
     protected List<List<String>> levels;
+    protected List<Pair<String, String>> shop_backgrounds;
+    protected List<Pair<String, String>> shop_codes;
 
     //PROVISIONAL
     int n_Images;
@@ -25,6 +32,8 @@ public class ResourceManager {
         images = new HashMap<>();
         fonts = new HashMap<>();
         levels = new ArrayList<>();
+        shop_codes = new ArrayList<>();
+        shop_backgrounds = new ArrayList<>();
     }
 
     /**
@@ -174,4 +183,72 @@ public class ResourceManager {
 
     public int getNumWorlds(){return levels.size();}
     public int getNumLevels(int worldIndex){return levels.get(worldIndex).size() - 1;} // el ultimo archivo es el style.json
+
+    public void loadShop()
+    {
+        // Cargar todos los estilos de los fondos
+        // Creamos el parser del json
+        Gson gson  = new Gson();
+        BufferedReader br = null; // -> esto igual se puede sacar al resource manager o hacer algo en el motor ?
+
+        loadShopBackgrounds(gson, br);
+        loadShopCodes(gson, br);
+
+    }
+
+    private void loadShopBackgrounds(Gson gson, BufferedReader br)
+    {
+        // Leemos el json
+        try {
+            br = engine.openAssetFile("shop/backgrounds.json");
+        }
+        catch (IOException ex)
+        {
+            System.out.println("Error loading shop backgrounds");
+        }
+
+        // Deserializamos el json en un objeto con la info del mundo
+        BackgroundInfo[] mieldaloco = gson.fromJson(br, BackgroundInfo[].class);
+        for(int i = 0; i < mieldaloco.length; i++)
+        {
+            System.out.println(mieldaloco[i].getThumbnail() + " " + mieldaloco[i].getBackground());
+        }
+    }
+
+    private void loadShopCodes(Gson gson, BufferedReader br)
+    {
+        // Leemos el json
+        try {
+            br = engine.openAssetFile("shop/codes.json");
+        }
+        catch (IOException ex)
+        {
+            System.out.println("Error loading shop codes");
+        }
+        // Deserializamos el json en un objeto con la info de los packs
+        CodeInfo[] packList = gson.fromJson(br, CodeInfo[].class);
+
+        // Por cada pack
+        for(int i = 0; i < packList.length; i++)
+        {
+            System.out.println(packList[i].getThumbnail() + " " + packList[i].getCode());
+
+            // Abrir la carpeta del pack y leer todos los archivos
+            String baseRoute = "sprites/" + packList[i].getCode();
+            List<String> files = engine.obtainFolderFiles(baseRoute);
+
+            // Guardamos la info de los packs
+            shop_codes.add(new Pair<String, String>(packList[i].getThumbnail(), packList[i].getCode()));
+
+            // Cargamos la miniatura del pack
+            // createImage(packList[i].getThumbnail()); <<-- esto habra que descomentarlo cuando tengamos los pngs
+
+            // Cargar imagenes del pack
+            for(int j = 0; j < files.size(); j++)
+            {
+                String route = packList[i].getCode() + "/" + packList[i].getCode() + "_" + (j+1) + ".png";
+                createImage(route);
+            }
+        }
+    }
 }

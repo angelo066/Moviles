@@ -1,0 +1,32 @@
+{
+    "backgrounds":[
+        {"thumbnail": "sprites/moe_thumbnail.png", "background": "sprites/moe_background.png"},
+        {"thumbnail": "sprites/nuclear_thumbnail.png", "background": "sprites/nuclear_background.png"},
+        {"thumbnail": "sprites/otto_thumbnail.png", "background": "sprites/otto_background.png"}
+    ],
+    "codes":[
+        {"thumbnail": "sprites/moe_thumbnail.png", "code": "sprites/moe_background.png"},
+        {"thumbnail": "sprites/nuclear_thumbnail.png", "code": "sprites/nuclear_background.png"},
+        {"thumbnail": "sprites/otto_thumbnail.png", "code": "sprites/otto_background.png"}
+    ],
+    "colors":[
+        {
+            "thumbnail": "sprites/moe_thumbnail.png",
+            "color_background": "sprites/moe_background.png",
+            "color_button": "sprites/moe_background.png",
+            "color_text": "sprites/moe_background.png"
+        },
+        {
+            "thumbnail": "sprites/moe_thumbnail.png",
+            "color_background": "sprites/moe_background.png",
+            "color_button": "sprites/moe_background.png",
+            "color_text": "sprites/moe_background.png"
+        },
+        {
+            "thumbnail": "sprites/moe_thumbnail.png",
+            "color_background": "sprites/moe_background.png",
+            "color_button": "sprites/moe_background.png",
+            "color_text": "sprites/moe_background.png"
+        }
+    ]
+}

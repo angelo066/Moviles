@@ -209,17 +209,15 @@ public class ResourceManager {
 
         // Deserializamos el json en una lista de fondos
         BackgroundInfo[] backgroundList = gson.fromJson(br, BackgroundInfo[].class);
+        String baseRoute = "backgrounds/";
         for(int i = 0; i < backgroundList.length; i++)
         {
-            shop_backgrounds.add(new Pair<String, String>(backgroundList[i].getThumbnail(), backgroundList[i].getBackground()));
+            shop_backgrounds.add(new Pair<String, String>(baseRoute + backgroundList[i].getThumbnail(), baseRoute + backgroundList[i].getBackground()));
             System.out.println(backgroundList[i].getThumbnail() + " " + backgroundList[i].getBackground());
-
-            // Creamos las imagenes de los fondos
-            String baseRoute = "backgrounds/";
-            // createImage(baseRoute + backgroundList[i].getThumbnail()); <<-- esto habra que descomentarlo cuando tengamos los pngs
-            createImage(baseRoute + backgroundList[i].getBackground());
         }
+        int a = 0;
     }
+
 
     private void loadShopCodes(Gson gson, BufferedReader br)
     {
@@ -245,15 +243,57 @@ public class ResourceManager {
 
             // Guardamos la info de los packs
             shop_codes.add(new Pair<String, String>(packList[i].getThumbnail(), packList[i].getCode()));
+        }
+    }
 
-            // Cargamos la miniatura del pack
-            // createImage(packList[i].getThumbnail()); <<-- esto habra que descomentarlo cuando tengamos los pngs
+    /**
+     * Recorre la carpeta de sprites/backgrounds y crea todas las imagenes de fondos posibles
+     */
+    public void loadBackgroundImages()
+    {
+        // Cargar carpeta de fondos
+        String baseRoute = "sprites/backgrounds";
+        List<String> files = engine.obtainFolderFiles(baseRoute);
 
-            // Cargar imagenes del pack
-            for(int j = 0; j < files.size(); j++)
+        // Crear la imagen recurso
+        for(String background : files)
+        {
+            String filename = background.replace("sprites/", "");
+            createImage(filename);
+        }
+    }
+
+    /**
+     * Recorre la carpeta de sprites/thumbnails y crea todas las imagenes de miniaturas posibles
+     */
+    public void loadThumbnailsImages()
+    {
+        // Cargar carpeta de fondos
+        String baseRoute = "sprites/thumbnails";
+        List<String> files = engine.obtainFolderFiles(baseRoute);
+
+        // Crear la imagen recurso
+        for(String background : files)
+        {
+            String filename = background.replace("sprites/", "");
+            createImage(filename);
+        }
+    }
+
+    public void loadPackCodes()
+    {
+        // Cargar carpeta de fondos
+        String baseRoute = "sprites/packs";
+        List<String> files = engine.obtainFolderFiles(baseRoute);
+
+        // Crear la imagen recurso
+        for(String packfiles : files)
+        {
+            List<String> images = engine.obtainFolderFiles(packfiles);
+            for(String image : images)
             {
-                String route = packList[i].getCode() + "/" + packList[i].getCode() + "_" + (j+1) + ".png";
-                createImage(route);
+                String filename = image.replace("sprites/", "");
+                createImage(filename);
             }
         }
     }

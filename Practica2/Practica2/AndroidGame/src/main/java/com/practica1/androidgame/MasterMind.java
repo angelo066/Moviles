@@ -48,7 +48,8 @@ public class MasterMind extends Scene {
 
     private int lvl_coins = 0; //Inicializado a 0 para los niveles de partida rapida
 
-    ImageObject imageBackground;
+    private ImageObject imageBackground;
+    private String pack_file;
 
     public MasterMind(Difficulty mode) {
         this.width = 1080;
@@ -80,6 +81,7 @@ public class MasterMind extends Scene {
 
         //Por ser la constructora que usan los mundos
         this.world_Level = true;
+
     }
 
     @Override
@@ -91,6 +93,7 @@ public class MasterMind extends Scene {
         else{
             createLevel();
             lvl_coins = this.random.nextInt(6) + 1;    //Seteamos las monedas que va a ganar si se pasa el nivel
+            selectPack();
         }
 
         createAttempts();
@@ -173,7 +176,10 @@ public class MasterMind extends Scene {
             int x = startPosition + (offsetBetweenCircle * i) + (circleRadius * 2 * i);
             int y = (tamDivision * (numDivisions - 1)) + ((tamDivision - 2 * circleRadius) / 2);
             if(world_Level)
-                this.availableColors[i] = new Circle(graphics, new Vector2(x, y), circleRadius,"pack_1/pack_1_" + (i+1) +".png");
+            {
+                String fileRoute= "packs/" + pack_file + "/" + pack_file + "_" + (i+1) +".png";
+                this.availableColors[i] = new Circle(graphics, new Vector2(x, y), circleRadius,fileRoute);
+            }
             else
                 this.availableColors[i] = new Circle(graphics, new Vector2(x, y), circleRadius);
             this.availableColors[i].setColor(Color.values()[i]);
@@ -241,10 +247,32 @@ public class MasterMind extends Scene {
             WordlInfo levelInfo = gson.fromJson(br, WordlInfo.class);
 
             // Asignamos los valores que hemos recogido a nuestra partida
-            String background = levelInfo.getStyle();
+            String background = levelInfo.getGameplay_background();
             imageBackground = new ImageObject(graphics, new Vector2(0,0), new Vector2(width, height), "backgrounds/" + background + ".png");
         }
+    }
 
+    private void selectPack()
+    {
+        // Cargar todos los estilos de los fondos
+        // Creamos el parser del json
+        Gson gson  = new Gson();
+        BufferedReader br = null; // -> esto igual se puede sacar al resource manager o hacer algo en el motor ?
+
+        // Leemos el json
+        try {
+            String filename = "levels/world" + (GameManager.getInstance().getActualWorld()+1) + "/style.json";
+            br = engine.openAssetFile(filename);
+        }
+        catch (IOException ex)
+        {
+            System.out.println("Error loading world style");
+        }
+
+        // Deserializamos el json en un objeto con la info del mundo
+        WordlInfo worldStyle = gson.fromJson(br, WordlInfo.class);
+        pack_file = worldStyle.getPack();
+        int a = 0;
     }
 
     @Override

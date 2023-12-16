@@ -232,7 +232,7 @@ public class WorldSelectionMenu extends Scene {
         String[] styleNames = new String[num_WORLDS];
         for(int i = 0; i < num_WORLDS; i++)
         {
-            String styleName = ResourceManager.getInstance().getWorldSytle(i);
+            String styleName = ResourceManager.getInstance().getWorldSytle(i); // TODO -> regulin esto
 
             // Leemos el json
             try {
@@ -245,7 +245,7 @@ public class WorldSelectionMenu extends Scene {
 
             // Deserializamos el json en un objeto con la info del mundo
             WordlInfo worldStyle = gson.fromJson(br, WordlInfo.class);
-            styleNames[i] = worldStyle.getStyle();
+            styleNames[i] = worldStyle.getWorld_background();
         }
 
         // Inicializamos la lista de imagenes de fondos

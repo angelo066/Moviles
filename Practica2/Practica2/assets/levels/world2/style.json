@@ -1,3 +1,5 @@
 {
-    "style": "nuclear_background"
+    "world_background": "nuclear_background",
+    "gameplay_background": "nuclear_background_gameplay",
+    "pack": "pack_2"
 }

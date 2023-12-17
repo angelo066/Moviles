@@ -11,12 +11,13 @@ public class BuyObject {
     private Vector2 pos;
     private Vector2 iniPos;
     private Graphics graphics;
-    ButtonObject buyButton;
-    ImageObject selectedImage;
-    ImageObject coinImage;
-    TextObject priceText;
-    boolean unlock = false;
-    boolean selected = true;
+    private ButtonObject buyButton;
+    private ImageObject selectedImage;
+    private ImageObject coinImage;
+    private TextObject priceText;
+    private int price;
+    private boolean unlock = false;
+    private boolean selected = true;
 
 
     /**
@@ -61,8 +62,10 @@ public class BuyObject {
 
     public void setPrice(int p){
         priceText.setText(String.valueOf(p));
+        price = p;
     }
 
+    public int getPrice(){return price;}
     public void setSelected(boolean s)
     {
         if(unlock)
@@ -73,4 +76,9 @@ public class BuyObject {
     {
         unlock = u;
     }
+
+    public boolean isUnlocked() {return unlock;}
+
+    public ButtonObject getButton(){return buyButton;}
+
 }

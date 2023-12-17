@@ -124,12 +124,10 @@ public class Shop extends Scene {
 
     public void handleInput(ArrayList<TouchEvent> events) {
 
-        boolean selected = false;
-        Difficulty mode = Difficulty.EASY;
 
         // Dependiendo del boton, vamos a una escena u otra
         // Si es un boton de juego asignamos la dificultad
-        for (int i = 0; i < events.size() && !selected; i++) {
+        for (int i = 0; i < events.size(); i++) {
 
             if (buttonBack.handleInput(events.get(i))) {
                 SceneManager.getInstance().addScene(new MainMenu());
@@ -160,14 +158,21 @@ public class Shop extends Scene {
                 break;
             }
 
+            for(int b = 0; b < skins_Back.length;b++){
+                GameManager gm = GameManager.getInstance();
+                BuyObject skin = skins_Back[b];
+                int coins = gm.getCoins();
+                int price = skin.getPrice();
+
+                if(skin.getButton().handleInput(events.get(i)) && coins <= price && !skin.isUnlocked() ){
+                    skin.setUnlock(true);
+                    gm.buyObject(price);
+                    gm.equipBackgroundSkin(b);
+                }
+            }
+
         }
 
-        if (selected) {
-            audio.stopSound("botonInterfaz.wav");
-            audio.playSound("botonInterfaz.wav", false);
-            SceneManager.getInstance().addScene(new MasterMind(mode));
-            SceneManager.getInstance().goToNextScene();
-        }
     }
 
     private void changeText() {

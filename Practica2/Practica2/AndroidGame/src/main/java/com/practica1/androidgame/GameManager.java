@@ -35,7 +35,7 @@ public class GameManager {
     private int actualLvl = 0;
     private int actualWorld = 0;
 
-    private Pair<Integer,Integer> lastLevelUnlocked = new Pair<>(1,0);
+    private Pair<Integer,Integer> lastLevelUnlocked = new Pair<>(0,0);
 
     private GameManager(){
 
@@ -111,6 +111,9 @@ public class GameManager {
         coins = coins + n;
     }
 
+    //Metodo que se usa para restar monedas cuando compramos
+    public void buyObject(int p) {coins = coins - p;}
+
     public int getCoins(){
         return coins;
     }
@@ -135,4 +138,6 @@ public class GameManager {
     public boolean isLasLevel(){
         return actualLvl == lastLevelUnlocked.second && actualWorld == lastLevelUnlocked.first;
     }
+
+    public void equipBackgroundSkin(int s){actual_Skin_Background = s;}
 }

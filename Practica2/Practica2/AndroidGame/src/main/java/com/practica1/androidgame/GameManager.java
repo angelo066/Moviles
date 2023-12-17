@@ -35,7 +35,7 @@ public class GameManager {
     private int actualLvl = 0;
     private int actualWorld = 0;
 
-    private Pair<Integer,Integer> lastLevelUnlocked = new Pair<>(0,0);
+    private Pair<Integer,Integer> lastLevelUnlocked = new Pair<>(1,0);
 
     private GameManager(){
 

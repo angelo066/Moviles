@@ -71,7 +71,7 @@ public class Shop extends Scene {
         coins = new ImageObject(graphics, pos_Coin, size_Coin, "coins.png");
 
         coin_cuantity = new TextObject(graphics, new Vector2(pos_Coin.x, pos_Coin.y + size_Coin.y),
-                "Nexa.ttf", "1000", Color.BLACK, 60, false, false);
+                "Nexa.ttf", String.valueOf(GameManager.getInstance().getCoins()), Color.BLACK, 60, false, false);
 
         type_Text = new TextObject(graphics, new Vector2(width/2, 140),
                 "Nexa.ttf", "Fondos", Color.BLACK, 60, false, false);

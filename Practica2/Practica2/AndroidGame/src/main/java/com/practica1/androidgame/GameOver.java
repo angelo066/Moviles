@@ -151,7 +151,7 @@ public class GameOver extends Scene {
 
         Vector2 posBack = new Vector2(width / 2, height / 14 * 13);
         buttonBackMenu = new ButtonObject(graphics, posBack, size, 40, Color.CYAN,
-                new TextObject(graphics, new Vector2(posBack), "Nexa.ttf", "Elegir Dificultad", Color.BLACK, 80, false, false));
+                new TextObject(graphics, new Vector2(posBack), "Nexa.ttf", "Menú", Color.BLACK, 80, false, false));
         buttonBackMenu.center();
     }
 
@@ -263,7 +263,7 @@ public class GameOver extends Scene {
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
                 SceneManager.getInstance().removeScene();
-                SceneManager.getInstance().addScene(new SelectionMenu());
+                SceneManager.getInstance().addScene(new WorldSelectionMenu());
                 SceneManager.getInstance().goToNextScene();
                 break;
             }

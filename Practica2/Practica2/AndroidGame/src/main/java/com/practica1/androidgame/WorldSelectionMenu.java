@@ -210,14 +210,46 @@ public class WorldSelectionMenu extends Scene {
         }
 
 
-        for(int i = 0; i <= GameManager.getInstance().getUnlocked_lvls().first;i++){
+        int worlds_Unlocked = GameManager.getInstance().getUnlocked_lvls().first;
+
+        //Desbloqueamos lo que haya del primer mundo
+        if(worlds_Unlocked == 0){
+            for(int j=0; j <= GameManager.getInstance().getUnlocked_lvls().second;j++){
+                //Desbloqueamos los mundos
+                levels.get(0).get(j).setUnlock(true);
+            }
+        }
+        else if(worlds_Unlocked == 1){
+            //Desbloqueamos el nivel 0 completamente
+            for(int j=0; j <= ResourceManager.getInstance().getNumLevels(0) - 1;j++){
+                //Desbloqueamos los mundos
+                levels.get(0).get(j).setUnlock(true);
+            }
 
             for(int j=0; j <= GameManager.getInstance().getUnlocked_lvls().second;j++){
                 //Desbloqueamos los mundos
-                levels.get(i).get(j).setUnlock(true);
+                levels.get(1).get(j).setUnlock(true);
+            }
+        }
+        else {  //Si están todos desbloqueados
+            //Desbloqueamos el nivel 0 completamente
+            for(int j=0; j <= ResourceManager.getInstance().getNumLevels(0) - 1;j++){
+                //Desbloqueamos los mundos
+                levels.get(0).get(j).setUnlock(true);
             }
 
+            //Desbloqueamos el nivel 1 completamente
+            for(int j=0; j <= ResourceManager.getInstance().getNumLevels(1) - 1;j++){
+                //Desbloqueamos los mundos
+                levels.get(1).get(j).setUnlock(true);
+            }
+
+            for(int j=0; j <= GameManager.getInstance().getUnlocked_lvls().second;j++){
+                //Desbloqueamos los mundos
+                levels.get(2).get(j).setUnlock(true);
+            }
         }
+
 
     }
 

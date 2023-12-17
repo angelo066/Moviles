@@ -93,8 +93,10 @@ public class MasterMind extends Scene {
         else{
             createLevel();
             lvl_coins = this.random.nextInt(6) + 1;    //Seteamos las monedas que va a ganar si se pasa el nivel
-            selectPack();
+            //selectPack();
         }
+
+        createStyle();
 
         createAttempts();
 
@@ -106,7 +108,6 @@ public class MasterMind extends Scene {
 
         createTexts();
 
-        createBackground();
     }
 
     private void selectConfiguration() {
@@ -227,7 +228,7 @@ public class MasterMind extends Scene {
         buttonBack = new ButtonObject(graphics, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
     }
 
-    private void createBackground()
+    private void createStyle()
     {
         // Si es un nivel de mundo cargamos el style.json del mundo
         if(world_Level)
@@ -248,31 +249,9 @@ public class MasterMind extends Scene {
 
             // Asignamos los valores que hemos recogido a nuestra partida
             String background = levelInfo.getGameplay_background();
+            pack_file = levelInfo.getPack();
             imageBackground = new ImageObject(graphics, new Vector2(0,0), new Vector2(width, height), "backgrounds/" + background + ".png");
         }
-    }
-
-    private void selectPack()
-    {
-        // Cargar todos los estilos de los fondos
-        // Creamos el parser del json
-        Gson gson  = new Gson();
-        BufferedReader br = null; // -> esto igual se puede sacar al resource manager o hacer algo en el motor ?
-
-        // Leemos el json
-        try {
-            String filename = "levels/world" + (GameManager.getInstance().getActualWorld()+1) + "/style.json";
-            br = engine.openAssetFile(filename);
-        }
-        catch (IOException ex)
-        {
-            System.out.println("Error loading world style");
-        }
-
-        // Deserializamos el json en un objeto con la info del mundo
-        WordlInfo worldStyle = gson.fromJson(br, WordlInfo.class);
-        pack_file = worldStyle.getPack();
-        int a = 0;
     }
 
     @Override

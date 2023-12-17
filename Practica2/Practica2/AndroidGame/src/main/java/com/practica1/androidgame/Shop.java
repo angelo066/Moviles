@@ -1,12 +1,18 @@
 package com.practica1.androidgame;
 
+import android.util.Pair;
+
+import com.google.gson.Gson;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.TouchEvent;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Shop extends Scene {
 
@@ -53,8 +59,8 @@ public class Shop extends Scene {
         super.init(engine);
 
         //Provisional, hay que cambiar numeros y demás
-        skins_Back = new BuyObject[GameManager.getInstance().getN_skins_Background()];
-        skins_Code = new BuyObject[GameManager.getInstance().getN_skins_Background()];
+        skins_Back = new BuyObject[ResourceManager.getInstance().shop_backgrounds.size()];
+        skins_Code = new BuyObject[ResourceManager.getInstance().shop_codes.size()];
         skins_Color = new BuyObject[GameManager.getInstance().getN_skins_Background()];
 
         Vector2 pos_Coin = new Vector2(900, 200);
@@ -81,7 +87,7 @@ public class Shop extends Scene {
         graphics.clear(Color.WHITE.getValue());
 
         // Fondo del juego
-        graphics.setColor(Color.BLUE.getValue());
+        graphics.setColor(Color.GREY.getValue());
         graphics.fillRectangle(0, 0, width, height);
 
         //Objetos
@@ -178,9 +184,16 @@ public class Shop extends Scene {
 
 
     private void createButtons(){
+
+        createBackgroundsShop();
+        createCodePacksShop();
+
+        /*
         createBuyObjects(skins_Back, "central.png");
         createBuyObjects(skins_Code, "autobus.png");
+        createBuyObjects(skins_Color, "taberna.png");*/
         createBuyObjects(skins_Color, "taberna.png");
+        int a = 0;
 
     }
 
@@ -212,6 +225,67 @@ public class Shop extends Scene {
         }
     }
 
+    private void createBackgroundsShop()
+    {
+        Vector2 pos = new Vector2(skin_Pos.x, skin_Pos.y);
+
+        int aux = width / N_SKIN_COLUMN;
+        Vector2 size = new Vector2(aux - 100, aux - 100);
+        int xIndex = 0;
+
+        int a = ResourceManager.getInstance().shop_backgrounds.size();
+        for(int i = 0; i < ResourceManager.getInstance().shop_backgrounds.size(); i++)
+        {
+            int diff = aux * (xIndex) + aux / 2;
+            pos.x = diff - size.x / 2;
+
+            // Si has llenado los huecos disponibles en esta fila pasas a la siguiente
+            if (xIndex >= N_SKIN_COLUMN) {
+                xIndex = 0;
+                pos.y += size.y + offset;
+                diff = aux / 2;
+                pos.x = diff - size.x / 2;
+            }
+            xIndex++;
+
+            // Miniatura
+            String image = ResourceManager.getInstance().shop_backgrounds.get(i).first;
+
+            // Crear el objeto
+            skins_Back[i] = new BuyObject(graphics, pos, size, image);
+            skins_Back[i].setPrice(100 * i);
+        }
+    }
+    private void createCodePacksShop()
+    {
+        Vector2 pos = new Vector2(skin_Pos.x, skin_Pos.y);
+
+        int aux = width / N_SKIN_COLUMN;
+        Vector2 size = new Vector2(aux - 100, aux - 100);
+        int xIndex = 0;
+
+        for(int i = 0; i < ResourceManager.getInstance().shop_codes.size(); i++)
+        {
+            int diff = aux * (xIndex) + aux / 2;
+            pos.x = diff - size.x / 2;
+
+            // Si has llenado los huecos disponibles en esta fila pasas a la siguiente
+            if (xIndex >= N_SKIN_COLUMN) {
+                xIndex = 0;
+                pos.y += size.y + offset;
+                diff = aux / 2;
+                pos.x = diff - size.x / 2;
+            }
+            xIndex++;
+
+            // Miniatura
+            String image = ResourceManager.getInstance().shop_codes.get(i).first;
+
+            // Crear el objeto
+            skins_Code[i] = new BuyObject(graphics, pos, size, image);
+            skins_Code[i].setPrice(100 * i);
+        }
+    }
     private void createNavigators(){
         buttonForward = new ButtonObject(graphics, new Vector2(width/2 + 100, 100), new Vector2(80,80), "ArrowNavigators.png");
         buttonBackward = new ButtonObject(graphics, new Vector2(width/2 - 200, 100), new Vector2(80,80), "ArrowNavigators_Left.png");

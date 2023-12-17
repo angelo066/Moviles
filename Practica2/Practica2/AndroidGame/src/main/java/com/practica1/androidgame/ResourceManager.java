@@ -209,10 +209,11 @@ public class ResourceManager {
 
         // Deserializamos el json en una lista de fondos
         BackgroundInfo[] backgroundList = gson.fromJson(br, BackgroundInfo[].class);
-        String baseRoute = "backgrounds/";
+        String backBaseRoute = "backgrounds/";
+        String thumbBaseRoute = "thumbnails/";
         for(int i = 0; i < backgroundList.length; i++)
         {
-            shop_backgrounds.add(new Pair<String, String>(baseRoute + backgroundList[i].getThumbnail(), baseRoute + backgroundList[i].getBackground()));
+            shop_backgrounds.add(new Pair<String, String>(thumbBaseRoute + backgroundList[i].getThumbnail(), backBaseRoute + backgroundList[i].getBackground()));
             System.out.println(backgroundList[i].getThumbnail() + " " + backgroundList[i].getBackground());
         }
         int a = 0;
@@ -242,7 +243,8 @@ public class ResourceManager {
             List<String> files = engine.obtainFolderFiles(baseRoute);
 
             // Guardamos la info de los packs
-            shop_codes.add(new Pair<String, String>(packList[i].getThumbnail(), packList[i].getCode()));
+            String thumbBaseRoute = "thumbnails/";
+            shop_codes.add(new Pair<String, String>(thumbBaseRoute + packList[i].getThumbnail(), packList[i].getCode()));
         }
     }
 

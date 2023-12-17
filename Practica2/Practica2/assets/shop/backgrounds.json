@@ -1,5 +1,8 @@
 [
     {"thumbnail": "moe_thumbnail.png", "background": "moe_background.png"},
+    {"thumbnail": "moe_thumbnail_gameplay.png", "background": "moe_background_gameplay.png"},
     {"thumbnail": "nuclear_thumbnail.png", "background": "nuclear_background.png"},
-    {"thumbnail": "otto_thumbnail.png", "background": "otto_background.png"}
+    {"thumbnail": "nuclear_thumbnail_gameplay.png", "background": "nuclear_background_gameplay.png"},
+    {"thumbnail": "otto_thumbnail.png", "background": "otto_background.png"},
+    {"thumbnail": "otto_thumbnail_gameplay.png", "background": "otto_background_gameplay.png"}
 ]

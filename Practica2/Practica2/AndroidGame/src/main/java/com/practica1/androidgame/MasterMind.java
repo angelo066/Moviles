@@ -30,7 +30,6 @@ public class MasterMind extends Scene {
     private int currentAttempt;
     private boolean colorBlind;
 
-
     private ButtonObject buttonColorBlind;
     private ButtonObject buttonBack;
     private TextObject textAttempts;
@@ -49,7 +48,7 @@ public class MasterMind extends Scene {
     private int lvl_coins = 0; //Inicializado a 0 para los niveles de partida rapida
 
     private ImageObject imageBackground;
-    private String pack_file;
+    private String pack_file;   //Combinacion de color
 
     public MasterMind(Difficulty mode) {
         this.width = 1080;
@@ -176,7 +175,7 @@ public class MasterMind extends Scene {
         for (int i = 0; i < this.numColors; i++) {
             int x = startPosition + (offsetBetweenCircle * i) + (circleRadius * 2 * i);
             int y = (tamDivision * (numDivisions - 1)) + ((tamDivision - 2 * circleRadius) / 2);
-            if(world_Level)
+            if(world_Level || GameManager.getInstance().getActual_Skin_Code() != -1)
             {
                 String fileRoute= "packs/" + pack_file + "/" + pack_file + "_" + (i+1) +".png";
                 this.availableColors[i] = new Circle(graphics, new Vector2(x, y), circleRadius,fileRoute);
@@ -251,6 +250,20 @@ public class MasterMind extends Scene {
             String background = levelInfo.getGameplay_background();
             pack_file = levelInfo.getPack();
             imageBackground = new ImageObject(graphics, new Vector2(0,0), new Vector2(width, height), "backgrounds/" + background + ".png");
+        }else{
+            int index = GameManager.getInstance().getActual_Skin_Background();
+
+            if(index != -1){
+                String route = ResourceManager.getInstance().shop_backgrounds.get(GameManager.getInstance().getActual_Skin_Background()).second;
+                imageBackground = new ImageObject(graphics, new Vector2(0,0), new Vector2(width, height), route);
+            }
+
+            int code_index = GameManager.getInstance().getActual_Skin_Code();
+
+            if(code_index != -1){
+                pack_file = ResourceManager.getInstance().shop_codes.get(GameManager.getInstance().getActual_Skin_Code()).second;
+            }
+
         }
     }
 
@@ -334,7 +347,7 @@ public class MasterMind extends Scene {
             for (int j = 0; j < availableColors.length; j++) {
                 if (availableColors[j].handleInput(events.get(i))) {
 
-                    if(world_Level)
+                    if(world_Level || GameManager.getInstance().getActual_Skin_Code() != -1)
                         attempts.get(currentAttempt).setCircle(availableColors[j].getColor(), winningCombination, availableColors[j].getImage());
                     else
                         attempts.get(currentAttempt).setCircle(availableColors[j].getColor(), winningCombination, null);
@@ -346,8 +359,11 @@ public class MasterMind extends Scene {
                             if(world_Level && GameManager.getInstance().isLasLevel()){
                                 GameManager.getInstance().addCoins(lvl_coins);
                                 GameManager.getInstance().level_Completed();
+                                SceneManager.getInstance().addScene(new GameOver(winningCombination, true, difficultyMode, currentAttempt + 1, colorBlind, lvl_coins, world_Level, levelName));
                             }
-                            SceneManager.getInstance().addScene(new GameOver(winningCombination, true, difficultyMode, currentAttempt + 1, colorBlind, lvl_coins, world_Level, levelName));
+                            else{
+                                SceneManager.getInstance().addScene(new GameOverQuickGame(winningCombination, true, difficultyMode, currentAttempt + 1, colorBlind, lvl_coins));
+                            }
                             SceneManager.getInstance().addScene(this);
                             SceneManager.getInstance().goToNextScene();
                             break outerloop;
@@ -355,7 +371,8 @@ public class MasterMind extends Scene {
                             currentAttempt++;
 
                             if (currentAttempt == numAttempts) {
-                                SceneManager.getInstance().addScene(new GameOver(winningCombination, false, difficultyMode, currentAttempt + 1, colorBlind, lvl_coins, world_Level, levelName));
+                                if(world_Level)SceneManager.getInstance().addScene(new GameOver(winningCombination, false, difficultyMode, currentAttempt + 1, colorBlind, lvl_coins, world_Level, levelName));
+                                else SceneManager.getInstance().addScene(new GameOverQuickGame(winningCombination, false, difficultyMode, currentAttempt + 1, colorBlind, lvl_coins));
                                 SceneManager.getInstance().addScene(this);
                                 SceneManager.getInstance().goToNextScene();
                                 break outerloop;

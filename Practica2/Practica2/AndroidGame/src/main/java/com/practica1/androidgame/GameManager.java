@@ -28,9 +28,9 @@ public class GameManager {
     private int n_skins_Color;
 
     //Indice de la skin que tengo puesta
-    private int actual_Skin_Background;
-    private int actual_Skin_Code;
-    private int actual_Skin_Color;
+    private int actual_Skin_Background = -1; //-1 cuando no hay ninguna equipada
+    private int actual_Skin_Code= -1; //-1 cuando no hay ninguna equipada
+    private int actual_Skin_Color= -1; //-1 cuando no hay ninguna equipada
 
     private int actualLvl = 0;
     private int actualWorld = 0;
@@ -140,4 +140,10 @@ public class GameManager {
     }
 
     public void equipBackgroundSkin(int s){actual_Skin_Background = s;}
+
+    public int getActual_Skin_Background(){return actual_Skin_Background;}
+
+    public void equipCode(int s){actual_Skin_Code = s;}
+
+    public int getActual_Skin_Code(){return actual_Skin_Code;}
 }

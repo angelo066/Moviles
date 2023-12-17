@@ -81,4 +81,6 @@ public class LevelObject {
     public boolean handleInput(TouchEvent event) {
         return levelButton.handleInput(event);
     }
+
+    public boolean isUnlock(){return unlock;}
 }

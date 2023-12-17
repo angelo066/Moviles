@@ -97,12 +97,10 @@ public class WorldSelectionMenu extends Scene {
 
     public void handleInput(ArrayList<TouchEvent> events) {
 
-        boolean selected = false;
-        Difficulty mode = Difficulty.EASY;
 
         // Dependiendo del boton, vamos a una escena u otra
         // Si es un boton de juego asignamos la dificultad
-        for (int i = 0; i < events.size() && !selected; i++) {
+        for (int i = 0; i < events.size(); i++) {
 
             if (buttonBack.handleInput(events.get(i))) {
                 SceneManager.getInstance().addScene(new MainMenu());
@@ -141,7 +139,7 @@ public class WorldSelectionMenu extends Scene {
                 for(int j = 0; j < levels.get(actual_WORLD).size(); j++)
                 {
                     // Hemos pulsado algun boton
-                    if(levels.get(actual_WORLD).get(j).handleInput(events.get(i)))
+                    if(levels.get(actual_WORLD).get(j).isUnlock() && levels.get(actual_WORLD).get(j).handleInput(events.get(i)))
                     {
                         String levelName = ResourceManager.getInstance().getLevel(actual_WORLD, j);
 
@@ -162,14 +160,6 @@ public class WorldSelectionMenu extends Scene {
 
         }
 
-        //Que hace esto (Ahora mismo selected siempre es false)
-        if (selected) {
-            audio.stopSound("botonInterfaz.wav");
-            audio.playSound("botonInterfaz.wav", false);
-
-            SceneManager.getInstance().addScene(new MasterMind(mode));
-            SceneManager.getInstance().goToNextScene();
-        }
     }
 
 

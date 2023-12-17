@@ -154,6 +154,7 @@ public class GameOverQuickGame extends Scene {
         int totalWidth = (combination_win.length * circleRadius * 2) + ((combination_win.length - 1) * offset);
         int spaceToEachSide = (width - totalWidth) / 2;
 
+        int skin = GameManager.getInstance().getActual_Skin_Code() + 1;
         // Creacion de cada circulo
         for (int i = 0; i < combination_win.length; i++) {
             int x = spaceToEachSide + i * (circleRadius * 2) + i * offset;
@@ -162,6 +163,14 @@ public class GameOverQuickGame extends Scene {
             circles[i].setColorblind(colorBlind);
             circles[i].setColor(combination_win[i]);
             circles[i].setUncovered(true);
+
+            if(skin != -1){
+
+                int colorIndex = combination_win[i].getId() + 1;
+                String image = "packs/pack_" + skin + "/" +colorIndex + ".png";
+
+                circles[i].setImage(ResourceManager.getInstance().getImage(image));
+            }
         }
     }
 

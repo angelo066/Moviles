@@ -356,10 +356,13 @@ public class MasterMind extends Scene {
 
                         if (attempts.get(currentAttempt).isCorrectCombination()) {
 
-                            if(world_Level && GameManager.getInstance().isLasLevel()){
+                            if(world_Level){
+                                //Si es el último nivel por el que vamos
+                                if(GameManager.getInstance().isLasLevel()){
+                                    GameManager.getInstance().level_Completed();
+                                }
                                 GameManager.getInstance().addCoins(lvl_coins);
-                                GameManager.getInstance().level_Completed();
-                                SceneManager.getInstance().addScene(new GameOver(winningCombination, true, difficultyMode, currentAttempt + 1, colorBlind, lvl_coins, world_Level, levelName));
+                                SceneManager.getInstance().addScene(new GameOverWorld(winningCombination, true, difficultyMode, currentAttempt + 1, colorBlind, lvl_coins, levelName, pack_file));
                             }
                             else{
                                 SceneManager.getInstance().addScene(new GameOverQuickGame(winningCombination, true, difficultyMode, currentAttempt + 1, colorBlind, lvl_coins));
@@ -371,7 +374,7 @@ public class MasterMind extends Scene {
                             currentAttempt++;
 
                             if (currentAttempt == numAttempts) {
-                                if(world_Level)SceneManager.getInstance().addScene(new GameOver(winningCombination, false, difficultyMode, currentAttempt + 1, colorBlind, lvl_coins, world_Level, levelName));
+                                if(world_Level)SceneManager.getInstance().addScene(new GameOverWorld(winningCombination, false, difficultyMode, currentAttempt + 1, colorBlind, lvl_coins, levelName, pack_file));
                                 else SceneManager.getInstance().addScene(new GameOverQuickGame(winningCombination, false, difficultyMode, currentAttempt + 1, colorBlind, lvl_coins));
                                 SceneManager.getInstance().addScene(this);
                                 SceneManager.getInstance().goToNextScene();

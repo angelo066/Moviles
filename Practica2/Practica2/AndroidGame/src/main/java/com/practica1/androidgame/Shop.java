@@ -158,18 +158,36 @@ public class Shop extends Scene {
                 break;
             }
 
-            for(int b = 0; b < skins_Back.length;b++){
-                GameManager gm = GameManager.getInstance();
-                BuyObject skin = skins_Back[b];
-                int coins = gm.getCoins();
-                int price = skin.getPrice();
+            if(Skin_Type.values()[type] == Skin_Type.BACKGROUND) {
+                for (int b = 0; b < skins_Back.length; b++) {
+                    GameManager gm = GameManager.getInstance();
+                    BuyObject skin = skins_Back[b];
+                    int coins = gm.getCoins();
+                    int price = skin.getPrice();
 
-                if(skin.getButton().handleInput(events.get(i)) && coins <= price && !skin.isUnlocked() ){
-                    skin.setUnlock(true);
-                    gm.buyObject(price);
-                    gm.equipBackgroundSkin(b);
+                    if (skin.getButton().handleInput(events.get(i)) && coins <= price && !skin.isUnlocked()) {
+                        skin.setUnlock(true);
+                        gm.buyObject(price);
+                        gm.equipBackgroundSkin(b);
+                    }
                 }
             }
+
+            if(Skin_Type.values()[type] == Skin_Type.CODE){
+                for(int c = 0; c < skins_Code.length;c++){
+                    GameManager gm = GameManager.getInstance();
+                    BuyObject skin = skins_Code[c];
+                    int coins = gm.getCoins();
+                    int price = skin.getPrice();
+
+                    if(skin.getButton().handleInput(events.get(i)) && coins <= price && !skin.isUnlocked() ){
+                        skin.setUnlock(true);
+                        gm.buyObject(price);
+                        gm.equipCode(c);
+                    }
+                }
+            }
+
 
         }
 
@@ -192,13 +210,7 @@ public class Shop extends Scene {
 
         createBackgroundsShop();
         createCodePacksShop();
-
-        /*
-        createBuyObjects(skins_Back, "central.png");
-        createBuyObjects(skins_Code, "autobus.png");
-        createBuyObjects(skins_Color, "taberna.png");*/
         createBuyObjects(skins_Color, "taberna.png");
-        int a = 0;
 
     }
 

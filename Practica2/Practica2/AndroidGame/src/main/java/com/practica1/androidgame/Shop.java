@@ -61,7 +61,7 @@ public class Shop extends Scene {
         //Provisional, hay que cambiar numeros y demás
         skins_Back = new BuyObject[ResourceManager.getInstance().shop_backgrounds.size()];
         skins_Code = new BuyObject[ResourceManager.getInstance().shop_codes.size()];
-        skins_Color = new BuyObject[GameManager.getInstance().getN_skins_Background()];
+        skins_Color = new BuyObject[ResourceManager.getInstance().shop_palettes.size()];
 
         Vector2 pos_Coin = new Vector2(900, 200);
         Vector2 size_Coin = new Vector2(100, 100);
@@ -188,6 +188,21 @@ public class Shop extends Scene {
                 }
             }
 
+            if(Skin_Type.values()[type] == Skin_Type.COLORS){
+                for(int c = 0; c < skins_Color.length;c++){
+                    GameManager gm = GameManager.getInstance();
+                    BuyObject skin = skins_Color[c];
+                    int coins = gm.getCoins();
+                    int price = skin.getPrice();
+
+                    if(skin.getButton().handleInput(events.get(i)) && coins <= price && !skin.isUnlocked() ){
+                        skin.setUnlock(true);
+                        gm.buyObject(price);
+                        gm.equipPalette(ResourceManager.getInstance().shop_palettes.get(c));
+                    }
+                }
+            }
+
 
         }
 
@@ -210,7 +225,7 @@ public class Shop extends Scene {
 
         createBackgroundsShop();
         createCodePacksShop();
-        createBuyObjects(skins_Color, "taberna.png");
+        createPalettesShop();
 
     }
 
@@ -302,6 +317,38 @@ public class Shop extends Scene {
             skins_Code[i] = new BuyObject(graphics, pos, size, image);
             skins_Code[i].setPrice(100 * i);
         }
+    }
+
+    private void createPalettesShop()
+    {
+        Vector2 pos = new Vector2(skin_Pos.x, skin_Pos.y);
+
+        int aux = width / N_SKIN_COLUMN;
+        Vector2 size = new Vector2(aux - 100, aux - 100);
+        int xIndex = 0;
+
+        for(int i = 0; i < ResourceManager.getInstance().shop_palettes.size(); i++)
+        {
+            int diff = aux * (xIndex) + aux / 2;
+            pos.x = diff - size.x / 2;
+
+            // Si has llenado los huecos disponibles en esta fila pasas a la siguiente
+            if (xIndex >= N_SKIN_COLUMN) {
+                xIndex = 0;
+                pos.y += size.y + offset;
+                diff = aux / 2;
+                pos.x = diff - size.x / 2;
+            }
+            xIndex++;
+
+            // Miniatura
+            String image = "thumbnails/" + ResourceManager.getInstance().shop_palettes.get(i).getThumbnail();
+
+            // Crear el objeto
+            skins_Color[i] = new BuyObject(graphics, pos, size, image);
+            skins_Color[i].setPrice(100 * i);
+        }
+        int a = 0;
     }
     private void createNavigators(){
         buttonForward = new ButtonObject(graphics, new Vector2(width/2 + 100, 100), new Vector2(80,80), "ArrowNavigators.png");

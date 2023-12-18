@@ -31,6 +31,7 @@ public class GameManager {
     private int actual_Skin_Background = -1; //-1 cuando no hay ninguna equipada
     private int actual_Skin_Code= -1; //-1 cuando no hay ninguna equipada
     private int actual_Skin_Color= -1; //-1 cuando no hay ninguna equipada
+    private PaletteInfo actual_Skin_Palette = null;
 
     private int actualLvl = 0;
     private int actualWorld = 0;
@@ -146,4 +147,6 @@ public class GameManager {
     public void equipCode(int s){actual_Skin_Code = s;}
 
     public int getActual_Skin_Code(){return actual_Skin_Code;}
+    public void equipPalette(PaletteInfo p){actual_Skin_Palette = p;}
+    public PaletteInfo getActual_Skin_Palette(){return actual_Skin_Palette;}
 }

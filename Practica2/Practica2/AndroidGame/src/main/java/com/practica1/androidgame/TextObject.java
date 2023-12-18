@@ -1,5 +1,7 @@
 package com.practica1.androidgame;
 
+import static java.lang.Integer.parseInt;
+
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Font;
@@ -19,6 +21,7 @@ public class TextObject {
     private Vector2 pos;
     private Vector2 iniPos;
     private Graphics graphics;
+    private long aux_color_prueba_cambiar_men = 0;
 
     /**
      * @param graphics Objeto graphics del engine
@@ -40,13 +43,26 @@ public class TextObject {
         this.graphics = graphics;
         this.pos = new Vector2(pos);
         this.iniPos = pos;
+
+        if(GameManager.getInstance().getActual_Skin_Palette() != null)
+        {
+            String a = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+            aux_color_prueba_cambiar_men = Long.parseLong(a, 16);
+        }
     }
 
     /**
      * Render del texto
      */
     public void render() {
-        graphics.setColor(color.getValue());
+
+
+        if(GameManager.getInstance().getActual_Skin_Palette() != null)
+            graphics.setColor((int)aux_color_prueba_cambiar_men);
+        else
+            graphics.setColor(color.getValue());
+        //graphics.setColor(color.getValue());
+
 
         setFont();
 

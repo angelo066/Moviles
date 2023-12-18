@@ -22,8 +22,9 @@ public class ResourceManager {
     protected HashMap<String, Image> images;
     protected HashMap<String, Font> fonts;
     protected List<List<String>> levels;
-    protected List<Pair<String, String>> shop_backgrounds;
+    protected List<Pair<String, String>> shop_backgrounds; // estos no son de tipo BackgroundInfo porque tenemos que poner mas cosas en la ruta del string // igual lo podemos cambiar tambien
     protected List<Pair<String, String>> shop_codes;
+    protected List<PaletteInfo> shop_palettes;
 
     //PROVISIONAL
     int n_Images;
@@ -34,6 +35,7 @@ public class ResourceManager {
         levels = new ArrayList<>();
         shop_codes = new ArrayList<>();
         shop_backgrounds = new ArrayList<>();
+        shop_palettes = new ArrayList<>();
     }
 
     /**
@@ -54,6 +56,9 @@ public class ResourceManager {
     public static void Release() {
         Instance.images.clear();
         Instance.fonts.clear();
+        Instance.shop_backgrounds.clear();
+        Instance.shop_codes.clear();
+        Instance.shop_palettes.clear();
         Instance.engine = null;
         Instance = null;
     }
@@ -189,11 +194,12 @@ public class ResourceManager {
         // Cargar todos los estilos de los fondos
         // Creamos el parser del json
         Gson gson  = new Gson();
-        BufferedReader br = null; // -> esto igual se puede sacar al resource manager o hacer algo en el motor ?
+        BufferedReader br = null;
 
         loadShopBackgrounds(gson, br);
         loadShopCodes(gson, br);
-
+        loadShopColors(gson, br);
+        int a = 0;
     }
 
     private void loadShopBackgrounds(Gson gson, BufferedReader br)
@@ -248,6 +254,25 @@ public class ResourceManager {
         }
     }
 
+    public void loadShopColors(Gson gson, BufferedReader br)
+    {
+        // Leemos el json
+        try {
+            br = engine.openAssetFile("shop/colors.json");
+        }
+        catch (IOException ex)
+        {
+            System.out.println("Error loading shop colors");
+        }
+        // Deserializamos el json en un objeto con la info de los packs
+        PaletteInfo[] paletteInfos = gson.fromJson(br, PaletteInfo[].class);
+        for(int i = 0; i< paletteInfos.length; i++)
+        {
+            shop_palettes.add(paletteInfos[i]);
+        }
+        int a = 0;
+    }
+
     /**
      * Recorre la carpeta de sprites/backgrounds y crea todas las imagenes de fondos posibles
      */
@@ -299,4 +324,5 @@ public class ResourceManager {
             }
         }
     }
+
 }

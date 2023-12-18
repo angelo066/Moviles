@@ -24,7 +24,7 @@ public class ResourceManager {
     protected List<List<String>> levels;
     protected List<Pair<String, String>> shop_backgrounds; // estos no son de tipo BackgroundInfo porque tenemos que poner mas cosas en la ruta del string // igual lo podemos cambiar tambien
     protected List<Pair<String, String>> shop_codes;
-    protected List<PaletteInfo> shop_palettes;
+    protected List<Palette> shop_palettes;
 
     //PROVISIONAL
     int n_Images;
@@ -268,7 +268,13 @@ public class ResourceManager {
         PaletteInfo[] paletteInfos = gson.fromJson(br, PaletteInfo[].class);
         for(int i = 0; i< paletteInfos.length; i++)
         {
-            shop_palettes.add(paletteInfos[i]);
+            PaletteInfo p = paletteInfos[i];
+            long cb = Long.parseLong(p.getColor_Background(), 16);
+            long c1 = Long.parseLong(p.getColor_1(), 16);
+            long c2 = Long.parseLong(p.getColor_2(), 16);
+            long c3 = Long.parseLong(p.getColor_3(), 16);
+            Palette palette = new Palette(p.getThumbnail(), (int)cb, (int)c1, (int)c2, (int)c3);
+            shop_palettes.add(palette);
         }
         int a = 0;
     }

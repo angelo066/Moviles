@@ -44,10 +44,10 @@ public class TextObject {
         this.pos = new Vector2(pos);
         this.iniPos = pos;
 
+
         if(GameManager.getInstance().getActual_Skin_Palette() != null)
         {
-            String a = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
-            aux_color_prueba_cambiar_men = Long.parseLong(a, 16);
+            aux_color_prueba_cambiar_men = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
         }
     }
 

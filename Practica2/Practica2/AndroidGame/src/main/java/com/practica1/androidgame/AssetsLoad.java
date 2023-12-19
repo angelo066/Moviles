@@ -20,6 +20,7 @@ public class AssetsLoad extends Scene {
         engine.getAudio().loadSound("clickboton.wav");
         engine.getAudio().loadSound("yuju.wav");
         engine.getAudio().loadSound("douh.wav");
+        engine.getAudio().loadSound("siila.wav");
 
         ResourceManager.getInstance().createFont("BarlowCondensed-Regular.ttf", 200, true, true);
         ResourceManager.getInstance().createFont("Nexa.ttf", 80, false, false);

@@ -49,7 +49,7 @@ public class AndroidGame extends AppCompatActivity implements SensorEventListene
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER); //u otro sensor
         //registramos el listener
-        sensorManager .registerListener( this, sensor , SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener( this, sensor , SensorManager.SENSOR_DELAY_NORMAL);
 
 
         engine.resume();

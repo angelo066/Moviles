@@ -3,6 +3,7 @@ package com.practica1.androidgame;
 import android.content.Context;
 import android.util.Pair;
 
+import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 
 import java.io.FileInputStream;
@@ -31,8 +32,7 @@ public class GameManager {
     private int actual_Skin_Background = -1; //-1 cuando no hay ninguna equipada
     private int actual_Skin_Code= -1; //-1 cuando no hay ninguna equipada
     private int actual_Skin_Color= -1; //-1 cuando no hay ninguna equipada
-    private Palette actual_Skin_Palette = null;
-
+    private Palette actual_Skin_Palette = new Palette("", -1, -1, -1, -1);
     private int actualLvl = 0;
     private int actualWorld = 0;
 

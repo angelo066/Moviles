@@ -56,8 +56,9 @@ public class Attempt {
 
 
         //Texto para el numero de intento
+        int color = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
         this.attemptNumber = new TextObject(graphics, new Vector2(pos.x + widthPerDivision / 2, pos.y + size.y / 2), "Nexa.ttf",
-                String.valueOf(id), Color.BLACK, 50, false, false);
+                String.valueOf(id), color, 50, false, false);
         this.attemptNumber.center();
 
 

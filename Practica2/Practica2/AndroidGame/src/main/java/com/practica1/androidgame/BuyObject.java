@@ -33,7 +33,9 @@ public class BuyObject {
         this.buyButton = new ButtonObject(graphics, pos, size, image);
         this.selectedImage = new ImageObject(graphics, pos, size, "select_skin.png");
         Vector2 pricePos = new Vector2(pos.x + size.x/2, pos.y + 50 + size.y);
-        this.priceText = new TextObject(graphics, pricePos, "Nexa.ttf", String.valueOf(100), Color.BLACK, 50, false, false);
+
+        int colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+        this.priceText = new TextObject(graphics, pricePos, "Nexa.ttf", String.valueOf(100), colorText, 50, false, false);
         this.priceText.center();
         this.coinImage = new ImageObject(graphics, new Vector2(pricePos.x + 80, pricePos.y), new Vector2(30,30), "coins.png");
         this.coinImage.center();
@@ -80,5 +82,9 @@ public class BuyObject {
     public boolean isUnlocked() {return unlock;}
 
     public ButtonObject getButton(){return buyButton;}
+
+    public void resetColor(){
+        priceText.resetColor();
+    }
 
 }

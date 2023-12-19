@@ -10,7 +10,7 @@ import com.practica1.androidengine.TouchEvent;
  */
 public class ButtonObject {
     private Vector2 size;
-    private Color color;
+    private int color;
     private float arc;
     boolean showText;
     private TextObject text;
@@ -30,7 +30,7 @@ public class ButtonObject {
      * @param text        Objeto de texto
      * @param colorButton Color del boton
      */
-    public ButtonObject(Graphics graphics, Vector2 pos, Vector2 size, float arc, Color colorButton, TextObject text) {
+    public ButtonObject(Graphics graphics, Vector2 pos, Vector2 size, float arc, int colorButton, TextObject text) {
         this.size = size;
 
         this.arc = arc;
@@ -74,7 +74,7 @@ public class ButtonObject {
         if (image != null) {
             image.render();
         } else {
-            graphics.setColor(color.getValue());
+            graphics.setColor(color);
             graphics.fillRoundRectangle(pos.x, pos.y, size.x, size.y, arc);
 
             if (text != null && showText)

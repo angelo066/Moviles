@@ -50,6 +50,8 @@ public class MasterMind extends Scene {
     private ImageObject imageBackground;
     private String pack_file;   //Combinacion de color
 
+    private int colorText;
+
     public MasterMind(Difficulty mode) {
         this.width = 1080;
         this.height = 1920;
@@ -94,6 +96,8 @@ public class MasterMind extends Scene {
             lvl_coins = this.random.nextInt(6) + 1;    //Seteamos las monedas que va a ganar si se pasa el nivel
             //selectPack();
         }
+
+        createPalette();
 
         createStyle();
 
@@ -213,11 +217,11 @@ public class MasterMind extends Scene {
 
     private void createTexts() {
         textAttempts = new TextObject(graphics, new Vector2(width / 2, height / numDivisions / 2),
-                "Nexa.ttf", "Te quedan " + (numAttempts - currentAttempt) + " intentos", Color.BLACK, 45, false, false);
+                "Nexa.ttf", "Te quedan " + (numAttempts - currentAttempt) + " intentos", colorText, 45, false, false);
         textAttempts.centerHorizontal();
 
         title = new TextObject(graphics, new Vector2(width / 2, height / numDivisions / 3),
-                "BarlowCondensed-Regular.ttf", "Averigua el código", Color.BLACK, 60, true, false);
+                "BarlowCondensed-Regular.ttf", "Averigua el código", colorText, 60, true, false);
         title.center();
     }
 
@@ -267,14 +271,20 @@ public class MasterMind extends Scene {
         }
     }
 
+    private void createPalette()
+    {
+        colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+    }
+
     @Override
     public void render() {
 
         // Fondo de APP
-        graphics.clear(Color.WHITE.getValue());
+        int backColor = GameManager.getInstance().getActual_Skin_Palette().color_background();
+        graphics.clear(backColor);
 
         // Fondo de Juego
-        graphics.setColor(Color.WHITE.getValue());
+        graphics.setColor(backColor);
         graphics.fillRectangle(0, 0, width, height);
 
         // Background si hay
@@ -298,7 +308,7 @@ public class MasterMind extends Scene {
             availableColors[i].render();
 
         // Texto de los intentos restantes
-        graphics.setColor(Color.WHITE.getValue());
+        graphics.setColor(GameManager.getInstance().getActual_Skin_Palette().getColor_1());
         graphics.fillRectangle(0, 0, width, attemptHeight);
         textAttempts.setText("Te quedan " + (numAttempts - currentAttempt) + " intentos");
         textAttempts.render();

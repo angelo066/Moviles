@@ -59,7 +59,8 @@ public class WorldSelectionMenu extends Scene {
         buttonLastWorld = new ButtonObject(graphics, new Vector2(banner_Pos.x - 270, banner_Pos.y), new Vector2(100, 100), "ArrowNavigators_Left.png");
         buttonLastWorld.center();
 
-        textWorld = new TextObject(graphics, new Vector2(banner_Pos.x, banner_Pos.y), "Nexa.ttf", "Mundo " + String.valueOf(actual_WORLD+1), Color.BLACK, 70, false, false);
+        int colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+        textWorld = new TextObject(graphics, new Vector2(banner_Pos.x, banner_Pos.y), "Nexa.ttf", "Mundo " + String.valueOf(actual_WORLD+1), colorText, 70, false, false);
         textWorld.center();
 
         createButtons();
@@ -67,18 +68,19 @@ public class WorldSelectionMenu extends Scene {
     }
 
     public void render(){
-        //Fondo de al APP
-        graphics.clear(Color.WHITE.getValue());
+        // Fondo de APP
+        int backColor = GameManager.getInstance().getActual_Skin_Palette().color_background();
+        graphics.clear(backColor);
 
-        // Fondo del juego
-        graphics.setColor(Color.WHITE.getValue());
+        // Fondo de Juego
+        graphics.setColor(backColor);
         graphics.fillRectangle(0, 0, width, height);
 
         // Fondo del mundo
         worldBackgrounds.get(actual_WORLD).render();
 
         // Indicador de mundo
-        graphics.setColor(Color.CYAN.getValue());
+        graphics.setColor(GameManager.getInstance().getActual_Skin_Palette().getColor_1());
         Vector2 rectSize = new Vector2(400, 100);
         graphics.fillRoundRectangle(banner_Pos.x - rectSize.x /2, banner_Pos.y - rectSize.y/2, 400, 100, 20);
         textWorld.render();

@@ -45,6 +45,7 @@ public class AssetsLoad extends Scene {
 
         SceneManager.getInstance().addScene(new MainMenu());
         SceneManager.getInstance().goToNextScene();
+
     }
 
 }

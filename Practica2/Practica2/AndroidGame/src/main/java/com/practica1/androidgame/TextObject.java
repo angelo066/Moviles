@@ -12,7 +12,7 @@ import com.practica1.androidengine.Graphics;
  * GameObject Texto, encapsula las funcionalidades de pintar texto dentro de un objeto
  */
 public class TextObject {
-    private Color color;
+    private int color;
     private String text;
     private Font font;
     private int textSize;
@@ -33,7 +33,7 @@ public class TextObject {
      * @param isBold   Bold
      * @param isItalic Italic
      */
-    public TextObject(Graphics graphics, Vector2 pos, String font, String text, Color color, int textSize, boolean isBold, boolean isItalic) {
+    public TextObject(Graphics graphics, Vector2 pos, String font, String text, int color, int textSize, boolean isBold, boolean isItalic) {
         this.font = ResourceManager.getInstance().getFont(font);
         this.text = text;
         this.color = color;
@@ -43,26 +43,15 @@ public class TextObject {
         this.graphics = graphics;
         this.pos = new Vector2(pos);
         this.iniPos = pos;
-
-
-        if(GameManager.getInstance().getActual_Skin_Palette() != null)
-        {
-            aux_color_prueba_cambiar_men = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
-        }
     }
+
+
 
     /**
      * Render del texto
      */
     public void render() {
-
-
-        if(GameManager.getInstance().getActual_Skin_Palette() != null)
-            graphics.setColor((int)aux_color_prueba_cambiar_men);
-        else
-            graphics.setColor(color.getValue());
-        //graphics.setColor(color.getValue());
-
+        graphics.setColor(color);
 
         setFont();
 
@@ -126,5 +115,10 @@ public class TextObject {
      */
     public Vector2 getPos() {
         return pos;
+    }
+
+    public void resetColor()
+    {
+        color = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
     }
 }

@@ -30,8 +30,9 @@ public class Circle {
         this.pos = pos;
         this.color = Color.NO_COLOR;
 
+        int colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
         this.id = new TextObject(graphics, new Vector2(pos.x + circleRadius, pos.y + circleRadius),
-                "Nexa.ttf", String.valueOf(this.color.getId()), Color.BLACK, 50, false, false);
+                "Nexa.ttf", String.valueOf(this.color.getId()), colorText, 50, false, false);
         this.id.center();
 
         this.uncovered = false;
@@ -43,8 +44,9 @@ public class Circle {
         this.pos = pos;
 
         this.color = Color.NO_COLOR;
+        int colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
         this.id = new TextObject(graphics, new Vector2(pos.x + circleRadius, pos.y + circleRadius),
-                "Nexa.ttf", String.valueOf(this.color.getId()), Color.BLACK, 50, false, false);
+                "Nexa.ttf", String.valueOf(this.color.getId()), colorText, 50, false, false);
         this.id.center();
 
         this.uncovered = false;

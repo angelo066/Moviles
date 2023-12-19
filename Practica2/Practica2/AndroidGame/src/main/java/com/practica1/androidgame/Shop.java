@@ -70,11 +70,12 @@ public class Shop extends Scene {
 
         coins = new ImageObject(graphics, pos_Coin, size_Coin, "coins.png");
 
+        int colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
         coin_cuantity = new TextObject(graphics, new Vector2(pos_Coin.x, pos_Coin.y + size_Coin.y),
-                "Nexa.ttf", String.valueOf(GameManager.getInstance().getCoins()), Color.BLACK, 60, false, false);
+                "Nexa.ttf", String.valueOf(GameManager.getInstance().getCoins()), colorText, 60, false, false);
 
         type_Text = new TextObject(graphics, new Vector2(width/2, 140),
-                "Nexa.ttf", "Fondos", Color.BLACK, 60, false, false);
+                "Nexa.ttf", "Fondos", colorText, 60, false, false);
 
         type_Text.center();
 
@@ -83,11 +84,12 @@ public class Shop extends Scene {
     }
 
     public void render(){
-        //Fondo de al APP
-        graphics.clear(Color.WHITE.getValue());
+        // Fondo de APP
+        int backColor = GameManager.getInstance().getActual_Skin_Palette().color_background();
+        graphics.clear(backColor);
 
-        // Fondo del juego
-        graphics.setColor(Color.GREY.getValue());
+        // Fondo de Juego
+        graphics.setColor(backColor);
         graphics.fillRectangle(0, 0, width, height);
 
         //Objetos
@@ -199,6 +201,23 @@ public class Shop extends Scene {
                         skin.setUnlock(true);
                         gm.buyObject(price);
                         gm.equipPalette(ResourceManager.getInstance().shop_palettes.get(c));
+
+                        // Recargar la escena de colores
+                        coin_cuantity.resetColor();
+                        type_Text.resetColor();
+
+                        for(int j = 0; j < skins_Back.length; j++)
+                        {
+                            skins_Back[j].resetColor();
+                        }
+                        for(int j = 0; j < skins_Code.length; j++)
+                        {
+                            skins_Code[j].resetColor();
+                        }
+                        for(int j = 0; j < skins_Color.length; j++)
+                        {
+                            skins_Color[j].resetColor();
+                        }
                     }
                 }
             }

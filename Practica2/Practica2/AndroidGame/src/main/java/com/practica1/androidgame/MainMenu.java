@@ -18,6 +18,9 @@ public class MainMenu extends Scene {
 
     private TextObject textTitle;
 
+    private int colorText;
+    private int colorButton1;
+    private int colorButton2;
     public MainMenu() {
         this.width = 1080;
         this.height = 1920;
@@ -27,9 +30,8 @@ public class MainMenu extends Scene {
     public void init(Engine engine) {
         super.init(engine);
 
-        createTexts();
-
         createButtons();
+        createTexts();
 
         GameManager.getInstance().savePlayerData();
         GameManager.getInstance().loadPlayerData();
@@ -40,39 +42,44 @@ public class MainMenu extends Scene {
         Vector2 pos = new Vector2(width / 2, height / 2);
         int offsetY = 50;
 
-        buttonQuickMatch = new ButtonObject(graphics, new Vector2(pos), size, 40, Color.CYAN,
-                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Partida rápida", Color.BLACK, 80, false, false));
+        colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+        colorButton1 = GameManager.getInstance().getActual_Skin_Palette().getColor_1();
+        colorButton2 = GameManager.getInstance().getActual_Skin_Palette().getColor_3();
+
+        buttonQuickMatch = new ButtonObject(graphics, new Vector2(pos), size, 40, colorButton1,
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Partida rápida", colorText, 80, false, false));
         buttonQuickMatch.center();
 
         pos.y += size.y + offsetY;
-        buttonExploreWorlds = new ButtonObject(graphics, new Vector2(pos), size, 40, Color.CYAN,
-                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Explorar mundos", Color.BLACK, 80, false, false));
+        buttonExploreWorlds = new ButtonObject(graphics, new Vector2(pos), size, 40, colorButton1,
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Explorar mundos", colorText, 80, false, false));
         buttonExploreWorlds.center();
 
         pos.y += size.y + offsetY;
-        buttonPersonalize = new ButtonObject(graphics, new Vector2(pos), size, 40, Color.BLACK,
-                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Personalizar", Color.CYAN, 80, false, false));
+        buttonPersonalize = new ButtonObject(graphics, new Vector2(pos), size, 40, colorText,
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Personalizar", colorButton1, 80, false, false));
         buttonPersonalize.center();
 
         pos.y += size.y + offsetY;
-        buttonExit = new ButtonObject(graphics, new Vector2(pos), size, 40, Color.RED,
-                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Salir", Color.BLACK, 80, false, false));
+        buttonExit = new ButtonObject(graphics, new Vector2(pos), size, 40, colorButton2,
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Salir", colorText, 80, false, false));
         buttonExit.center();
     }
 
     private void createTexts() {
         textTitle = new TextObject(graphics, new Vector2(width / 2, height / 5), "BarlowCondensed-Regular.ttf", "Master Mind",
-                Color.BLACK, 200, true, true);
+                colorText, 200, true, true);
         textTitle.center();
     }
 
     @Override
     public void render() {
-        // Fondo de la APP
-        graphics.clear(Color.WHITE.getValue());
+        // Fondo de APP
+        int backColor = GameManager.getInstance().getActual_Skin_Palette().color_background();
+        graphics.clear(backColor);
 
-        // Fondo del juego
-        graphics.setColor(Color.WHITE.getValue());
+        // Fondo de Juego
+        graphics.setColor(backColor);
         graphics.fillRectangle(0, 0, width, height);
 
         // Objetos

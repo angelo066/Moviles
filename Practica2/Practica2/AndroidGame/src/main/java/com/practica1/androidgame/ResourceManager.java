@@ -3,6 +3,7 @@ package com.practica1.androidgame;
 import android.util.Pair;
 
 import com.google.gson.Gson;
+import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Font;
 import com.practica1.androidengine.Image;
@@ -25,6 +26,8 @@ public class ResourceManager {
     protected List<Pair<String, String>> shop_backgrounds; // estos no son de tipo BackgroundInfo porque tenemos que poner mas cosas en la ruta del string // igual lo podemos cambiar tambien
     protected List<Pair<String, String>> shop_codes;
     protected List<Palette> shop_palettes;
+
+    private Palette default_Palette = new Palette("", Color.WHITE.getValue(), Color.CYAN.getValue(), Color.BLACK.getValue(), Color.RED.getValue());
 
     //PROVISIONAL
     int n_Images;
@@ -276,7 +279,9 @@ public class ResourceManager {
             Palette palette = new Palette(p.getThumbnail(), (int)cb, (int)c1, (int)c2, (int)c3);
             shop_palettes.add(palette);
         }
-        int a = 0;
+
+        // Seteamos la paleta por defecto
+        GameManager.getInstance().equipPalette(default_Palette);
     }
 
     /**

@@ -17,6 +17,7 @@ public class SelectionMenu extends Scene {
     private ButtonObject buttonImpossible;
     private ButtonObject buttonBack;
     private TextObject textSelection;
+    int colorText;
 
     public SelectionMenu() {
         this.width = 1080;
@@ -27,6 +28,9 @@ public class SelectionMenu extends Scene {
     public void init(Engine engine) {
         super.init(engine);
 
+
+        colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+
         createTexts();
 
         createButtons();
@@ -34,7 +38,7 @@ public class SelectionMenu extends Scene {
 
     private void createTexts() {
         textSelection = new TextObject(graphics, new Vector2(width / 2, height / 7),
-                "BarlowCondensed-Regular.ttf", "¿En qué dificultad quieres jugar?", Color.BLACK, 75, true, false);
+                "BarlowCondensed-Regular.ttf", "¿En qué dificultad quieres jugar?", colorText, 75, true, false);
         textSelection.center();
     }
 
@@ -43,23 +47,24 @@ public class SelectionMenu extends Scene {
         Vector2 pos = new Vector2(width / 2, height / 10 * 3);
         Vector2 size = new Vector2(width / 2, height / 10);
 
-        buttonEasy = new ButtonObject(graphics, new Vector2(pos), size, 50, Color.GREEN,
-                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Fácil", Color.BLACK, 80, false, false));
+        int colorButton = GameManager.getInstance().getActual_Skin_Palette().getColor_1();
+        buttonEasy = new ButtonObject(graphics, new Vector2(pos), size, 50, colorButton,
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Fácil", colorText, 80, false, false));
         buttonEasy.center();
 
         pos.y += (height / 10 + offsetY);
-        buttonMedium = new ButtonObject(graphics, new Vector2(pos), size, 50, Color.YELLOW,
-                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Medio", Color.BLACK, 80, false, false));
+        buttonMedium = new ButtonObject(graphics, new Vector2(pos), size, 50, colorButton,
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Medio", colorText, 80, false, false));
         buttonMedium.center();
 
         pos.y += (height / 10 + offsetY);
-        buttonHard = new ButtonObject(graphics, new Vector2(pos), size, 50, Color.ORANGE,
-                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Difícil", Color.BLACK, 80, false, false));
+        buttonHard = new ButtonObject(graphics, new Vector2(pos), size, 50, colorButton,
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Difícil", colorText, 80, false, false));
         buttonHard.center();
 
         pos.y += (height / 10 + offsetY);
-        buttonImpossible = new ButtonObject(graphics, new Vector2(pos), size, 50, Color.RED,
-                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Imposible", Color.BLACK, 80, false, false));
+        buttonImpossible = new ButtonObject(graphics, new Vector2(pos), size, 50, colorButton,
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Imposible", colorText, 80, false, false));
         buttonImpossible.center();
 
         buttonBack = new ButtonObject(graphics, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
@@ -68,10 +73,11 @@ public class SelectionMenu extends Scene {
     @Override
     public void render() {
         // Fondo de APP
-        graphics.clear(Color.WHITE.getValue());
+        int backColor = GameManager.getInstance().getActual_Skin_Palette().color_background();
+        graphics.clear(backColor);
 
         // Fondo de Juego
-        graphics.setColor(Color.WHITE.getValue());
+        graphics.setColor(backColor);
         graphics.fillRectangle(0, 0, width, height);
 
         // Texto de seleccion

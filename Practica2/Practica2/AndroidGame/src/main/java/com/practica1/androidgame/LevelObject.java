@@ -32,9 +32,10 @@ public class LevelObject {
         this.size = size;
 
         Vector2 textPos = new Vector2(pos.x + size.x/2, pos.y + size.y /2);
-        this.levelText = new TextObject(graphics, textPos, "Nexa.ttf", String.valueOf(id), Color.BLACK, 100, false, false);
+        int colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+        this.levelText = new TextObject(graphics, textPos, "Nexa.ttf", String.valueOf(id), colorText, 100, false, false);
         this.levelText.center();
-        this.levelButton = new ButtonObject(graphics, pos, size, 20, Color.OPACITY_GREY, null);
+        this.levelButton = new ButtonObject(graphics, pos, size, 20, Color.OPACITY_GREY.getValue(), null);
 
         this.lockImage = new ImageObject(graphics, textPos, new Vector2(150,150), "lock.png");
         this.lockImage.center();

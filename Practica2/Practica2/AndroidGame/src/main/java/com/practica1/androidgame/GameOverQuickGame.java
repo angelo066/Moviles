@@ -33,6 +33,8 @@ public class GameOverQuickGame extends Scene {
 
     private ButtonObject buttonNext_Level;
 
+    private int colorText = 0;
+
     /**
      * @param combination_win Combinacion elegida por el juego
      * @param win             Indica si el jugador ha ganado
@@ -50,6 +52,7 @@ public class GameOverQuickGame extends Scene {
         this.numAttempts = numAttempts;
         this.colorBlind = colorBlind;
         this.coins = coins;
+        this.colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
 
     }
 
@@ -77,19 +80,19 @@ public class GameOverQuickGame extends Scene {
             description = "Has averiguado el codigo en";
             attempt = numAttempts + " intentos";
 
-
+            int colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
             textUsedAttempts = new TextObject(graphics, new Vector2(width / 2, height / 10 * 5 / 2),
-                    "Nexa.ttf", attempt, Color.BLACK, 45, false, false);
+                    "Nexa.ttf", attempt, colorText, 45, false, false);
             textUsedAttempts.center();
 
             textCode = new TextObject(graphics, new Vector2(width / 2, height / 10 * 7 / 2),
-                    "Nexa.ttf", "Código:", Color.BLACK, 50, false, false);
+                    "Nexa.ttf", "Código:", colorText, 50, false, false);
             textCode.center();
 
             String coins_String = "+" + String.valueOf(coins) + "- Total" + String.valueOf(GameManager.getInstance().getCoins());
 
             coins_Earned = new TextObject(graphics, new Vector2(width/2, (height / 10 * 7 / 2) + 350),
-                    "Nexa.ttf", coins_String, Color.BLACK, 100, false, false);
+                    "Nexa.ttf", coins_String, colorText, 100, false, false);
 
             coin_Image = new ImageObject(graphics, new Vector2(width/2 - 310, (height / 10 * 7 / 2) + 350), new Vector2(100,100),
                     "coins.png");
@@ -105,11 +108,11 @@ public class GameOverQuickGame extends Scene {
         }
 
         textEndMessage = new TextObject(graphics, new Vector2(width / 2, height / 10),
-                "BarlowCondensed-Regular.ttf", mensaje, Color.BLACK, 150, true, false);
+                "BarlowCondensed-Regular.ttf", mensaje, colorText, 150, true, false);
         textEndMessage.center();
 
         textDescriptionMessage = new TextObject(graphics, new Vector2(width / 2, height / 10 * 2),
-                "Nexa.ttf", description, Color.BLACK, 50, false, false);
+                "Nexa.ttf", description, colorText, 50, false, false);
         textDescriptionMessage.center();
 
     }
@@ -117,27 +120,28 @@ public class GameOverQuickGame extends Scene {
     private void createButtons() {
         Vector2 size = new Vector2(width / 4 * 3, height / 10);
 
+        int colorButton = GameManager.getInstance().getActual_Skin_Palette().getColor_1();
         if (!win) {
             Vector2 posAtt = new Vector2(width / 2, height / 14 * 7);
-            buttonMoreAttempts = new ButtonObject(graphics, posAtt, size, 40, Color.CYAN,
-                    new TextObject(graphics, new Vector2(posAtt), "Nexa.ttf", "+2 intentos", Color.BLACK, 80, false, false));
+            buttonMoreAttempts = new ButtonObject(graphics, posAtt, size, 40, colorButton,
+                    new TextObject(graphics, new Vector2(posAtt), "Nexa.ttf", "+2 intentos", colorText, 80, false, false));
             buttonMoreAttempts.center();
         } else {
             Vector2 posShare = new Vector2(width / 2, height / 14 * 9);
-            buttonShare = new ButtonObject(graphics, posShare, size, 40, Color.CYAN,
-                    new TextObject(graphics, new Vector2(posShare), "Nexa.ttf", "Compartir", Color.BLACK, 80, false, false));
+            buttonShare = new ButtonObject(graphics, posShare, size, 40, colorButton,
+                    new TextObject(graphics, new Vector2(posShare), "Nexa.ttf", "Compartir", colorText, 80, false, false));
             buttonShare.center();
 
         }
 
         Vector2 posBack = new Vector2(width / 2, height / 14 * 13);
-        buttonBackMenu = new ButtonObject(graphics, posBack, size, 40, Color.CYAN,
-                new TextObject(graphics, new Vector2(posBack), "Nexa.ttf", "Menú", Color.BLACK, 80, false, false));
+        buttonBackMenu = new ButtonObject(graphics, posBack, size, 40, colorButton,
+                new TextObject(graphics, new Vector2(posBack), "Nexa.ttf", "Menú", colorText, 80, false, false));
         buttonBackMenu.center();
 
         Vector2 posRepeat = new Vector2(width / 2, height / 14 * 11);
-        buttonRepeat = new ButtonObject(graphics, posRepeat, size, 40, Color.CYAN,
-                new TextObject(graphics, new Vector2(posRepeat), "Nexa.ttf", "Repetir", Color.BLACK, 80, false, false));
+        buttonRepeat = new ButtonObject(graphics, posRepeat, size, 40, colorButton,
+                new TextObject(graphics, new Vector2(posRepeat), "Nexa.ttf", "Repetir", colorText, 80, false, false));
         buttonRepeat.center();
     }
 
@@ -176,11 +180,12 @@ public class GameOverQuickGame extends Scene {
 
     @Override
     public void render() {
-        // Fondo APP
-        graphics.clear(Color.WHITE.getValue());
+        // Fondo de APP
+        int backColor = GameManager.getInstance().getActual_Skin_Palette().color_background();
+        graphics.clear(backColor);
 
-        // Fondo Juego
-        graphics.setColor(Color.WHITE.getValue());
+        // Fondo de Juego
+        graphics.setColor(backColor);
         graphics.fillRectangle(0, 0, width, height);
 
         // Botones

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
+import com.practica1.androidengine.SensorHandler;
 import com.practica1.androidengine.TouchEvent;
 
 import java.io.BufferedReader;
@@ -65,6 +66,8 @@ public class WorldSelectionMenu extends Scene {
 
         createButtons();
         createBackgrounds();
+
+
     }
 
     public void render(){
@@ -107,8 +110,8 @@ public class WorldSelectionMenu extends Scene {
             if (buttonBack.handleInput(events.get(i))) {
                 SceneManager.getInstance().addScene(new MainMenu());
                 SceneManager.getInstance().goToNextScene();
-                audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
+                audio.stopSound("botonInterfaz.wav");
                 break;
             }
 
@@ -162,6 +165,11 @@ public class WorldSelectionMenu extends Scene {
 
         }
 
+        //Lo pongo en el inputHandler porque es input al final del día
+        SensorHandler sensorHandler = engine.getSensorHandler();
+        if(sensorHandler.getAcccelerometerValuesAdded(false) > 4){
+            audio.playSound("silla.wav", false);
+        }
     }
 
 

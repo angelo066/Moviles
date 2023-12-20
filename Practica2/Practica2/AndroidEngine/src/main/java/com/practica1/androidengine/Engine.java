@@ -23,6 +23,8 @@ public class Engine implements Runnable {
     private Scene newScene;
     private AdManager ads;
 
+    private SensorHandler sensorHandler;
+
     /**
      * @param view Ventana de la aplicacion
      */
@@ -214,4 +216,9 @@ public class Engine implements Runnable {
 
         return nameFiles;
     }
+
+    //Yo creo que esto es lo mejor para que lo tenga el engine
+    public void setSensorHandler(SensorHandler s){sensorHandler = s;}
+
+    public SensorHandler getSensorHandler(){return sensorHandler;}
 }

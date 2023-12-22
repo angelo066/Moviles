@@ -66,4 +66,36 @@ public class RunSerializeInfo implements Serializable {
     public void setColorBlind(boolean colorBlind) {
         this.colorBlind = colorBlind;
     }
+
+    public int getWorld() {
+        return world;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public Color[] getWinningCombination() {
+        return winningCombination;
+    }
+
+    public Circle[] getAvailableColors() {
+        return availableColors;
+    }
+
+    public ArrayList<Attempt> getAttempts() {
+        return attempts;
+    }
+
+    public int getCurrentAttempt() {
+        return currentAttempt;
+    }
+
+    public boolean isColorBlind() {
+        return colorBlind;
+    }
 }

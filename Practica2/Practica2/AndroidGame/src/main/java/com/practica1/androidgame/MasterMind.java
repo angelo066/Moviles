@@ -9,10 +9,13 @@ import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.TouchEvent;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Random;
@@ -116,6 +119,7 @@ public class MasterMind extends Scene {
 
         saveData();
 
+        loadData();
     }
 
     private void saveData() {
@@ -123,21 +127,15 @@ public class MasterMind extends Scene {
         RunSerializeInfo runSerializeInfo = new RunSerializeInfo(indexWorld, indexLevel, difficultyMode,
                 winningCombination, availableColors, attempts, currentAttempt, colorBlind);
         try{
-            Gson gson = new Gson();
 
-            //runSerializeInfo.setAttempts(attempts);
-            //runSerializeInfo.setAvailableColors(availableColors);
-            //runSerializeInfo.setColorBlind(colorBlind);
-            //runSerializeInfo.setCurrentAttempt(currentAttempt);
-            //runSerializeInfo.setLevel(indexLevel);
-            //runSerializeInfo.setWorld(indexWorld);
-            //runSerializeInfo.setDifficulty(difficultyMode);
+            FileOutputStream fout = GameManager.getInstance().getContext().openFileOutput("game.json", Context.MODE_PRIVATE);
+
+            Gson gson = new Gson();
 
             String json = gson.toJson(runSerializeInfo);
             System.out.println(json);
 
-            FileWriter fileWriter = new FileWriter("game.json");
-            fileWriter.write(json);
+            fout.write(json.getBytes());
 
         }
         catch (FileNotFoundException e) {
@@ -148,6 +146,21 @@ public class MasterMind extends Scene {
             e.printStackTrace();
         }
 
+    }
+
+    private void loadData(){
+        try{
+            FileInputStream file = GameManager.getInstance().getContext().openFileInput("game.json");
+            ObjectInputStream in = new ObjectInputStream(file);
+
+            RunSerializeInfo run = (RunSerializeInfo)in.readObject();
+        }
+        catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        int mismuertospelaos = 0;
     }
 
     private void selectConfiguration() {

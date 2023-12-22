@@ -56,6 +56,8 @@ public class MasterMind extends Scene {
 
     private int colorText;
 
+    private boolean loadedData = false;
+
     public MasterMind(Difficulty mode) {
         this.width = 1080;
         this.height = 1920;
@@ -89,18 +91,6 @@ public class MasterMind extends Scene {
 
     }
 
-    public MasterMind(){
-        this.width = 1080;
-        this.height = 1920;
-
-        this.numDivisions = 12;
-
-        this.random = new Random();
-
-        this.currentAttempt = 0;
-
-        this.colorBlind = false;
-    }
 
     @Override
     public void init(Engine engine) {
@@ -118,16 +108,17 @@ public class MasterMind extends Scene {
 
         createStyle();
 
-        createAttempts();
-
         createAvailableColors();
-
-        selectWinningCombination();
 
         createButtons();
 
         createTexts();
 
+        if(loadedData) loadData();
+        else{
+            createAttempts();
+            selectWinningCombination();
+        }
     }
 
     @Override
@@ -157,6 +148,7 @@ public class MasterMind extends Scene {
     @Override
     public void loadData(){
         super.loadData();
+
         RunSerializeInfo run;
         try{
             FileInputStream file = GameManager.getInstance().getContext().openFileInput("game.txt");
@@ -167,7 +159,12 @@ public class MasterMind extends Scene {
         catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+        this.attempts = new ArrayList<>();
         this.attempts = run.getAttempts();
+
+        this.attemptHeight = height / this.numDivisions;
+        this.heightOffset = attemptHeight / (this.numDivisions - 2);
+        this.lastYPosition = 0;
 
         for(int i = 0; i < this.attempts.size();i++){
             this.attempts.get(i).load(graphics);
@@ -223,9 +220,11 @@ public class MasterMind extends Scene {
         this.heightOffset = attemptHeight / (this.numDivisions - 2);
         this.lastYPosition = 0;
 
-        for (int i = 0; i < this.numAttempts; i++) {
-            this.attempts.add(new Attempt(graphics, numColorsPerAttempt, i + 1,
-                    new Vector2(3, (attemptHeight * (i + 1))), new Vector2(width - 6, attemptHeight - heightOffset)));
+        if(!loadedData){
+            for (int i = 0; i < this.numAttempts; i++) {
+                this.attempts.add(new Attempt(graphics, numColorsPerAttempt, i + 1,
+                        new Vector2(3, (attemptHeight * (i + 1))), new Vector2(width - 6, attemptHeight - heightOffset)));
+            }
         }
 
     }
@@ -266,6 +265,7 @@ public class MasterMind extends Scene {
 
     private void selectWinningCombination() {
         winningCombination = new Color[numColorsPerAttempt];
+
         if (repeatColors) {
             for (int i = 0; i < numColorsPerAttempt; i++) {
                 int index = random.nextInt(numColors);
@@ -528,4 +528,6 @@ public class MasterMind extends Scene {
     public void setIndexWorld(int world){
         indexWorld = world;
     }
+
+    public void savedGame(){loadedData = true;}
 }

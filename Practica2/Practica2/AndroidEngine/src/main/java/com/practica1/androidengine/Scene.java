@@ -62,7 +62,7 @@ public class Scene {
     }
 
     public void saveData(){
-        dataSaved = true;
+
     }
 
     public void loadData(){

@@ -22,6 +22,7 @@ public class RunSerializeInfo implements Serializable {
     private Circle[] availableColors; // Colores disponibles
     private ArrayList<Attempt> attempts; // La lista de intentos
 
+
     private int currentAttempt;
     private boolean colorBlind;
 

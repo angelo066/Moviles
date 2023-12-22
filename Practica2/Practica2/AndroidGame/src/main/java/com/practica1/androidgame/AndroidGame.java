@@ -56,7 +56,6 @@ public class AndroidGame extends AppCompatActivity {
         ResourceManager.getInstance().loadLevels();
         SceneManager.getInstance().addScene(new AssetsLoad());
         SceneManager.getInstance().goToNextScene();
-        SceneManager.getInstance().loadData();
         engine.resume();
 
     }
@@ -80,17 +79,10 @@ public class AndroidGame extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        SceneManager.getInstance().saveData();
         sensorHandler.onDestroy();
         ResourceManager.Release();
         SceneManager.Release();
         engine.getAds().destroy();
-    }
-
-    @Override
-    protected void onStop(){
-        super.onStop();
-        SceneManager.getInstance().saveData();
     }
 
 }

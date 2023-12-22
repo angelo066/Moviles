@@ -9,11 +9,13 @@ import com.practica1.androidengine.Scene;
  * GameObject Imagen, encapsula las funcionalidades de pintar imagenes dentro de un objeto
  */
 public class ImageObject {
-    private Image image;
+    private transient Image image;
     private Vector2 size;
     private Vector2 pos;
     private Vector2 iniPos;
     private transient Graphics graphics;
+    private String imageFile;
+
 
     /**
      * @param graphics  Objeto graphics del engine
@@ -24,6 +26,7 @@ public class ImageObject {
     public ImageObject(Graphics graphics, Vector2 pos, Vector2 size, String imageFile) {
         this.size = size;
         this.image = ResourceManager.getInstance().getImage(imageFile);
+        this.imageFile = imageFile;
         this.graphics = graphics;
         this.pos = new Vector2(pos);
         this.iniPos = pos;
@@ -59,6 +62,7 @@ public class ImageObject {
      */
     public void changeImage(String imageFile) {
         image = ResourceManager.getInstance().getImage(imageFile);
+        this.imageFile = imageFile;
     }
 
     /**

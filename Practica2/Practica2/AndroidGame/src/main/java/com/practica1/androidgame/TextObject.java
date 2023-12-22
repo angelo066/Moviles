@@ -14,13 +14,14 @@ import com.practica1.androidengine.Graphics;
 public class TextObject {
     private int color;
     private String text;
-    private Font font;
+    private transient Font font;
     private int textSize;
     private boolean isBold;
     private boolean isItalic;
     private Vector2 pos;
     private Vector2 iniPos;
     private transient Graphics graphics;
+    private String fontName;
 
     /**
      * @param graphics Objeto graphics del engine
@@ -34,6 +35,7 @@ public class TextObject {
      */
     public TextObject(Graphics graphics, Vector2 pos, String font, String text, int color, int textSize, boolean isBold, boolean isItalic) {
         this.font = ResourceManager.getInstance().getFont(font);
+        this.fontName = font;
         this.text = text;
         this.color = color;
         this.textSize = textSize;

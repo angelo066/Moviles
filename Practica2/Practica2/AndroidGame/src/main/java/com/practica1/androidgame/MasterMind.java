@@ -12,8 +12,6 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -91,6 +89,19 @@ public class MasterMind extends Scene {
 
     }
 
+    public MasterMind(){
+        this.width = 1080;
+        this.height = 1920;
+
+        this.numDivisions = 12;
+
+        this.random = new Random();
+
+        this.currentAttempt = 0;
+
+        this.colorBlind = false;
+    }
+
     @Override
     public void init(Engine engine) {
         super.init(engine);
@@ -117,13 +128,11 @@ public class MasterMind extends Scene {
 
         createTexts();
 
-        saveData();
-
-        loadData();
     }
 
-    private void saveData() {
-
+    @Override
+    public void saveData() {
+        super.saveData();
         RunSerializeInfo runSerializeInfo = new RunSerializeInfo(indexWorld, indexLevel, difficultyMode,
                 winningCombination, availableColors, attempts, currentAttempt, colorBlind);
         try{
@@ -145,8 +154,9 @@ public class MasterMind extends Scene {
 
     }
 
-    private void loadData(){
-
+    @Override
+    public void loadData(){
+        super.loadData();
         RunSerializeInfo run;
         try{
             FileInputStream file = GameManager.getInstance().getContext().openFileInput("game.txt");
@@ -157,9 +167,23 @@ public class MasterMind extends Scene {
         catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+        this.attempts = run.getAttempts();
 
+        for(int i = 0; i < this.attempts.size();i++){
+            this.attempts.get(i).load(graphics);
+        }
 
-        int mismuertospelaos = 0;
+        this.indexLevel = run.getLevel();
+        this.indexWorld = run.getWorld();
+        this.difficultyMode = run.getDifficulty();
+        this.availableColors = run.getAvailableColors();
+
+        for(int i = 0; i < this.availableColors.length; i++){
+            this.availableColors[i].setGraphics(graphics);
+        }
+
+        this.winningCombination = run.getWinningCombination();
+        this.currentAttempt = run.getCurrentAttempt();
     }
 
     private void selectConfiguration() {
@@ -461,6 +485,7 @@ public class MasterMind extends Scene {
                     buttonColorBlind.changeImage("ojo2.png");
                 else
                     buttonColorBlind.changeImage("ojo.png");
+
             }
 
             if (buttonBack.handleInput(events.get(i))) {

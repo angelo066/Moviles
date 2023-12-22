@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * GameObject Circulo, encapsula la info y comportamientos relativos a un circulo del tablero
  */
-public class Circle  implements Serializable {
+public class Circle implements Serializable {
     private TextObject id;
     private Color color;
     private boolean uncovered;
@@ -186,4 +186,9 @@ public class Circle  implements Serializable {
         return image.getImage();
     }
 
+    public void setGraphics(Graphics graphics) {
+        this.graphics = graphics;
+
+        this.id.load(graphics);
+    }
 }

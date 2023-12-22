@@ -221,4 +221,6 @@ public class Engine implements Runnable {
     public void setSensorHandler(SensorHandler s){sensorHandler = s;}
 
     public SensorHandler getSensorHandler(){return sensorHandler;}
+
+    public Scene getScene(){return scene;}
 }

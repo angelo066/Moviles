@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.practica1.androidengine.AdManager;
 import com.practica1.androidengine.Engine;
+import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.SensorHandler;
 
 //TODO:
@@ -55,6 +56,7 @@ public class AndroidGame extends AppCompatActivity {
         ResourceManager.getInstance().loadLevels();
         SceneManager.getInstance().addScene(new AssetsLoad());
         SceneManager.getInstance().goToNextScene();
+        SceneManager.getInstance().loadData();
         engine.resume();
 
     }
@@ -63,6 +65,7 @@ public class AndroidGame extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         sensorHandler.onResume();
+        SceneManager.getInstance().loadData();
         engine.resume();
     }
 
@@ -70,17 +73,24 @@ public class AndroidGame extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         sensorHandler.onPause();
+        SceneManager.getInstance().saveData();
         engine.pause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        SceneManager.getInstance().saveData();
         sensorHandler.onDestroy();
         ResourceManager.Release();
         SceneManager.Release();
         engine.getAds().destroy();
     }
 
+    @Override
+    protected void onStop(){
+        super.onStop();
+        SceneManager.getInstance().saveData();
+    }
 
 }

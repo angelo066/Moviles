@@ -168,7 +168,7 @@ public class GameOverQuickGame extends Scene {
             circles[i].setColor(combination_win[i]);
             circles[i].setUncovered(true);
 
-            if(skin != -1){
+            if(skin != 0){
 
                 int colorIndex = combination_win[i].getId() + 1;
                 String image = "packs/pack_" + skin + "/" +colorIndex + ".png";
@@ -220,7 +220,7 @@ public class GameOverQuickGame extends Scene {
                     audio.stopSound("botonInterfaz.wav");
                     audio.playSound("botonInterfaz.wav", false);
                     engine.getAds().showRewardedAd(() -> {
-                        ((MasterMind) SceneManager.getInstance().getScene()).addAttempts(2);
+                        ((MasterMind) SceneManager.getInstance().getNextScene()).addAttempts(2);
                         SceneManager.getInstance().goToNextScene();
                     });
                     break;

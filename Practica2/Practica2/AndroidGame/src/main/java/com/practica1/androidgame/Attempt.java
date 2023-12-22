@@ -234,6 +234,19 @@ public class Attempt  implements Serializable {
     public Vector2 getPos() {
         return pos;
     }
+
+    public void load(Graphics graphics) {
+        this.graphics = graphics;
+
+        attemptNumber.load(graphics);
+
+        for(int i=0; i < combination.length; i++){
+            combination[i].setGraphics(graphics);
+        }
+
+        clue.setGraphics(graphics);
+
+    }
 }
 
 

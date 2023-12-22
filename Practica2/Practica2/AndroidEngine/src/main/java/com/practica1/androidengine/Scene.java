@@ -17,6 +17,8 @@ public class Scene {
     protected Audio audio;
     private boolean initialized = false;
 
+    private boolean dataSaved = false;
+
     /**
      * Inicializar
      *
@@ -57,6 +59,14 @@ public class Scene {
 
     public boolean isInitialized() {
         return initialized;
+    }
+
+    public void saveData(){
+        dataSaved = true;
+    }
+
+    public void loadData(){
+
     }
 
 }

@@ -3,6 +3,7 @@ package com.practica1.androidgame;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -45,7 +46,7 @@ public class SceneManager {
     }
 
     public void goToNextScene(){
-        engine.setScene(getScene());
+        engine.setScene(getNextScene());
         removeScene();
     }
 
@@ -56,11 +57,37 @@ public class SceneManager {
         if(!newScene.isInitialized())newScene.init(engine);
     }
 
-    public Scene getScene() {
-        return Instance.sceneQueue.element();
+    public Scene getNextScene() {
+        if(Instance.sceneQueue.size() > 0) return Instance.sceneQueue.element();
+        return null;
     }
 
     public void removeScene(){
         Instance.sceneQueue.remove();
+    }
+
+    public void saveData(){
+        Scene currentScene = engine.getScene();
+        if(currentScene != null){
+            currentScene.saveData();
+        }
+    }
+
+    public void loadData(){
+        File file = new File("game.txt");
+
+        if(file.exists()){
+            System.out.println("Partida cargada");
+            MasterMind masterMind = new MasterMind();
+            masterMind.loadData();
+            addScene(masterMind);
+            goToNextScene();
+
+            file.delete();
+
+        }
+        else{
+            System.out.println("No hay ninguna partida guardaada");
+        }
     }
 }

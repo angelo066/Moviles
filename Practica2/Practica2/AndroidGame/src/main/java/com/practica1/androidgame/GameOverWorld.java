@@ -231,7 +231,7 @@ public class GameOverWorld extends Scene {
                     audio.stopSound("botonInterfaz.wav");
                     audio.playSound("botonInterfaz.wav", false);
                     engine.getAds().showRewardedAd(() -> {
-                        ((MasterMind) SceneManager.getInstance().getScene()).addAttempts(2);
+                        ((MasterMind) SceneManager.getInstance().getNextScene()).addAttempts(2);
                         SceneManager.getInstance().goToNextScene();
                     });
                     break;

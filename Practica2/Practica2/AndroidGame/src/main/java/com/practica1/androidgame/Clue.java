@@ -107,4 +107,8 @@ public class Clue  implements Serializable {
     public Vector2 getPos() {
         return pos;
     }
+
+    public void setGraphics(Graphics graphics) {
+        this.graphics = graphics;
+    }
 }

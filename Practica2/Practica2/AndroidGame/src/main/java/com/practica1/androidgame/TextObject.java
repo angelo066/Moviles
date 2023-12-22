@@ -2,8 +2,6 @@ package com.practica1.androidgame;
 
 import static java.lang.Integer.parseInt;
 
-import com.practica1.androidengine.Color;
-import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Font;
 import com.practica1.androidengine.Graphics;
 
@@ -123,5 +121,10 @@ public class TextObject implements Serializable  {
     public void resetColor()
     {
         color = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+    }
+
+    public void load(Graphics graphics) {
+        this.graphics = graphics;
+        this.font = ResourceManager.getInstance().getFont(fontName);
     }
 }

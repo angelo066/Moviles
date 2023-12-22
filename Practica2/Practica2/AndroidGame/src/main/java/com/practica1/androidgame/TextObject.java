@@ -7,11 +7,13 @@ import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Font;
 import com.practica1.androidengine.Graphics;
 
+import java.io.Serializable;
+
 
 /**
  * GameObject Texto, encapsula las funcionalidades de pintar texto dentro de un objeto
  */
-public class TextObject {
+public class TextObject implements Serializable  {
     private int color;
     private String text;
     private transient Font font;

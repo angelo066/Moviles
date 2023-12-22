@@ -1,9 +1,11 @@
 package com.practica1.androidgame;
 
+import java.io.Serializable;
+
 /**
  * Clase que representa una posicion en el espacio
  */
-public class Vector2 {
+public class Vector2  implements Serializable {
     public int x = 0;
     public int y = 0;
 

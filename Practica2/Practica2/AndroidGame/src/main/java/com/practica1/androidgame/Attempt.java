@@ -5,12 +5,13 @@ import com.practica1.androidengine.Graphics;
 import com.practica1.androidengine.Image;
 import com.practica1.androidengine.TouchEvent;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Clase que representa un intento en el juego
  */
-public class Attempt {
+public class Attempt  implements Serializable {
     private Circle[] combination;
     private TextObject attemptNumber;
     private Clue clue;

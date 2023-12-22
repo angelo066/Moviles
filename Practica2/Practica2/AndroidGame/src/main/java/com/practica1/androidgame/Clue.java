@@ -3,7 +3,9 @@ package com.practica1.androidgame;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Graphics;
 
-public class Clue {
+import java.io.Serializable;
+
+public class Clue  implements Serializable {
     private int numFoundCircles;
     private int numFoundColors;
     private transient Graphics graphics;

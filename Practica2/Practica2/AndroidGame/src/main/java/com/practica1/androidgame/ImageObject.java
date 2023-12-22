@@ -5,10 +5,12 @@ import com.practica1.androidengine.Graphics;
 import com.practica1.androidengine.Image;
 import com.practica1.androidengine.Scene;
 
+import java.io.Serializable;
+
 /**
  * GameObject Imagen, encapsula las funcionalidades de pintar imagenes dentro de un objeto
  */
-public class ImageObject {
+public class ImageObject  implements Serializable  {
     private transient Image image;
     private Vector2 size;
     private Vector2 pos;

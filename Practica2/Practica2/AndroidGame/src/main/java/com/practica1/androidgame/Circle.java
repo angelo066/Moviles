@@ -5,10 +5,12 @@ import com.practica1.androidengine.Graphics;
 import com.practica1.androidengine.Image;
 import com.practica1.androidengine.TouchEvent;
 
+import java.io.Serializable;
+
 /**
  * GameObject Circulo, encapsula la info y comportamientos relativos a un circulo del tablero
  */
-public class Circle {
+public class Circle  implements Serializable {
     private TextObject id;
     private Color color;
     private boolean uncovered;

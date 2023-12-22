@@ -18,15 +18,52 @@ public class RunSerializeInfo implements Serializable {
     private Difficulty difficulty;
 
     private Color[] winningCombination; // Codigo a adivinar
+
     private Circle[] availableColors; // Colores disponibles
     private ArrayList<Attempt> attempts; // La lista de intentos
 
     private int currentAttempt;
     private boolean colorBlind;
 
-    public RunSerializeInfo()
+    public RunSerializeInfo(int world, int level, Difficulty difficulty, Color[] colors,
+                            Circle[] circles, ArrayList<Attempt> attempts, int currentAttempt, boolean colorBlind)
     {
-
+        this.world = world;
+        this.level = level;
+        this.difficulty = difficulty;
+        this.winningCombination = colors;
+        this.availableColors = circles;
+        this.attempts = attempts;
+        this.currentAttempt = currentAttempt;
+        this.colorBlind = colorBlind;
     }
 
+    public void setAttempts(ArrayList<Attempt> n){attempts = n;}
+    public void setAvailableColors(Circle[] availableColors) {
+        this.availableColors = availableColors;
+    }
+
+    public void setWorld(int world) {
+        this.world = world;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public void setWinningCombination(Color[] winningCombination) {
+        this.winningCombination = winningCombination;
+    }
+
+    public void setCurrentAttempt(int currentAttempt) {
+        this.currentAttempt = currentAttempt;
+    }
+
+    public void setColorBlind(boolean colorBlind) {
+        this.colorBlind = colorBlind;
+    }
 }

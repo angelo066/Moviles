@@ -12,6 +12,15 @@ import com.practica1.androidengine.AdManager;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.SensorHandler;
 
+//TODO:
+//  Securizar con NDK
+//  Persistencia <--
+//  Paletas de Colores
+//  Compartir
+//  Notificiaciones
+//  Memoria
+
+
 public class AndroidGame extends AppCompatActivity {
     private Engine engine;
     private Context context;

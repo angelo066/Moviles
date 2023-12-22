@@ -2,7 +2,6 @@ package com.practica1.androidgame;
 
 public class LevelInfo {
 
-
     private int codeSize;
     private int codeOpt;
     private boolean repeat;

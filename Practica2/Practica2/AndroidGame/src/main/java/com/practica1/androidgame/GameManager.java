@@ -149,4 +149,6 @@ public class GameManager {
     public int getActual_Skin_Code(){return actual_Skin_Code;}
     public void equipPalette(Palette p){actual_Skin_Palette = p;}
     public Palette getActual_Skin_Palette(){return actual_Skin_Palette;}
+
+    public Context getContext(){return context;}
 }

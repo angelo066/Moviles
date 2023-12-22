@@ -1,5 +1,7 @@
 package com.practica1.androidgame;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
@@ -7,7 +9,11 @@ import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.TouchEvent;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -25,16 +31,13 @@ public class MasterMind extends Scene {
     private Circle[] availableColors;
     private ArrayList<Attempt> attempts;
 
-
     private Random random;
     private int currentAttempt;
     private boolean colorBlind;
-
     private ButtonObject buttonColorBlind;
     private ButtonObject buttonBack;
     private TextObject textAttempts;
     private TextObject title;
-
     private int attemptHeight;
     private int heightOffset;
     private int lastYPosition;
@@ -110,6 +113,40 @@ public class MasterMind extends Scene {
         createButtons();
 
         createTexts();
+
+        saveData();
+
+    }
+
+    private void saveData() {
+
+        RunSerializeInfo runSerializeInfo = new RunSerializeInfo(indexWorld, indexLevel, difficultyMode,
+                winningCombination, availableColors, attempts, currentAttempt, colorBlind);
+        try{
+            Gson gson = new Gson();
+
+            //runSerializeInfo.setAttempts(attempts);
+            //runSerializeInfo.setAvailableColors(availableColors);
+            //runSerializeInfo.setColorBlind(colorBlind);
+            //runSerializeInfo.setCurrentAttempt(currentAttempt);
+            //runSerializeInfo.setLevel(indexLevel);
+            //runSerializeInfo.setWorld(indexWorld);
+            //runSerializeInfo.setDifficulty(difficultyMode);
+
+            String json = gson.toJson(runSerializeInfo);
+            System.out.println(json);
+
+            FileWriter fileWriter = new FileWriter("game.json");
+            fileWriter.write(json);
+
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Error: Archivo no encontrado");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Error de entrada/salida al persistir datos del jugador");
+            e.printStackTrace();
+        }
 
     }
 

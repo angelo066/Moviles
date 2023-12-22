@@ -20,8 +20,7 @@ public class TextObject {
     private boolean isItalic;
     private Vector2 pos;
     private Vector2 iniPos;
-    private Graphics graphics;
-    private long aux_color_prueba_cambiar_men = 0;
+    private transient Graphics graphics;
 
     /**
      * @param graphics Objeto graphics del engine

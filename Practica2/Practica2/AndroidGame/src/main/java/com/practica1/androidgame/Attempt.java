@@ -14,7 +14,7 @@ public class Attempt {
     private Circle[] combination;
     private TextObject attemptNumber;
     private Clue clue;
-    private Graphics graphics;
+    private transient Graphics graphics;
     private Vector2 pos;
     private Vector2 size;
     private int numDivisions;

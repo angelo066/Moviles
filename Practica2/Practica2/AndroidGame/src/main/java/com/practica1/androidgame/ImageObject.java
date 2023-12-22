@@ -13,8 +13,7 @@ public class ImageObject {
     private Vector2 size;
     private Vector2 pos;
     private Vector2 iniPos;
-
-    private Graphics graphics;
+    private transient Graphics graphics;
 
     /**
      * @param graphics  Objeto graphics del engine

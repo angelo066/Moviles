@@ -16,7 +16,7 @@ public class Circle {
     private int circleRadius;
     private Vector2 pos;
     private ImageObject image;
-    private Graphics graphics;
+    private transient Graphics graphics;
 
     /**
      * @param graphics     Objecto graphics del motor

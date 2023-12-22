@@ -6,7 +6,7 @@ import com.practica1.androidengine.Graphics;
 public class Clue {
     private int numFoundCircles;
     private int numFoundColors;
-    private Graphics graphics;
+    private transient Graphics graphics;
     private Vector2 pos;
     private int circleRadius;
     private int numColorsPerAttempt;

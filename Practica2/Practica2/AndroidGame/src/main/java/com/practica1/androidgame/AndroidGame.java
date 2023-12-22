@@ -19,6 +19,7 @@ import com.practica1.androidengine.SensorHandler;
 //  Compartir
 //  Notificiaciones
 //  Memoria
+//  Estilo predeterminado en la tienda
 
 
 public class AndroidGame extends AppCompatActivity {

@@ -128,15 +128,12 @@ public class MasterMind extends Scene {
                 winningCombination, availableColors, attempts, currentAttempt, colorBlind);
         try{
 
-            FileOutputStream fout = GameManager.getInstance().getContext().openFileOutput("game.json", Context.MODE_PRIVATE);
+            FileOutputStream fout = GameManager.getInstance().getContext().openFileOutput("game.txt", Context.MODE_PRIVATE);
+            ObjectOutputStream out =  new ObjectOutputStream(fout);
 
-            Gson gson = new Gson();
-
-            String json = gson.toJson(runSerializeInfo);
-            System.out.println(json);
-
-            fout.write(json.getBytes());
-
+            out.writeObject(runSerializeInfo);
+            out.flush();
+            out.close();
         }
         catch (FileNotFoundException e) {
             System.out.println("Error: Archivo no encontrado");
@@ -149,11 +146,13 @@ public class MasterMind extends Scene {
     }
 
     private void loadData(){
+
+        RunSerializeInfo run;
         try{
-            FileInputStream file = GameManager.getInstance().getContext().openFileInput("game.json");
+            FileInputStream file = GameManager.getInstance().getContext().openFileInput("game.txt");
             ObjectInputStream in = new ObjectInputStream(file);
 
-            RunSerializeInfo run = (RunSerializeInfo)in.readObject();
+            run = (RunSerializeInfo)in.readObject();
         }
         catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);

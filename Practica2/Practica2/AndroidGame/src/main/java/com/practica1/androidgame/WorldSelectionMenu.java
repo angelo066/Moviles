@@ -167,7 +167,8 @@ public class WorldSelectionMenu extends Scene {
 
         //Lo pongo en el inputHandler porque es input al final del día
         SensorHandler sensorHandler = engine.getSensorHandler();
-        if(sensorHandler.getAcccelerometerValuesAdded(false) > 4){
+        if(sensorHandler.getAcccelerometerValuesAdded(false) > 40){
+            audio.stopSound("silla.wav");
             audio.playSound("silla.wav", false);
         }
     }

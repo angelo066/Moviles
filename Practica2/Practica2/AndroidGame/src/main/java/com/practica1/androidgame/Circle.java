@@ -13,7 +13,6 @@ public class Circle {
     private Color color;
     private boolean uncovered;
     private boolean colorblind;
-    private boolean imageMode = false;
     private int circleRadius;
     private Vector2 pos;
     private ImageObject image;
@@ -37,6 +36,8 @@ public class Circle {
 
         this.uncovered = false;
         this.colorblind = false;
+
+        image = null;
     }
     public Circle(Graphics graphics, Vector2 pos, int circleRadius, String imageRoute) {
         this.graphics = graphics;
@@ -54,7 +55,6 @@ public class Circle {
 
         // Creacion de la imagen
         image = new ImageObject(graphics, new Vector2(pos), new Vector2(circleRadius*2, circleRadius*2), imageRoute);
-        imageMode = true;
     }
 
     /**
@@ -65,7 +65,7 @@ public class Circle {
         // Si se ha descubierto pintamos el color normal
         if (uncovered) {
 
-            if(imageMode)
+            if(image != null)
                 image.render();
             else
             {
@@ -161,6 +161,9 @@ public class Circle {
         pos.x += translateX;
         pos.y += translateY;
         id.translate(translateX, translateY);
+
+        if(image != null)
+            image.translate(translateX,translateY);
     }
 
     /**
@@ -173,11 +176,11 @@ public class Circle {
     public void setImage(Image image)
     {
         this.image = new ImageObject(graphics, new Vector2(pos), new Vector2(circleRadius*2, circleRadius*2), image);
-        imageMode = true;
     }
 
     public Image getImage()
     {
+        if(image == null) return null;
         return image.getImage();
     }
 

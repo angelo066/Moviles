@@ -1,7 +1,5 @@
 package com.practica1.androidgame;
 
-
-import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.SurfaceView;
@@ -12,6 +10,7 @@ import com.practica1.androidengine.AdManager;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.SensorHandler;
+import com.practica1.androidengine.ShareManager;
 
 //TODO:
 //  Securizar con NDK
@@ -25,24 +24,23 @@ import com.practica1.androidengine.SensorHandler;
 
 public class AndroidGame extends AppCompatActivity {
     private Engine engine;
-    private SensorHandler sensorHandler;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_android_game);
-        SurfaceView renderView = findViewById(R.id.surfaceView);
+        SurfaceView surfaceView = findViewById(R.id.surfaceView);
 
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
         AdManager ads = new AdManager(this, findViewById(R.id.adView));
         SensorHandler sensorHandler = new SensorHandler(this);
+        ShareManager shareManager = new ShareManager(surfaceView,this);
 
-        engine = new Engine(renderView);
+        engine = new Engine(surfaceView);
         engine.setAds(ads);
         engine.setSensorHandler(sensorHandler);
-        engine.setContext(this);
+        engine.setShareManager(shareManager);
 
 
         ResourceManager.Init(engine);

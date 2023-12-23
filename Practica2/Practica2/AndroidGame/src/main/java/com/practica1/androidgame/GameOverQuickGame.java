@@ -3,6 +3,7 @@ package com.practica1.androidgame;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
+import com.practica1.androidengine.ShareManager;
 import com.practica1.androidengine.TouchEvent;
 
 import java.util.ArrayList;
@@ -91,10 +92,10 @@ public class GameOverQuickGame extends Scene {
 
             String coins_String = "+" + String.valueOf(coins) + "- Total" + String.valueOf(GameManager.getInstance().getCoins());
 
-            coins_Earned = new TextObject(graphics, new Vector2(width/2, (height / 10 * 7 / 2) + 350),
+            coins_Earned = new TextObject(graphics, new Vector2(width / 2, (height / 10 * 7 / 2) + 350),
                     "Nexa.ttf", coins_String, colorText, 100, false, false);
 
-            coin_Image = new ImageObject(graphics, new Vector2(width/2 - 310, (height / 10 * 7 / 2) + 350), new Vector2(100,100),
+            coin_Image = new ImageObject(graphics, new Vector2(width / 2 - 310, (height / 10 * 7 / 2) + 350), new Vector2(100, 100),
                     "coins.png");
 
             coins_Earned.center();
@@ -168,10 +169,10 @@ public class GameOverQuickGame extends Scene {
             circles[i].setColor(combination_win[i]);
             circles[i].setUncovered(true);
 
-            if(skin != 0){
+            if (skin != 0) {
 
                 int colorIndex = combination_win[i].getId() + 1;
-                String image = "packs/pack_" + skin + "/" +colorIndex + ".png";
+                String image = "packs/pack_" + skin + "/" + colorIndex + ".png";
 
                 circles[i].setImage(ResourceManager.getInstance().getImage(image));
             }
@@ -215,7 +216,7 @@ public class GameOverQuickGame extends Scene {
     @Override
     public void handleInput(ArrayList<TouchEvent> events) {
         for (int i = 0; i < events.size(); i++) {
-            if(!win){
+            if (!win) {
                 if (buttonMoreAttempts.handleInput(events.get(i))) {
                     audio.stopSound("botonInterfaz.wav");
                     audio.playSound("botonInterfaz.wav", false);
@@ -225,14 +226,12 @@ public class GameOverQuickGame extends Scene {
                     });
                     break;
                 }
-            }
-
-            else{
+            } else {
                 if (buttonShare.handleInput(events.get(i))) {
                     audio.stopSound("botonInterfaz.wav");
                     audio.playSound("botonInterfaz.wav", false);
-                    new Screenshot(engine.getView(),engine.getContext(),0,0,engine.getView().getWidth(),engine.getView().getHeight(),
-                            "Compartir resultado","!He conseguido superar un nivel! Juega Mastermind","Mastermind","Victoria en Mastermind");
+                    engine.getShareManager().share(0, 0, graphics.getWidth(), graphics.getHeight(), "Compartir resultado", "¡He conseguido superar un nivel! Juega Mastermind"
+                            , "Mastermind", "Victoria en Mastermind");
                     break;
                 }
             }
@@ -244,8 +243,7 @@ public class GameOverQuickGame extends Scene {
                 SceneManager.getInstance().addScene(new MainMenu());
                 SceneManager.getInstance().goToNextScene();
                 break;
-            }
-            else if (buttonRepeat.handleInput(events.get(i))) {
+            } else if (buttonRepeat.handleInput(events.get(i))) {
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
                 SceneManager.getInstance().removeScene();

@@ -1,6 +1,5 @@
 package com.practica1.androidengine;
 
-import android.content.Context;
 import android.view.SurfaceView;
 
 import java.io.BufferedReader;
@@ -24,7 +23,7 @@ public class Engine implements Runnable {
     private Scene newScene;
     private AdManager ads;
     private SensorHandler sensorHandler;
-    private Context context;
+    private ShareManager shareManager;
 
     /**
      * @param view Ventana de la aplicacion
@@ -33,7 +32,7 @@ public class Engine implements Runnable {
         this.view = view;
         this.ads = null;
         this.sensorHandler = null;
-        this.context = null;
+        this.shareManager = null;
         this.graphics = new Graphics(view);
         this.input = new Input(view);
         this.audio = new Audio(view.getContext().getAssets());
@@ -78,16 +77,12 @@ public class Engine implements Runnable {
         return sensorHandler;
     }
 
-    public void setContext(Context context) {
-        this.context = context;
+    public void setShareManager(ShareManager shareManager) {
+        this.shareManager = shareManager;
     }
 
-    public Context getContext() {
-        return context;
-    }
-
-    public SurfaceView getView() {
-        return view;
+    public ShareManager getShareManager() {
+        return shareManager;
     }
 
     public void run() {

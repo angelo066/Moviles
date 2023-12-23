@@ -1,4 +1,4 @@
-package com.practica1.androidgame;
+package com.practica1.androidengine;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +11,17 @@ import android.provider.MediaStore;
 import android.view.PixelCopy;
 import android.view.SurfaceView;
 
-public class Screenshot {
-    public Screenshot(SurfaceView surfaceview, Context context, int x, int y, int w, int h, String shareTitle, String extraMessage, String descriptionTitle, String description) {
+public class ShareManager {
+
+    private SurfaceView surfaceview;
+    private Context context;
+
+    public ShareManager(SurfaceView surfaceview, Context context) {
+        this.surfaceview = surfaceview;
+        this.context = context;
+    }
+
+    public void share(int x, int y, int w, int h, String shareTitle, String extraMessage, String descriptionTitle, String description){
         Bitmap bitmap = Bitmap.createBitmap(surfaceview.getWidth(), surfaceview.getHeight(),
                 Bitmap.Config.ARGB_8888);
 

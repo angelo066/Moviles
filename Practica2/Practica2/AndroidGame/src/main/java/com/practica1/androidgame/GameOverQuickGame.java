@@ -228,7 +228,13 @@ public class GameOverQuickGame extends Scene {
             }
 
             else{
-
+                if (buttonShare.handleInput(events.get(i))) {
+                    audio.stopSound("botonInterfaz.wav");
+                    audio.playSound("botonInterfaz.wav", false);
+                    new Screenshot(engine.getView(),engine.getContext(),0,0,engine.getView().getWidth(),engine.getView().getHeight(),
+                            "Compartir resultado","!He conseguido superar un nivel! Juega Mastermind","Mastermind","Victoria en Mastermind");
+                    break;
+                }
             }
 
             if (buttonBackMenu.handleInput(events.get(i))) {

@@ -1,5 +1,6 @@
 package com.practica1.androidengine;
 
+import android.content.Context;
 import android.view.SurfaceView;
 
 import java.io.BufferedReader;
@@ -22,20 +23,22 @@ public class Engine implements Runnable {
     private Scene scene;
     private Scene newScene;
     private AdManager ads;
-
     private SensorHandler sensorHandler;
+    private Context context;
 
     /**
      * @param view Ventana de la aplicacion
      */
-    public Engine(SurfaceView view, AdManager ads) {
+    public Engine(SurfaceView view) {
         this.view = view;
-        this.ads = ads;
-        graphics = new Graphics(view);
-        input = new Input(view);
-        audio = new Audio(view.getContext().getAssets());
-        scene = null;
-        newScene = null;
+        this.ads = null;
+        this.sensorHandler = null;
+        this.context = null;
+        this.graphics = new Graphics(view);
+        this.input = new Input(view);
+        this.audio = new Audio(view.getContext().getAssets());
+        this.scene = null;
+        this.newScene = null;
     }
 
     /**
@@ -59,10 +62,33 @@ public class Engine implements Runnable {
         return audio;
     }
 
+    public void setAds(AdManager adManager) {
+        ads = adManager;
+    }
+
     public AdManager getAds() {
         return ads;
     }
 
+    public void setSensorHandler(SensorHandler s) {
+        sensorHandler = s;
+    }
+
+    public SensorHandler getSensorHandler() {
+        return sensorHandler;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public SurfaceView getView() {
+        return view;
+    }
 
     public void run() {
         if (thread != Thread.currentThread())
@@ -136,6 +162,10 @@ public class Engine implements Runnable {
             newScene = scene;
     }
 
+    public Scene getScene() {
+        return scene;
+    }
+
     /**
      * Cambia, si es necesario, la escena al principio de frame
      */
@@ -183,8 +213,7 @@ public class Engine implements Runnable {
     /**
      * Apertura de archivos
      */
-    public BufferedReader openAssetFile(String fileName) throws IOException
-    {
+    public BufferedReader openAssetFile(String fileName) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(graphics.getAssetManager().open(fileName), "UTF-8"));
         return br;
     }
@@ -192,20 +221,17 @@ public class Engine implements Runnable {
     /**
      * Devuelve las rutas de todos los archivos de una carpeta
      */
-    public List<String> obtainFolderFiles(String baseRoute)
-    {
+    public List<String> obtainFolderFiles(String baseRoute) {
         List<String> nameFiles = new ArrayList<>();
 
-        try{
+        try {
             // Obtenemos la lista de archivos
             String[] fileList = graphics.getAssetManager().list(baseRoute);
 
             // Si la carpeta no estaba vacia
-            if(fileList != null)
-            {
+            if (fileList != null) {
                 // Creamos la ruta completa
-                for(String file : fileList)
-                {
+                for (String file : fileList) {
                     String completeRoute = baseRoute + "/" + file;
                     nameFiles.add(completeRoute);
                 }
@@ -217,10 +243,4 @@ public class Engine implements Runnable {
         return nameFiles;
     }
 
-    //Yo creo que esto es lo mejor para que lo tenga el engine
-    public void setSensorHandler(SensorHandler s){sensorHandler = s;}
-
-    public SensorHandler getSensorHandler(){return sensorHandler;}
-
-    public Scene getScene(){return scene;}
 }

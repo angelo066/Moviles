@@ -368,6 +368,6 @@ public class Graphics {
         return translateY;
     }
 
-    public AssetManager getAssetManager(){return assetManager;};
+    public AssetManager getAssetManager(){return assetManager;}
 
 }

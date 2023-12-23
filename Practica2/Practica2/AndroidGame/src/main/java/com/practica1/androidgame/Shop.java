@@ -166,6 +166,7 @@ public class Shop extends Scene {
 
                     if (skin.getButton().handleInput(events.get(i)) && coins >= price && !skin.isUnlocked()) {
                         skin.setUnlock(true);
+                        gm.unlockedSkin(0, b);
                         gm.buyObject(price);
                         gm.equipBackgroundSkin(b);
                     }
@@ -181,6 +182,7 @@ public class Shop extends Scene {
 
                     if(skin.getButton().handleInput(events.get(i)) && coins >= price && !skin.isUnlocked() ){
                         skin.setUnlock(true);
+                        gm.unlockedSkin(1, c);
                         gm.buyObject(price);
                         gm.equipCode(c);
                     }
@@ -197,6 +199,7 @@ public class Shop extends Scene {
                     if(skin.getButton().handleInput(events.get(i)) && coins >= price && !skin.isUnlocked() ){
                         skin.setUnlock(true);
                         gm.buyObject(price);
+                        gm.unlockedSkin(2, c);
                         gm.equipPalette(ResourceManager.getInstance().shop_palettes.get(c));
 
                         // Recargar la escena de colores
@@ -260,6 +263,7 @@ public class Shop extends Scene {
 
     private void createBackgroundsShop()
     {
+        boolean[] unlocked_Skins = GameManager.getInstance().getUnlockedSkinsByIndex(0);
         Vector2 pos = new Vector2(skin_Pos.x, skin_Pos.y);
 
         int aux = width / N_SKIN_COLUMN;
@@ -286,11 +290,15 @@ public class Shop extends Scene {
 
             // Crear el objeto
             skins_Back[i] = new BuyObject(graphics, pos, size, image);
+            if(unlocked_Skins[i]){
+                skins_Back[i].setUnlock(true);
+            }
             skins_Back[i].setPrice(100 * i);
         }
     }
     private void createCodePacksShop()
     {
+        boolean[] unlocked_Skins = GameManager.getInstance().getUnlockedSkinsByIndex(1);
         Vector2 pos = new Vector2(skin_Pos.x, skin_Pos.y);
 
         int aux = width / N_SKIN_COLUMN;
@@ -316,12 +324,16 @@ public class Shop extends Scene {
 
             // Crear el objeto
             skins_Code[i] = new BuyObject(graphics, pos, size, image);
+            if(unlocked_Skins[i]){
+                skins_Code[i].setUnlock(true);
+            }
             skins_Code[i].setPrice(100 * i);
         }
     }
 
     private void createPalettesShop()
     {
+        boolean[] unlocked_Skins = GameManager.getInstance().getUnlockedSkinsByIndex(2);
         Vector2 pos = new Vector2(skin_Pos.x, skin_Pos.y);
 
         int aux = width / N_SKIN_COLUMN;
@@ -347,6 +359,9 @@ public class Shop extends Scene {
 
             // Crear el objeto
             skins_Color[i] = new BuyObject(graphics, pos, size, image);
+            if(unlocked_Skins[i]){
+                skins_Color[i].setUnlock(true);
+            }
             skins_Color[i].setPrice(100 * i);
         }
         int a = 0;

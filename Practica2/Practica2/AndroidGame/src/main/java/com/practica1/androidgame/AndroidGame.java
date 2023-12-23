@@ -64,9 +64,9 @@ public class AndroidGame extends AppCompatActivity {
         SceneManager.Init(engine);
 
         GameManager.getInstance().setContext(this);
-        GameManager.getInstance().loadPlayerData();
 
         ResourceManager.getInstance().loadLevels();
+        GameManager.getInstance().loadPlayerData();
         SceneManager.getInstance().addScene(new AssetsLoad());
         SceneManager.getInstance().goToNextScene();
 
@@ -79,6 +79,7 @@ public class AndroidGame extends AppCompatActivity {
         engine.getSensorHandler().onResume();
         GameManager.getInstance().loadPlayerData();
         SceneManager.getInstance().loadData();
+        notificationHandler.stopPushNotificationWorker();
         engine.resume();
     }
 
@@ -88,9 +89,8 @@ public class AndroidGame extends AppCompatActivity {
         engine.getSensorHandler().onPause();
         SceneManager.getInstance().saveData();
         GameManager.getInstance().savePlayerData();
-        notificationHandler.sendPushNotification(R.mipmap.ic_launcher, "MasterMind", "Notificacion de prueba",
-                "Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible");
-        notificationHandler.setPushNotificationWorker(10, TimeUnit.SECONDS,R.mipmap.ic_launcher, "MasterMind", "Notificacion de prueba",
+        notificationHandler.setPushNotificationWorkerPeriodic(10, TimeUnit.SECONDS, 20, TimeUnit.MINUTES, R.mipmap.ic_launcher,
+                "MasterMind", "Notificacion de prueba",
                 "Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible");
         // engine.Release();
         engine.pause();
@@ -99,6 +99,7 @@ public class AndroidGame extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        GameManager.getInstance().savePlayerData();
         engine.getSensorHandler().onDestroy();
         ResourceManager.Release();
         SceneManager.Release();

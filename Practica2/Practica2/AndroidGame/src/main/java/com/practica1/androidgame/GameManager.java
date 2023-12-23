@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 public class GameManager {
 
@@ -37,6 +38,9 @@ public class GameManager {
     //First = mundo Second = Level
     private Pair<Integer,Integer> lastLevelUnlocked = new Pair<>(0,0);
 
+    private boolean[] unlocked_Backgrounds;
+    private boolean[] unlocked_Codes;
+    private boolean[] unlocked_Palettes;
 
     private GameManager(){
 
@@ -67,8 +71,9 @@ public class GameManager {
         // Que yo el otro dia me tire 2 horas buscando el archivito 💀
         // Que que quiere decir privado, pues efectivamente que no aparece en el explorador de archivos
 
+
         PlayerSerializeInfo playerSerializeInfo = new PlayerSerializeInfo(coins, lastLevelUnlocked.first, lastLevelUnlocked.second,
-                                                    actual_Skin_Background, actual_Skin_Code, actual_Skin_Palette);
+                                                    actual_Skin_Background, actual_Skin_Code, actual_Skin_Palette, unlocked_Backgrounds, unlocked_Codes, unlocked_Palettes);
 
         try{
             FileOutputStream fout = context.openFileOutput("player.txt", Context.MODE_PRIVATE);
@@ -111,14 +116,18 @@ public class GameManager {
             actual_Skin_Background = playerSerializeInfo.getBackgroundSkin();
             actual_Skin_Code = playerSerializeInfo.getCodeSkin();
             actual_Skin_Palette = playerSerializeInfo.getPaleteSkin();
+            unlocked_Backgrounds = playerSerializeInfo.getUnlocked_Backgrounds();
+            unlocked_Codes = playerSerializeInfo.getUnlocked_Codes();
+            unlocked_Palettes = playerSerializeInfo.getUnlocked_Palettes();
 
             //Si no hay ninguna equipada ponemos la predeterminada
             if(actual_Skin_Palette.getThumbnail() == "")
                 actual_Skin_Palette = ResourceManager.getInstance().getDefault_Palette();
         }
         else{
-            actual_Skin_Palette = ResourceManager.getInstance().getDefault_Palette();
+            defaultValues();
         }
+
 
     }
 
@@ -172,4 +181,34 @@ public class GameManager {
     public Palette getActual_Skin_Palette(){return actual_Skin_Palette;}
 
     public Context getContext(){return context;}
+
+    public void unlockedSkin(int type, int index){
+        if(type == 0){
+            unlocked_Backgrounds[index] = true;
+        }
+        else if(type == 1){
+            unlocked_Codes[index] = true;
+        }
+        else{
+            unlocked_Palettes[index] = true;
+        }
+
+    }
+
+    //0 background 1 codes 2 palettes
+    public boolean[] getUnlockedSkinsByIndex(int index){
+        if(index == 0) return unlocked_Backgrounds;
+        if(index == 1) return unlocked_Codes;
+
+        return unlocked_Palettes;
+    }
+
+    public void defaultValues(){
+
+        unlocked_Backgrounds = new boolean[ResourceManager.getInstance().shop_backgrounds.size()];
+        unlocked_Codes = new boolean[ResourceManager.getInstance().shop_codes.size()];
+        unlocked_Palettes = new boolean[ResourceManager.getInstance().shop_palettes.size()];
+
+        actual_Skin_Palette = ResourceManager.getInstance().getDefault_Palette();
+    }
 }

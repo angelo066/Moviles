@@ -21,11 +21,9 @@ public class PushNotification {
     private final CharSequence name = "MasterMind";
     private final String description = "MasterMind Game";
     private Context context;
-    private int notificationId;
 
     public PushNotification(Context context) {
         this.context = context;
-        this.notificationId = 0;
 
         createChannel();
     }
@@ -67,8 +65,7 @@ public class PushNotification {
 
         if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-            notificationManager.notify(notificationId, builder.build());
-            notificationId++;
+            notificationManager.notify(1, builder.build());
             return Result.success();
         }
         return Result.failure();

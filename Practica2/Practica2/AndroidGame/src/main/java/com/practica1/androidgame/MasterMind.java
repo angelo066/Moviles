@@ -104,6 +104,8 @@ public class MasterMind extends Scene {
             //selectPack();
         }
 
+        if(loadedData) loadData();
+
         createPalette();
 
         createStyle();
@@ -114,9 +116,9 @@ public class MasterMind extends Scene {
 
         createTexts();
 
-        if(loadedData) loadData();
-        else{
-            createAttempts();
+        createAttempts();
+
+        if(!loadedData){
             selectWinningCombination();
         }
     }
@@ -125,7 +127,7 @@ public class MasterMind extends Scene {
     public void saveData() {
         super.saveData();
         RunSerializeInfo runSerializeInfo = new RunSerializeInfo(indexWorld, indexLevel, difficultyMode,
-                winningCombination, availableColors, attempts, currentAttempt, colorBlind);
+                winningCombination, availableColors, attempts, currentAttempt, colorBlind, world_Level);
         try{
 
             FileOutputStream fout = GameManager.getInstance().getContext().openFileOutput("game.txt", Context.MODE_PRIVATE);
@@ -170,17 +172,20 @@ public class MasterMind extends Scene {
             this.attempts.get(i).load(graphics);
         }
 
+        this.numAttempts = this.attempts.size();
+
         this.indexLevel = run.getLevel();
         this.indexWorld = run.getWorld();
         this.difficultyMode = run.getDifficulty();
         this.availableColors = run.getAvailableColors();
 
-        for(int i = 0; i < this.availableColors.length; i++){
-            this.availableColors[i].setGraphics(graphics);
-        }
+       /*for(int i = 0; i < this.availableColors.length; i++){
+            this.availableColors[i].load(graphics);
+        }*/
 
         this.winningCombination = run.getWinningCombination();
         this.currentAttempt = run.getCurrentAttempt();
+        this.world_Level = run.isWorldLevel();
     }
 
     private void selectConfiguration() {
@@ -214,13 +219,13 @@ public class MasterMind extends Scene {
     }
 
     private void createAttempts() {
-        this.attempts = new ArrayList<>();
 
         this.attemptHeight = height / this.numDivisions;
         this.heightOffset = attemptHeight / (this.numDivisions - 2);
         this.lastYPosition = 0;
 
         if(!loadedData){
+            this.attempts = new ArrayList<>();
             for (int i = 0; i < this.numAttempts; i++) {
                 this.attempts.add(new Attempt(graphics, numColorsPerAttempt, i + 1,
                         new Vector2(3, (attemptHeight * (i + 1))), new Vector2(width - 6, attemptHeight - heightOffset)));
@@ -253,7 +258,7 @@ public class MasterMind extends Scene {
             int y = (tamDivision * (numDivisions - 1)) + ((tamDivision - 2 * circleRadius) / 2);
             if(world_Level || GameManager.getInstance().getActual_Skin_Code() != -1)
             {
-                String fileRoute= "packs/" + pack_file + "/" + pack_file + "_" + (i+1) +".png";
+                String fileRoute= "packs/" + pack_file + "/" + (i+1) +".png";
                 this.availableColors[i] = new Circle(graphics, new Vector2(x, y), circleRadius,fileRoute);
             }
             else

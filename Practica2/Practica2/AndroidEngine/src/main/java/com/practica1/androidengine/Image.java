@@ -12,6 +12,7 @@ import java.io.InputStream;
 public class Image {
 
     private Bitmap bitmap;
+    private String file;
 
     /**
      * @param filename     Nombre del archivo
@@ -19,6 +20,7 @@ public class Image {
      */
     public Image(String filename, AssetManager assetManager) {
         try {
+            file = filename;
             InputStream is = assetManager.open(filename);
             bitmap = BitmapFactory.decodeStream(is);
             is.close();
@@ -48,4 +50,6 @@ public class Image {
     public Bitmap getImage() {
         return bitmap;
     }
+
+    public String getFile(){return file;}
 }

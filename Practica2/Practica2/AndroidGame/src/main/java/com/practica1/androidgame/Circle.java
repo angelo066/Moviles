@@ -20,6 +20,9 @@ public class Circle implements Serializable {
     private ImageObject image;
     private transient Graphics graphics;
 
+    //Para la serializacion
+    private String imageName;
+
     /**
      * @param graphics     Objecto graphics del motor
      * @param pos          Posicion del circulo
@@ -55,6 +58,7 @@ public class Circle implements Serializable {
         this.uncovered = false;
         this.colorblind = false;
 
+        imageName = imageRoute;
         // Creacion de la imagen
         image = new ImageObject(graphics, new Vector2(pos), new Vector2(circleRadius*2, circleRadius*2), imageRoute);
     }
@@ -177,6 +181,7 @@ public class Circle implements Serializable {
 
     public void setImage(Image image)
     {
+        this.imageName = image.getFile();
         this.image = new ImageObject(graphics, new Vector2(pos), new Vector2(circleRadius*2, circleRadius*2), image);
     }
 
@@ -186,9 +191,15 @@ public class Circle implements Serializable {
         return image.getImage();
     }
 
-    public void setGraphics(Graphics graphics) {
+    public void load(Graphics graphics) {
         this.graphics = graphics;
 
         this.id.load(graphics);
+
+        if(this.imageName != null){
+            // Creacion de la imagen
+            image = new ImageObject(graphics, new Vector2(pos), new Vector2(circleRadius*2, circleRadius*2), imageName);
+        }
     }
+
 }

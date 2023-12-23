@@ -241,7 +241,7 @@ public class Attempt  implements Serializable {
         attemptNumber.load(graphics);
 
         for(int i=0; i < combination.length; i++){
-            combination[i].setGraphics(graphics);
+            combination[i].load(graphics);
         }
 
         clue.setGraphics(graphics);

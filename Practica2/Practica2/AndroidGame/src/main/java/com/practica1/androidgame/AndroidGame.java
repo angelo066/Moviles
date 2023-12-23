@@ -13,6 +13,8 @@ import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.SensorHandler;
 
+import java.io.File;
+
 //TODO:
 //  Securizar con NDK
 //  Persistencia <--
@@ -32,6 +34,10 @@ public class AndroidGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //DEBUG:
+        //File file = new File("/data/user/0/com.practica1.androidgame/files/game.txt");
+        //file.delete();
 
         setContentView(R.layout.activity_android_game);
         SurfaceView renderView = findViewById(R.id.surfaceView);

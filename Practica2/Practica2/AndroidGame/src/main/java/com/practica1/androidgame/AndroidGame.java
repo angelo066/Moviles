@@ -75,6 +75,7 @@ public class AndroidGame extends AppCompatActivity {
         super.onPause();
         engine.getSensorHandler().onPause();
         SceneManager.getInstance().saveData();
+        //engine.Release();
         engine.pause();
     }
 
@@ -85,6 +86,7 @@ public class AndroidGame extends AppCompatActivity {
         ResourceManager.Release();
         SceneManager.Release();
         engine.getAds().destroy();
+        //engine.Release();
     }
 
 }

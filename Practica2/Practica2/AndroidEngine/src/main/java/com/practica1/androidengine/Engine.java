@@ -235,7 +235,13 @@ public class Engine implements Runnable {
             throw new RuntimeException(e);
         }
 
+        //graphics.getAssetManager().
         return nameFiles;
+    }
+
+    public void Release()
+    {
+        graphics.getAssetManager().close();
     }
 
 }

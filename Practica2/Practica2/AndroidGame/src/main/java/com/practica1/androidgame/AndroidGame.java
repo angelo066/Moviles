@@ -40,10 +40,8 @@ public class AndroidGame extends AppCompatActivity {
         // File("/data/user/0/com.practica1.androidgame/files/game.txt");
         // file.delete();
 
-        //PlayerSerializeInfo playerSerializeInfo;
-
+        //DEBUG:
         //File fileExist = new File("/data/user/0/com.practica1.androidgame/files/player.txt");
-
         //fileExist.delete();
 
         setContentView(R.layout.activity_android_game);

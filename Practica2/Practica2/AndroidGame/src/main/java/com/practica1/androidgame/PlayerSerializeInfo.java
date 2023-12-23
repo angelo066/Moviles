@@ -1,19 +1,23 @@
 package com.practica1.androidgame;
 
+import android.util.Pair;
+
 import java.io.Serializable;
 
 public class PlayerSerializeInfo implements Serializable {
 
     private int coins; // Dinero
     private int unlock_levels; // Numero de niveles desbloqueados // van en orden por mundos
+    private int unlock_world; // Numero de niveles desbloqueados // van en orden por mundos
 
     private int backgroundSkin;
     private int codeSkin;
     private Palette paleteSkin;
 
-    public PlayerSerializeInfo(int coins, int unlock_levels, int backgroundSkin, int codeSkin, Palette palette)
+    public PlayerSerializeInfo(int coins, int unlock_world ,int unlock_levels, int backgroundSkin, int codeSkin, Palette palette)
     {
         this.coins = coins;
+        this.unlock_world = unlock_world;
         this.unlock_levels = unlock_levels;
         this.backgroundSkin= backgroundSkin;
         this.codeSkin = codeSkin;
@@ -27,19 +31,6 @@ public class PlayerSerializeInfo implements Serializable {
     public int getUnlockLevels() {
         return unlock_levels;
     }
-    /*
-
-    // SETTERS
-    public void setCoins(int coins) {
-        this.coins = coins;
-    }
-    public void setUnlockLevels(int unlock_levels) {
-        this.unlock_levels = unlock_levels;
-    }
-    public void setCompletelevels(int complete_levels) {
-        this.complete_levels = complete_levels;
-    }
-     */
 
     public void print()
     {
@@ -56,5 +47,9 @@ public class PlayerSerializeInfo implements Serializable {
 
     public Palette getPaleteSkin() {
         return paleteSkin;
+    }
+
+    public int getUnlock_world() {
+        return unlock_world;
     }
 }

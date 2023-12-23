@@ -112,6 +112,7 @@ public class MainMenu extends Scene {
                 break;
 
             } else if (buttonExit.handleInput(events.get(i))) {
+                GameManager.getInstance().savePlayerData();
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
                 System.exit(0);

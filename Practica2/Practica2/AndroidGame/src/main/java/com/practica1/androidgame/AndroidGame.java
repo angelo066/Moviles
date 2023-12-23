@@ -1,27 +1,20 @@
 package com.practica1.androidgame;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.SurfaceView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import com.practica1.androidengine.AdManager;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.NotificationHandler;
+import com.practica1.androidengine.NotificationWorker;
+import com.practica1.androidengine.PushNotification;
 import com.practica1.androidengine.SensorHandler;
 import com.practica1.androidengine.ShareManager;
 
-import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 //TODO:
 //  Securizar con NDK
@@ -54,7 +47,7 @@ public class AndroidGame extends AppCompatActivity {
         AdManager ads = new AdManager(this, findViewById(R.id.adView));
         SensorHandler sensorHandler = new SensorHandler(this);
         ShareManager shareManager = new ShareManager(surfaceView, this);
-        notificationHandler = new NotificationHandler(this, this.getClass());
+        notificationHandler = new NotificationHandler(this);
 
         engine = new Engine(surfaceView);
         engine.setAds(ads);
@@ -88,13 +81,12 @@ public class AndroidGame extends AppCompatActivity {
         super.onPause();
         engine.getSensorHandler().onPause();
         SceneManager.getInstance().saveData();
-
-        notificationHandler.sendNotification(R.mipmap.ic_launcher, "MasterMind", "Notificacion de prueba",
+        GameManager.getInstance().savePlayerData();
+        notificationHandler.sendPushNotification(R.mipmap.ic_launcher, "MasterMind", "Notificacion de prueba",
+                "Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible");
+        notificationHandler.setPushNotificationWorker(10, TimeUnit.SECONDS,R.mipmap.ic_launcher, "MasterMind", "Notificacion de prueba",
                 "Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible");
         // engine.Release();
-
-        GameManager.getInstance().savePlayerData();
-
         engine.pause();
     }
 

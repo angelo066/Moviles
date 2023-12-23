@@ -38,19 +38,19 @@ public class Shop extends Scene {
 
     private ButtonObject buttonBackToDefault;
 
-    private Vector2 skin_Size = new Vector2(200,200);
-    private Vector2 skin_Pos = new Vector2(20,450);
+    private Vector2 skin_Size = new Vector2(200, 200);
+    private Vector2 skin_Pos = new Vector2(20, 450);
 
     private int offset = 200;
     private final int N_SKIN_COLUMN = 3;
 
-    public Shop(){
+    public Shop() {
         this.width = 1080;
         this.height = 1920;
     }
 
     @Override
-    public void init(Engine engine){
+    public void init(Engine engine) {
         super.init(engine);
 
         //Provisional, hay que cambiar numeros y demás
@@ -69,7 +69,7 @@ public class Shop extends Scene {
         coin_cuantity = new TextObject(graphics, new Vector2(pos_Coin.x, pos_Coin.y + size_Coin.y),
                 "Nexa.ttf", String.valueOf(GameManager.getInstance().getCoins()), colorText, 60, false, false);
 
-        type_Text = new TextObject(graphics, new Vector2(width/2, 140),
+        type_Text = new TextObject(graphics, new Vector2(width / 2, 140),
                 "Nexa.ttf", "Fondos", colorText, 60, false, false);
 
         type_Text.center();
@@ -78,9 +78,8 @@ public class Shop extends Scene {
         createNavigators();
     }
 
-    public void render(){
+    public void render() {
         // Fondo de APP
-        GameManager gm = GameManager.getInstance();
         int backColor = GameManager.getInstance().getActual_Skin_Palette().color_background();
         graphics.clear(backColor);
 
@@ -102,18 +101,16 @@ public class Shop extends Scene {
         type_Text.render();
 
         //Revisable
-        if(Skin_Type.values()[type] == Skin_Type.BACKGROUND){
-            for(int i = 0; i < skins_Back.length; i++){
+        if (Skin_Type.values()[type] == Skin_Type.BACKGROUND) {
+            for (int i = 0; i < skins_Back.length; i++) {
                 skins_Back[i].render();
             }
-        }
-        else if(Skin_Type.values()[type] == Skin_Type.CODE){
-            for(int i = 0; i < skins_Code.length; i++){
+        } else if (Skin_Type.values()[type] == Skin_Type.CODE) {
+            for (int i = 0; i < skins_Code.length; i++) {
                 skins_Code[i].render();
             }
-        }
-        else{
-            for(int i = 0; i < skins_Color.length; i++){
+        } else {
+            for (int i = 0; i < skins_Color.length; i++) {
                 skins_Color[i].render();
             }
         }
@@ -136,9 +133,9 @@ public class Shop extends Scene {
                 break;
             }
 
-            if(buttonBackward.handleInput(events.get(i))){
+            if (buttonBackward.handleInput(events.get(i))) {
                 type--;
-                if(type < 0){
+                if (type < 0) {
                     type = Skin_Type.values().length - 1;
                 }
 
@@ -147,9 +144,9 @@ public class Shop extends Scene {
                 break;
             }
 
-            if(buttonForward.handleInput(events.get(i))){
+            if (buttonForward.handleInput(events.get(i))) {
                 type++;
-                if(type > Skin_Type.values().length - 1){
+                if (type > Skin_Type.values().length - 1) {
                     type = 0;
                 }
 
@@ -157,82 +154,110 @@ public class Shop extends Scene {
                 break;
             }
 
-            if(Skin_Type.values()[type] == Skin_Type.BACKGROUND) {
+            if (Skin_Type.values()[type] == Skin_Type.BACKGROUND) {
                 for (int b = 0; b < skins_Back.length; b++) {
                     GameManager gm = GameManager.getInstance();
                     BuyObject skin = skins_Back[b];
                     int coins = gm.getCoins();
                     int price = skin.getPrice();
 
-                    if (skin.getButton().handleInput(events.get(i)) && coins >= price && !skin.isUnlocked()) {
-                        skin.setUnlock(true);
-                        gm.unlockedSkin(0, b);
-                        gm.buyObject(price);
-                        gm.equipBackgroundSkin(b);
+                    if (skin.getButton().handleInput(events.get(i))) {
+                        if (skin.isUnlocked())
+                            gm.equipBackgroundSkin(b);
+                        else if (coins >= price) {
+                            skin.setUnlock(true);
+                            gm.unlockedSkin(0, b);
+                            gm.buyObject(price);
+                            gm.equipBackgroundSkin(b);
+                        }
                     }
                 }
             }
 
-            if(Skin_Type.values()[type] == Skin_Type.CODE){
-                for(int c = 0; c < skins_Code.length;c++){
+            if (Skin_Type.values()[type] == Skin_Type.CODE) {
+                for (int c = 0; c < skins_Code.length; c++) {
                     GameManager gm = GameManager.getInstance();
                     BuyObject skin = skins_Code[c];
                     int coins = gm.getCoins();
                     int price = skin.getPrice();
 
-                    if(skin.getButton().handleInput(events.get(i)) && coins >= price && !skin.isUnlocked() ){
-                        skin.setUnlock(true);
-                        gm.unlockedSkin(1, c);
-                        gm.buyObject(price);
-                        gm.equipCode(c);
+                    if (skin.getButton().handleInput(events.get(i))) {
+                        if (skin.isUnlocked())
+                            gm.equipBackgroundSkin(c);
+                        else if (coins >= price) {
+                            skin.setUnlock(true);
+                            gm.unlockedSkin(1, c);
+                            gm.buyObject(price);
+                            gm.equipCode(c);
+                        }
                     }
                 }
             }
 
-            if(Skin_Type.values()[type] == Skin_Type.COLORS){
-                for(int c = 0; c < skins_Color.length;c++){
+            if (Skin_Type.values()[type] == Skin_Type.COLORS) {
+                for (int c = 0; c < skins_Color.length; c++) {
                     GameManager gm = GameManager.getInstance();
                     BuyObject skin = skins_Color[c];
                     int coins = gm.getCoins();
                     int price = skin.getPrice();
 
-                    if(skin.getButton().handleInput(events.get(i)) && coins >= price && !skin.isUnlocked() ){
-                        skin.setUnlock(true);
-                        gm.buyObject(price);
-                        gm.unlockedSkin(2, c);
-                        gm.equipPalette(ResourceManager.getInstance().shop_palettes.get(c));
-
-                        // Recargar la escena de colores
-                        coin_cuantity.resetColor();
-                        type_Text.resetColor();
-
-                        for(int j = 0; j < skins_Back.length; j++)
-                        {
-                            skins_Back[j].resetColor();
+                    if (skin.getButton().handleInput(events.get(i))) {
+                        boolean reload = false;
+                        if (skin.isUnlocked()) {
+                            gm.equipPalette(ResourceManager.getInstance().shop_palettes.get(c));
+                            reload = true;
+                        } else if (coins >= price) {
+                            skin.setUnlock(true);
+                            gm.buyObject(price);
+                            gm.unlockedSkin(2, c);
+                            gm.equipPalette(ResourceManager.getInstance().shop_palettes.get(c));
+                            reload = true;
                         }
-                        for(int j = 0; j < skins_Code.length; j++)
-                        {
-                            skins_Code[j].resetColor();
-                        }
-                        for(int j = 0; j < skins_Color.length; j++)
-                        {
-                            skins_Color[j].resetColor();
+
+                        if (reload) {
+                            // Recargar la escena de colores
+                            coin_cuantity.resetColor();
+                            type_Text.resetColor();
+
+                            for (int j = 0; j < skins_Back.length; j++) {
+                                skins_Back[j].resetColor();
+                            }
+                            for (int j = 0; j < skins_Code.length; j++) {
+                                skins_Code[j].resetColor();
+                            }
+                            for (int j = 0; j < skins_Color.length; j++) {
+                                skins_Color[j].resetColor();
+                            }
                         }
                     }
                 }
             }
 
-            if(buttonBackToDefault.handleInput(events.get(i))){
-                if(Skin_Type.values()[type] == Skin_Type.BACKGROUND) {
+            if (buttonBackToDefault.handleInput(events.get(i))) {
+                if (Skin_Type.values()[type] == Skin_Type.BACKGROUND) {
                     GameManager.getInstance().equipBackgroundSkin(-1);
                 }
 
-                if(Skin_Type.values()[type] == Skin_Type.CODE){
+                if (Skin_Type.values()[type] == Skin_Type.CODE) {
                     GameManager.getInstance().equipCode(-1);
                 }
 
-                if(Skin_Type.values()[type] == Skin_Type.COLORS){
+                if (Skin_Type.values()[type] == Skin_Type.COLORS) {
                     GameManager.getInstance().equipPalette(ResourceManager.getInstance().getDefault_Palette());
+
+                    // Recargar la escena de colores
+                    coin_cuantity.resetColor();
+                    type_Text.resetColor();
+
+                    for (int j = 0; j < skins_Back.length; j++) {
+                        skins_Back[j].resetColor();
+                    }
+                    for (int j = 0; j < skins_Code.length; j++) {
+                        skins_Code[j].resetColor();
+                    }
+                    for (int j = 0; j < skins_Color.length; j++) {
+                        skins_Color[j].resetColor();
+                    }
                 }
             }
         }
@@ -240,29 +265,26 @@ public class Shop extends Scene {
     }
 
     private void changeText() {
-        if(Skin_Type.values()[type] == Skin_Type.BACKGROUND){
+        if (Skin_Type.values()[type] == Skin_Type.BACKGROUND) {
             type_Text.setText("Fondos");
-        }
-        else if(Skin_Type.values()[type] == Skin_Type.CODE){
+        } else if (Skin_Type.values()[type] == Skin_Type.CODE) {
             type_Text.setText("Codigos");
-        }
-        else{
+        } else {
             type_Text.setText("Colores");
         }
     }
 
-    private void createButtons(){
+    private void createButtons() {
 
         createBackgroundsShop();
         createCodePacksShop();
         createPalettesShop();
 
         buttonBackToDefault = new ButtonObject(graphics, new Vector2(width - skin_Size.x, height - skin_Size.y),
-                                                                skin_Size, "backToMonkey.jpg");
+                skin_Size, "backToMonkey.jpg");
     }
 
-    private void createBackgroundsShop()
-    {
+    private void createBackgroundsShop() {
         boolean[] unlocked_Skins = GameManager.getInstance().getUnlockedSkinsByIndex(0);
         Vector2 pos = new Vector2(skin_Pos.x, skin_Pos.y);
 
@@ -271,8 +293,7 @@ public class Shop extends Scene {
         int xIndex = 0;
 
         int a = ResourceManager.getInstance().shop_backgrounds.size();
-        for(int i = 0; i < ResourceManager.getInstance().shop_backgrounds.size(); i++)
-        {
+        for (int i = 0; i < ResourceManager.getInstance().shop_backgrounds.size(); i++) {
             int diff = aux * (xIndex) + aux / 2;
             pos.x = diff - size.x / 2;
 
@@ -290,14 +311,14 @@ public class Shop extends Scene {
 
             // Crear el objeto
             skins_Back[i] = new BuyObject(graphics, pos, size, image);
-            if(unlocked_Skins[i]){
+            if (unlocked_Skins[i]) {
                 skins_Back[i].setUnlock(true);
             }
             skins_Back[i].setPrice(100 * i);
         }
     }
-    private void createCodePacksShop()
-    {
+
+    private void createCodePacksShop() {
         boolean[] unlocked_Skins = GameManager.getInstance().getUnlockedSkinsByIndex(1);
         Vector2 pos = new Vector2(skin_Pos.x, skin_Pos.y);
 
@@ -305,8 +326,7 @@ public class Shop extends Scene {
         Vector2 size = new Vector2(aux - 100, aux - 100);
         int xIndex = 0;
 
-        for(int i = 0; i < ResourceManager.getInstance().shop_codes.size(); i++)
-        {
+        for (int i = 0; i < ResourceManager.getInstance().shop_codes.size(); i++) {
             int diff = aux * (xIndex) + aux / 2;
             pos.x = diff - size.x / 2;
 
@@ -324,15 +344,14 @@ public class Shop extends Scene {
 
             // Crear el objeto
             skins_Code[i] = new BuyObject(graphics, pos, size, image);
-            if(unlocked_Skins[i]){
+            if (unlocked_Skins[i]) {
                 skins_Code[i].setUnlock(true);
             }
             skins_Code[i].setPrice(100 * i);
         }
     }
 
-    private void createPalettesShop()
-    {
+    private void createPalettesShop() {
         boolean[] unlocked_Skins = GameManager.getInstance().getUnlockedSkinsByIndex(2);
         Vector2 pos = new Vector2(skin_Pos.x, skin_Pos.y);
 
@@ -340,8 +359,7 @@ public class Shop extends Scene {
         Vector2 size = new Vector2(aux - 100, aux - 100);
         int xIndex = 0;
 
-        for(int i = 0; i < ResourceManager.getInstance().shop_palettes.size(); i++)
-        {
+        for (int i = 0; i < ResourceManager.getInstance().shop_palettes.size(); i++) {
             int diff = aux * (xIndex) + aux / 2;
             pos.x = diff - size.x / 2;
 
@@ -359,15 +377,16 @@ public class Shop extends Scene {
 
             // Crear el objeto
             skins_Color[i] = new BuyObject(graphics, pos, size, image);
-            if(unlocked_Skins[i]){
+            if (unlocked_Skins[i]) {
                 skins_Color[i].setUnlock(true);
             }
             skins_Color[i].setPrice(100 * i);
         }
         int a = 0;
     }
-    private void createNavigators(){
-        buttonForward = new ButtonObject(graphics, new Vector2(width/2 + 100, 100), new Vector2(80,80), "ArrowNavigators.png");
-        buttonBackward = new ButtonObject(graphics, new Vector2(width/2 - 200, 100), new Vector2(80,80), "ArrowNavigators_Left.png");
+
+    private void createNavigators() {
+        buttonForward = new ButtonObject(graphics, new Vector2(width / 2 + 100, 100), new Vector2(80, 80), "ArrowNavigators.png");
+        buttonBackward = new ButtonObject(graphics, new Vector2(width / 2 - 200, 100), new Vector2(80, 80), "ArrowNavigators_Left.png");
     }
 }

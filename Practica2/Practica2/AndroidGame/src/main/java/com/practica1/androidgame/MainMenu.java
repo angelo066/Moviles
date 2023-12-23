@@ -46,7 +46,7 @@ public class MainMenu extends Scene {
         buttonQuickMatch.center();
 
         pos.y += size.y + offsetY;
-        buttonExploreWorlds = new ButtonObject(graphics, new Vector2(pos), size, 40, colorButton1,
+        buttonExploreWorlds = new ButtonObject(graphics, new Vector2(pos), size, 40, colorButton2,
                 new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Explorar mundos", colorText, 80, false, false));
         buttonExploreWorlds.center();
 
@@ -58,7 +58,7 @@ public class MainMenu extends Scene {
 
     private void createTexts() {
         textTitle = new TextObject(graphics, new Vector2(width / 2, height / 5), "BarlowCondensed-Regular.ttf", "Master Mind",
-                colorText, 200, true, true);
+                colorText, 200, true, false);
         textTitle.center();
     }
 

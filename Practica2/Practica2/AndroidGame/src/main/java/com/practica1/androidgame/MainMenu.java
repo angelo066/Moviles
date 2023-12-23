@@ -28,7 +28,6 @@ public class MainMenu extends Scene {
 
     @Override
     public void init(Engine engine) {
-        System.out.println("Y Obelix");
         super.init(engine);
 
         createButtons();

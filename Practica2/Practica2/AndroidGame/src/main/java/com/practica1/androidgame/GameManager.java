@@ -6,6 +6,7 @@ import android.util.Pair;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -90,26 +91,36 @@ public class GameManager {
     {
 
         PlayerSerializeInfo playerSerializeInfo;
-        try {
-            FileInputStream file = context.openFileInput("player.txt");
-            ObjectInputStream in = new ObjectInputStream(file);
 
-            playerSerializeInfo = (PlayerSerializeInfo)in.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+        File fileExist = new File("/data/user/0/com.practica1.androidgame/files/player.txt");
+
+        if(fileExist.exists()){
+            try {
+                FileInputStream file = context.openFileInput("player.txt");
+                ObjectInputStream in = new ObjectInputStream(file);
+
+                playerSerializeInfo = (PlayerSerializeInfo)in.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+            // Cargamos la info deserializada
+            playerSerializeInfo.print();
+            coins = playerSerializeInfo.getCoins();
+            unlocked_lvls = playerSerializeInfo.getUnlockLevels();
+            actual_Skin_Background = playerSerializeInfo.getBackgroundSkin();
+            actual_Skin_Code = playerSerializeInfo.getCodeSkin();
+            actual_Skin_Palette = playerSerializeInfo.getPaleteSkin();
+
+            //Si no hay ninguna equipada ponemos la predeterminada
+            if(actual_Skin_Palette.getThumbnail() == "")
+                actual_Skin_Palette = ResourceManager.getInstance().getDefault_Palette();
+        }
+        else{
+            actual_Skin_Palette = ResourceManager.getInstance().getDefault_Palette();
         }
 
-        // Cargamos la info deserializada
-        playerSerializeInfo.print();
-        coins = playerSerializeInfo.getCoins();
-        unlocked_lvls = playerSerializeInfo.getUnlockLevels();
-        actual_Skin_Background = playerSerializeInfo.getBackgroundSkin();
-        actual_Skin_Code = playerSerializeInfo.getCodeSkin();
-        actual_Skin_Palette = playerSerializeInfo.getPaleteSkin();
 
-        //Si no hay ninguna equipada ponemos la predeterminada
-        if(actual_Skin_Palette.getThumbnail() == "")
-            actual_Skin_Palette = ResourceManager.getInstance().getDefault_Palette();
     }
 
     public void setContext(Context context){

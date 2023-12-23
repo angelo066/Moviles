@@ -1,7 +1,5 @@
 package com.practica1.androidgame;
 
-
-import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.SurfaceView;
@@ -12,6 +10,7 @@ import com.practica1.androidengine.AdManager;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.SensorHandler;
+import com.practica1.androidengine.ShareManager;
 
 import java.io.File;
 
@@ -27,10 +26,6 @@ import java.io.File;
 
 public class AndroidGame extends AppCompatActivity {
     private Engine engine;
-    private Context context;
-
-    private SensorHandler sensorHandler;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,36 +35,37 @@ public class AndroidGame extends AppCompatActivity {
         //file.delete();
 
         setContentView(R.layout.activity_android_game);
-        SurfaceView renderView = findViewById(R.id.surfaceView);
+        SurfaceView surfaceView = findViewById(R.id.surfaceView);
 
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
         AdManager ads = new AdManager(this, findViewById(R.id.adView));
+        SensorHandler sensorHandler = new SensorHandler(this);
+        ShareManager shareManager = new ShareManager(surfaceView,this);
 
-        engine = new Engine(renderView, ads);
+        engine = new Engine(surfaceView);
+        engine.setAds(ads);
+        engine.setSensorHandler(sensorHandler);
+        engine.setShareManager(shareManager);
+
 
         ResourceManager.Init(engine);
         SceneManager.Init(engine);
         GameManager.Init(engine);
 
-        // Yo esto no se si va a aqui aviso soy un garrulo
-        context = getApplicationContext();
-        GameManager.getInstance().setContext(context);
-        sensorHandler = new SensorHandler(context);
-
-        engine.setSensorHandler(sensorHandler);
+        GameManager.getInstance().setContext(this);
 
         ResourceManager.getInstance().loadLevels();
         SceneManager.getInstance().addScene(new AssetsLoad());
         SceneManager.getInstance().goToNextScene();
-        engine.resume();
 
+        engine.resume();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        sensorHandler.onResume();
+        engine.getSensorHandler().onResume();
         SceneManager.getInstance().loadData();
         engine.resume();
     }
@@ -77,7 +73,7 @@ public class AndroidGame extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        sensorHandler.onPause();
+        engine.getSensorHandler().onPause();
         SceneManager.getInstance().saveData();
         engine.pause();
     }
@@ -85,7 +81,7 @@ public class AndroidGame extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        sensorHandler.onDestroy();
+        engine.getSensorHandler().onDestroy();
         ResourceManager.Release();
         SceneManager.Release();
         engine.getAds().destroy();

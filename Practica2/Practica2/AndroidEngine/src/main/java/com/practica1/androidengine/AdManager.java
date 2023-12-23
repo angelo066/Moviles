@@ -1,5 +1,7 @@
 package com.practica1.androidengine;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,11 +20,11 @@ import kotlin.jvm.internal.Lambda;
 
 
 public class AdManager {
-    private AppCompatActivity context;
+    private Context context;
     private AdView adView;
     private RewardedAd rewardedAd;
 
-    public AdManager(AppCompatActivity context, AdView adView) {
+    public AdManager(Context context, AdView adView) {
         this.context = context;
         MobileAds.initialize(context, new OnInitializationCompleteListener() {
             @Override
@@ -63,10 +65,10 @@ public class AdManager {
     // Método para mostrar un anuncio recompensado
     public void showRewardedAd(AdCallback adCallback) {
         if (rewardedAd != null) {
-            context.runOnUiThread(new Runnable() {
+            ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    rewardedAd.show(context, new OnUserEarnedRewardListener() {
+                    rewardedAd.show((AppCompatActivity)context, new OnUserEarnedRewardListener() {
                         @Override
                         public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
                             adCallback.execute();

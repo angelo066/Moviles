@@ -3,6 +3,7 @@ package com.practica1.androidgame;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
+import com.practica1.androidengine.ShareManager;
 import com.practica1.androidengine.TouchEvent;
 
 import java.util.ArrayList;
@@ -96,10 +97,10 @@ public class GameOverWorld extends Scene {
 
             String coins_String = "+" + String.valueOf(coins) + "- Total" + String.valueOf(GameManager.getInstance().getCoins());
 
-            coins_Earned = new TextObject(graphics, new Vector2(width/2, (height / 10 * 7 / 2) + 350),
+            coins_Earned = new TextObject(graphics, new Vector2(width / 2, (height / 10 * 7 / 2) + 350),
                     "Nexa.ttf", coins_String, colorText, 100, false, false);
 
-            coin_Image = new ImageObject(graphics, new Vector2(width/2 - 310, (height / 10 * 7 / 2) + 350), new Vector2(100,100),
+            coin_Image = new ImageObject(graphics, new Vector2(width / 2 - 310, (height / 10 * 7 / 2) + 350), new Vector2(100, 100),
                     "coins.png");
 
             coins_Earned.center();
@@ -141,7 +142,7 @@ public class GameOverWorld extends Scene {
 
             Vector2 posNext = new Vector2(width / 2, height / 14 * 11);
             buttonNext_Level = new ButtonObject(graphics, posNext, size, 40, colorButton,
-                        new TextObject(graphics, new Vector2(posNext),"Nexa.ttf", "Siguiente nivel", colorText, 80, false, false));
+                    new TextObject(graphics, new Vector2(posNext), "Nexa.ttf", "Siguiente nivel", colorText, 80, false, false));
 
             buttonNext_Level.center();
 
@@ -175,7 +176,7 @@ public class GameOverWorld extends Scene {
             int x = spaceToEachSide + i * (circleRadius * 2) + i * offset;
 
             int colorIndex = combination_win[i].getId() + 1;
-            String image = "packs/" + packFile + "/" +colorIndex + ".png";
+            String image = "packs/" + packFile + "/" + colorIndex + ".png";
 
             circles[i] = new Circle(graphics, new Vector2(x, 800), circleRadius);
             circles[i].setImage(ResourceManager.getInstance().getImage(image));
@@ -226,7 +227,7 @@ public class GameOverWorld extends Scene {
     @Override
     public void handleInput(ArrayList<TouchEvent> events) {
         for (int i = 0; i < events.size(); i++) {
-            if(!win){
+            if (!win) {
                 if (buttonMoreAttempts.handleInput(events.get(i))) {
                     audio.stopSound("botonInterfaz.wav");
                     audio.playSound("botonInterfaz.wav", false);
@@ -243,26 +244,30 @@ public class GameOverWorld extends Scene {
                     SceneManager.getInstance().goToNextScene();
                     break;
                 }
-            }
-
-            else{
-                if(buttonNext_Level.handleInput(events.get(i))){
+            } else {
+                if (buttonNext_Level.handleInput(events.get(i))) {
                     SceneManager.getInstance().removeScene();
 
                     int world = GameManager.getInstance().getActualWorld();
                     int lvl = GameManager.getInstance().getActualLvl();
                     lvl++;
 
-                    if(lvl >= ResourceManager.getInstance().getNumLevels(world)){
+                    if (lvl >= ResourceManager.getInstance().getNumLevels(world)) {
                         world++;
                         lvl = 0;
                         GameManager.getInstance().setActualWorld(world);
                     }
                     GameManager.getInstance().setActualLvl(lvl);
 
-                    String next_lvl = ResourceManager.getInstance().getLevel(world,lvl);
+                    String next_lvl = ResourceManager.getInstance().getLevel(world, lvl);
                     SceneManager.getInstance().addScene(new MasterMind(next_lvl));
                     SceneManager.getInstance().goToNextScene();
+                    break;
+                } else if (buttonShare.handleInput(events.get(i))) {
+                    audio.stopSound("botonInterfaz.wav");
+                    audio.playSound("botonInterfaz.wav", false);
+                    engine.getShareManager().share(0, 0, graphics.getWidth(), graphics.getHeight(), "Compartir resultado", "¡He conseguido superar un nivel! Juega Mastermind"
+                            , "Mastermind", "Victoria en Mastermind");
                     break;
                 }
             }
@@ -274,8 +279,7 @@ public class GameOverWorld extends Scene {
                 SceneManager.getInstance().addScene(new MainMenu());
                 SceneManager.getInstance().goToNextScene();
                 break;
-            }
-            else if (buttonRepeat.handleInput(events.get(i))) {
+            } else if (buttonRepeat.handleInput(events.get(i))) {
                 audio.stopSound("botonInterfaz.wav");
                 audio.playSound("botonInterfaz.wav", false);
                 SceneManager.getInstance().removeScene();
@@ -283,8 +287,6 @@ public class GameOverWorld extends Scene {
                 SceneManager.getInstance().goToNextScene();
                 break;
             }
-
-
 
 
         }

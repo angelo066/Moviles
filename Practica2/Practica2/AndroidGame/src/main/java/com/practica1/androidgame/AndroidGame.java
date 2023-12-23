@@ -81,6 +81,7 @@ public class AndroidGame extends AppCompatActivity {
         engine.getSensorHandler().onResume();
         GameManager.getInstance().loadPlayerData();
         SceneManager.getInstance().loadData();
+        notificationHandler.stopPushNotificationWorker();
         engine.resume();
     }
 
@@ -90,9 +91,8 @@ public class AndroidGame extends AppCompatActivity {
         engine.getSensorHandler().onPause();
         SceneManager.getInstance().saveData();
         //GameManager.getInstance().savePlayerData();
-        notificationHandler.sendPushNotification(R.mipmap.ic_launcher, "MasterMind", "Notificacion de prueba",
-                "Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible");
-        notificationHandler.setPushNotificationWorker(10, TimeUnit.SECONDS,R.mipmap.ic_launcher, "MasterMind", "Notificacion de prueba",
+        notificationHandler.setPushNotificationWorkerPeriodic(10, TimeUnit.SECONDS, 20, TimeUnit.MINUTES, R.mipmap.ic_launcher,
+                "MasterMind", "Notificacion de prueba",
                 "Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible");
         // engine.Release();
         engine.pause();

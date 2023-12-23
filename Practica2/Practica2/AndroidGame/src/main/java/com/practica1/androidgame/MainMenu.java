@@ -14,8 +14,6 @@ public class MainMenu extends Scene {
     private ButtonObject buttonQuickMatch;
     private ButtonObject buttonExploreWorlds;
     private ButtonObject buttonPersonalize;
-    private ButtonObject buttonExit;
-
     private TextObject textTitle;
 
     private int colorText;
@@ -56,11 +54,6 @@ public class MainMenu extends Scene {
         buttonPersonalize = new ButtonObject(graphics, new Vector2(pos), size, 40, colorText,
                 new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Personalizar", colorButton1, 80, false, false));
         buttonPersonalize.center();
-
-        pos.y += size.y + offsetY;
-        buttonExit = new ButtonObject(graphics, new Vector2(pos), size, 40, colorButton2,
-                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Salir", colorText, 80, false, false));
-        buttonExit.center();
     }
 
     private void createTexts() {
@@ -84,7 +77,6 @@ public class MainMenu extends Scene {
         buttonQuickMatch.render();
         buttonExploreWorlds.render();
         buttonPersonalize.render();
-        buttonExit.render();
     }
 
     @Override
@@ -110,14 +102,7 @@ public class MainMenu extends Scene {
                 SceneManager.getInstance().addScene(new WorldSelectionMenu());
                 SceneManager.getInstance().goToNextScene();
                 break;
-
-            } else if (buttonExit.handleInput(events.get(i))) {
-                audio.stopSound("botonInterfaz.wav");
-                audio.playSound("botonInterfaz.wav", false);
-                System.exit(0);
-                break;
             }
-
         }
     }
 }

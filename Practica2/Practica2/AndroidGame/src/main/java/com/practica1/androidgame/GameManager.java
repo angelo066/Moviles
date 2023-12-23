@@ -31,12 +31,12 @@ public class GameManager {
     //Indice de la skin que tengo puesta
     private int actual_Skin_Background = -1; //-1 cuando no hay ninguna equipada
     private int actual_Skin_Code= -1; //-1 cuando no hay ninguna equipada
-    private int actual_Skin_Color= -1; //-1 cuando no hay ninguna equipada
     private Palette actual_Skin_Palette = new Palette("", -1, -1, -1, -1);
     private int actualLvl = 0;
     private int actualWorld = 0;
 
     private Pair<Integer,Integer> lastLevelUnlocked = new Pair<>(0,0);
+
 
     private GameManager(){
 
@@ -67,7 +67,7 @@ public class GameManager {
         // Que yo el otro dia me tire 2 horas buscando el archivito 💀
         // Que que quiere decir privado, pues efectivamente que no aparece en el explorador de archivos
 
-        PlayerSerializeInfo playerSerializeInfo = new PlayerSerializeInfo(coins, unlocked_lvls);
+        PlayerSerializeInfo playerSerializeInfo = new PlayerSerializeInfo(coins, unlocked_lvls, actual_Skin_Background, actual_Skin_Code, actual_Skin_Palette);
 
         try{
             FileOutputStream fout = context.openFileOutput("player.txt", Context.MODE_PRIVATE);
@@ -88,6 +88,7 @@ public class GameManager {
 
     public void loadPlayerData()
     {
+
         PlayerSerializeInfo playerSerializeInfo;
         try {
             FileInputStream file = context.openFileInput("player.txt");
@@ -102,6 +103,13 @@ public class GameManager {
         playerSerializeInfo.print();
         coins = playerSerializeInfo.getCoins();
         unlocked_lvls = playerSerializeInfo.getUnlockLevels();
+        actual_Skin_Background = playerSerializeInfo.getBackgroundSkin();
+        actual_Skin_Code = playerSerializeInfo.getCodeSkin();
+        actual_Skin_Palette = playerSerializeInfo.getPaleteSkin();
+
+        //Si no hay ninguna equipada ponemos la predeterminada
+        if(actual_Skin_Palette.getThumbnail() == "")
+            actual_Skin_Palette = ResourceManager.getInstance().getDefault_Palette();
     }
 
     public void setContext(Context context){
@@ -148,6 +156,7 @@ public class GameManager {
 
     public int getActual_Skin_Code(){return actual_Skin_Code;}
     public void equipPalette(Palette p){actual_Skin_Palette = p;}
+
     public Palette getActual_Skin_Palette(){return actual_Skin_Palette;}
 
     public Context getContext(){return context;}

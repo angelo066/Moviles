@@ -1,6 +1,8 @@
 package com.practica1.androidgame;
 
-public class PaletteInfo {
+import java.io.Serializable;
+
+public class PaletteInfo implements Serializable {
     private String thumbnail;
     private String background_color;
     private String color_1;

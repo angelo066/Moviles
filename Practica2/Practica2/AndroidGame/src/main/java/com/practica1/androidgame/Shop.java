@@ -85,6 +85,7 @@ public class Shop extends Scene {
 
     public void render(){
         // Fondo de APP
+        GameManager gm = GameManager.getInstance();
         int backColor = GameManager.getInstance().getActual_Skin_Palette().color_background();
         graphics.clear(backColor);
 

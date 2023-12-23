@@ -181,7 +181,10 @@ public class Circle implements Serializable {
 
     public void setImage(Image image)
     {
-        this.imageName = image.getFile();
+        String imageName = image.getFile();
+        imageName = imageName.replace("sprites/", "");
+
+        this.imageName = imageName;
         this.image = new ImageObject(graphics, new Vector2(pos), new Vector2(circleRadius*2, circleRadius*2), image);
     }
 

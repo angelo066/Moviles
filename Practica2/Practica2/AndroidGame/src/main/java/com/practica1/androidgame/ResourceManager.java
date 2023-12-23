@@ -273,9 +273,6 @@ public class ResourceManager {
             Palette palette = new Palette(p.getThumbnail(), (int)cb, (int)c1, (int)c2, (int)c3);
             shop_palettes.add(palette);
         }
-
-        // Seteamos la paleta por defecto
-        GameManager.getInstance().equipPalette(default_Palette);
     }
 
     /**
@@ -329,5 +326,7 @@ public class ResourceManager {
             }
         }
     }
+
+    public Palette getDefault_Palette(){return  default_Palette;}
 
 }

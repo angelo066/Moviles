@@ -62,8 +62,8 @@ public class AndroidGame extends AppCompatActivity {
         engine.setShareManager(shareManager);
 
         ResourceManager.Init(engine);
-        SceneManager.Init(engine);
         GameManager.Init(engine);
+        SceneManager.Init(engine);
 
         GameManager.getInstance().setContext(this);
 
@@ -78,6 +78,7 @@ public class AndroidGame extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         engine.getSensorHandler().onResume();
+        GameManager.getInstance().loadPlayerData();
         SceneManager.getInstance().loadData();
         engine.resume();
     }
@@ -87,9 +88,13 @@ public class AndroidGame extends AppCompatActivity {
         super.onPause();
         engine.getSensorHandler().onPause();
         SceneManager.getInstance().saveData();
+
         notificationHandler.sendNotification(R.mipmap.ic_launcher, "MasterMind", "Notificacion de prueba",
                 "Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible");
         // engine.Release();
+
+        GameManager.getInstance().savePlayerData();
+
         engine.pause();
     }
 
@@ -100,6 +105,6 @@ public class AndroidGame extends AppCompatActivity {
         ResourceManager.Release();
         SceneManager.Release();
         engine.getAds().destroy();
-        // engine.Release();
+        engine.Release();
     }
 }

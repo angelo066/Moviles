@@ -40,11 +40,11 @@ public class AndroidGame extends AppCompatActivity {
         // File("/data/user/0/com.practica1.androidgame/files/game.txt");
         // file.delete();
 
-        PlayerSerializeInfo playerSerializeInfo;
+        //PlayerSerializeInfo playerSerializeInfo;
 
-        File fileExist = new File("/data/user/0/com.practica1.androidgame/files/player.txt");
+        //File fileExist = new File("/data/user/0/com.practica1.androidgame/files/player.txt");
 
-        fileExist.delete();
+        //fileExist.delete();
 
         setContentView(R.layout.activity_android_game);
         SurfaceView surfaceView = findViewById(R.id.surfaceView);
@@ -89,7 +89,7 @@ public class AndroidGame extends AppCompatActivity {
         super.onPause();
         engine.getSensorHandler().onPause();
         SceneManager.getInstance().saveData();
-        //GameManager.getInstance().savePlayerData();
+        GameManager.getInstance().savePlayerData();
         notificationHandler.sendPushNotification(R.mipmap.ic_launcher, "MasterMind", "Notificacion de prueba",
                 "Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible");
         notificationHandler.setPushNotificationWorker(10, TimeUnit.SECONDS,R.mipmap.ic_launcher, "MasterMind", "Notificacion de prueba",

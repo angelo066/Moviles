@@ -1,18 +1,11 @@
 package com.practica1.androidgame;
 
-import android.util.Pair;
-
-import com.google.gson.Gson;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
-import com.practica1.androidengine.Color;
 import com.practica1.androidengine.TouchEvent;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Shop extends Scene {
 
@@ -42,6 +35,8 @@ public class Shop extends Scene {
 
     //Boton para volver a la pantalla anterior
     private ButtonObject buttonBack;
+
+    private ButtonObject buttonBackToDefault;
 
     private Vector2 skin_Size = new Vector2(200,200);
     private Vector2 skin_Pos = new Vector2(20,450);
@@ -100,6 +95,7 @@ public class Shop extends Scene {
         buttonBack.render();
         buttonForward.render();
         buttonBackward.render();
+        buttonBackToDefault.render();
 
         //Texto
         coin_cuantity.render();
@@ -223,7 +219,19 @@ public class Shop extends Scene {
                 }
             }
 
+            if(buttonBackToDefault.handleInput(events.get(i))){
+                if(Skin_Type.values()[type] == Skin_Type.BACKGROUND) {
+                    GameManager.getInstance().equipBackgroundSkin(-1);
+                }
 
+                if(Skin_Type.values()[type] == Skin_Type.CODE){
+                    GameManager.getInstance().equipCode(-1);
+                }
+
+                if(Skin_Type.values()[type] == Skin_Type.COLORS){
+                    GameManager.getInstance().equipPalette(ResourceManager.getInstance().getDefault_Palette());
+                }
+            }
         }
 
     }
@@ -247,6 +255,8 @@ public class Shop extends Scene {
         createCodePacksShop();
         createPalettesShop();
 
+        buttonBackToDefault = new ButtonObject(graphics, new Vector2(width - skin_Size.x, height - skin_Size.y),
+                                                                skin_Size, "backToMonkey.jpg");
     }
 
     private void createBuyObjects(BuyObject[] skins, String image) {

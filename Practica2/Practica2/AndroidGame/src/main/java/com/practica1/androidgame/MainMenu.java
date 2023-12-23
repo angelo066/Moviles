@@ -102,6 +102,7 @@ public class MainMenu extends Scene {
                 SceneManager.getInstance().addScene(new WorldSelectionMenu());
                 SceneManager.getInstance().goToNextScene();
                 break;
+
             }
         }
     }

@@ -1,23 +1,35 @@
 package com.practica1.androidgame;
 
+import android.util.Pair;
+
 import java.io.Serializable;
 
 public class PlayerSerializeInfo implements Serializable {
 
     private int coins; // Dinero
     private int unlock_levels; // Numero de niveles desbloqueados // van en orden por mundos
+    private int unlock_world; // Numero de niveles desbloqueados // van en orden por mundos
 
     private int backgroundSkin;
     private int codeSkin;
     private Palette paleteSkin;
 
-    public PlayerSerializeInfo(int coins, int unlock_levels, int backgroundSkin, int codeSkin, Palette palette)
+    private boolean[] unlocked_Backgrounds;
+    private boolean[] unlocked_Codes;
+    private boolean[] unlocked_Palettes;
+
+    public PlayerSerializeInfo(int coins, int unlock_world ,int unlock_levels, int backgroundSkin, int codeSkin, Palette palette,
+                               boolean[] unlocked_Backgrounds, boolean[] unlocked_Codes, boolean[] unlocked_Palettes)
     {
         this.coins = coins;
+        this.unlock_world = unlock_world;
         this.unlock_levels = unlock_levels;
         this.backgroundSkin= backgroundSkin;
         this.codeSkin = codeSkin;
         this.paleteSkin = palette;
+        this.unlocked_Backgrounds = unlocked_Backgrounds;
+        this.unlocked_Codes = unlocked_Codes;
+        this.unlocked_Palettes = unlocked_Palettes;
     }
 
     // GETTERS
@@ -27,19 +39,6 @@ public class PlayerSerializeInfo implements Serializable {
     public int getUnlockLevels() {
         return unlock_levels;
     }
-    /*
-
-    // SETTERS
-    public void setCoins(int coins) {
-        this.coins = coins;
-    }
-    public void setUnlockLevels(int unlock_levels) {
-        this.unlock_levels = unlock_levels;
-    }
-    public void setCompletelevels(int complete_levels) {
-        this.complete_levels = complete_levels;
-    }
-     */
 
     public void print()
     {
@@ -56,5 +55,21 @@ public class PlayerSerializeInfo implements Serializable {
 
     public Palette getPaleteSkin() {
         return paleteSkin;
+    }
+
+    public int getUnlock_world() {
+        return unlock_world;
+    }
+
+    public boolean[] getUnlocked_Backgrounds() {
+        return unlocked_Backgrounds;
+    }
+
+    public boolean[] getUnlocked_Codes() {
+        return unlocked_Codes;
+    }
+
+    public boolean[] getUnlocked_Palettes() {
+        return unlocked_Palettes;
     }
 }

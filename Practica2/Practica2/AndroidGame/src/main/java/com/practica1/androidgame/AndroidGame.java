@@ -40,10 +40,8 @@ public class AndroidGame extends AppCompatActivity {
         // File("/data/user/0/com.practica1.androidgame/files/game.txt");
         // file.delete();
 
-        //PlayerSerializeInfo playerSerializeInfo;
-
+        //DEBUG:
         //File fileExist = new File("/data/user/0/com.practica1.androidgame/files/player.txt");
-
         //fileExist.delete();
 
         setContentView(R.layout.activity_android_game);
@@ -69,9 +67,9 @@ public class AndroidGame extends AppCompatActivity {
         System.out.println(a);
 
         GameManager.getInstance().setContext(this);
-        GameManager.getInstance().loadPlayerData();
 
         ResourceManager.getInstance().loadLevels();
+        GameManager.getInstance().loadPlayerData();
         SceneManager.getInstance().addScene(new AssetsLoad());
         SceneManager.getInstance().goToNextScene();
 
@@ -104,6 +102,7 @@ public class AndroidGame extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        GameManager.getInstance().savePlayerData();
         engine.getSensorHandler().onDestroy();
         ResourceManager.Release();
         SceneManager.Release();

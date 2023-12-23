@@ -28,7 +28,7 @@ import java.io.File;
 //  Persistencia <--
 //  Paletas de Colores
 //  Compartir <--
-//  Notificiaciones
+//  Notificiaciones <--
 //  Memoria
 //  Estilo predeterminado en la tienda
 
@@ -101,50 +101,5 @@ public class AndroidGame extends AppCompatActivity {
         SceneManager.Release();
         engine.getAds().destroy();
         // engine.Release();
-    }
-
-    private void a() {
-
-        String CHANNEL_ID = "Canal";
-
-        // Crear el canal
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // CharSequence name = getString(R.string.channel_name);
-            // String description = getString(R.string.channel_description);
-            CharSequence name = "Nombre";
-            String description = "Descripcion";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-
-        // Intent
-        Intent intent = new Intent(this, AndroidGame.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        // Crear la notificacion
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("My notification")
-                .setContentText("Hello World!")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("Much longer text that cannot fit one line..."))
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
-
-        // Mandar la notificacion
-        if (ActivityCompat.checkSelfPermission(this,
-                android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-            int notificationId = 0;
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            notificationManager.notify(notificationId, builder.build());
-        }
-
     }
 }

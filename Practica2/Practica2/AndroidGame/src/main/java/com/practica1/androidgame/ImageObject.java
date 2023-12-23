@@ -40,6 +40,7 @@ public class ImageObject  implements Serializable  {
         this.graphics = graphics;
         this.pos = new Vector2(pos);
         this.iniPos = pos;
+        this.imageFile = image.getFile();
     }
 
     /**
@@ -91,4 +92,5 @@ public class ImageObject  implements Serializable  {
     public Image getImage(){
         return image;
     }
+
 }

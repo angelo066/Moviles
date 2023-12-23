@@ -26,8 +26,10 @@ public class RunSerializeInfo implements Serializable {
     private int currentAttempt;
     private boolean colorBlind;
 
+    private boolean worldLevel;
+
     public RunSerializeInfo(int world, int level, Difficulty difficulty, Color[] colors,
-                            Circle[] circles, ArrayList<Attempt> attempts, int currentAttempt, boolean colorBlind)
+                            Circle[] circles, ArrayList<Attempt> attempts, int currentAttempt, boolean colorBlind, boolean worldLevel)
     {
         this.world = world;
         this.level = level;
@@ -37,6 +39,7 @@ public class RunSerializeInfo implements Serializable {
         this.attempts = attempts;
         this.currentAttempt = currentAttempt;
         this.colorBlind = colorBlind;
+        this.worldLevel = worldLevel;
     }
 
     public void setAttempts(ArrayList<Attempt> n){attempts = n;}
@@ -98,5 +101,13 @@ public class RunSerializeInfo implements Serializable {
 
     public boolean isColorBlind() {
         return colorBlind;
+    }
+
+    public boolean isWorldLevel() {
+        return worldLevel;
+    }
+
+    public void setWorldLevel(boolean worldLevel) {
+        this.worldLevel = worldLevel;
     }
 }

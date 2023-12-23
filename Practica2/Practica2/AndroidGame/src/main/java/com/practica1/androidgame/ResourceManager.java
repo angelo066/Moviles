@@ -194,7 +194,6 @@ public class ResourceManager {
 
     public void loadShop()
     {
-        // Cargar todos los estilos de los fondos
         // Creamos el parser del json
         Gson gson  = new Gson();
         BufferedReader br = null;
@@ -202,7 +201,6 @@ public class ResourceManager {
         loadShopBackgrounds(gson, br);
         loadShopCodes(gson, br);
         loadShopColors(gson, br);
-        int a = 0;
     }
 
     private void loadShopBackgrounds(Gson gson, BufferedReader br)
@@ -246,10 +244,6 @@ public class ResourceManager {
         for(int i = 0; i < packList.length; i++)
         {
             System.out.println(packList[i].getThumbnail() + " " + packList[i].getCode());
-
-            // Abrir la carpeta del pack y leer todos los archivos
-            String baseRoute = "sprites/" + packList[i].getCode();
-            List<String> files = engine.obtainFolderFiles(baseRoute);
 
             // Guardamos la info de los packs
             String thumbBaseRoute = "thumbnails/";
@@ -320,7 +314,7 @@ public class ResourceManager {
 
     public void loadPackCodes()
     {
-        // Cargar carpeta de fondos
+        // Cargar carpeta de packs
         String baseRoute = "sprites/packs";
         List<String> files = engine.obtainFolderFiles(baseRoute);
 

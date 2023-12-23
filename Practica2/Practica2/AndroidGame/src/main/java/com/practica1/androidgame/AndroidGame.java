@@ -21,6 +21,8 @@ import com.practica1.androidengine.NotificationHandler;
 import com.practica1.androidengine.SensorHandler;
 import com.practica1.androidengine.ShareManager;
 
+import java.io.File;
+
 //TODO:
 //  Securizar con NDK
 //  Persistencia <--
@@ -30,7 +32,6 @@ import com.practica1.androidengine.ShareManager;
 //  Memoria
 //  Estilo predeterminado en la tienda
 
-
 public class AndroidGame extends AppCompatActivity {
     private Engine engine;
 
@@ -39,6 +40,11 @@ public class AndroidGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // DEBUG:
+        // File file = new
+        // File("/data/user/0/com.practica1.androidgame/files/game.txt");
+        // file.delete();
 
         setContentView(R.layout.activity_android_game);
         SurfaceView surfaceView = findViewById(R.id.surfaceView);
@@ -55,7 +61,6 @@ public class AndroidGame extends AppCompatActivity {
         engine.setSensorHandler(sensorHandler);
         engine.setShareManager(shareManager);
 
-
         ResourceManager.Init(engine);
         SceneManager.Init(engine);
         GameManager.Init(engine);
@@ -65,7 +70,6 @@ public class AndroidGame extends AppCompatActivity {
         ResourceManager.getInstance().loadLevels();
         SceneManager.getInstance().addScene(new AssetsLoad());
         SceneManager.getInstance().goToNextScene();
-
 
         engine.resume();
     }
@@ -83,8 +87,9 @@ public class AndroidGame extends AppCompatActivity {
         super.onPause();
         engine.getSensorHandler().onPause();
         SceneManager.getInstance().saveData();
-        notificationHandler.sendNotification(R.mipmap.ic_launcher,"MasterMind","Notificacion de prueba",
+        notificationHandler.sendNotification(R.mipmap.ic_launcher, "MasterMind", "Notificacion de prueba",
                 "Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible");
+        // engine.Release();
         engine.pause();
     }
 
@@ -95,16 +100,17 @@ public class AndroidGame extends AppCompatActivity {
         ResourceManager.Release();
         SceneManager.Release();
         engine.getAds().destroy();
+        // engine.Release();
     }
 
     private void a() {
 
         String CHANNEL_ID = "Canal";
 
-        //Crear el canal
+        // Crear el canal
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //CharSequence name = getString(R.string.channel_name);
-            //String description = getString(R.string.channel_description);
+            // CharSequence name = getString(R.string.channel_name);
+            // String description = getString(R.string.channel_description);
             CharSequence name = "Nombre";
             String description = "Descripcion";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
@@ -116,13 +122,12 @@ public class AndroidGame extends AppCompatActivity {
             notificationManager.createNotificationChannel(channel);
         }
 
-        //Intent
+        // Intent
         Intent intent = new Intent(this, AndroidGame.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
-
-        //Crear la notificacion
+        // Crear la notificacion
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("My notification")
@@ -133,13 +138,13 @@ public class AndroidGame extends AppCompatActivity {
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
 
-        //Mandar la notificacion
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+        // Mandar la notificacion
+        if (ActivityCompat.checkSelfPermission(this,
+                android.Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
             int notificationId = 0;
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             notificationManager.notify(notificationId, builder.build());
         }
-
 
     }
 }

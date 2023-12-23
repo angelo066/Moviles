@@ -90,31 +90,6 @@ public class SceneManager {
             file.delete();
         }
 
-        /*
-        try{
-            FileInputStream file2 = GameManager.getInstance().getContext().openFileInput("game.txt");
-            ObjectInputStream in = new ObjectInputStream(file2);
-
-            if(file != null){
-                System.out.println("Partida cargada");
-                MasterMind masterMind = new MasterMind();
-                masterMind.loadData();
-                addScene(masterMind);
-                goToNextScene();
-
-                file2.close();
-                file2.reset();
-
-            }
-            else{
-                System.out.println("No hay ninguna partida guardaada");
-            }
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        */
-
 
     }
 }

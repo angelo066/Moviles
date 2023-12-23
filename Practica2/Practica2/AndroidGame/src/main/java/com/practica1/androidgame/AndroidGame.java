@@ -64,6 +64,9 @@ public class AndroidGame extends AppCompatActivity {
         ResourceManager.Init(engine);
         GameManager.Init(engine);
         SceneManager.Init(engine);
+        NDKManager ndk = new NDKManager();
+        int a = ndk.computeFibonacci(5);
+        System.out.println(a);
 
         GameManager.getInstance().setContext(this);
         GameManager.getInstance().loadPlayerData();

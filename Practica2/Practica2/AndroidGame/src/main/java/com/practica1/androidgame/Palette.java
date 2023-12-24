@@ -1,11 +1,9 @@
 package com.practica1.androidgame;
 
-import java.io.Serializable;
-
 /**
  * Clase que representa un objeto palette de la tienda
  */
-public class Palette implements Serializable {
+public class Palette {
 
     private String thumbnail;
     private int backgroundColor;

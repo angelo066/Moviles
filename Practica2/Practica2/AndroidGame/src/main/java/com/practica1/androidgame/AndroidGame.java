@@ -30,6 +30,12 @@ public class AndroidGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /*
+        File file = new File("/data/user/0/com.practica1.androidgame/files/player.txt");
+        if(file.exists()){
+            boolean deleted = file.delete();
+        }*/
+
         setContentView(R.layout.activity_android_game);
         SurfaceView surfaceView = findViewById(R.id.surfaceView);
 

@@ -16,7 +16,7 @@ public class BuyObject {
     private TextObject priceText;
     private int price;
     private boolean unlock = false;
-    private boolean selected = true;
+    private boolean selected = false;
 
 
     /**
@@ -104,6 +104,11 @@ public class BuyObject {
      */
     public void resetColor() {
         priceText.resetColor();
+    }
+
+    public void setSelected(boolean s)
+    {
+        selected = s;
     }
 
 }

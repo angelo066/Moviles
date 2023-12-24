@@ -52,9 +52,9 @@ public class Shop extends Scene {
         super.init(engine);
 
         //Provisional, hay que cambiar numeros y demás
-        skins_Back = new BuyObject[ResourceManager.getInstance().shop_backgrounds.size() + 1];
-        skins_Code = new BuyObject[ResourceManager.getInstance().shop_codes.size() + 1];
-        skins_Color = new BuyObject[ResourceManager.getInstance().shop_palettes.size() + 1];
+        skins_Back = new BuyObject[ResourceManager.getInstance().getNumShopBackgrounds() + 1];
+        skins_Code = new BuyObject[ResourceManager.getInstance().getNumShopCodes() + 1];
+        skins_Color = new BuyObject[ResourceManager.getInstance().getNumShopPalettes() + 1];
 
         Vector2 pos_Coin = new Vector2(900, 200);
         Vector2 size_Coin = new Vector2(100, 100);
@@ -207,7 +207,7 @@ public class Shop extends Scene {
 
                 // Default
                 if (skins_Color[0].getButton().handleInput(events.get(i))) {
-                    GameManager.getInstance().equipPalette(ResourceManager.getInstance().getDefault_Palette());
+                    GameManager.getInstance().equipPalette(ResourceManager.getInstance().getDefaultPalette());
 
                     // Recargar la escena de colores
                     coin_cuantity.resetColor();
@@ -233,13 +233,13 @@ public class Shop extends Scene {
                     if (skin.getButton().handleInput(events.get(i))) {
                         boolean reload = false;
                         if (skin.isUnlocked()) {
-                            gm.equipPalette(ResourceManager.getInstance().shop_palettes.get(c - 1));
+                            gm.equipPalette(ResourceManager.getInstance().getShopPalette(c - 1));
                             reload = true;
                         } else if (coins >= price) {
                             skin.setUnlock(true);
                             gm.buyObject(price);
                             gm.unlockedSkin(2, c - 1);
-                            gm.equipPalette(ResourceManager.getInstance().shop_palettes.get(c - 1));
+                            gm.equipPalette(ResourceManager.getInstance().getShopPalette(c - 1));
                             reload = true;
                         }
 
@@ -289,7 +289,7 @@ public class Shop extends Scene {
         Vector2 size = new Vector2(aux - 100, aux - 100);
         int xIndex = 0;
 
-        for (int i = 0; i < ResourceManager.getInstance().shop_backgrounds.size()+1; i++) {
+        for (int i = 0; i < ResourceManager.getInstance().getNumShopBackgrounds()+1; i++) {
             int diff = aux * (xIndex) + aux / 2;
             pos.x = diff - size.x / 2;
 
@@ -313,7 +313,7 @@ public class Shop extends Scene {
             else
             {
                 // Miniatura
-                String image = ResourceManager.getInstance().shop_backgrounds.get(i-1).first;
+                String image = ResourceManager.getInstance().getShopBackground(i-1).first;
 
                 // Crear el objeto
                 skins_Back[i] = new BuyObject(graphics, pos, size, image);
@@ -335,7 +335,7 @@ public class Shop extends Scene {
         Vector2 size = new Vector2(aux - 100, aux - 100);
         int xIndex = 0;
 
-        for (int i = 0; i < ResourceManager.getInstance().shop_codes.size() + 1; i++) {
+        for (int i = 0; i < ResourceManager.getInstance().getNumShopCodes() + 1; i++) {
             int diff = aux * (xIndex) + aux / 2;
             pos.x = diff - size.x / 2;
 
@@ -356,7 +356,7 @@ public class Shop extends Scene {
             }
             else {
                 // Miniatura
-                String image = ResourceManager.getInstance().shop_codes.get(i-1).first;
+                String image = ResourceManager.getInstance().getShopCode(i-1).first;
 
                 // Crear el objeto
                 skins_Code[i] = new BuyObject(graphics, pos, size, image);
@@ -379,7 +379,7 @@ public class Shop extends Scene {
         Vector2 size = new Vector2(aux - 100, aux - 100);
         int xIndex = 0;
 
-        for (int i = 0; i < ResourceManager.getInstance().shop_palettes.size() + 1; i++) {
+        for (int i = 0; i < ResourceManager.getInstance().getNumShopPalettes() + 1; i++) {
             int diff = aux * (xIndex) + aux / 2;
             pos.x = diff - size.x / 2;
 
@@ -401,7 +401,7 @@ public class Shop extends Scene {
             else
             {
                 // Miniatura
-                String image = "thumbnails/" + ResourceManager.getInstance().shop_palettes.get(i-1).getThumbnail();
+                String image = "thumbnails/" + ResourceManager.getInstance().getShopPalette(i-1).getThumbnail();
 
                 // Crear el objeto
                 skins_Color[i] = new BuyObject(graphics, pos, size, image);

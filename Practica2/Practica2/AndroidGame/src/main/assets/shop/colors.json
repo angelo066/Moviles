@@ -1,5 +1,5 @@
 [
-    {"thumbnail": "palette_1_thumbnail.png", "background_color":"fff7ffae", "color_1": "ff96fbc7", "color_2": "ff74569b", "color_3": "ffffb3cb"},
-    {"thumbnail": "palette_2_thumbnail.png", "background_color":"fffff6d3", "color_1": "fff9a875", "color_2": "ff7c3f58", "color_3": "ffeb6b6f"},
-    {"thumbnail": "palette_3_thumbnail.png", "background_color":"ffe3f3e5", "color_1": "ff98e35a", "color_2": "ff332d4e", "color_3": "ff4a898e"}
+    {"thumbnail": "palette_1_thumbnail.png", "backgroundColor":"fff7ffae", "color1": "ff96fbc7", "color2": "ff74569b", "color3": "ffffb3cb"},
+    {"thumbnail": "palette_2_thumbnail.png", "backgroundColor":"fffff6d3", "color1": "fff9a875", "color2": "ff7c3f58", "color3": "ffeb6b6f"},
+    {"thumbnail": "palette_3_thumbnail.png", "backgroundColor":"ffe3f3e5", "color1": "ff98e35a", "color2": "ff332d4e", "color3": "ff4a898e"}
 ]

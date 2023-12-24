@@ -44,6 +44,13 @@ public class Circle implements Serializable {
 
         image = null;
     }
+
+    /**
+     * @param graphics     Objecto graphics del motor
+     * @param pos          Posicion del circulo
+     * @param circleRadius Radio del circulo
+     * @param imageRoute   Path de la ficha
+     */
     public Circle(Graphics graphics, Vector2 pos, int circleRadius, String imageRoute) {
         this.graphics = graphics;
         this.circleRadius = circleRadius;
@@ -60,7 +67,7 @@ public class Circle implements Serializable {
 
         imageName = imageRoute;
         // Creacion de la imagen
-        image = new ImageObject(graphics, new Vector2(pos), new Vector2(circleRadius*2, circleRadius*2), imageRoute);
+        image = new ImageObject(graphics, new Vector2(pos), new Vector2(circleRadius * 2, circleRadius * 2), imageRoute);
     }
 
     /**
@@ -71,10 +78,9 @@ public class Circle implements Serializable {
         // Si se ha descubierto pintamos el color normal
         if (uncovered) {
 
-            if(image != null)
+            if (image != null)
                 image.render();
-            else
-            {
+            else {
                 graphics.setColor(color.getValue());
                 graphics.fillCircle(pos.x, pos.y, circleRadius);
             }
@@ -168,8 +174,8 @@ public class Circle implements Serializable {
         pos.y += translateY;
         id.translate(translateX, translateY);
 
-        if(image != null)
-            image.translate(translateX,translateY);
+        if (image != null)
+            image.translate(translateX, translateY);
     }
 
     /**
@@ -179,29 +185,40 @@ public class Circle implements Serializable {
         return pos;
     }
 
-    public void setImage(Image image)
-    {
+    /**
+     * Establece la imagen de la ficha
+     *
+     * @param image
+     */
+    public void setImage(Image image) {
         String imageName = image.getFile();
         imageName = imageName.replace("sprites/", "");
 
         this.imageName = imageName;
-        this.image = new ImageObject(graphics, new Vector2(pos), new Vector2(circleRadius*2, circleRadius*2), image);
+        this.image = new ImageObject(graphics, new Vector2(pos), new Vector2(circleRadius * 2, circleRadius * 2), image);
     }
 
-    public Image getImage()
-    {
-        if(image == null) return null;
+    /**
+     * @return La imagen de la ficha
+     */
+    public Image getImage() {
+        if (image == null) return null;
         return image.getImage();
     }
 
+    /**
+     * Se usa para cargar informacion desde el archivo de guardado
+     *
+     * @param graphics Objeto graphics del motor
+     */
     public void load(Graphics graphics) {
         this.graphics = graphics;
 
         this.id.load(graphics);
 
-        if(this.imageName != null){
+        if (this.imageName != null) {
             // Creacion de la imagen
-            image = new ImageObject(graphics, new Vector2(pos), new Vector2(circleRadius*2, circleRadius*2), imageName);
+            image = new ImageObject(graphics, new Vector2(pos), new Vector2(circleRadius * 2, circleRadius * 2), imageName);
         }
     }
 

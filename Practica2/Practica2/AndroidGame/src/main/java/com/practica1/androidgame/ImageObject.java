@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * GameObject Imagen, encapsula las funcionalidades de pintar imagenes dentro de un objeto
  */
-public class ImageObject  implements Serializable  {
+public class ImageObject implements Serializable {
     private transient Image image;
     private Vector2 size;
     private Vector2 pos;
@@ -89,7 +89,10 @@ public class ImageObject  implements Serializable  {
         return pos;
     }
 
-    public Image getImage(){
+    /**
+     * @return Imagen del objeto
+     */
+    public Image getImage() {
         return image;
     }
 

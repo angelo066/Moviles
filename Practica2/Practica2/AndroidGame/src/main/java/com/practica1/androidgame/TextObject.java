@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * GameObject Texto, encapsula las funcionalidades de pintar texto dentro de un objeto
  */
-public class TextObject implements Serializable  {
+public class TextObject implements Serializable {
     private int color;
     private String text;
     private transient Font font;
@@ -45,7 +45,6 @@ public class TextObject implements Serializable  {
         this.pos = new Vector2(pos);
         this.iniPos = pos;
     }
-
 
 
     /**
@@ -118,11 +117,18 @@ public class TextObject implements Serializable  {
         return pos;
     }
 
-    public void resetColor()
-    {
+    /**
+     * Resetea el color. Se usa para resetear en la tienda al seleccionar color
+     */
+    public void resetColor() {
         color = GameManager.getInstance().getCurrentSkinPalette().getColor2();
     }
 
+    /**
+     * Se usa para cargar informacion desde el archivo de guardado
+     *
+     * @param graphics Objeto graphics del motor
+     */
     public void load(Graphics graphics) {
         this.graphics = graphics;
         this.font = ResourceManager.getInstance().getFont(fontName);

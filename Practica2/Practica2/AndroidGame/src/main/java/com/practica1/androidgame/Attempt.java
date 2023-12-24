@@ -235,6 +235,12 @@ public class Attempt  implements Serializable {
         return pos;
     }
 
+
+    /**
+     * Se usa para cargar informacion desde el archivo de guardado
+     *
+     * @param graphics Objeto graphics del motor
+     */
     public void load(Graphics graphics) {
         this.graphics = graphics;
 
@@ -244,7 +250,7 @@ public class Attempt  implements Serializable {
             combination[i].load(graphics);
         }
 
-        clue.setGraphics(graphics);
+        clue.load(graphics);
 
     }
 }

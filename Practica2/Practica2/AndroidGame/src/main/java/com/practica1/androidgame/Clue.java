@@ -5,7 +5,7 @@ import com.practica1.androidengine.Graphics;
 
 import java.io.Serializable;
 
-public class Clue  implements Serializable {
+public class Clue implements Serializable {
     private int numFoundCircles;
     private int numFoundColors;
     private transient Graphics graphics;
@@ -108,7 +108,12 @@ public class Clue  implements Serializable {
         return pos;
     }
 
-    public void setGraphics(Graphics graphics) {
+    /**
+     * Se usa para cargar informacion desde el archivo de guardado
+     *
+     * @param graphics Objeto graphics del motor
+     */
+    public void load(Graphics graphics) {
         this.graphics = graphics;
     }
 }

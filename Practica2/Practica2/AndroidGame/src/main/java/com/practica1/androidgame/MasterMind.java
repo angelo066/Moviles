@@ -136,6 +136,11 @@ public class MasterMind extends Scene {
             out.writeObject(runSerializeInfo);
             out.flush();
             out.close();
+
+            /// SECURIZAR /// ---------------------------------------------------------------------------
+            String data = runSerializeInfo.toString();
+            NDKManager.getInstance().secure(data, "hashgame.txt"); // lo queremos guardar en archivo
+            /// SECURIZAR /// ---------------------------------------------------------------------------
         }
         catch (FileNotFoundException e) {
             System.out.println("Error: Archivo no encontrado");
@@ -157,6 +162,17 @@ public class MasterMind extends Scene {
             ObjectInputStream in = new ObjectInputStream(file);
 
             run = (RunSerializeInfo)in.readObject();
+
+            /// COMPROBAR SECURIZACION /// ---------------------------------------------------------------------------
+            String data = run.toString(); // cogemos el archivo de guardado
+            if(!NDKManager.getInstance().checkHash(data, "hashgame.txt"))
+            {
+                System.out.println("ERES UN BANDIDO, CAMBIASTE LA PARTIDA");
+            }
+            else {
+                System.out.println("ERES LEGAL, NO CAMBIASTE LA PARTIDA");
+            }
+            /// COMPROBAR SECURIZACION /// ---------------------------------------------------------------------------
         }
         catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);

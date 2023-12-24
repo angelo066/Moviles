@@ -73,6 +73,12 @@ public class GameManager {
             out.writeObject(playerSerializeInfo);
             out.flush();
             out.close();
+
+            /// SECURIZAR /// ---------------------------------------------------------------------------
+            String data = playerSerializeInfo.toString();
+            NDKManager.getInstance().secure(data, "hashplayer.txt"); // lo queremos guardar en archivo
+            /// SECURIZAR /// ---------------------------------------------------------------------------
+
         } catch (FileNotFoundException e) {
             System.out.println("Error: Archivo no encontrado");
             e.printStackTrace();
@@ -96,6 +102,18 @@ public class GameManager {
                 ObjectInputStream in = new ObjectInputStream(file);
 
                 playerSerializeInfo = (PlayerSerializeInfo) in.readObject();
+
+                /// COMPROBAR SECURIZACION /// ---------------------------------------------------------------------------
+                String data = playerSerializeInfo.toString(); // cogemos el archivo de guardado
+                if(!NDKManager.getInstance().checkHash(data, "hashplayer.txt"))
+                {
+                    System.out.println("ERES UN BANDIDO, CAMBIASTE LOS DATOS DE JUEGO");
+                }
+                else {
+                    System.out.println("ERES LEGAL, NO CAMBIASTE LOS DATOS DE JUEGO");
+                }
+                /// COMPROBAR SECURIZACION /// ---------------------------------------------------------------------------
+
             } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }

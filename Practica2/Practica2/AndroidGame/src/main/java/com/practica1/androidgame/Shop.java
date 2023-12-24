@@ -54,9 +54,9 @@ public class Shop extends Scene {
         super.init(engine);
 
         //Provisional, hay que cambiar numeros y demás
-        skins_Back = new BuyObject[ResourceManager.getInstance().shop_backgrounds.size()];
-        skins_Code = new BuyObject[ResourceManager.getInstance().shop_codes.size()];
-        skins_Color = new BuyObject[ResourceManager.getInstance().shop_palettes.size()];
+        skins_Back = new BuyObject[ResourceManager.getInstance().shop_backgrounds.size() + 1];
+        skins_Code = new BuyObject[ResourceManager.getInstance().shop_codes.size() + 1];
+        skins_Color = new BuyObject[ResourceManager.getInstance().shop_palettes.size() + 1];
 
         Vector2 pos_Coin = new Vector2(900, 200);
         Vector2 size_Coin = new Vector2(100, 100);
@@ -155,7 +155,13 @@ public class Shop extends Scene {
             }
 
             if (Skin_Type.values()[type] == Skin_Type.BACKGROUND) {
-                for (int b = 0; b < skins_Back.length; b++) {
+
+                // Default
+                if (skins_Back[0].getButton().handleInput(events.get(i))) {
+                    GameManager.getInstance().equipBackgroundSkin(-1);
+                }
+
+                for (int b = 1; b < skins_Back.length; b++) {
                     GameManager gm = GameManager.getInstance();
                     BuyObject skin = skins_Back[b];
                     int coins = gm.getCoins();
@@ -163,12 +169,12 @@ public class Shop extends Scene {
 
                     if (skin.getButton().handleInput(events.get(i))) {
                         if (skin.isUnlocked())
-                            gm.equipBackgroundSkin(b);
+                            gm.equipBackgroundSkin(b-1);
                         else if (coins >= price) {
                             skin.setUnlock(true);
-                            gm.unlockedSkin(0, b);
+                            gm.unlockedSkin(0, b-1);
                             gm.buyObject(price);
-                            gm.equipBackgroundSkin(b);
+                            gm.equipBackgroundSkin(b-1);
                         }
                     }
                 }
@@ -277,8 +283,8 @@ public class Shop extends Scene {
     private void createButtons() {
 
         createBackgroundsShop();
-        createCodePacksShop();
-        createPalettesShop();
+        //createCodePacksShop();
+        //createPalettesShop();
 
         buttonBackToDefault = new ButtonObject(graphics, new Vector2(width - skin_Size.x, height - skin_Size.y),
                 skin_Size, "backToMonkey.jpg");
@@ -292,8 +298,7 @@ public class Shop extends Scene {
         Vector2 size = new Vector2(aux - 100, aux - 100);
         int xIndex = 0;
 
-        int a = ResourceManager.getInstance().shop_backgrounds.size();
-        for (int i = 0; i < ResourceManager.getInstance().shop_backgrounds.size(); i++) {
+        for (int i = 0; i < ResourceManager.getInstance().shop_backgrounds.size()+1; i++) {
             int diff = aux * (xIndex) + aux / 2;
             pos.x = diff - size.x / 2;
 
@@ -306,15 +311,26 @@ public class Shop extends Scene {
             }
             xIndex++;
 
-            // Miniatura
-            String image = ResourceManager.getInstance().shop_backgrounds.get(i).first;
 
-            // Crear el objeto
-            skins_Back[i] = new BuyObject(graphics, pos, size, image);
-            if (unlocked_Skins[i]) {
+            // DEFAULT
+            if(i == 0)
+            {
+                skins_Back[i] = new BuyObject(graphics, pos, size, "backToMonkey.jpg");
                 skins_Back[i].setUnlock(true);
+                skins_Back[i].setPrice(0);
             }
-            skins_Back[i].setPrice(100 * i);
+            else
+            {
+                // Miniatura
+                String image = ResourceManager.getInstance().shop_backgrounds.get(i-1).first;
+
+                // Crear el objeto
+                skins_Back[i] = new BuyObject(graphics, pos, size, image);
+                if (unlocked_Skins[i-1]) {
+                    skins_Back[i].setUnlock(true);
+                }
+                skins_Back[i].setPrice(100 * (i-1));
+            }
         }
     }
 

@@ -1,33 +1,64 @@
 package com.practica1.androidgame;
 
+/**
+ * Clase que representa la informacion de un mundo
+ */
 public class WordlInfo {
-    private String world_background;
-    private String gameplay_background;
+    private String worldBackground;
+    private String gameplayBackground;
     private String pack;
 
-    public WordlInfo(String world_background)
-    {
-        this.world_background = world_background;
+    /**
+     * @param worldBackground Path del fondo del mundo
+     */
+    public WordlInfo(String worldBackground) {
+        this.worldBackground = worldBackground;
     }
 
-    // GETTERS
-    public String getWorld_background() {
-        return world_background;
+    /**
+     * @return Path del fondo del mundo
+     */
+    public String getWorldBackground() {
+        return worldBackground;
     }
-    public String getGameplay_background() {
-        return gameplay_background;
+
+    /**
+     * @return Path del fondo de los niveles del mundo
+     */
+    public String getGameplayBackground() {
+        return gameplayBackground;
     }
+
+    /**
+     * @return Path del pack del mundo
+     */
     public String getPack() {
         return pack;
     }
 
-    // SETTERS
-    public void setWorld_background(String world_background) {
-        this.world_background = world_background;
+    /**
+     * Establece Path del fondo del mundo
+     *
+     * @param worldBackground
+     */
+    public void setWorldBackground(String worldBackground) {
+        this.worldBackground = worldBackground;
     }
-    public void setGameplay_background(String gameplay_background) {
-        this.gameplay_background = gameplay_background;
+
+    /**
+     * Establece Path del fondo de los niveles del mundo
+     *
+     * @param gameplayBackground
+     */
+    public void setGameplayBackground(String gameplayBackground) {
+        this.gameplayBackground = gameplayBackground;
     }
+
+    /**
+     * Establece Path del pack del mundo
+     *
+     * @param pack
+     */
     public void setPack(String pack) {
         this.pack = pack;
     }

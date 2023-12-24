@@ -277,7 +277,7 @@ public class WorldSelectionMenu extends Scene {
 
             // Deserializamos el json en un objeto con la info del mundo
             WordlInfo worldStyle = gson.fromJson(br, WordlInfo.class);
-            styleNames[i] = worldStyle.getWorld_background();
+            styleNames[i] = worldStyle.getWorldBackground();
         }
 
         // Inicializamos la lista de imagenes de fondos

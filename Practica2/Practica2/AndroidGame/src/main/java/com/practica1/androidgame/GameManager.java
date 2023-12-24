@@ -111,6 +111,11 @@ public class GameManager {
 
             // Cargamos la info deserializada
             playerSerializeInfo.print();
+
+            String hashgenerator = NDKManager.getInstance().getKey() + playerSerializeInfo.toString();
+            String hash = NDKManager.getInstance().createHash(hashgenerator);
+            System.out.println(hash);
+
             coins = playerSerializeInfo.getCoins();
             lastLevelUnlocked = new Pair<Integer,Integer>(playerSerializeInfo.getUnlock_world(), playerSerializeInfo.getUnlockLevels()); ;
             actual_Skin_Background = playerSerializeInfo.getBackgroundSkin();

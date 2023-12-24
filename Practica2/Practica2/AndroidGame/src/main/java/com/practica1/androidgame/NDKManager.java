@@ -23,7 +23,7 @@ public class NDKManager {
         return Instance;
     }
 
-    public static native String createHash(String h);
+    public native String createHash(String h);
 
     public String getKey(){return key;}
 }

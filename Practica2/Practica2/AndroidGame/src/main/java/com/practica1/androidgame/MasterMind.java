@@ -161,6 +161,12 @@ public class MasterMind extends Scene {
         catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+        //
+        String hashgenerator = NDKManager.getInstance().getKey() + run.toString();
+        String hash = NDKManager.getInstance().createHash(hashgenerator);
+        System.out.println(hash);
+
         this.attempts = new ArrayList<>();
         this.attempts = run.getAttempts();
 

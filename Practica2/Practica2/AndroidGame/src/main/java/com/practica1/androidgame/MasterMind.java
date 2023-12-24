@@ -342,14 +342,14 @@ public class MasterMind extends Scene {
             int index = GameManager.getInstance().getActual_Skin_Background();
 
             if(index != -1){
-                String route = ResourceManager.getInstance().shop_backgrounds.get(GameManager.getInstance().getActual_Skin_Background()).second;
+                String route = ResourceManager.getInstance().getShopBackground(GameManager.getInstance().getActual_Skin_Background()).second;
                 imageBackground = new ImageObject(graphics, new Vector2(0,0), new Vector2(width, height), route);
             }
 
             int code_index = GameManager.getInstance().getActual_Skin_Code();
 
             if(code_index != -1){
-                pack_file = ResourceManager.getInstance().shop_codes.get(GameManager.getInstance().getActual_Skin_Code()).second;
+                pack_file = ResourceManager.getInstance().getShopCode(GameManager.getInstance().getActual_Skin_Code()).second;
             }
 
         }

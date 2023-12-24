@@ -19,26 +19,24 @@ import java.util.List;
  */
 public class ResourceManager {
     private static ResourceManager Instance;
-    protected Engine engine;
-    protected HashMap<String, Image> images;
-    protected HashMap<String, Font> fonts;
-    protected List<List<String>> levels;
-    protected List<Pair<String, String>> shop_backgrounds; // estos no son de tipo BackgroundInfo porque tenemos que poner mas cosas en la ruta del string // igual lo podemos cambiar tambien
-    protected List<Pair<String, String>> shop_codes;
-    protected List<Palette> shop_palettes;
-
-    private Palette default_Palette = new Palette("", Color.WHITE.getValue(), Color.DARK_GREY.getValue(), Color.BLACK.getValue(), Color.GREY.getValue());
-
-    //PROVISIONAL
-    int n_Images;
+    private Engine engine;
+    private HashMap<String, Image> images;
+    private HashMap<String, Font> fonts;
+    private List<List<String>> levels;
+    private List<Pair<String, String>> shopBackgrounds; // estos no son de tipo BackgroundInfo porque tenemos que poner mas cosas en la ruta del string // igual lo podemos cambiar tambien
+    private List<Pair<String, String>> shopCodes;
+    private List<Palette> shopPalettes;
+    private Palette defaultPalette;
 
     private ResourceManager() {
         images = new HashMap<>();
         fonts = new HashMap<>();
         levels = new ArrayList<>();
-        shop_codes = new ArrayList<>();
-        shop_backgrounds = new ArrayList<>();
-        shop_palettes = new ArrayList<>();
+        shopCodes = new ArrayList<>();
+        shopBackgrounds = new ArrayList<>();
+        shopPalettes = new ArrayList<>();
+        defaultPalette = new Palette("", Color.WHITE.getValue(), Color.DARK_GREY.getValue(), Color.BLACK.getValue(), Color.GREY.getValue());
+
     }
 
     /**
@@ -59,9 +57,9 @@ public class ResourceManager {
     public static void Release() {
         Instance.images.clear();
         Instance.fonts.clear();
-        Instance.shop_backgrounds.clear();
-        Instance.shop_codes.clear();
-        Instance.shop_palettes.clear();
+        Instance.shopBackgrounds.clear();
+        Instance.shopCodes.clear();
+        Instance.shopPalettes.clear();
         Instance.engine = null;
         Instance = null;
     }
@@ -84,7 +82,6 @@ public class ResourceManager {
         if (images.containsKey(file)) {
             return images.get(file);
         } else {
-            n_Images++;
             Image newImage = engine.getGraphics().newImage(file);
             images.put(file, newImage);
             return newImage;
@@ -146,11 +143,6 @@ public class ResourceManager {
         return false;
     }
 
-    public void assetsChargeFinalized(){
-        //Cambiar luego
-        GameManager.getInstance().setN_skins_Background(n_Images);
-    }
-
     /**
      * Borra la fuente con ese id
      *
@@ -165,37 +157,57 @@ public class ResourceManager {
         return false;
     }
 
-    public int getN_Images() {return n_Images;}
-
-    void loadLevels()
-    {
+    /**
+     * Carga los mundos
+     */
+    void loadLevels() {
         // Cargar numero de mundos
         String baseRoute = "levels";
         List<String> files = engine.obtainFolderFiles(baseRoute);
 
         // Cargar niveles por mundo
-        for(String world : files)
-        {
+        for (String world : files) {
             levels.add(engine.obtainFolderFiles(world));
         }
     }
 
-    public String getLevel(int worldIndex, int levelIndex)
-    {
+    /**
+     * @param worldIndex Numero de mundo
+     * @param levelIndex Numero de nivel
+     * @return El nivel
+     */
+    public String getLevel(int worldIndex, int levelIndex) {
         return levels.get(worldIndex).get(levelIndex);
     }
-    public String getWorldSytle(int worldIndex)
-    {
-        return levels.get(worldIndex).get(levels.get(worldIndex).size()-1);
+
+    /**
+     * @param worldIndex Numero de mundo
+     * @return Estilo del mundo
+     */
+    public String getWorldSytle(int worldIndex) {
+        return levels.get(worldIndex).get(levels.get(worldIndex).size() - 1);
     }
 
-    public int getNumWorlds(){return levels.size();}
-    public int getNumLevels(int worldIndex){return levels.get(worldIndex).size() - 1;} // el ultimo archivo es el style.json
+    /**
+     * @return Numero de mundos
+     */
+    public int getNumWorlds() {
+        return levels.size();
+    }
 
-    public void loadShop()
-    {
-        // Creamos el parser del json
-        Gson gson  = new Gson();
+    /**
+     * @param worldIndex Numero de mundo
+     * @return Numero de niveles del mundo
+     */
+    public int getNumLevels(int worldIndex) {
+        return levels.get(worldIndex).size() - 1;
+    } // el ultimo archivo es el style.json
+
+    /**
+     * Carga los assets de la tienda
+     */
+    public void loadShop() {
+        Gson gson = new Gson();
         BufferedReader br = null;
 
         loadShopBackgrounds(gson, br);
@@ -203,90 +215,98 @@ public class ResourceManager {
         loadShopColors(gson, br);
     }
 
-    private void loadShopBackgrounds(Gson gson, BufferedReader br)
-    {
-        // Leemos el json
+    /**
+     * Carga los fondos de la tienda
+     *
+     * @param gson Gson
+     * @param br   BufferedReader
+     */
+    private void loadShopBackgrounds(Gson gson, BufferedReader br) {
         try {
             br = engine.openAssetFile("shop/backgrounds.json");
-        }
-        catch (IOException ex)
-        {
+
+            // Deserializamos el json en una lista de fondos
+            BackgroundInfo[] backgroundList = gson.fromJson(br, BackgroundInfo[].class);
+            String backBaseRoute = "backgrounds/";
+            String thumbBaseRoute = "thumbnails/";
+            for (int i = 0; i < backgroundList.length; i++) {
+                shopBackgrounds.add(new Pair<String, String>(thumbBaseRoute + backgroundList[i].getThumbnail(), backBaseRoute + backgroundList[i].getBackground()));
+            }
+
+        } catch (IOException ex) {
             System.out.println("Error loading shop backgrounds");
         }
 
-        // Deserializamos el json en una lista de fondos
-        BackgroundInfo[] backgroundList = gson.fromJson(br, BackgroundInfo[].class);
-        String backBaseRoute = "backgrounds/";
-        String thumbBaseRoute = "thumbnails/";
-        for(int i = 0; i < backgroundList.length; i++)
-        {
-            shop_backgrounds.add(new Pair<String, String>(thumbBaseRoute + backgroundList[i].getThumbnail(), backBaseRoute + backgroundList[i].getBackground()));
-            System.out.println(backgroundList[i].getThumbnail() + " " + backgroundList[i].getBackground());
-        }
-        int a = 0;
+
     }
 
 
-    private void loadShopCodes(Gson gson, BufferedReader br)
-    {
-        // Leemos el json
+    /**
+     * Carga los codigos de la tienda
+     *
+     * @param gson Gson
+     * @param br   BufferedReader
+     */
+    private void loadShopCodes(Gson gson, BufferedReader br) {
         try {
             br = engine.openAssetFile("shop/codes.json");
-        }
-        catch (IOException ex)
-        {
+
+            // Deserializamos el json en un objeto con la info de los packs
+            CodeInfo[] packList = gson.fromJson(br, CodeInfo[].class);
+
+            // Por cada pack
+            for (int i = 0; i < packList.length; i++) {
+                System.out.println(packList[i].getThumbnail() + " " + packList[i].getCode());
+
+                // Guardamos la info de los packs
+                String thumbBaseRoute = "thumbnails/";
+                shopCodes.add(new Pair<String, String>(thumbBaseRoute + packList[i].getThumbnail(), packList[i].getCode()));
+            }
+
+        } catch (IOException ex) {
             System.out.println("Error loading shop codes");
         }
-        // Deserializamos el json en un objeto con la info de los packs
-        CodeInfo[] packList = gson.fromJson(br, CodeInfo[].class);
 
-        // Por cada pack
-        for(int i = 0; i < packList.length; i++)
-        {
-            System.out.println(packList[i].getThumbnail() + " " + packList[i].getCode());
-
-            // Guardamos la info de los packs
-            String thumbBaseRoute = "thumbnails/";
-            shop_codes.add(new Pair<String, String>(thumbBaseRoute + packList[i].getThumbnail(), packList[i].getCode()));
-        }
     }
 
-    public void loadShopColors(Gson gson, BufferedReader br)
-    {
-        // Leemos el json
+    /**
+     * Carga las paletas de la tienda
+     *
+     * @param gson Gson
+     * @param br   BufferedReader
+     */
+    public void loadShopColors(Gson gson, BufferedReader br) {
         try {
             br = engine.openAssetFile("shop/colors.json");
-        }
-        catch (IOException ex)
-        {
+
+            // Deserializamos el json en un objeto con la info de los packs
+            PaletteInfo[] paletteInfos = gson.fromJson(br, PaletteInfo[].class);
+            for (int i = 0; i < paletteInfos.length; i++) {
+                PaletteInfo p = paletteInfos[i];
+                long cb = Long.parseLong(p.getColor_Background(), 16);
+                long c1 = Long.parseLong(p.getColor_1(), 16);
+                long c2 = Long.parseLong(p.getColor_2(), 16);
+                long c3 = Long.parseLong(p.getColor_3(), 16);
+                Palette palette = new Palette(p.getThumbnail(), (int) cb, (int) c1, (int) c2, (int) c3);
+                shopPalettes.add(palette);
+            }
+
+        } catch (IOException ex) {
             System.out.println("Error loading shop colors");
         }
-        // Deserializamos el json en un objeto con la info de los packs
-        PaletteInfo[] paletteInfos = gson.fromJson(br, PaletteInfo[].class);
-        for(int i = 0; i< paletteInfos.length; i++)
-        {
-            PaletteInfo p = paletteInfos[i];
-            long cb = Long.parseLong(p.getColor_Background(), 16);
-            long c1 = Long.parseLong(p.getColor_1(), 16);
-            long c2 = Long.parseLong(p.getColor_2(), 16);
-            long c3 = Long.parseLong(p.getColor_3(), 16);
-            Palette palette = new Palette(p.getThumbnail(), (int)cb, (int)c1, (int)c2, (int)c3);
-            shop_palettes.add(palette);
-        }
+
     }
 
     /**
      * Recorre la carpeta de sprites/backgrounds y crea todas las imagenes de fondos posibles
      */
-    public void loadBackgroundImages()
-    {
+    public void loadBackgroundImages() {
         // Cargar carpeta de fondos
         String baseRoute = "sprites/backgrounds";
         List<String> files = engine.obtainFolderFiles(baseRoute);
 
         // Crear la imagen recurso
-        for(String background : files)
-        {
+        for (String background : files) {
             String filename = background.replace("sprites/", "");
             createImage(filename);
         }
@@ -295,38 +315,86 @@ public class ResourceManager {
     /**
      * Recorre la carpeta de sprites/thumbnails y crea todas las imagenes de miniaturas posibles
      */
-    public void loadThumbnailsImages()
-    {
+    public void loadThumbnailsImages() {
         // Cargar carpeta de fondos
         String baseRoute = "sprites/thumbnails";
         List<String> files = engine.obtainFolderFiles(baseRoute);
 
         // Crear la imagen recurso
-        for(String background : files)
-        {
+        for (String background : files) {
             String filename = background.replace("sprites/", "");
             createImage(filename);
         }
     }
 
-    public void loadPackCodes()
-    {
+    /**
+     * Recorre la carpeta de sprites/codes y crea todas los codigos posibles
+     */
+    public void loadPackCodes() {
         // Cargar carpeta de packs
         String baseRoute = "sprites/packs";
         List<String> files = engine.obtainFolderFiles(baseRoute);
 
         // Crear la imagen recurso
-        for(String packfiles : files)
-        {
+        for (String packfiles : files) {
             List<String> images = engine.obtainFolderFiles(packfiles);
-            for(String image : images)
-            {
+            for (String image : images) {
                 String filename = image.replace("sprites/", "");
                 createImage(filename);
             }
         }
     }
 
-    public Palette getDefault_Palette(){return  default_Palette;}
+    /**
+     * @return Paleta por defecto
+     */
+    public Palette getDefaultPalette() {
+        return defaultPalette;
+    }
+
+    /**
+     * @param i Indice del background
+     * @return Background con ese indice
+     */
+    public Pair<String, String> getShopBackground(int i) {
+        return getNumShopBackgrounds() > i ? shopBackgrounds.get(i) : null;
+    }
+
+    /**
+     * @return Numero de backgrounds de la tienda
+     */
+    public int getNumShopBackgrounds() {
+        return shopBackgrounds.size();
+    }
+
+    /**
+     * @param i Indice del code
+     * @return Code con ese indice
+     */
+    public Pair<String, String> getShopCode(int i) {
+        return getNumShopCodes() > i ? shopCodes.get(i) : null;
+    }
+
+    /**
+     * @return Numero de codes de la tienda
+     */
+    public int getNumShopCodes() {
+        return shopCodes.size();
+    }
+
+    /**
+     * @param i Indice de la paleta
+     * @return Paleta con ese indice
+     */
+    public Palette getShopPalette(int i) {
+        return getNumShopPalettes() > i ? shopPalettes.get(i) : null;
+    }
+
+    /**
+     * @return Numero de palettes de la tienda
+     */
+    public int getNumShopPalettes() {
+        return shopPalettes.size();
+    }
 
 }

@@ -3,7 +3,6 @@ package com.practica1.androidgame;
 import android.content.Context;
 import android.util.Pair;
 
-import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 
 import java.io.File;
@@ -13,20 +12,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 
 public class GameManager {
 
     private static GameManager Instance;
+
     protected Engine engine;
-    Context context;
-
+    private Context context;
     private int coins;
-
-    //Numero total de skins;
-    private int n_skins_Background;
-    private int n_skins_Codes;
-    private int n_skins_Color;
 
     //Indice de la skin que tengo puesta
     private int actual_Skin_Background = -1; //-1 cuando no hay ninguna equipada
@@ -60,10 +53,6 @@ public class GameManager {
     public static GameManager getInstance() {
         return Instance;
     }
-
-    public void setN_skins_Background(int n){n_skins_Background = n;}
-
-    public int getN_skins_Background(){return n_skins_Background;}
 
     public void savePlayerData()
     {
@@ -127,7 +116,7 @@ public class GameManager {
 
             //Si no hay ninguna equipada ponemos la predeterminada
             if(actual_Skin_Palette.getThumbnail() == "")
-                actual_Skin_Palette = ResourceManager.getInstance().getDefault_Palette();
+                actual_Skin_Palette = ResourceManager.getInstance().getDefaultPalette();
         }
         else{
             defaultValues();
@@ -210,10 +199,10 @@ public class GameManager {
 
     public void defaultValues(){
 
-        unlocked_Backgrounds = new boolean[ResourceManager.getInstance().shop_backgrounds.size()];
-        unlocked_Codes = new boolean[ResourceManager.getInstance().shop_codes.size()];
-        unlocked_Palettes = new boolean[ResourceManager.getInstance().shop_palettes.size()];
+        unlocked_Backgrounds = new boolean[ResourceManager.getInstance().getNumShopBackgrounds()];
+        unlocked_Codes = new boolean[ResourceManager.getInstance().getNumShopCodes()];
+        unlocked_Palettes = new boolean[ResourceManager.getInstance().getNumShopPalettes()];
 
-        actual_Skin_Palette = ResourceManager.getInstance().getDefault_Palette();
+        actual_Skin_Palette = ResourceManager.getInstance().getDefaultPalette();
     }
 }

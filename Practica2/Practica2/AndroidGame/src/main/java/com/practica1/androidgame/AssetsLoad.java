@@ -43,8 +43,6 @@ public class AssetsLoad extends Scene {
         ResourceManager.getInstance().loadPackCodes();
         ResourceManager.getInstance().loadShop();
 
-        ResourceManager.getInstance().assetsChargeFinalized();
-
         SceneManager.getInstance().addScene(new MainMenu());
         SceneManager.getInstance().goToNextScene();
 

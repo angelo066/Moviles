@@ -73,16 +73,14 @@ public class Attempt  implements Serializable {
     public void render() {
 
         //Recuadro
-        graphics.setColor(Color.OPACITY_GREY.getValue());
-        graphics.fillRoundRectangle(pos.x, pos.y, size.x, size.y, 20);
-        graphics.setColor(Color.GREY.getValue());
+        graphics.setColor(GameManager.getInstance().getCurrentSkinPalette().getColor2());
         graphics.drawRoundRectangle(pos.x, pos.y, size.x, size.y, 20);
 
         //Numero de intento
         attemptNumber.render();
 
         //Lineas separadoras
-        graphics.setColor(Color.BLACK.getValue());
+        graphics.setColor(GameManager.getInstance().getCurrentSkinPalette().getColor2());
         graphics.drawLine(pos.x + widthPerDivision, pos.y + 10, pos.x + widthPerDivision, pos.y + size.y - 10);
         graphics.drawLine(pos.x + widthPerDivision * 5, pos.y + 10, pos.x + widthPerDivision * 5, pos.y + size.y - 10);
 

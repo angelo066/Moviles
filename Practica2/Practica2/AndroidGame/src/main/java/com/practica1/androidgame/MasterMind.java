@@ -385,7 +385,7 @@ public class MasterMind extends Scene {
 
 
         // Colores disponibles
-        graphics.setColor(Color.GREY.getValue());
+        graphics.setColor(GameManager.getInstance().getCurrentSkinPalette().getColor1());
         graphics.fillRectangle(0, (numDivisions - 1) * attemptHeight, width, attemptHeight);
 
         for (int i = 0; i < availableColors.length; i++)

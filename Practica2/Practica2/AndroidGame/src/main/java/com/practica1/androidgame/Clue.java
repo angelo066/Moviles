@@ -62,15 +62,15 @@ public class Clue implements Serializable {
             }
 
             if (numRightCir > 0) {
-                graphics.setColor(Color.BLACK.getValue());
+                graphics.setColor(GameManager.getInstance().getCurrentSkinPalette().getColor2());
                 graphics.fillCircle(x, y, circleRadius);
                 numRightCir--;
             } else if (numRightCol > 0) {
-                graphics.setColor(Color.BLACK.getValue());
+                graphics.setColor(GameManager.getInstance().getCurrentSkinPalette().getColor2());
                 graphics.drawCircle(x, y, circleRadius);
                 numRightCol--;
             } else {
-                graphics.setColor(Color.GREY.getValue());
+                graphics.setColor(GameManager.getInstance().getCurrentSkinPalette().getColor1());
                 graphics.fillCircle(x, y, circleRadius);
             }
 

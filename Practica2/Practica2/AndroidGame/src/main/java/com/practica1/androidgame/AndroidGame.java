@@ -18,12 +18,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-//TODO:
-//  Securizar con NDK
-//  Paletas de Colores
-//  Memoria
-//  Estilo predeterminado en la tienda
-
 public class AndroidGame extends AppCompatActivity {
     private Engine engine;
 

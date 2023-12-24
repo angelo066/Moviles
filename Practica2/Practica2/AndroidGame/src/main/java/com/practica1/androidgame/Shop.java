@@ -323,7 +323,7 @@ public class Shop extends Scene {
                 skins_Back[i].setPrice(100 * (i-1));
             }
 
-            skins_Back[i].setSelected(false);
+            //skins_Back[i].setSelected(false);
         }
     }
 
@@ -366,7 +366,7 @@ public class Shop extends Scene {
                 skins_Code[i].setPrice(100 * (i-1));
             }
 
-            skins_Code[i].setSelected(false);
+            //skins_Code[i].setSelected(false);
 
         }
     }
@@ -411,7 +411,7 @@ public class Shop extends Scene {
                 skins_Color[i].setPrice(100 * (i-1));
             }
 
-            skins_Color[i].setSelected(false);
+            //skins_Color[i].setSelected(false);
         }
     }
 

@@ -351,7 +351,7 @@ public class MasterMind extends Scene {
             WordlInfo levelInfo = gson.fromJson(br, WordlInfo.class);
 
             // Asignamos los valores que hemos recogido a nuestra partida
-            String background = levelInfo.getGameplay_background();
+            String background = levelInfo.getGameplayBackground();
             pack_file = levelInfo.getPack();
             imageBackground = new ImageObject(graphics, new Vector2(0,0), new Vector2(width, height), "backgrounds/" + background + ".png");
         }else{
@@ -401,7 +401,7 @@ public class MasterMind extends Scene {
 
 
         // Colores disponibles
-        graphics.setColor(Color.GREY.getValue());
+        graphics.setColor(GameManager.getInstance().getCurrentSkinPalette().getColor1());
         graphics.fillRectangle(0, (numDivisions - 1) * attemptHeight, width, attemptHeight);
 
         for (int i = 0; i < availableColors.length; i++)

@@ -59,7 +59,7 @@ public class Shop extends Scene {
         Vector2 pos_Coin = new Vector2(900, 200);
         Vector2 size_Coin = new Vector2(100, 100);
 
-        buttonBack = new ButtonObject(graphics, new Vector2(0, 20), new Vector2(100, 100), "volver.png");
+        buttonBack = new ButtonObject(graphics, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
 
         coins = new ImageObject(graphics, pos_Coin, size_Coin, "coins.png");
 
@@ -67,7 +67,7 @@ public class Shop extends Scene {
         coin_cuantity = new TextObject(graphics, new Vector2(pos_Coin.x, pos_Coin.y + size_Coin.y),
                 "Nexa.ttf", String.valueOf(GameManager.getInstance().getCoins()), colorText, 60, false, false);
 
-        type_Text = new TextObject(graphics, new Vector2(width / 2, 140),
+        type_Text = new TextObject(graphics, new Vector2(width / 2 - 10, 140),
                 "Nexa.ttf", "Fondos", colorText, 60, false, false);
 
         type_Text.center();
@@ -153,16 +153,18 @@ public class Shop extends Scene {
 
             if (Skin_Type.values()[type] == Skin_Type.BACKGROUND) {
 
+                GameManager gm = GameManager.getInstance();
+                int currentSkinIndex = gm.getCurrentSkinBackground() + 1; //+1 porque el default está ahora incluido
                 // Default
                 if (skins_Back[0].getButton().handleInput(events.get(i))) {
+
+                    skins_Back[currentSkinIndex].setSelected(false);
+
                     GameManager.getInstance().equipBackgroundSkin(-1);
                     skins_Back[0].setSelected(true);
-                    if(GameManager.getInstance().getCurrentSkinBackground() != -1)
-                        skins_Back[GameManager.getInstance().getCurrentSkinBackground()].setSelected(false);
                 }
 
                 for (int b = 1; b < skins_Back.length; b++) {
-                    GameManager gm = GameManager.getInstance();
                     BuyObject skin = skins_Back[b];
                     int coins = gm.getCoins();
                     int price = skin.getPrice();
@@ -170,19 +172,19 @@ public class Shop extends Scene {
                     if (skin.getButton().handleInput(events.get(i))) {
                         if (skin.isUnlocked())
                         {
+                            skins_Back[currentSkinIndex].setSelected(false);
+
                             gm.equipBackgroundSkin(b-1);
                             skin.setSelected(true);
-                            skins_Back[gm.getCurrentSkinBackground()].setSelected(false);
+
                         }
                         else if (coins >= price) {
                             skin.setUnlock(true);
                             gm.unlockedSkin(0, b-1);
                             gm.buyObject(price);
-                            if(GameManager.getInstance().getCurrentSkinBackground() != -1)
-                            {
-                                skins_Back[gm.getCurrentSkinBackground()].setSelected(false);
 
-                            }
+                            skins_Back[currentSkinIndex].setSelected(false);
+
                             gm.equipBackgroundSkin(b-1);
                             skin.setSelected(true);
                         }
@@ -193,25 +195,40 @@ public class Shop extends Scene {
 
             if (Skin_Type.values()[type] == Skin_Type.CODE) {
 
+                GameManager gm = GameManager.getInstance();
+                int currentSkinIndex = gm.getCurrentSkinCode() + 1; //+1 porque el default está ahora incluido
+
                 // Default
                 if (skins_Code[0].getButton().handleInput(events.get(i))) {
+                    skins_Code[currentSkinIndex].setSelected(false);
+
                     GameManager.getInstance().equipCode(-1);
+                    skins_Code[0].setSelected(true);
                 }
 
                 for (int c = 1; c < skins_Code.length; c++) {
-                    GameManager gm = GameManager.getInstance();
                     BuyObject skin = skins_Code[c];
                     int coins = gm.getCoins();
                     int price = skin.getPrice();
 
                     if (skin.getButton().handleInput(events.get(i))) {
                         if (skin.isUnlocked())
+                        {
+                            skins_Code[currentSkinIndex].setSelected(false);
+
                             gm.equipCode(c-1);
+                            skin.setSelected(true);
+
+                        }
                         else if (coins >= price) {
                             skin.setUnlock(true);
                             gm.unlockedSkin(1, c-1);
                             gm.buyObject(price);
+
+                            skins_Code[currentSkinIndex].setSelected(false);
+
                             gm.equipCode(c-1);
+                            skin.setSelected(true);
                         }
                     }
                 }
@@ -219,9 +236,15 @@ public class Shop extends Scene {
 
             if (Skin_Type.values()[type] == Skin_Type.COLORS) {
 
+                GameManager gm = GameManager.getInstance();
+                int currentSkinIndex = gm.getPaletteIndex() + 1; //+1 porque el default está ahora incluido
+
                 // Default
                 if (skins_Color[0].getButton().handleInput(events.get(i))) {
-                    GameManager.getInstance().equipPalette(ResourceManager.getInstance().getDefaultPalette());
+                    skins_Color[currentSkinIndex].setSelected(false);
+                    gm.equipPalette(ResourceManager.getInstance().getDefaultPalette());
+                    gm.setPaletteIndex(-1);
+                    skins_Color[0].setSelected(true);
 
                     // Recargar la escena de colores
                     coin_cuantity.resetColor();
@@ -239,7 +262,6 @@ public class Shop extends Scene {
                 }
 
                 for (int c = 1; c < skins_Color.length; c++) {
-                    GameManager gm = GameManager.getInstance();
                     BuyObject skin = skins_Color[c];
                     int coins = gm.getCoins();
                     int price = skin.getPrice();
@@ -247,13 +269,20 @@ public class Shop extends Scene {
                     if (skin.getButton().handleInput(events.get(i))) {
                         boolean reload = false;
                         if (skin.isUnlocked()) {
+                            skins_Color[currentSkinIndex].setSelected(false);
+
+                            skin.setSelected(true);
                             gm.equipPalette(ResourceManager.getInstance().getShopPalette(c - 1));
+                            gm.setPaletteIndex(c - 1);
                             reload = true;
                         } else if (coins >= price) {
                             skin.setUnlock(true);
                             gm.buyObject(price);
                             gm.unlockedSkin(2, c - 1);
+                            skins_Color[currentSkinIndex].setSelected(false);
+                            skin.setSelected(true);
                             gm.equipPalette(ResourceManager.getInstance().getShopPalette(c - 1));
+                            gm.setPaletteIndex(c - 1);
                             reload = true;
                         }
 
@@ -287,6 +316,7 @@ public class Shop extends Scene {
         } else {
             type_Text.setText("Colores");
         }
+        type_Text.center();
     }
 
     private void createButtons() {

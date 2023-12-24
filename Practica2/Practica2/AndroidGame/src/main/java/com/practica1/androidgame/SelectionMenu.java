@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Escena de seleccion de dificultad
  */
-public class SelectionMenu extends Scene {
+public class  SelectionMenu extends Scene {
     private ButtonObject buttonEasy;
     private ButtonObject buttonMedium;
     private ButtonObject buttonHard;
@@ -27,15 +27,13 @@ public class SelectionMenu extends Scene {
     public void init(Engine engine) {
         super.init(engine);
 
-
-        colorText = GameManager.getInstance().getCurrentSkinPalette().getColor2();
-
         createTexts();
 
         createButtons();
     }
 
     private void createTexts() {
+        colorText = GameManager.getInstance().getCurrentSkinPalette().getColor2();
         textSelection = new TextObject(graphics, new Vector2(width / 2, height / 7),
                 "BarlowCondensed-Regular.ttf", "¿En qué dificultad quieres jugar?", colorText, 75, true, false);
         textSelection.center();
@@ -47,23 +45,24 @@ public class SelectionMenu extends Scene {
         Vector2 size = new Vector2(width / 2, height / 10);
 
         int colorButton = GameManager.getInstance().getCurrentSkinPalette().getColor1();
-        buttonEasy = new ButtonObject(graphics, new Vector2(pos), size, 50, colorButton,
-                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Fácil", colorText, 80, false, false));
+        int colorButton2 = GameManager.getInstance().getCurrentSkinPalette().getColor3();
+        buttonEasy = new ButtonObject(graphics, new Vector2(pos), size, 50, colorButton2,
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Fácil", colorButton, 80, false, false));
         buttonEasy.center();
 
         pos.y += (height / 10 + offsetY);
         buttonMedium = new ButtonObject(graphics, new Vector2(pos), size, 50, colorButton,
-                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Medio", colorText, 80, false, false));
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Medio", colorButton2, 80, false, false));
         buttonMedium.center();
 
         pos.y += (height / 10 + offsetY);
         buttonHard = new ButtonObject(graphics, new Vector2(pos), size, 50, colorButton,
-                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Difícil", colorText, 80, false, false));
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Difícil", colorButton2, 80, false, false));
         buttonHard.center();
 
         pos.y += (height / 10 + offsetY);
-        buttonImpossible = new ButtonObject(graphics, new Vector2(pos), size, 50, colorButton,
-                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Imposible", colorText, 80, false, false));
+        buttonImpossible = new ButtonObject(graphics, new Vector2(pos), size, 50, colorText,
+                new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Imposible", colorButton, 80, false, false));
         buttonImpossible.center();
 
         buttonBack = new ButtonObject(graphics, new Vector2(20, 20), new Vector2(100, 100), "volver.png");

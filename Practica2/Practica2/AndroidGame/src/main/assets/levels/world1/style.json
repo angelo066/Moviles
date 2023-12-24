@@ -1,5 +1,5 @@
 {
-    "world_background": "moe_background",
-    "gameplay_background": "moe_background_gameplay",
+    "worldBackground": "moe_background",
+    "gameplayBackground": "moe_background_gameplay",
     "pack": "pack_1"
 }

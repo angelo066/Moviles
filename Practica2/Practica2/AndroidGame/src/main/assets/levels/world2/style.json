@@ -1,5 +1,5 @@
 {
-    "world_background": "nuclear_background",
-    "gameplay_background": "nuclear_background_gameplay",
+    "worldBackground": "nuclear_background",
+    "gameplayBackground": "nuclear_background_gameplay",
     "pack": "pack_2"
 }

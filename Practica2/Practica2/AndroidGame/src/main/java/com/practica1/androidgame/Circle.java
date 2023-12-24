@@ -93,9 +93,9 @@ public class Circle implements Serializable {
         // Si no lo pintamos bloqueado
         else {
             int internCircleRadius = circleRadius / 4;
-            graphics.setColor(Color.GREY.getValue());
+            graphics.setColor(GameManager.getInstance().getCurrentSkinPalette().getColor1());
             graphics.fillCircle(pos.x, pos.y, circleRadius);
-            graphics.setColor(Color.DARK_GREY.getValue());
+            graphics.setColor(GameManager.getInstance().getCurrentSkinPalette().getColor2());
             graphics.fillCircle(pos.x + circleRadius - internCircleRadius, pos.y + circleRadius - internCircleRadius, internCircleRadius);
         }
 

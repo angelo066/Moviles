@@ -283,10 +283,10 @@ public class ResourceManager {
             PaletteInfo[] paletteInfos = gson.fromJson(br, PaletteInfo[].class);
             for (int i = 0; i < paletteInfos.length; i++) {
                 PaletteInfo p = paletteInfos[i];
-                long cb = Long.parseLong(p.getColor_Background(), 16);
-                long c1 = Long.parseLong(p.getColor_1(), 16);
-                long c2 = Long.parseLong(p.getColor_2(), 16);
-                long c3 = Long.parseLong(p.getColor_3(), 16);
+                long cb = Long.parseLong(p.getColorBackground(), 16);
+                long c1 = Long.parseLong(p.getColor1(), 16);
+                long c2 = Long.parseLong(p.getColor2(), 16);
+                long c3 = Long.parseLong(p.getColor3(), 16);
                 Palette palette = new Palette(p.getThumbnail(), (int) cb, (int) c1, (int) c2, (int) c3);
                 shopPalettes.add(palette);
             }

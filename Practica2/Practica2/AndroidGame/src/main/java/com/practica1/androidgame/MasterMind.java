@@ -262,7 +262,7 @@ public class MasterMind extends Scene {
         for (int i = 0; i < this.numColors; i++) {
             int x = startPosition + (offsetBetweenCircle * i) + (circleRadius * 2 * i);
             int y = (tamDivision * (numDivisions - 1)) + ((tamDivision - 2 * circleRadius) / 2);
-            if(world_Level || GameManager.getInstance().getActual_Skin_Code() != -1)
+            if(world_Level || GameManager.getInstance().getCurrentSkinCode() != -1)
             {
                 String fileRoute= "packs/" + pack_file + "/" + (i+1) +".png";
                 this.availableColors[i] = new Circle(graphics, new Vector2(x, y), circleRadius,fileRoute);
@@ -326,7 +326,7 @@ public class MasterMind extends Scene {
 
             // Leemos el json
             try {
-                br = engine.openAssetFile("levels/world" + (GameManager.getInstance().getActualWorld()+1) + "/style.json");
+                br = engine.openAssetFile("levels/world" + (GameManager.getInstance().getCurrentWorld()+1) + "/style.json");
             } catch (IOException ex) {
                 System.out.println("Error loading World Style");
             }
@@ -339,17 +339,17 @@ public class MasterMind extends Scene {
             pack_file = levelInfo.getPack();
             imageBackground = new ImageObject(graphics, new Vector2(0,0), new Vector2(width, height), "backgrounds/" + background + ".png");
         }else{
-            int index = GameManager.getInstance().getActual_Skin_Background();
+            int index = GameManager.getInstance().getCurrentSkinBackground();
 
             if(index != -1){
-                String route = ResourceManager.getInstance().getShopBackground(GameManager.getInstance().getActual_Skin_Background()).second;
+                String route = ResourceManager.getInstance().getShopBackground(GameManager.getInstance().getCurrentSkinBackground()).second;
                 imageBackground = new ImageObject(graphics, new Vector2(0,0), new Vector2(width, height), route);
             }
 
-            int code_index = GameManager.getInstance().getActual_Skin_Code();
+            int code_index = GameManager.getInstance().getCurrentSkinCode();
 
             if(code_index != -1){
-                pack_file = ResourceManager.getInstance().getShopCode(GameManager.getInstance().getActual_Skin_Code()).second;
+                pack_file = ResourceManager.getInstance().getShopCode(GameManager.getInstance().getCurrentSkinCode()).second;
             }
 
         }
@@ -357,14 +357,14 @@ public class MasterMind extends Scene {
 
     private void createPalette()
     {
-        colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+        colorText = GameManager.getInstance().getCurrentSkinPalette().getColor2();
     }
 
     @Override
     public void render() {
 
         // Fondo de APP
-        int backColor = GameManager.getInstance().getActual_Skin_Palette().color_background();
+        int backColor = GameManager.getInstance().getCurrentSkinPalette().getColorBackground();
         graphics.clear(backColor);
 
         // Fondo de Juego
@@ -392,7 +392,7 @@ public class MasterMind extends Scene {
             availableColors[i].render();
 
         // Texto de los intentos restantes
-        graphics.setColor(GameManager.getInstance().getActual_Skin_Palette().getColor_1());
+        graphics.setColor(GameManager.getInstance().getCurrentSkinPalette().getColor1());
         graphics.fillRectangle(0, 0, width, attemptHeight);
         textAttempts.setText("Te quedan " + (numAttempts - currentAttempt) + " intentos");
         textAttempts.render();
@@ -441,7 +441,7 @@ public class MasterMind extends Scene {
             for (int j = 0; j < availableColors.length; j++) {
                 if (availableColors[j].handleInput(events.get(i))) {
 
-                    if(world_Level || GameManager.getInstance().getActual_Skin_Code() != -1)
+                    if(world_Level || GameManager.getInstance().getCurrentSkinCode() != -1)
                         attempts.get(currentAttempt).setCircle(availableColors[j].getColor(), winningCombination, availableColors[j].getImage());
                     else
                         attempts.get(currentAttempt).setCircle(availableColors[j].getColor(), winningCombination, null);
@@ -452,8 +452,8 @@ public class MasterMind extends Scene {
 
                             if(world_Level){
                                 //Si es el último nivel por el que vamos
-                                if(GameManager.getInstance().isLasLevel()){
-                                    GameManager.getInstance().level_Completed();
+                                if(GameManager.getInstance().isLastLevel()){
+                                    GameManager.getInstance().levelCompleted();
                                 }
                                 GameManager.getInstance().addCoins(lvl_coins);
                                 SceneManager.getInstance().addScene(new GameOverWorld(winningCombination, true, difficultyMode, currentAttempt + 1, colorBlind, lvl_coins, levelName, pack_file));

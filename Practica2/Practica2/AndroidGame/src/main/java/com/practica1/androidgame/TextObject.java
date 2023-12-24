@@ -120,7 +120,7 @@ public class TextObject implements Serializable  {
 
     public void resetColor()
     {
-        color = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+        color = GameManager.getInstance().getCurrentSkinPalette().getColor2();
     }
 
     public void load(Graphics graphics) {

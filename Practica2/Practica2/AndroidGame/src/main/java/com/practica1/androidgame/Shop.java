@@ -65,7 +65,7 @@ public class Shop extends Scene {
 
         coins = new ImageObject(graphics, pos_Coin, size_Coin, "coins.png");
 
-        int colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+        int colorText = GameManager.getInstance().getCurrentSkinPalette().getColor2();
         coin_cuantity = new TextObject(graphics, new Vector2(pos_Coin.x, pos_Coin.y + size_Coin.y),
                 "Nexa.ttf", String.valueOf(GameManager.getInstance().getCoins()), colorText, 60, false, false);
 
@@ -80,7 +80,7 @@ public class Shop extends Scene {
 
     public void render() {
         // Fondo de APP
-        int backColor = GameManager.getInstance().getActual_Skin_Palette().color_background();
+        int backColor = GameManager.getInstance().getCurrentSkinPalette().getColorBackground();
         graphics.clear(backColor);
 
         // Fondo de Juego

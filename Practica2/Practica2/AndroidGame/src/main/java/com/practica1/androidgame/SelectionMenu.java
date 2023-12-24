@@ -1,6 +1,5 @@
 package com.practica1.androidgame;
 
-import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.TouchEvent;
@@ -29,7 +28,7 @@ public class SelectionMenu extends Scene {
         super.init(engine);
 
 
-        colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+        colorText = GameManager.getInstance().getCurrentSkinPalette().getColor2();
 
         createTexts();
 
@@ -47,7 +46,7 @@ public class SelectionMenu extends Scene {
         Vector2 pos = new Vector2(width / 2, height / 10 * 3);
         Vector2 size = new Vector2(width / 2, height / 10);
 
-        int colorButton = GameManager.getInstance().getActual_Skin_Palette().getColor_1();
+        int colorButton = GameManager.getInstance().getCurrentSkinPalette().getColor1();
         buttonEasy = new ButtonObject(graphics, new Vector2(pos), size, 50, colorButton,
                 new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Fácil", colorText, 80, false, false));
         buttonEasy.center();
@@ -73,7 +72,7 @@ public class SelectionMenu extends Scene {
     @Override
     public void render() {
         // Fondo de APP
-        int backColor = GameManager.getInstance().getActual_Skin_Palette().color_background();
+        int backColor = GameManager.getInstance().getCurrentSkinPalette().getColorBackground();
         graphics.clear(backColor);
 
         // Fondo de Juego

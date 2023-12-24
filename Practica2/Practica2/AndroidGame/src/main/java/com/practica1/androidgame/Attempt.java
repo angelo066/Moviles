@@ -57,7 +57,7 @@ public class Attempt  implements Serializable {
 
 
         //Texto para el numero de intento
-        int color = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+        int color = GameManager.getInstance().getCurrentSkinPalette().getColor2();
         this.attemptNumber = new TextObject(graphics, new Vector2(pos.x + widthPerDivision / 2, pos.y + size.y / 2), "Nexa.ttf",
                 String.valueOf(id), color, 50, false, false);
         this.attemptNumber.center();

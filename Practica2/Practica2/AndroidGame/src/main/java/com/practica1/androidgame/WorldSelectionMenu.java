@@ -1,7 +1,6 @@
 package com.practica1.androidgame;
 
 import com.google.gson.Gson;
-import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.SensorHandler;
@@ -60,7 +59,7 @@ public class WorldSelectionMenu extends Scene {
         buttonLastWorld = new ButtonObject(graphics, new Vector2(banner_Pos.x - 270, banner_Pos.y), new Vector2(100, 100), "ArrowNavigators_Left.png");
         buttonLastWorld.center();
 
-        int colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+        int colorText = GameManager.getInstance().getCurrentSkinPalette().getColor2();
         textWorld = new TextObject(graphics, new Vector2(banner_Pos.x, banner_Pos.y), "Nexa.ttf", "Mundo " + String.valueOf(actual_WORLD+1), colorText, 70, false, false);
         textWorld.center();
 
@@ -72,7 +71,7 @@ public class WorldSelectionMenu extends Scene {
 
     public void render(){
         // Fondo de APP
-        int backColor = GameManager.getInstance().getActual_Skin_Palette().color_background();
+        int backColor = GameManager.getInstance().getCurrentSkinPalette().getColorBackground();
         graphics.clear(backColor);
 
         // Fondo de Juego
@@ -83,7 +82,7 @@ public class WorldSelectionMenu extends Scene {
         worldBackgrounds.get(actual_WORLD).render();
 
         // Indicador de mundo
-        graphics.setColor(GameManager.getInstance().getActual_Skin_Palette().getColor_1());
+        graphics.setColor(GameManager.getInstance().getCurrentSkinPalette().getColor1());
         Vector2 rectSize = new Vector2(400, 100);
         graphics.fillRoundRectangle(banner_Pos.x - rectSize.x /2, banner_Pos.y - rectSize.y/2, 400, 100, 20);
         textWorld.render();
@@ -150,8 +149,8 @@ public class WorldSelectionMenu extends Scene {
 
                         GameManager gm = GameManager.getInstance();
 
-                        gm.setActualWorld(actual_WORLD);
-                        gm.setActualLvl(j);
+                        gm.setCurrentWorld(actual_WORLD);
+                        gm.setCurrentLvl(j);
 
                         MasterMind next_Scene = new MasterMind(levelName);
                         next_Scene.setIndexWorld(actual_WORLD);
@@ -211,11 +210,11 @@ public class WorldSelectionMenu extends Scene {
         }
 
 
-        int worlds_Unlocked = GameManager.getInstance().getUnlocked_lvls().first;
+        int worlds_Unlocked = GameManager.getInstance().getUnlockedLvls().first;
 
         //Desbloqueamos lo que haya del primer mundo
         if(worlds_Unlocked == 0){
-            for(int j=0; j <= GameManager.getInstance().getUnlocked_lvls().second;j++){
+            for(int j = 0; j <= GameManager.getInstance().getUnlockedLvls().second; j++){
                 //Desbloqueamos los mundos
                 levels.get(0).get(j).setUnlock(true);
             }
@@ -227,7 +226,7 @@ public class WorldSelectionMenu extends Scene {
                 levels.get(0).get(j).setUnlock(true);
             }
 
-            for(int j=0; j <= GameManager.getInstance().getUnlocked_lvls().second;j++){
+            for(int j = 0; j <= GameManager.getInstance().getUnlockedLvls().second; j++){
                 //Desbloqueamos los mundos
                 levels.get(1).get(j).setUnlock(true);
             }
@@ -245,7 +244,7 @@ public class WorldSelectionMenu extends Scene {
                 levels.get(1).get(j).setUnlock(true);
             }
 
-            for(int j=0; j <= GameManager.getInstance().getUnlocked_lvls().second;j++){
+            for(int j = 0; j <= GameManager.getInstance().getUnlockedLvls().second; j++){
                 //Desbloqueamos los mundos
                 levels.get(2).get(j).setUnlock(true);
             }

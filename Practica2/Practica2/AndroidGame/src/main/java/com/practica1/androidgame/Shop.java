@@ -156,6 +156,9 @@ public class Shop extends Scene {
                 // Default
                 if (skins_Back[0].getButton().handleInput(events.get(i))) {
                     GameManager.getInstance().equipBackgroundSkin(-1);
+                    skins_Back[0].setSelected(true);
+                    if(GameManager.getInstance().getCurrentSkinBackground() != -1)
+                        skins_Back[GameManager.getInstance().getCurrentSkinBackground()].setSelected(false);
                 }
 
                 for (int b = 1; b < skins_Back.length; b++) {
@@ -166,15 +169,26 @@ public class Shop extends Scene {
 
                     if (skin.getButton().handleInput(events.get(i))) {
                         if (skin.isUnlocked())
+                        {
                             gm.equipBackgroundSkin(b-1);
+                            skin.setSelected(true);
+                            skins_Back[gm.getCurrentSkinBackground()].setSelected(false);
+                        }
                         else if (coins >= price) {
                             skin.setUnlock(true);
                             gm.unlockedSkin(0, b-1);
                             gm.buyObject(price);
+                            if(GameManager.getInstance().getCurrentSkinBackground() != -1)
+                            {
+                                skins_Back[gm.getCurrentSkinBackground()].setSelected(false);
+
+                            }
                             gm.equipBackgroundSkin(b-1);
+                            skin.setSelected(true);
                         }
                     }
                 }
+
             }
 
             if (Skin_Type.values()[type] == Skin_Type.CODE) {
@@ -322,8 +336,6 @@ public class Shop extends Scene {
                 }
                 skins_Back[i].setPrice(100 * (i-1));
             }
-
-            //skins_Back[i].setSelected(false);
         }
     }
 
@@ -365,9 +377,6 @@ public class Shop extends Scene {
                 }
                 skins_Code[i].setPrice(100 * (i-1));
             }
-
-            //skins_Code[i].setSelected(false);
-
         }
     }
 
@@ -410,8 +419,6 @@ public class Shop extends Scene {
                 }
                 skins_Color[i].setPrice(100 * (i-1));
             }
-
-            //skins_Color[i].setSelected(false);
         }
     }
 

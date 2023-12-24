@@ -27,7 +27,7 @@ public class ResourceManager {
     protected List<Pair<String, String>> shop_codes;
     protected List<Palette> shop_palettes;
 
-    private Palette default_Palette = new Palette("", Color.WHITE.getValue(), Color.CYAN.getValue(), Color.BLACK.getValue(), Color.RED.getValue());
+    private Palette default_Palette = new Palette("", Color.WHITE.getValue(), Color.DARK_GREY.getValue(), Color.BLACK.getValue(), Color.GREY.getValue());
 
     //PROVISIONAL
     int n_Images;

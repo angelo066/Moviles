@@ -52,7 +52,6 @@ public class GameOverQuickGame extends Scene {
         this.numAttempts = numAttempts;
         this.colorBlind = colorBlind;
         this.coins = coins;
-        this.colorText = GameManager.getInstance().getCurrentSkinPalette().getColor2();
 
     }
 
@@ -60,17 +59,19 @@ public class GameOverQuickGame extends Scene {
     public void init(Engine engine) {
         super.init(engine);
 
-        // Botones
-        createButtons();
-
         // Textos
         createTexts();
+
+        // Botones
+        createButtons();
 
         // Colocacion de los circulos
         if (win) setCircles();
     }
 
     private void createTexts() {
+        this.colorText = GameManager.getInstance().getCurrentSkinPalette().getColor2();
+
         String mensaje = "";
         String description = "";
         String attempt = "";
@@ -121,8 +122,10 @@ public class GameOverQuickGame extends Scene {
         Vector2 size = new Vector2(width / 4 * 3, height / 10);
 
         int colorButton = GameManager.getInstance().getCurrentSkinPalette().getColor1();
+        int colorButton2 = GameManager.getInstance().getCurrentSkinPalette().getColor3();
+
         if (!win) {
-            Vector2 posAtt = new Vector2(width / 2, height / 14 * 7);
+            Vector2 posAtt = new Vector2(width / 2, height / 14 * 9);
             buttonMoreAttempts = new ButtonObject(graphics, posAtt, size, 40, colorButton,
                     new TextObject(graphics, new Vector2(posAtt), "Nexa.ttf", "+2 intentos", colorText, 80, false, false));
             buttonMoreAttempts.center();
@@ -134,15 +137,15 @@ public class GameOverQuickGame extends Scene {
 
         }
 
-        Vector2 posBack = new Vector2(width / 2, height / 14 * 13);
-        buttonBackMenu = new ButtonObject(graphics, posBack, size, 40, colorButton,
-                new TextObject(graphics, new Vector2(posBack), "Nexa.ttf", "Menú", colorText, 80, false, false));
-        buttonBackMenu.center();
-
         Vector2 posRepeat = new Vector2(width / 2, height / 14 * 11);
-        buttonRepeat = new ButtonObject(graphics, posRepeat, size, 40, colorButton,
+        buttonRepeat = new ButtonObject(graphics, posRepeat, size, 40, colorButton2,
                 new TextObject(graphics, new Vector2(posRepeat), "Nexa.ttf", "Repetir", colorText, 80, false, false));
         buttonRepeat.center();
+
+        Vector2 posBack = new Vector2(width / 2, height / 14 * 13);
+        buttonBackMenu = new ButtonObject(graphics, posBack, size, 40, colorText,
+                new TextObject(graphics, new Vector2(posBack), "Nexa.ttf", "Menú", colorButton, 80, false, false));
+        buttonBackMenu.center();
     }
 
     /**
@@ -229,7 +232,7 @@ public class GameOverQuickGame extends Scene {
                 if (buttonShare.handleInput(events.get(i))) {
                     audio.stopSound("botonInterfaz.wav");
                     audio.playSound("botonInterfaz.wav", false);
-                    engine.getShareManager().share(0, 0, graphics.getWidth(), graphics.getHeight()/2, "Compartir resultado", "¡He conseguido superar un nivel! Juega Mastermind"
+                    engine.getShareManager().share(0, 0, graphics.getWidth(), graphics.getHeight() / 2, "Compartir resultado", "¡He conseguido superar un nivel! Juega Mastermind"
                             , "Mastermind", "Victoria en Mastermind");
                     break;
                 }

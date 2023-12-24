@@ -59,7 +59,7 @@ public class Shop extends Scene {
         Vector2 pos_Coin = new Vector2(900, 200);
         Vector2 size_Coin = new Vector2(100, 100);
 
-        buttonBack = new ButtonObject(graphics, new Vector2(0, 20), new Vector2(100, 100), "volver.png");
+        buttonBack = new ButtonObject(graphics, new Vector2(20, 20), new Vector2(100, 100), "volver.png");
 
         coins = new ImageObject(graphics, pos_Coin, size_Coin, "coins.png");
 
@@ -67,7 +67,7 @@ public class Shop extends Scene {
         coin_cuantity = new TextObject(graphics, new Vector2(pos_Coin.x, pos_Coin.y + size_Coin.y),
                 "Nexa.ttf", String.valueOf(GameManager.getInstance().getCoins()), colorText, 60, false, false);
 
-        type_Text = new TextObject(graphics, new Vector2(width / 2, 140),
+        type_Text = new TextObject(graphics, new Vector2(width / 2 - 10, 140),
                 "Nexa.ttf", "Fondos", colorText, 60, false, false);
 
         type_Text.center();
@@ -287,6 +287,7 @@ public class Shop extends Scene {
         } else {
             type_Text.setText("Colores");
         }
+        type_Text.center();
     }
 
     private void createButtons() {

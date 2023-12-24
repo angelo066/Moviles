@@ -12,6 +12,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+/*
+* Clase que gestiona la gestion de librerias con c++
+* Tambien es el encargado de los metodos de securizacion
+ */
 public class NDKManager {
 
     static {
@@ -33,10 +37,23 @@ public class NDKManager {
         return Instance;
     }
 
+    /**
+     * Funcion que se llama desde c++ para generar un hash a partir de un string
+     * @param h
+     * @return
+     */
     public native String createHash(String h);
 
     public String getKey(){return key;}
 
+    /**
+     * Securiza y guarda un hash en un archivo (Si filename == "") no lo guarda
+     * Devuelve el hash final
+     * @param data
+     * @param filename
+     * @return
+     */
+    // Metodo que
     // Si entra filename != "", guardamos el hash en archivo, sino simplemente lo calculamos
     public String secure(String data, String filename)
     {
@@ -71,6 +88,12 @@ public class NDKManager {
         return keyHash;
     }
 
+    /**
+     * Comprueba que el el hash guardado y el generado al cargar un archivo coinciden
+     * @param savedata
+     * @param filename
+     * @return
+     */
     public boolean checkHash(String savedata, String filename)
     {
         boolean check = true;

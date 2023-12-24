@@ -34,7 +34,7 @@ public class Circle implements Serializable {
         this.pos = pos;
         this.color = Color.NO_COLOR;
 
-        int colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+        int colorText = GameManager.getInstance().getCurrentSkinPalette().getColor2();
         this.id = new TextObject(graphics, new Vector2(pos.x + circleRadius, pos.y + circleRadius),
                 "Nexa.ttf", String.valueOf(this.color.getId()), colorText, 50, false, false);
         this.id.center();
@@ -50,7 +50,7 @@ public class Circle implements Serializable {
         this.pos = pos;
 
         this.color = Color.NO_COLOR;
-        int colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+        int colorText = GameManager.getInstance().getCurrentSkinPalette().getColor2();
         this.id = new TextObject(graphics, new Vector2(pos.x + circleRadius, pos.y + circleRadius),
                 "Nexa.ttf", String.valueOf(this.color.getId()), colorText, 50, false, false);
         this.id.center();

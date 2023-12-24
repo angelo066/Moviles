@@ -1,6 +1,5 @@
 package com.practica1.androidgame;
 
-import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
 import com.practica1.androidengine.TouchEvent;
@@ -37,9 +36,9 @@ public class MainMenu extends Scene {
         Vector2 pos = new Vector2(width / 2, height / 2);
         int offsetY = 50;
 
-        colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
-        colorButton1 = GameManager.getInstance().getActual_Skin_Palette().getColor_1();
-        colorButton2 = GameManager.getInstance().getActual_Skin_Palette().getColor_3();
+        colorText = GameManager.getInstance().getCurrentSkinPalette().getColor2();
+        colorButton1 = GameManager.getInstance().getCurrentSkinPalette().getColor1();
+        colorButton2 = GameManager.getInstance().getCurrentSkinPalette().getColor3();
 
         buttonQuickMatch = new ButtonObject(graphics, new Vector2(pos), size, 40, colorButton1,
                 new TextObject(graphics, new Vector2(pos), "Nexa.ttf", "Partida rápida", colorText, 80, false, false));
@@ -65,7 +64,7 @@ public class MainMenu extends Scene {
     @Override
     public void render() {
         // Fondo de APP
-        int backColor = GameManager.getInstance().getActual_Skin_Palette().color_background();
+        int backColor = GameManager.getInstance().getCurrentSkinPalette().getColorBackground();
         graphics.clear(backColor);
 
         // Fondo de Juego

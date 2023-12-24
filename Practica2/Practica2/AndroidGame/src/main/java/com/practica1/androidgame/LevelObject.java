@@ -32,7 +32,7 @@ public class LevelObject {
         this.size = size;
 
         Vector2 textPos = new Vector2(pos.x + size.x/2, pos.y + size.y /2);
-        int colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+        int colorText = GameManager.getInstance().getCurrentSkinPalette().getColor2();
         this.levelText = new TextObject(graphics, textPos, "Nexa.ttf", String.valueOf(id), colorText, 100, false, false);
         this.levelText.center();
         this.levelButton = new ButtonObject(graphics, pos, size, 20, Color.OPACITY_GREY.getValue(), null);

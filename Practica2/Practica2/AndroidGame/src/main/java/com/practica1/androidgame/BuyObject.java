@@ -1,6 +1,5 @@
 package com.practica1.androidgame;
 
-import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Graphics;
 
 
@@ -34,7 +33,7 @@ public class BuyObject {
         this.selectedImage = new ImageObject(graphics, pos, size, "select_skin.png");
         Vector2 pricePos = new Vector2(pos.x + size.x/2, pos.y + 50 + size.y);
 
-        int colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+        int colorText = GameManager.getInstance().getCurrentSkinPalette().getColor2();
         this.priceText = new TextObject(graphics, pricePos, "Nexa.ttf", String.valueOf(100), colorText, 50, false, false);
         this.priceText.center();
         this.coinImage = new ImageObject(graphics, new Vector2(pricePos.x + 80, pricePos.y), new Vector2(30,30), "coins.png");

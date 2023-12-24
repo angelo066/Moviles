@@ -2,37 +2,109 @@ package com.practica1.androidgame;
 
 import java.io.Serializable;
 
+/**
+ * Clase que representa un objeto palette de la tienda
+ */
 public class PaletteInfo implements Serializable {
     private String thumbnail;
-    private String background_color;
-    private String color_1;
-    private String color_2;
-    private String color_3;
+    private String backgroundColor;
+    private String color1;
+    private String color2;
+    private String color3;
 
-    public PaletteInfo(String thumbnail, String background_color, String color_1, String color_2, String color_3)
-    {
+    /**
+     * @param thumbnail       Path del thumbnail de la palette
+     * @param backgroundColor Color de fondo
+     * @param color1          Color 1
+     * @param color2          Color 2
+     * @param color3          Color 3
+     */
+    public PaletteInfo(String thumbnail, String backgroundColor, String color1, String color2, String color3) {
         this.thumbnail = thumbnail;
-        this.background_color = background_color;
-        this.color_1 = color_1;
-        this.color_2 = color_2;
-        this.color_3 = color_3;
+        this.backgroundColor = backgroundColor;
+        this.color1 = color1;
+        this.color2 = color2;
+        this.color3 = color3;
     }
 
-    // GETTERS
+    /**
+     * @return Path del thumbnail de la palette
+     */
     public String getThumbnail() {
         return thumbnail;
     }
-    public String getColor_Background() { return background_color; }
-    public String getColor_1() { return color_1; }
-    public String getColor_2() { return color_2; }
-    public String getColor_3() { return color_3; }
 
-    // SETTERS
+    /**
+     * @return El color de fondo
+     */
+    public String getColorBackground() {
+        return backgroundColor;
+    }
+
+    /**
+     * @return El color 1
+     */
+    public String getColor1() {
+        return color1;
+    }
+
+    /**
+     * @return El color 2
+     */
+    public String getColor2() {
+        return color2;
+    }
+
+    /**
+     * @return El color 3
+     */
+    public String getColor3() {
+        return color3;
+    }
+
+
+    /**
+     * Establece el thumbnail de la palette
+     *
+     * @param thumbnail
+     */
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
     }
-    public void setBackground_Color(String background_color) { this.background_color = background_color; }
-    public void setColor_1(String color_1) { this.color_1 = color_1; }
-    public void setColor_2(String color_2) { this.color_2 = color_2; }
-    public void setColor_3(String color_3) { this.color_3 = color_3; }
+
+    /**
+     * Establece el color de fondo
+     *
+     * @param backgroundColor
+     */
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    /**
+     * Establece el color 1
+     *
+     * @param color1
+     */
+    public void setColor1(String color1) {
+        this.color1 = color1;
+    }
+
+    /**
+     * Establece el color 2
+     *
+     * @param color2
+     */
+    public void setColor2(String color2) {
+        this.color2 = color2;
+    }
+
+    /**
+     * Establece el color 3
+     *
+     * @param color3
+     */
+    public void setColor3(String color3) {
+        this.color3 = color3;
+    }
 }

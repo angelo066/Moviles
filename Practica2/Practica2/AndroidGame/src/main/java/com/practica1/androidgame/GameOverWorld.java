@@ -3,7 +3,6 @@ package com.practica1.androidgame;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
-import com.practica1.androidengine.ShareManager;
 import com.practica1.androidengine.TouchEvent;
 
 import java.util.ArrayList;
@@ -59,7 +58,7 @@ public class GameOverWorld extends Scene {
         this.coins = coins;
         this.worldName = worldName;
         this.packFile = pack;
-        this.colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+        this.colorText = GameManager.getInstance().getCurrentSkinPalette().getColor2();
     }
 
     @Override
@@ -126,7 +125,7 @@ public class GameOverWorld extends Scene {
     private void createButtons() {
         Vector2 size = new Vector2(width / 4 * 3, height / 10);
 
-        int colorButton = GameManager.getInstance().getActual_Skin_Palette().getColor_1();
+        int colorButton = GameManager.getInstance().getCurrentSkinPalette().getColor1();
         if (!win) {
             Vector2 posAtt = new Vector2(width / 2, height / 14 * 7);
             buttonMoreAttempts = new ButtonObject(graphics, posAtt, size, 40, colorButton,
@@ -189,7 +188,7 @@ public class GameOverWorld extends Scene {
     @Override
     public void render() {
         // Fondo de APP
-        int backColor = GameManager.getInstance().getActual_Skin_Palette().color_background();
+        int backColor = GameManager.getInstance().getCurrentSkinPalette().getColorBackground();
         graphics.clear(backColor);
 
         // Fondo de Juego
@@ -248,16 +247,16 @@ public class GameOverWorld extends Scene {
                 if (buttonNext_Level.handleInput(events.get(i))) {
                     SceneManager.getInstance().removeScene();
 
-                    int world = GameManager.getInstance().getActualWorld();
-                    int lvl = GameManager.getInstance().getActualLvl();
+                    int world = GameManager.getInstance().getCurrentWorld();
+                    int lvl = GameManager.getInstance().getCurrentLvl();
                     lvl++;
 
                     if (lvl >= ResourceManager.getInstance().getNumLevels(world)) {
                         world++;
                         lvl = 0;
-                        GameManager.getInstance().setActualWorld(world);
+                        GameManager.getInstance().setCurrentWorld(world);
                     }
-                    GameManager.getInstance().setActualLvl(lvl);
+                    GameManager.getInstance().setCurrentLvl(lvl);
 
                     String next_lvl = ResourceManager.getInstance().getLevel(world, lvl);
                     SceneManager.getInstance().addScene(new MasterMind(next_lvl));

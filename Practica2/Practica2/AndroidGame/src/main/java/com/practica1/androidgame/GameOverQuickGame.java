@@ -3,7 +3,6 @@ package com.practica1.androidgame;
 import com.practica1.androidengine.Color;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.Scene;
-import com.practica1.androidengine.ShareManager;
 import com.practica1.androidengine.TouchEvent;
 
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class GameOverQuickGame extends Scene {
         this.numAttempts = numAttempts;
         this.colorBlind = colorBlind;
         this.coins = coins;
-        this.colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+        this.colorText = GameManager.getInstance().getCurrentSkinPalette().getColor2();
 
     }
 
@@ -81,7 +80,7 @@ public class GameOverQuickGame extends Scene {
             description = "Has averiguado el codigo en";
             attempt = numAttempts + " intentos";
 
-            int colorText = GameManager.getInstance().getActual_Skin_Palette().getColor_2();
+            int colorText = GameManager.getInstance().getCurrentSkinPalette().getColor2();
             textUsedAttempts = new TextObject(graphics, new Vector2(width / 2, height / 10 * 5 / 2),
                     "Nexa.ttf", attempt, colorText, 45, false, false);
             textUsedAttempts.center();
@@ -121,7 +120,7 @@ public class GameOverQuickGame extends Scene {
     private void createButtons() {
         Vector2 size = new Vector2(width / 4 * 3, height / 10);
 
-        int colorButton = GameManager.getInstance().getActual_Skin_Palette().getColor_1();
+        int colorButton = GameManager.getInstance().getCurrentSkinPalette().getColor1();
         if (!win) {
             Vector2 posAtt = new Vector2(width / 2, height / 14 * 7);
             buttonMoreAttempts = new ButtonObject(graphics, posAtt, size, 40, colorButton,
@@ -159,7 +158,7 @@ public class GameOverQuickGame extends Scene {
         int totalWidth = (combination_win.length * circleRadius * 2) + ((combination_win.length - 1) * offset);
         int spaceToEachSide = (width - totalWidth) / 2;
 
-        int skin = GameManager.getInstance().getActual_Skin_Code() + 1;
+        int skin = GameManager.getInstance().getCurrentSkinCode() + 1;
         // Creacion de cada circulo
         for (int i = 0; i < combination_win.length; i++) {
             int x = spaceToEachSide + i * (circleRadius * 2) + i * offset;
@@ -182,7 +181,7 @@ public class GameOverQuickGame extends Scene {
     @Override
     public void render() {
         // Fondo de APP
-        int backColor = GameManager.getInstance().getActual_Skin_Palette().color_background();
+        int backColor = GameManager.getInstance().getCurrentSkinPalette().getColorBackground();
         graphics.clear(backColor);
 
         // Fondo de Juego

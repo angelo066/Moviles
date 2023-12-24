@@ -186,6 +186,7 @@ public class Shop extends Scene {
                             skin.setUnlock(true);
                             gm.unlockedSkin(0, b - 1);
                             gm.buyObject(price);
+                            coin_cuantity.setText(String.valueOf(gm.getCoins()));
 
                             skins_Back[currentSkinIndex].setSelected(false);
 
@@ -226,6 +227,7 @@ public class Shop extends Scene {
                             skin.setUnlock(true);
                             gm.unlockedSkin(1, c - 1);
                             gm.buyObject(price);
+                            coin_cuantity.setText(String.valueOf(gm.getCoins()));
 
                             skins_Code[currentSkinIndex].setSelected(false);
 
@@ -281,6 +283,8 @@ public class Shop extends Scene {
                             skin.setUnlock(true);
                             gm.buyObject(price);
                             gm.unlockedSkin(2, c - 1);
+                            coin_cuantity.setText(String.valueOf(gm.getCoins()));
+
                             skins_Color[currentSkinIndex].setSelected(false);
                             skin.setSelected(true);
                             gm.equipPalette(ResourceManager.getInstance().getShopPalette(c - 1));

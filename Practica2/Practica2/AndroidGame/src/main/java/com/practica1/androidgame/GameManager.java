@@ -24,15 +24,15 @@ public class GameManager {
     private Context context;
     private int coins;
 
-    //Indice de la skin que tengo puesta
-    private int currentSkinBackground = -1; //-1 cuando no hay ninguna equipada
-    private int currentSkinCode = -1; //-1 cuando no hay ninguna equipada
+    // Indice de la skin que tengo puesta
+    private int currentSkinBackground = -1; // -1 cuando no hay ninguna equipada
+    private int currentSkinCode = -1; // -1 cuando no hay ninguna equipada
     private Palette currentSkinPalette = new Palette("", -1, -1, -1, -1);
     private int PaletteIndex = -1;
     private int currentLvl = 0;
     private int currentWorld = 0;
 
-    //First = mundo Second = Level
+    // First = mundo Second = Level
     private Pair<Integer, Integer> lastLevelUnlocked = new Pair<>(0, 0);
 
     private boolean[] unlockedBackgrounds;
@@ -64,8 +64,10 @@ public class GameManager {
      * Guarda la informacion del jugador en un archivo
      */
     public void savePlayerData() {
-        PlayerSerializeInfo playerSerializeInfo = new PlayerSerializeInfo(coins, lastLevelUnlocked.first, lastLevelUnlocked.second,
-                currentSkinBackground, currentSkinCode, currentSkinPalette, unlockedBackgrounds, unlockedCodes, unlockedPalettes, PaletteIndex);
+        PlayerSerializeInfo playerSerializeInfo = new PlayerSerializeInfo(coins, lastLevelUnlocked.first,
+                lastLevelUnlocked.second,
+                currentSkinBackground, currentSkinCode, currentSkinPalette, unlockedBackgrounds, unlockedCodes,
+                unlockedPalettes, PaletteIndex);
 
         try {
             FileOutputStream fout = context.openFileOutput("player.txt", Context.MODE_PRIVATE);
@@ -75,10 +77,12 @@ public class GameManager {
             out.flush();
             out.close();
 
-            /// SECURIZAR /// ---------------------------------------------------------------------------
+            /// SECURIZAR ///
+            /// ---------------------------------------------------------------------------
             String data = playerSerializeInfo.toString();
             NDKManager.getInstance().secure(data, "hashplayer.txt"); // lo queremos guardar en archivo
-            /// SECURIZAR /// ---------------------------------------------------------------------------
+            /// SECURIZAR ///
+            /// ---------------------------------------------------------------------------
 
         } catch (FileNotFoundException e) {
             System.out.println("Error: Archivo no encontrado");
@@ -104,16 +108,16 @@ public class GameManager {
 
                 playerSerializeInfo = (PlayerSerializeInfo) in.readObject();
 
-                /// COMPROBAR SECURIZACION /// ---------------------------------------------------------------------------
+                /// COMPROBAR SECURIZACION ///
+                /// ---------------------------------------------------------------------------
                 String data = playerSerializeInfo.toString(); // cogemos el archivo de guardado
-                if(!NDKManager.getInstance().checkHash(data, "hashplayer.txt"))
-                {
+                if (!NDKManager.getInstance().checkHash(data, "hashplayer.txt")) {
                     System.out.println("ERES UN BANDIDO, CAMBIASTE LOS DATOS DE JUEGO");
-                }
-                else {
+                } else {
                     System.out.println("ERES LEGAL, NO CAMBIASTE LOS DATOS DE JUEGO");
                 }
-                /// COMPROBAR SECURIZACION /// ---------------------------------------------------------------------------
+                /// COMPROBAR SECURIZACION ///
+                /// ---------------------------------------------------------------------------
 
             } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
@@ -127,7 +131,8 @@ public class GameManager {
             System.out.println(hash);
 
             coins = playerSerializeInfo.getCoins();
-            lastLevelUnlocked = new Pair<Integer, Integer>(playerSerializeInfo.getUnlock_world(), playerSerializeInfo.getUnlockLevels());
+            lastLevelUnlocked = new Pair<Integer, Integer>(playerSerializeInfo.getUnlock_world(),
+                    playerSerializeInfo.getUnlockLevels());
 
             currentSkinBackground = playerSerializeInfo.getBackgroundSkin();
             currentSkinCode = playerSerializeInfo.getCodeSkin();
@@ -137,14 +142,13 @@ public class GameManager {
             unlockedPalettes = playerSerializeInfo.getUnlocked_Palettes();
             PaletteIndex = playerSerializeInfo.getPaletteIndex();
 
-            //Si no hay ninguna equipada ponemos la predeterminada
+            // Si no hay ninguna equipada ponemos la predeterminada
             if (currentSkinPalette.getThumbnail() == "")
                 currentSkinPalette = ResourceManager.getInstance().getDefaultPalette();
         } else {
             defaultValues();
         }
 
-        coins = 100;
     }
 
     /**
@@ -310,11 +314,13 @@ public class GameManager {
     /**
      * @param index
      * @return Skins desbloqueadas por index
-     * 0 background 1 codes 2 palettes
+     *         0 background 1 codes 2 palettes
      */
     public boolean[] getUnlockedSkinsByIndex(int index) {
-        if (index == 0) return unlockedBackgrounds;
-        if (index == 1) return unlockedCodes;
+        if (index == 0)
+            return unlockedBackgrounds;
+        if (index == 1)
+            return unlockedCodes;
 
         return unlockedPalettes;
     }
@@ -329,6 +335,7 @@ public class GameManager {
         unlockedPalettes = new boolean[ResourceManager.getInstance().getNumShopPalettes()];
 
         currentSkinPalette = ResourceManager.getInstance().getDefaultPalette();
+        coins = 100;
     }
 
     public int getPaletteIndex() {

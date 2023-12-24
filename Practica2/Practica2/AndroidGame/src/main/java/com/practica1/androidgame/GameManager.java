@@ -28,6 +28,7 @@ public class GameManager {
     private int currentSkinBackground = -1; //-1 cuando no hay ninguna equipada
     private int currentSkinCode = -1; //-1 cuando no hay ninguna equipada
     private Palette currentSkinPalette = new Palette("", -1, -1, -1, -1);
+    private int PaletteIndex = -1;
     private int currentLvl = 0;
     private int currentWorld = 0;
 
@@ -312,5 +313,13 @@ public class GameManager {
         unlockedPalettes = new boolean[ResourceManager.getInstance().getNumShopPalettes()];
 
         currentSkinPalette = ResourceManager.getInstance().getDefaultPalette();
+    }
+
+    public int getPaletteIndex() {
+        return PaletteIndex;
+    }
+
+    public void setPaletteIndex(int paletteIndex) {
+        PaletteIndex = paletteIndex;
     }
 }

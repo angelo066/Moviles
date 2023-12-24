@@ -34,6 +34,9 @@ public class AndroidGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
+        ////ATENCIÓN: SI HAY PROBLEMAS CON LOS ARCHIVOS DE GUARDADO PONER ESTAS LINEA TANTO PARA player.txt
+        //// COMO PARA game.txt EJECUTAR UNA VEZ PARA QUE SE BORREN, QUITAR LAS LÍNEAS Y VOLVER A EJECUTAR
+
         /*File file = new File("/data/user/0/com.practica1.androidgame/files/player.txt");
         if(file.exists()){
             boolean deleted = file.delete();

@@ -256,8 +256,6 @@ public class ResourceManager {
 
             // Por cada pack
             for (int i = 0; i < packList.length; i++) {
-                System.out.println(packList[i].getThumbnail() + " " + packList[i].getCode());
-
                 // Guardamos la info de los packs
                 String thumbBaseRoute = "thumbnails/";
                 shopCodes.add(new Pair<String, String>(thumbBaseRoute + packList[i].getThumbnail(), packList[i].getCode()));

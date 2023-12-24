@@ -90,12 +90,12 @@ public class GameOverQuickGame extends Scene {
                     "Nexa.ttf", "Código:", colorText, 50, false, false);
             textCode.center();
 
-            String coins_String = "+" + String.valueOf(coins) + "- Total" + String.valueOf(GameManager.getInstance().getCoins());
+            String coins_String = "+" + String.valueOf(coins) + " - Total " + String.valueOf(GameManager.getInstance().getCoins());
 
             coins_Earned = new TextObject(graphics, new Vector2(width / 2, (height / 10 * 7 / 2) + 350),
                     "Nexa.ttf", coins_String, colorText, 100, false, false);
 
-            coin_Image = new ImageObject(graphics, new Vector2(width / 2 - 310, (height / 10 * 7 / 2) + 350), new Vector2(100, 100),
+            coin_Image = new ImageObject(graphics, new Vector2(width / 2 - 350, (height / 10 * 7 / 2) + 350), new Vector2(100, 100),
                     "coins.png");
 
             coins_Earned.center();

@@ -143,10 +143,7 @@ public class GameManager {
             defaultValues();
         }
 
-        // TODO borrar esto
-        // TODO borrar esto
-        coins = 1000000000;
-
+        coins = 100;
     }
 
     /**

@@ -126,13 +126,14 @@ public class GameManager {
             unlocked_Palettes = playerSerializeInfo.getUnlocked_Palettes();
 
             //Si no hay ninguna equipada ponemos la predeterminada
-            if(actual_Skin_Palette.getThumbnail() == "")
+            if(actual_Skin_Palette.getThumbnail() == "")  
                 actual_Skin_Palette = ResourceManager.getInstance().getDefault_Palette();
         }
         else{
             defaultValues();
         }
 
+        // TODO borrar esto
         // TODO borrar esto
         coins = 1000000000;
 

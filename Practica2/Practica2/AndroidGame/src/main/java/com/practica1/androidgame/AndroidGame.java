@@ -12,6 +12,7 @@ import com.practica1.androidengine.NotificationHandler;
 import com.practica1.androidengine.SensorHandler;
 import com.practica1.androidengine.ShareManager;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 //TODO:

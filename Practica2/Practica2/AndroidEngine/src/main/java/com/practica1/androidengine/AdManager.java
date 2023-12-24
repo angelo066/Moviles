@@ -18,12 +18,18 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
 import kotlin.jvm.internal.Lambda;
 
-
+/**
+ * Clase para gestionar los anuncios
+ */
 public class AdManager {
     private Context context;
     private AdView adView;
     private RewardedAd rewardedAd;
 
+    /**
+     * @param context Contexto de la aplicacion
+     * @param adView Banner de anuncio
+     */
     public AdManager(Context context, AdView adView) {
         this.context = context;
         MobileAds.initialize(context, new OnInitializationCompleteListener() {
@@ -35,7 +41,10 @@ public class AdManager {
         });
     }
 
-    // Método para cargar y mostrar un banner
+    /**
+     * Cargar y mostrar un banner
+     * @param adView Banner de anuncio
+     */
     public void loadBannerAd(AdView adView) {
         this.adView = adView;
 
@@ -45,8 +54,9 @@ public class AdManager {
         }
     }
 
-
-    // Método para cargar un anuncio recompensado
+    /**
+     * Cargar un anuncio recompensado
+     */
     public void loadRewardedAd() {
         AdRequest adRequest = new AdRequest.Builder().build();
         RewardedAd.load(context, "ca-app-pub-3940256099942544/5224354917", adRequest, new RewardedAdLoadCallback() {
@@ -62,7 +72,10 @@ public class AdManager {
         });
     }
 
-    // Método para mostrar un anuncio recompensado
+    /**
+     * Mostrar un anuncio recompensado
+     * @param adCallback Callback para ejecutar despues del anuncio
+     */
     public void showRewardedAd(AdCallback adCallback) {
         if (rewardedAd != null) {
             ((AppCompatActivity)context).runOnUiThread(new Runnable() {
@@ -80,6 +93,9 @@ public class AdManager {
         }
     }
 
+    /**
+     * Destruye el banner de anuncio
+     */
     public void destroy() {
         adView.destroy();
     }

@@ -25,7 +25,7 @@ public enum Color {
     private int value;
     private int id;
 
-    private Color(int v, int id) {
+    Color(int v, int id) {
         this.value = v;
         this.id = id;
     }

@@ -1,6 +1,5 @@
 package com.practica1.androidengine;
 
-import android.app.usage.UsageEvents;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
@@ -35,6 +34,7 @@ public class InputHandler implements View.OnTouchListener {
         return events;
     }
 
+    @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         TouchEvent event = new TouchEvent(); //pool de eventos por hacer
         int index = motionEvent.getActionIndex();

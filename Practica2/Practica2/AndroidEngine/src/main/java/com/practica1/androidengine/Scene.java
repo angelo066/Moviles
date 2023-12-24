@@ -57,15 +57,24 @@ public class Scene {
 
     }
 
+    /**
+     * @return Si se ha inicializado la escena
+     */
     public boolean isInitialized() {
         return initialized;
     }
 
-    public void saveData(){
+    /**
+     * Guardar informacion de la escena en archivo
+     */
+    public void saveData() {
 
     }
 
-    public void loadData(){
+    /**
+     * Carga la informacion de la escena desde archivo
+     */
+    public void loadData() {
 
     }
 

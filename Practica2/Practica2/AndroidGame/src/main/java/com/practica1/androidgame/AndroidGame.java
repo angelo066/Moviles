@@ -9,20 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.practica1.androidengine.AdManager;
 import com.practica1.androidengine.Engine;
 import com.practica1.androidengine.NotificationHandler;
-import com.practica1.androidengine.NotificationWorker;
-import com.practica1.androidengine.PushNotification;
 import com.practica1.androidengine.SensorHandler;
 import com.practica1.androidengine.ShareManager;
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 //TODO:
 //  Securizar con NDK
-//  Persistencia <--
 //  Paletas de Colores
-//  Compartir <--
-//  Notificiaciones <--
 //  Memoria
 //  Estilo predeterminado en la tienda
 
@@ -34,15 +28,6 @@ public class AndroidGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // DEBUG:
-        // File file = new
-        // File("/data/user/0/com.practica1.androidgame/files/game.txt");
-        // file.delete();
-
-        //DEBUG:
-        //File fileExist = new File("/data/user/0/com.practica1.androidgame/files/player.txt");
-        //fileExist.delete();
 
         setContentView(R.layout.activity_android_game);
         SurfaceView surfaceView = findViewById(R.id.surfaceView);
@@ -91,9 +76,8 @@ public class AndroidGame extends AppCompatActivity {
         SceneManager.getInstance().saveData();
         GameManager.getInstance().savePlayerData();
         notificationHandler.setPushNotificationWorkerPeriodic(10, TimeUnit.SECONDS, 20, TimeUnit.MINUTES, R.mipmap.ic_launcher,
-                "MasterMind", "Notificacion de prueba",
-                "Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible Parte extensible");
-        // engine.Release();
+                "MasterMind", "¡Vuelve a jugar MasterMind!",
+                "El ojo de la verdad espera tu llegada, entra y juega ahora, ¡te esperan muchos niveles!");
         engine.pause();
     }
 

@@ -6,9 +6,16 @@ import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+/**
+ * Clase worker para notificaciones
+ */
 public class NotificationWorker extends Worker {
     private PushNotification pushNotification;
 
+    /**
+     * @param context    Contexto de la aplicacion
+     * @param parameters Parametros del worker
+     */
     public NotificationWorker(Context context, WorkerParameters parameters) {
         super(context, parameters);
         pushNotification = new PushNotification(context);

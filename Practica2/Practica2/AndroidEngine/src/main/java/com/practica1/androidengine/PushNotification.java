@@ -15,19 +15,27 @@ import androidx.core.app.NotificationManagerCompat;
 
 import androidx.work.ListenableWorker.Result;
 
+/**
+ * Clase que representa una notificacion push
+ */
 public class PushNotification {
-
     private final String CHANNEL_ID = "MasterMind";
     private final CharSequence name = "MasterMind";
     private final String description = "MasterMind Game";
     private Context context;
 
+    /**
+     * @param context Contexto de la aplicacion
+     */
     public PushNotification(Context context) {
         this.context = context;
 
         createChannel();
     }
 
+    /**
+     * Crea un canal de notificaciones
+     */
     private void createChannel() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -39,12 +47,26 @@ public class PushNotification {
         }
     }
 
+    /**
+     * Crea el intento ejectutar al pinchar la notificacion
+     *
+     * @return Intento de la notificacion
+     */
     private PendingIntent createIntent() {
         Intent intent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
     }
 
+    /**
+     * Crea la notificacion
+     *
+     * @param icon         Icono de la notificacion
+     * @param title        Titulo de la notificacion
+     * @param content      Contenido de la notificacion
+     * @param extraContent Contenido extra de la notificacion
+     * @return Notificacion creada
+     */
     private NotificationCompat.Builder createNotification(int icon, String title, String content, String extraContent) {
         PendingIntent pendingIntent = createIntent();
 
@@ -59,6 +81,15 @@ public class PushNotification {
                 .setAutoCancel(true);
     }
 
+    /**
+     * Manda la notificacion
+     *
+     * @param icon         Icono de la notificacion
+     * @param title        Titulo de la notificacion
+     * @param content      Contenido de la notificacion
+     * @param extraContent Contenido extra de la notificacion
+     * @return Resultado de mandar la aplicacion (Success/Failure)
+     */
     public Result sendNotification(int icon, String title, String content, String extraContent) {
 
         NotificationCompat.Builder builder = createNotification(icon, title, content, extraContent);

@@ -51,5 +51,10 @@ public class Image {
         return bitmap;
     }
 
-    public String getFile(){return file;}
+    /**
+     * @return Ruta de la imagen
+     */
+    public String getFile() {
+        return file;
+    }
 }

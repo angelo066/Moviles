@@ -61,30 +61,55 @@ public class Engine implements Runnable {
         return audio;
     }
 
+    /**
+     * Establece el objeto AdManager de la aplicacion
+     *
+     * @param adManager
+     */
     public void setAds(AdManager adManager) {
         ads = adManager;
     }
 
+    /**
+     * @return Objeto AdManager de la aplicacion
+     */
     public AdManager getAds() {
         return ads;
     }
 
-    public void setSensorHandler(SensorHandler s) {
-        sensorHandler = s;
+    /**
+     * Establece el objeto SensorHandler de la aplicacion
+     *
+     * @param sensorHandler
+     */
+    public void setSensorHandler(SensorHandler sensorHandler) {
+        this.sensorHandler = sensorHandler;
     }
 
+    /**
+     * @return Objeto SensorHandler de la aplicacion
+     */
     public SensorHandler getSensorHandler() {
         return sensorHandler;
     }
 
+    /**
+     * Establece el objeto ShareManager de la aplicacion
+     *
+     * @param shareManager
+     */
     public void setShareManager(ShareManager shareManager) {
         this.shareManager = shareManager;
     }
 
+    /**
+     * @return Objeto ShareManager de la aplicacion
+     */
     public ShareManager getShareManager() {
         return shareManager;
     }
 
+    @Override
     public void run() {
         if (thread != Thread.currentThread())
             throw new RuntimeException("run() should not be called directly");            // Programación defensiva
@@ -157,9 +182,13 @@ public class Engine implements Runnable {
             newScene = scene;
     }
 
+    /**
+     * @return Escena actual
+     */
     public Scene getScene() {
         return scene;
     }
+
 
     /**
      * Cambia, si es necesario, la escena al principio de frame
@@ -239,8 +268,10 @@ public class Engine implements Runnable {
         return nameFiles;
     }
 
-    public void Release()
-    {
+    /**
+     * Libera los recursos del AssetManager
+     */
+    public void Release() {
         graphics.getAssetManager().close();
     }
 

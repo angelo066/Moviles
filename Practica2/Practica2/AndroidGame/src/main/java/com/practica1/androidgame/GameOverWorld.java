@@ -266,7 +266,7 @@ public class GameOverWorld extends Scene {
                 } else if (buttonShare.handleInput(events.get(i))) {
                     audio.stopSound("botonInterfaz.wav");
                     audio.playSound("botonInterfaz.wav", false);
-                    engine.getShareManager().share(0, 0, graphics.getWidth(), graphics.getHeight(), "Compartir resultado", "¡He conseguido superar un nivel! Juega Mastermind"
+                    engine.getShareManager().share(0, 0, graphics.getWidth(), graphics.getHeight()/2, "Compartir resultado", "¡He conseguido superar un nivel! Juega Mastermind"
                             , "Mastermind", "Victoria en Mastermind");
                     break;
                 }

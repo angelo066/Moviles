@@ -313,7 +313,7 @@ public class Graphics {
 
 
     /**
-     * Prepara todo para el renderizado
+     * Prepara el renderizado
      */
     public void prepareRender() {
         while (!holder.getSurface().isValid()) ;
@@ -333,7 +333,7 @@ public class Graphics {
     }
 
     /**
-     * Libera todo lo necesario despues del renderizado
+     * Libera despues del renderizado
      */
     public void releaseRender() {
         restore();
@@ -368,6 +368,11 @@ public class Graphics {
         return translateY;
     }
 
-    public AssetManager getAssetManager(){return assetManager;}
+    /**
+     * @return AssetManager de la aplicacion
+     */
+    public AssetManager getAssetManager() {
+        return assetManager;
+    }
 
 }

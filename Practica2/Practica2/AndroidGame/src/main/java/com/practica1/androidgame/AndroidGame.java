@@ -33,8 +33,8 @@ public class AndroidGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*
-        File file = new File("/data/user/0/com.practica1.androidgame/files/player.txt");
+
+        /*File file = new File("/data/user/0/com.practica1.androidgame/files/player.txt");
         if(file.exists()){
             boolean deleted = file.delete();
         }*/

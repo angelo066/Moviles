@@ -13,13 +13,14 @@ public class PlayerSerializeInfo implements Serializable {
     private int backgroundSkin;
     private int codeSkin;
     private Palette paleteSkin;
+    private int paletteIndex;
 
     private boolean[] unlocked_Backgrounds;
     private boolean[] unlocked_Codes;
     private boolean[] unlocked_Palettes;
 
     public PlayerSerializeInfo(int coins, int unlock_world ,int unlock_levels, int backgroundSkin, int codeSkin, Palette palette,
-                               boolean[] unlocked_Backgrounds, boolean[] unlocked_Codes, boolean[] unlocked_Palettes)
+                               boolean[] unlocked_Backgrounds, boolean[] unlocked_Codes, boolean[] unlocked_Palettes, int paletteIndex)
     {
         this.coins = coins;
         this.unlock_world = unlock_world;
@@ -30,6 +31,7 @@ public class PlayerSerializeInfo implements Serializable {
         this.unlocked_Backgrounds = unlocked_Backgrounds;
         this.unlocked_Codes = unlocked_Codes;
         this.unlocked_Palettes = unlocked_Palettes;
+        this.paletteIndex = paletteIndex;
     }
 
     // GETTERS
@@ -71,5 +73,13 @@ public class PlayerSerializeInfo implements Serializable {
 
     public boolean[] getUnlocked_Palettes() {
         return unlocked_Palettes;
+    }
+
+    public int getPaletteIndex() {
+        return paletteIndex;
+    }
+
+    public void setPaletteIndex(int paletteIndex) {
+        this.paletteIndex = paletteIndex;
     }
 }

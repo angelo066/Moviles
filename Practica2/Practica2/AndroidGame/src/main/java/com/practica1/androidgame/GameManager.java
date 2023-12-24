@@ -65,7 +65,7 @@ public class GameManager {
      */
     public void savePlayerData() {
         PlayerSerializeInfo playerSerializeInfo = new PlayerSerializeInfo(coins, lastLevelUnlocked.first, lastLevelUnlocked.second,
-                currentSkinBackground, currentSkinCode, currentSkinPalette, unlockedBackgrounds, unlockedCodes, unlockedPalettes);
+                currentSkinBackground, currentSkinCode, currentSkinPalette, unlockedBackgrounds, unlockedCodes, unlockedPalettes, PaletteIndex);
 
         try {
             FileOutputStream fout = context.openFileOutput("player.txt", Context.MODE_PRIVATE);
@@ -128,13 +128,14 @@ public class GameManager {
 
             coins = playerSerializeInfo.getCoins();
             lastLevelUnlocked = new Pair<Integer, Integer>(playerSerializeInfo.getUnlock_world(), playerSerializeInfo.getUnlockLevels());
-            ;
+
             currentSkinBackground = playerSerializeInfo.getBackgroundSkin();
             currentSkinCode = playerSerializeInfo.getCodeSkin();
             currentSkinPalette = playerSerializeInfo.getPaleteSkin();
             unlockedBackgrounds = playerSerializeInfo.getUnlocked_Backgrounds();
             unlockedCodes = playerSerializeInfo.getUnlocked_Codes();
             unlockedPalettes = playerSerializeInfo.getUnlocked_Palettes();
+            PaletteIndex = playerSerializeInfo.getPaletteIndex();
 
             //Si no hay ninguna equipada ponemos la predeterminada
             if (currentSkinPalette.getThumbnail() == "")

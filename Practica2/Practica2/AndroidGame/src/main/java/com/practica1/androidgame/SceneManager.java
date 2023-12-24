@@ -94,6 +94,7 @@ public class SceneManager {
         File file = new File("/data/user/0/com.practica1.androidgame/files/game.txt");
 
         if(file.exists()){
+
             MasterMind masterMind = new MasterMind(Difficulty.EASY);
             masterMind.savedGame();
             addScene(masterMind);

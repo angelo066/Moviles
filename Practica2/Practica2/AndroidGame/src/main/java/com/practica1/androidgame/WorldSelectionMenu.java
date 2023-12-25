@@ -264,7 +264,7 @@ public class WorldSelectionMenu extends Scene {
         String[] styleNames = new String[num_WORLDS];
         for(int i = 0; i < num_WORLDS; i++)
         {
-            String styleName = ResourceManager.getInstance().getWorldSytle(i); // TODO -> regulin esto
+            String styleName = ResourceManager.getInstance().getWorldSytle(i);
 
             // Leemos el json
             try {

@@ -292,9 +292,5 @@ public class WorldSelectionMenu extends Scene {
             worldBackgrounds.add(background);
         }
     }
-
-    public void changeWorld(int world){
-        actual_WORLD = world;
-    }
-
+    
 }
